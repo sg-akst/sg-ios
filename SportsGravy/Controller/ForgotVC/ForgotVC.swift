@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ForgotVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logoview: UIView!
@@ -17,19 +18,21 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         let bottomBorder = CALayer()
-               bottomBorder.frame = CGRect(x:0, y: self.logoview.frame.size.height - 0.5, width: self.logoview.frame.size.width, height: 0.5)
+               bottomBorder.frame = CGRect(x:0, y: self.logoview.frame.size.height - 0.5, width: self.logoview.frame.size.width + 50, height: 0.5)
                  bottomBorder.backgroundColor = UIColor.gray.cgColor
                logoview.layer.addSublayer(bottomBorder)
         self.bordermethod(setborder: email_txt)
         self.email_txt.delegate = self
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+           super.viewWillAppear(true)
+       }
     func bordermethod(setborder: UITextField)
     {
         let thickness: CGFloat = 1.0
 
         let bottomBorder = CALayer()
-        bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: setborder.frame.size.width, height:thickness)
+        bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: self.view.frame.size.width - 30, height:thickness)
           bottomBorder.backgroundColor = UIColor.lightGray.cgColor
         setborder.layer.addSublayer(bottomBorder)
     }
@@ -74,9 +77,33 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
         }
         else
         {
-            
+            self.sendPasswordReset(withEmail: email_txt.text!)
         }
     }
    
+    func sendPasswordReset(withEmail email: String, _ callback: ((Error?) -> ())? = nil){
 
+        Constant.showActivityIndicatory(uiView: self.view)
+               Auth.auth().sendPasswordReset(withEmail: email) { error in
+                   callback?(error)
+                
+                self.showAlertMessage(titleStr: "Sports Gravy", messageStr: "Please check your Email")
+                Constant.showInActivityIndicatory()
+                               
+               
+              
+                
+                
+
+               }
+           }
+    func showAlertMessage(titleStr:String, messageStr:String) -> Void {
+           let alert = UIAlertController(title: titleStr, message: messageStr, preferredStyle: UIAlertController.Style.alert);
+           alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+            let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
+                self.navigationController?.pushViewController(objSigninvc, animated: true)
+                  }))
+           
+           self.present(alert, animated: true, completion: nil)
+       }
 }

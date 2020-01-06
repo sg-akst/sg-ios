@@ -86,7 +86,7 @@ static func showActivityIndicatory(uiView: UIView) {
 
     self.actInd = UIActivityIndicatorView()
     self.actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0);
-    self.actInd.style =
+    self.actInd.activityIndicatorViewStyle =
             UIActivityIndicatorView.Style.large
     self.actInd.center = CGPoint(x: loadingView.frame.size.width / 2,
                             y: loadingView.frame.size.height / 2);
@@ -104,6 +104,10 @@ static func showInActivityIndicatory() {
     
     static func showAlertMessage(vc: UIViewController, titleStr:String, messageStr:String) -> Void {
         let alert = UIAlertController(title: titleStr, message: messageStr, preferredStyle: UIAlertController.Style.alert);
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+                   //Cancel Action
+               }))
+        
         vc.present(alert, animated: true, completion: nil)
     }
     

@@ -16,6 +16,7 @@
 		081120ED23BDF77900327FF1 /* SportsGravyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120EC23BDF77900327FF1 /* SportsGravyUITests.swift */; };
 		0811210223BE061B00327FF1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
 		0811210623BE08DD00327FF1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
+		082AB50023C321F600D7A6E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */; };
 		08507F5823BF423800CC968F /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
 		08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
 		08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5721A23BF3A13000C8852 /* SplashVC.swift */; };
@@ -57,6 +58,7 @@
 		081120EE23BDF77900327FF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0811210123BE061B00327FF1 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0811210523BE08DD00327FF1 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
 		08E5721A23BF3A13000C8852 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		081120FA23BDFCAD00327FF1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */,
 				081120FE23BDFEAC00327FF1 /* Reachability */,
 			);
 			path = Model;
@@ -371,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */,
+				082AB50023C321F600D7A6E5 /* GoogleService-Info.plist in Resources */,
 				081120D423BDF77800327FF1 /* Assets.xcassets in Resources */,
 				081120D223BDF77500327FF1 /* Main.storyboard in Resources */,
 			);
@@ -692,7 +696,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportgravy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -712,7 +716,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportgravy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

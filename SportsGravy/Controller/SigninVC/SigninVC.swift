@@ -15,15 +15,11 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logoview: UIView!
     @IBOutlet weak var email_txt: UITextField!
     @IBOutlet weak var password_txt: UITextField!
+    
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       let bottomBorder = CALayer()
-        bottomBorder.frame = CGRect(x:0, y: self.logoview.frame.size.height - 0.5, width: self.logoview.frame.size.width, height: 0.5)
-          bottomBorder.backgroundColor = UIColor.gray.cgColor
-        logoview.layer.addSublayer(bottomBorder)
         self.bordermethod(setborder: email_txt)
         self.bordermethod(setborder: password_txt)
         self.email_txt.delegate = self
@@ -31,12 +27,15 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
     func bordermethod(setborder: UITextField)
     {
         let thickness: CGFloat = 1.0
 
         let bottomBorder = CALayer()
-        bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: setborder.frame.size.width, height:thickness)
+        bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: self.view.frame.size.width - 30, height:thickness)
           bottomBorder.backgroundColor = UIColor.lightGray.cgColor
         setborder.layer.addSublayer(bottomBorder)
     }
@@ -47,27 +46,14 @@ class SigninVC: UIViewController, UITextFieldDelegate {
          return true
      }
 
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-         print("textFieldShouldBeginEditing")
-         return true
-     }
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//         return true
+//     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-         print("textFieldDidBeginEditing")
-         print("Leaving textFieldDidBeginEditing")
+         
      }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-         print("textField")
-         print("Leaving textField")
-         return true
-     }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-         print("textFieldDidEndEditing")
-        print("textField = \(textField.text ?? "")")
-         print("Leaving textFieldDidEndEditing")
-     }
     
     @IBAction func signin_btnAction(_ sender: UIButton)
     {
@@ -81,6 +67,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         }
         else
         {
+            Constant.showActivityIndicatory(uiView: self.view)
             Auth.auth().signIn(withEmail: email_txt.text!, password: password_txt.text!) {
                 [weak self] user, error in
                 guard self != nil else { return }
@@ -96,11 +83,13 @@ class SigninVC: UIViewController, UITextFieldDelegate {
 //                                  // Send token to your backend via HTTPS
 //                                  // ...
 //                                    self?.JsonParsing()
+                                    Constant.showInActivityIndicatory()
 
                                 }
 //                                                let uid = user?.uid
 //                                                print(uid!)
 //                                UserDefaults.standard.set(uid, forKey: "uid")
+                
             }
         }
         
@@ -110,4 +99,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
            let objSigninvc: ForgotVC = (self.storyboard?.instantiateViewController(identifier: "forgot"))!
               self.navigationController?.pushViewController(objSigninvc, animated: true)
        }
+    
+    
+   
 }
