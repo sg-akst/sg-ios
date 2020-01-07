@@ -17,8 +17,12 @@
 		0811210223BE061B00327FF1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
 		0811210623BE08DD00327FF1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
 		082AB50023C321F600D7A6E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */; };
+		084663D723C49E2E00D5A72D /* roboto in Resources */ = {isa = PBXBuildFile; fileRef = 084663D623C49E2E00D5A72D /* roboto */; };
 		08507F5823BF423800CC968F /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
 		08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
+		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
+		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
+		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
 		08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5721A23BF3A13000C8852 /* SplashVC.swift */; };
 		5C7B04535684E7D7A13709F6 /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 409505180767F5FA821B8A03 /* Pods_SportsGravy_SportsGravyUITests.framework */; };
 		6B454943E20E754F3C71288B /* Pods_SportsGravyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBF10040B9BC9E0BF9460D4 /* Pods_SportsGravyTests.framework */; };
@@ -59,8 +63,12 @@
 		0811210123BE061B00327FF1 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0811210523BE08DD00327FF1 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		084663D623C49E2E00D5A72D /* roboto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = roboto; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
+		08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidemenuVC.swift; sourceTree = "<group>"; };
+		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
+		08E3658523C4633B0063C6F4 /* fira-sans */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fira-sans"; sourceTree = "<group>"; };
 		08E5721A23BF3A13000C8852 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		1EBF10040B9BC9E0BF9460D4 /* Pods_SportsGravyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		409505180767F5FA821B8A03 /* Pods_SportsGravy_SportsGravyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy_SportsGravyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +192,8 @@
 		081120FD23BDFCC800327FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				08E3658123C456D70063C6F4 /* DashboardVC */,
+				08E3657E23C455D00063C6F4 /* SideMenu */,
 				080BF3B723BF5BC100084274 /* SinginupVC */,
 				08507F5923BF518100CC968F /* ForgotVC */,
 				08507F5623BF421100CC968F /* SigninVC */,
@@ -203,6 +213,7 @@
 		0811210323BE085700327FF1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				08E3658423C462D60063C6F4 /* Font */,
 				0811210423BE08BC00327FF1 /* Constant */,
 			);
 			path = Utilities;
@@ -230,6 +241,31 @@
 				08507F5A23BF519C00CC968F /* ForgotVC.swift */,
 			);
 			path = ForgotVC;
+			sourceTree = "<group>";
+		};
+		08E3657E23C455D00063C6F4 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		08E3658123C456D70063C6F4 /* DashboardVC */ = {
+			isa = PBXGroup;
+			children = (
+				08E3658223C457090063C6F4 /* Dashboardvc.swift */,
+			);
+			path = DashboardVC;
+			sourceTree = "<group>";
+		};
+		08E3658423C462D60063C6F4 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				084663D623C49E2E00D5A72D /* roboto */,
+				08E3658523C4633B0063C6F4 /* fira-sans */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		08E5721923BF39F4000C8852 /* SplashVC */ = {
@@ -374,8 +410,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */,
+				084663D723C49E2E00D5A72D /* roboto in Resources */,
 				082AB50023C321F600D7A6E5 /* GoogleService-Info.plist in Resources */,
 				081120D423BDF77800327FF1 /* Assets.xcassets in Resources */,
+				08E3658623C4633B0063C6F4 /* fira-sans in Resources */,
 				081120D223BDF77500327FF1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,6 +548,8 @@
 				08507F5823BF423800CC968F /* SigninVC.swift in Sources */,
 				0811210223BE061B00327FF1 /* Reachability.swift in Sources */,
 				0811210623BE08DD00327FF1 /* Constant.swift in Sources */,
+				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
+				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
 				08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

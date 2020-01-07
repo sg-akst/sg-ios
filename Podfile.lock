@@ -77,12 +77,14 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - SWRevealViewController (2.3.0)
 
 DEPENDENCIES:
   - Alamofire
   - Firebase/Analytics
   - Firebase/Auth
   - IQKeyboardManagerSwift
+  - SWRevealViewController
 
 SPEC REPOS:
   trunk:
@@ -102,6 +104,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
     - nanopb
+    - SWRevealViewController
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -120,7 +123,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
 
-PODFILE CHECKSUM: f8f54a460cbdb03dc3d072755bd36cc0a10129c6
+PODFILE CHECKSUM: a213f02917b4d0111972824b6494c767a86ca709
 
 COCOAPODS: 1.8.4

@@ -10,8 +10,8 @@
         <array key="FiraSans-Regular.otf">
             <string>FiraSans-Regular</string>
         </array>
-        <array key="Roboto-Black.ttf">
-            <string>Roboto-Black</string>
+        <array key="FiraSans-SemiBold.otf">
+            <string>FiraSans-SemiBold</string>
         </array>
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
@@ -61,6 +61,7 @@
                         <viewLayoutGuide key="safeArea" id="Unk-Ga-taH"/>
                     </view>
                     <navigationItem key="navigationItem" id="oh3-bl-59w"/>
+                    <size key="freeformSize" width="375" height="667"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZK1-hq-fAg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -75,10 +76,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TiA-zI-osW" userLabel="logo">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="186"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="179"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="DzB-ne-awt">
-                                        <rect key="frame" x="87.5" y="32" width="200" height="122"/>
+                                        <rect key="frame" x="87.5" y="28.5" width="200" height="122"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -89,7 +90,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mym-LW-A4E">
-                                <rect key="frame" x="0.0" y="189" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="182" width="375" height="1"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="bak-9v-TZV"/>
@@ -99,19 +100,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4QG-50-qfO">
-                                <rect key="frame" x="15" y="236" width="345" height="74"/>
+                                <rect key="frame" x="15" y="229" width="345" height="79"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="151.5" translatesAutoresizingMaskIntoConstraints="NO" id="mYY-M5-bqd">
-                                        <rect key="frame" x="0.0" y="0.0" width="151.5" height="26"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="164" height="28.5"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="22"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="24"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address and password to access account." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VqN-z8-o4M">
-                                        <rect key="frame" x="0.0" y="34" width="326" height="40"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address and password to access account." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VqN-z8-o4M">
+                                        <rect key="frame" x="0.0" y="36.5" width="340" height="42.5"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -121,7 +122,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3J4-mB-fg9">
-                                <rect key="frame" x="16" y="360" width="343" height="100"/>
+                                <rect key="frame" x="16" y="358" width="343" height="100"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lh4-vc-0Z9">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
@@ -133,8 +134,8 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="N4U-Gl-039"/>
                                                 </constraints>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -146,8 +147,8 @@
                                                 <rect key="frame" x="0.0" y="60" width="343" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -192,11 +193,11 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-HC-Pwv">
-                                <rect key="frame" x="16" y="530" width="343" height="77"/>
+                                <rect key="frame" x="16" y="528" width="343" height="79"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unb-C4-gZd">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="32"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="34"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
                                         <state key="normal" title="Forget Password?">
                                             <color key="titleColor" red="0.059358143219999999" green="0.042919194039999997" blue="0.96620899439999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
@@ -210,7 +211,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="woh-Io-Si2">
-                                        <rect key="frame" x="0.0" y="37" width="343" height="40"/>
+                                        <rect key="frame" x="0.0" y="39" width="343" height="40"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES" playsSound="YES"/>
@@ -218,7 +219,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="f8a-ri-gQG"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                         <state key="normal" title="Sign In">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -262,6 +263,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="email_txt" destination="GrE-Bc-0hi" id="pbi-Kw-Z8d"/>
                         <outlet property="logoview" destination="TiA-zI-osW" id="31O-lg-VeQ"/>
@@ -271,6 +273,276 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJK-ix-kbY" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="631" y="88"/>
+        </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="c3j-40-e7Z">
+            <objects>
+                <viewController storyboardIdentifier="revealvc" id="PbE-fj-DbC" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Lxb-nB-kDQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="myD-GY-2c7"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="ASO-Jv-Fsk" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="x81-Vo-Jd7"/>
+                        <segue destination="w06-3F-AEu" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="Ty2-6a-dgz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RVg-TE-TV0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="621" y="753"/>
+        </scene>
+        <!--SidemenuVC-->
+        <scene sceneID="dmw-Db-9ER">
+            <objects>
+                <viewController id="ASO-Jv-Fsk" customClass="SidemenuVC" customModule="SportsGravy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="04E-nc-mb9">
+                        <rect key="frame" x="0.0" y="0.0" width="270" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8c-PW-jGz">
+                                <rect key="frame" x="0.0" y="0.0" width="270" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ER-uf-CLy">
+                                        <rect key="frame" x="0.0" y="0.0" width="270" height="130"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Adm-gV-7Cz">
+                                                <rect key="frame" x="20" y="20" width="23.5" height="90"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charles R Bailey Jr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aoi-V6-AkU">
+                                                <rect key="frame" x="53.5" y="55" width="206.5" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="D11-Re-RkK"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="25"/>
+                                                <color key="textColor" red="0.070588235294117646" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined November 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Mp-xO-g25">
+                                                <rect key="frame" x="53.5" y="96" width="206.5" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="08b-zc-uh1"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="13"/>
+                                                <color key="textColor" red="0.21176470588235294" green="0.25098039215686274" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vt-a7-RrS">
+                                                <rect key="frame" x="0.0" y="0.0" width="270" height="130"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="9vt-a7-RrS" firstAttribute="top" secondItem="2ER-uf-CLy" secondAttribute="top" id="5Dh-AW-ZbY"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Mp-xO-g25" secondAttribute="trailing" constant="10" id="5qE-Ge-JEQ"/>
+                                            <constraint firstItem="Adm-gV-7Cz" firstAttribute="top" secondItem="2ER-uf-CLy" secondAttribute="top" constant="20" id="7uX-IW-85B"/>
+                                            <constraint firstItem="0Mp-xO-g25" firstAttribute="top" secondItem="Aoi-V6-AkU" secondAttribute="bottom" constant="1" id="YmT-fO-ifD"/>
+                                            <constraint firstAttribute="bottom" secondItem="9vt-a7-RrS" secondAttribute="bottom" id="auS-OT-WDA"/>
+                                            <constraint firstItem="Adm-gV-7Cz" firstAttribute="centerY" secondItem="2ER-uf-CLy" secondAttribute="centerY" id="dvy-LX-YFu"/>
+                                            <constraint firstItem="Adm-gV-7Cz" firstAttribute="leading" secondItem="2ER-uf-CLy" secondAttribute="leading" constant="20" id="gA5-B3-FuO"/>
+                                            <constraint firstAttribute="trailing" secondItem="9vt-a7-RrS" secondAttribute="trailing" id="guY-q6-yZi"/>
+                                            <constraint firstItem="Aoi-V6-AkU" firstAttribute="top" secondItem="2ER-uf-CLy" secondAttribute="top" constant="55" id="iKV-oz-4id"/>
+                                            <constraint firstItem="Aoi-V6-AkU" firstAttribute="leading" secondItem="Adm-gV-7Cz" secondAttribute="trailing" constant="10" id="ovZ-hP-ofC"/>
+                                            <constraint firstAttribute="trailing" secondItem="Aoi-V6-AkU" secondAttribute="trailing" constant="10" id="pJE-3f-0cP"/>
+                                            <constraint firstItem="9vt-a7-RrS" firstAttribute="leading" secondItem="2ER-uf-CLy" secondAttribute="leading" id="vRc-az-Ctn"/>
+                                            <constraint firstItem="0Mp-xO-g25" firstAttribute="leading" secondItem="Adm-gV-7Cz" secondAttribute="trailing" constant="10" id="y4U-cx-7cU"/>
+                                            <constraint firstAttribute="height" constant="130" id="yOV-ma-tk5"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oam-41-wlb">
+                                        <rect key="frame" x="0.0" y="132" width="270" height="100"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="H9m-zM-33P"/>
+                                        </constraints>
+                                    </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFT-FF-8Nw">
+                                        <rect key="frame" x="0.0" y="234" width="270" height="175"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an0-sZ-dHn">
+                                                <rect key="frame" x="20" y="5" width="150" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="dm4-zd-DFP"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="koq-RO-AF8"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="20"/>
+                                                <color key="textColor" red="0.34509803921568627" green="0.38431372549019605" blue="0.43137254901960786" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1MN-ga-756">
+                                                <rect key="frame" x="21" y="39" width="228" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="UMq-E0-qpd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="20"/>
+                                                <state key="normal" title="User Groups">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U8h-4s-oIn">
+                                                <rect key="frame" x="21" y="84" width="228" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="vGC-k6-fMQ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="20"/>
+                                                <state key="normal" title="Tags">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BwL-sX-mjK">
+                                                <rect key="frame" x="21" y="129" width="228" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="qax-pF-Z9x"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="20"/>
+                                                <state key="normal">
+                                                    <string key="title">Canned Responses
+</string>
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="U8h-4s-oIn" firstAttribute="top" secondItem="1MN-ga-756" secondAttribute="bottom" constant="10" id="1Hr-1P-bki"/>
+                                            <constraint firstAttribute="height" constant="175" id="BgM-w1-qbm"/>
+                                            <constraint firstItem="1MN-ga-756" firstAttribute="top" secondItem="an0-sZ-dHn" secondAttribute="bottom" constant="4" id="LwR-6R-lR2"/>
+                                            <constraint firstAttribute="trailing" secondItem="1MN-ga-756" secondAttribute="trailing" constant="21" id="MS3-py-e7c"/>
+                                            <constraint firstAttribute="trailing" secondItem="U8h-4s-oIn" secondAttribute="trailing" constant="21" id="Sit-bZ-ngx"/>
+                                            <constraint firstAttribute="trailing" secondItem="BwL-sX-mjK" secondAttribute="trailing" constant="21" id="VA0-Y4-Dd6"/>
+                                            <constraint firstItem="1MN-ga-756" firstAttribute="leading" secondItem="CFT-FF-8Nw" secondAttribute="leading" constant="21" id="cny-6U-Ye8"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="an0-sZ-dHn" secondAttribute="trailing" constant="20" symbolic="YES" id="eRn-zx-gZG"/>
+                                            <constraint firstItem="BwL-sX-mjK" firstAttribute="leading" secondItem="CFT-FF-8Nw" secondAttribute="leading" constant="21" id="oL7-sb-sQc"/>
+                                            <constraint firstItem="an0-sZ-dHn" firstAttribute="top" secondItem="CFT-FF-8Nw" secondAttribute="top" constant="5" id="qMO-bB-3qe"/>
+                                            <constraint firstItem="U8h-4s-oIn" firstAttribute="leading" secondItem="CFT-FF-8Nw" secondAttribute="leading" constant="21" id="xP2-Zz-3Ji"/>
+                                            <constraint firstItem="BwL-sX-mjK" firstAttribute="top" secondItem="U8h-4s-oIn" secondAttribute="bottom" constant="10" id="xXJ-E4-a5y"/>
+                                            <constraint firstItem="an0-sZ-dHn" firstAttribute="leading" secondItem="CFT-FF-8Nw" secondAttribute="leading" constant="20" id="xx8-hx-PXm"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wxx-Hy-fsi">
+                                        <rect key="frame" x="0.0" y="410" width="270" height="257"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PY-Uj-cOk">
+                                                <rect key="frame" x="21" y="5" width="228" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="73z-Cy-81m"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="20"/>
+                                                <state key="normal">
+                                                    <string key="title">Settings
+</string>
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qKH-Q1-M5r">
+                                                <rect key="frame" x="21" y="45" width="228" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="Nlo-ss-TSE"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FiraSans-SemiBold" family="Fira Sans" pointSize="20"/>
+                                                <state key="normal">
+                                                    <string key="title">Logout
+</string>
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="0PY-Uj-cOk" firstAttribute="top" secondItem="Wxx-Hy-fsi" secondAttribute="top" constant="5" id="AD4-iR-zqD"/>
+                                            <constraint firstItem="0PY-Uj-cOk" firstAttribute="leading" secondItem="Wxx-Hy-fsi" secondAttribute="leading" constant="21" id="BND-ow-cAo"/>
+                                            <constraint firstItem="qKH-Q1-M5r" firstAttribute="top" secondItem="0PY-Uj-cOk" secondAttribute="bottom" constant="5" id="J5B-vr-83O"/>
+                                            <constraint firstAttribute="trailing" secondItem="0PY-Uj-cOk" secondAttribute="trailing" constant="21" id="R3H-Kt-Rz1"/>
+                                            <constraint firstAttribute="trailing" secondItem="qKH-Q1-M5r" secondAttribute="trailing" constant="21" id="fXq-iB-Qcb"/>
+                                            <constraint firstItem="qKH-Q1-M5r" firstAttribute="leading" secondItem="Wxx-Hy-fsi" secondAttribute="leading" constant="21" id="ojo-3t-1Pl"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="oam-41-wlb" firstAttribute="top" secondItem="2ER-uf-CLy" secondAttribute="bottom" constant="2" id="4UM-yO-gfO"/>
+                                    <constraint firstItem="Wxx-Hy-fsi" firstAttribute="top" secondItem="CFT-FF-8Nw" secondAttribute="bottom" constant="1" id="8ex-Ep-dSm"/>
+                                    <constraint firstAttribute="trailing" secondItem="CFT-FF-8Nw" secondAttribute="trailing" id="91y-7c-4rE"/>
+                                    <constraint firstItem="CFT-FF-8Nw" firstAttribute="trailing" secondItem="Wxx-Hy-fsi" secondAttribute="trailing" id="Afi-Mz-fUj"/>
+                                    <constraint firstItem="2ER-uf-CLy" firstAttribute="leading" secondItem="oam-41-wlb" secondAttribute="leading" id="EeQ-6s-u9w"/>
+                                    <constraint firstItem="CFT-FF-8Nw" firstAttribute="leading" secondItem="u8c-PW-jGz" secondAttribute="leading" id="UWS-su-V4g"/>
+                                    <constraint firstItem="CFT-FF-8Nw" firstAttribute="leading" secondItem="Wxx-Hy-fsi" secondAttribute="leading" id="Uxe-Rd-J6z"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wxx-Hy-fsi" secondAttribute="bottom" id="cZz-yf-jfI"/>
+                                    <constraint firstItem="2ER-uf-CLy" firstAttribute="centerX" secondItem="u8c-PW-jGz" secondAttribute="centerX" id="f1H-GN-obx"/>
+                                    <constraint firstItem="CFT-FF-8Nw" firstAttribute="top" secondItem="oam-41-wlb" secondAttribute="bottom" constant="2" id="irW-lT-Idr"/>
+                                    <constraint firstItem="2ER-uf-CLy" firstAttribute="leading" secondItem="u8c-PW-jGz" secondAttribute="leading" id="jjB-ut-iF9"/>
+                                    <constraint firstItem="2ER-uf-CLy" firstAttribute="trailing" secondItem="oam-41-wlb" secondAttribute="trailing" id="opf-F3-yVk"/>
+                                    <constraint firstItem="2ER-uf-CLy" firstAttribute="top" secondItem="u8c-PW-jGz" secondAttribute="top" id="uM7-gh-LFI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="u8c-PW-jGz" firstAttribute="top" secondItem="2Gw-NB-ln4" secondAttribute="top" id="Cdh-ck-tQI"/>
+                            <constraint firstItem="u8c-PW-jGz" firstAttribute="bottom" secondItem="2Gw-NB-ln4" secondAttribute="bottom" id="ETq-rm-LFO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u8c-PW-jGz" secondAttribute="trailing" constant="-16" id="Ye2-u0-obG"/>
+                            <constraint firstItem="u8c-PW-jGz" firstAttribute="leading" secondItem="2Gw-NB-ln4" secondAttribute="leading" id="gJz-IU-58A"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2Gw-NB-ln4"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="270" height="667"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hmr-GV-o1V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1440.8" y="760.56971514242889"/>
+        </scene>
+        <!--Dashboardvc-->
+        <scene sceneID="dXY-CI-wQn">
+            <objects>
+                <viewController storyboardIdentifier="dash" id="w06-3F-AEu" customClass="Dashboardvc" customModule="SportsGravy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kp3-B6-j8i">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rl9-Nu-DMx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bVT-a5-3aE">
+                                        <rect key="frame" x="20" y="15" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="menu"/>
+                                        <connections>
+                                            <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="NzH-UA-bPL"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3M-rP-ydL">
+                                        <rect key="frame" x="80" y="15" width="193" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jn0-Rw-NSq">
+                                        <rect key="frame" x="318" y="15" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="setmenu"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="wSt-LA-Tif"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="DBe-2n-7kj"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9N9-GH-QQz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1447.2" y="1437.9310344827588"/>
         </scene>
         <!--ForgotVC-->
         <scene sceneID="Mfe-le-bpV">
@@ -301,8 +573,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KaF-5I-h9F"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="24"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tp-2z-ae8">
@@ -315,11 +587,11 @@
                                 <string key="text">Enter your email address and we'll send 
 you an email with instructions to reset 
 your password.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xkY-J3-lUz" customClass="HoshiTextField" customModule="TextFieldEffects">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xkY-J3-lUz" customClass="HoshiTextField" customModule="TextFieldEffects">
                                 <rect key="frame" x="15" y="395" width="345" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -327,8 +599,8 @@ your password.</string>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="4vB-bj-88y"/>
                                     <constraint firstAttribute="height" constant="40" id="ZdX-ki-UJ5"/>
                                 </constraints>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -352,7 +624,7 @@ your password.</string>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="hdN-yx-5Wq"/>
                                     <constraint firstAttribute="height" constant="40" id="vLs-Mg-SgQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                 <state key="normal" title="Submit">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -373,6 +645,7 @@ your password.</string>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="nwY-N4-Fsg"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                         <state key="normal" title="Back to Login?"/>
                                         <connections>
                                             <action selector="gotologin:" destination="Ri0-Y7-ZnZ" eventType="touchUpInside" id="EhU-9S-fFO"/>
@@ -408,6 +681,7 @@ your password.</string>
                         <viewLayoutGuide key="safeArea" id="kvl-Ze-mPb"/>
                     </view>
                     <navigationItem key="navigationItem" id="UFa-Ga-NqP"/>
+                    <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="email_txt" destination="xkY-J3-lUz" id="VRV-7x-DRM"/>
                         <outlet property="logoview" destination="6n9-dp-Sa2" id="sKU-fb-8SM"/>
@@ -445,18 +719,18 @@ your password.</string>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="uGC-x0-zMm">
                                 <rect key="frame" x="16" y="327.5" width="343" height="101"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Up" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3K-b2-tag">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Up" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3K-b2-tag">
                                         <rect key="frame" x="0.0" y="0.0" width="85" height="33"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="85" id="6ad-fd-DHf"/>
                                             <constraint firstAttribute="height" constant="33" id="kue-BC-O5u"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="23"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="24"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8X-4K-KKF">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8X-4K-KKF">
                                         <rect key="frame" x="0.0" y="38" width="343" height="63"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -466,7 +740,7 @@ your password.</string>
                                         <string key="text">Congrats on being invited to SportsGravy! 
 Enter your email address below to get started
 and create your account.</string>
-                                        <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -475,7 +749,7 @@ and create your account.</string>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="hyx-Zv-SWB">
                                 <rect key="frame" x="16" y="466" width="343" height="121"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4z1-k0-uYn" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4z1-k0-uYn" customClass="HoshiTextField" customModule="TextFieldEffects">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -483,8 +757,8 @@ and create your account.</string>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="343" id="4nt-WT-bcx"/>
                                             <constraint firstAttribute="height" constant="43" id="VUF-Tq-vyE"/>
                                         </constraints>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
@@ -503,8 +777,8 @@ and create your account.</string>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcg-lf-w31">
                                         <rect key="frame" x="0.0" y="78" width="343" height="43"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="20"/>
+                                        <color key="backgroundColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                         <state key="normal" title="Next">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -534,6 +808,7 @@ and create your account.</string>
                         <viewLayoutGuide key="safeArea" id="Vds-fw-v3e"/>
                     </view>
                     <navigationItem key="navigationItem" id="dzn-yV-yhu"/>
+                    <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="email_txt" destination="4z1-k0-uYn" id="Nr2-Dd-ZRj"/>
                         <outlet property="logoview" destination="xSe-iy-pdn" id="vx5-QM-sas"/>
@@ -595,26 +870,26 @@ and create your account.</string>
                                                     <constraint firstItem="F04-RH-u0t" firstAttribute="top" secondItem="cIi-0y-HZI" secondAttribute="top" constant="30" id="yan-bs-cmH"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98e-ZG-eRf">
-                                                <rect key="frame" x="14" y="130" width="313.5" height="68"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98e-ZG-eRf">
+                                                <rect key="frame" x="14" y="130" width="328.5" height="68"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="68" id="DpG-is-DgR"/>
                                                 </constraints>
                                                 <string key="text">Accurate personal information helps us 
 ensure your account stays in sync across
 multiple sports organizations.</string>
-                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxf-vs-Iil">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxf-vs-Iil">
                                                 <rect key="frame" x="14" y="90" width="230" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="1Pa-qi-cJy"/>
                                                     <constraint firstAttribute="height" constant="32" id="6pE-xH-lev"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="23"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="24"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="tBw-NC-tDI">
@@ -626,7 +901,7 @@ multiple sports organizations.</string>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gZz-ag-eMO">
                                                                 <rect key="frame" x="0.0" y="0.0" width="233" height="94"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="FirstName" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ww2-Qz-hQK" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="FirstName" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ww2-Qz-hQK" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                         <rect key="frame" x="0.0" y="0.0" width="233" height="43"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <color key="tintColor" red="0.58823529409999997" green="0.62352941179999999" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -634,8 +909,8 @@ multiple sports organizations.</string>
                                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="210" id="aa1-3y-8xH"/>
                                                                             <constraint firstAttribute="height" constant="43" id="xrX-7n-abH"/>
                                                                         </constraints>
-                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                        <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -649,12 +924,12 @@ multiple sports organizations.</string>
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d5G-cp-kof" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d5G-cp-kof" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                         <rect key="frame" x="0.0" y="51" width="233" height="43"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <color key="tintColor" red="0.58823529409999997" green="0.62352941179999999" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                        <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -676,12 +951,12 @@ multiple sports organizations.</string>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="yOm-jV-O83">
                                                                 <rect key="frame" x="238" y="0.0" width="115" height="94"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Middle Initial" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adk-jf-AQE" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Middle Initial" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adk-jf-AQE" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                         <rect key="frame" x="0.0" y="0.0" width="115" height="42.5"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <color key="tintColor" red="0.75294117650000003" green="0.80000000000000004" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                        <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -698,12 +973,12 @@ multiple sports organizations.</string>
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Suffix" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6l2-Rl-k3d" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Suffix" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6l2-Rl-k3d" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                         <rect key="frame" x="0.0" y="51.5" width="115" height="42.5"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <color key="tintColor" red="0.75294117650000003" green="0.80000000000000004" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                        <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -730,15 +1005,15 @@ multiple sports organizations.</string>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="uWX-Ej-ZgW">
                                                         <rect key="frame" x="0.0" y="106" width="353" height="91"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date of Birth" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YBY-3h-JTb" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date of Birth" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YBY-3h-JTb" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="43"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="tintColor" red="0.58823529409999997" green="0.62352941179999999" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="43" id="VFR-Hf-rm1"/>
                                                                 </constraints>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -752,12 +1027,12 @@ multiple sports organizations.</string>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Adress " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r8W-Af-1nt" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Adress " minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r8W-Af-1nt" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                 <rect key="frame" x="0.0" y="48" width="353" height="43"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="tintColor" red="0.58823529409999997" green="0.62352941179999999" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -776,14 +1051,14 @@ multiple sports organizations.</string>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="qU2-qC-NmD">
                                                         <rect key="frame" x="0.0" y="209" width="353" height="139"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile Phone" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="okh-oT-ZtV" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile Phone" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="okh-oT-ZtV" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="43"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="43" id="kPK-ES-Mhq"/>
                                                                 </constraints>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -800,11 +1075,11 @@ multiple sports organizations.</string>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d5a-Tm-dgD" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d5a-Tm-dgD" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                 <rect key="frame" x="0.0" y="48" width="353" height="43"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -821,11 +1096,11 @@ multiple sports organizations.</string>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FYA-jZ-4en" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FYA-jZ-4en" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                                 <rect key="frame" x="0.0" y="96" width="353" height="43"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" name="FiraSans-Regular" family="Fira Sans" pointSize="17"/>
+                                                                <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -847,11 +1122,11 @@ multiple sports organizations.</string>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MX4-jx-ljN">
                                                         <rect key="frame" x="0.0" y="360" width="353" height="44"/>
-                                                        <color key="backgroundColor" red="0.058823529409999999" green="0.043137254899999998" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="A6a-sP-mUq"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                                         <state key="normal" title="Next">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </state>
@@ -905,6 +1180,7 @@ multiple sports organizations.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gZS-Ka-dLg"/>
                     </view>
+                    <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="DOB_TEXT" destination="YBY-3h-JTb" id="0Xr-31-32B"/>
                         <outlet property="Email_text" destination="r8W-Af-1nt" id="BKe-Oy-Nrq"/>
@@ -923,6 +1199,8 @@ multiple sports organizations.</string>
         </scene>
     </scenes>
     <resources>
+        <image name="menu" width="24" height="24"/>
+        <image name="setmenu" width="24" height="24"/>
         <image name="splash" width="200" height="122"/>
     </resources>
 </document>

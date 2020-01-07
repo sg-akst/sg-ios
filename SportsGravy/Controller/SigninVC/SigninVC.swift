@@ -9,13 +9,14 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import SWRevealViewController
 
 class SigninVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var logoview: UIView!
     @IBOutlet weak var email_txt: UITextField!
     @IBOutlet weak var password_txt: UITextField!
-    
+    var revealController: SWRevealViewController!
 
 
     override func viewDidLoad() {
@@ -24,7 +25,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         self.bordermethod(setborder: password_txt)
         self.email_txt.delegate = self
         self.password_txt.delegate = self
-        
+        revealController = SWRevealViewController()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -36,7 +37,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
 
         let bottomBorder = CALayer()
         bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: self.view.frame.size.width - 30, height:thickness)
-          bottomBorder.backgroundColor = UIColor.lightGray.cgColor
+        bottomBorder.backgroundColor =  UIColor.lightGray.cgColor
         setborder.layer.addSublayer(bottomBorder)
     }
     
@@ -67,6 +68,8 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         }
         else
         {
+           
+           
             Constant.showActivityIndicatory(uiView: self.view)
             Auth.auth().signIn(withEmail: email_txt.text!, password: password_txt.text!) {
                 [weak self] user, error in
@@ -85,11 +88,16 @@ class SigninVC: UIViewController, UITextFieldDelegate {
 //                                    self?.JsonParsing()
                                     Constant.showInActivityIndicatory()
 
+
+                                    let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
+                                    self?.navigationController?.pushViewController(swrvc, animated: true)
+
+
                                 }
 //                                                let uid = user?.uid
 //                                                print(uid!)
 //                                UserDefaults.standard.set(uid, forKey: "uid")
-                
+
             }
         }
         
