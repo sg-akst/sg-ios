@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SWRevealViewController
 
 class SplashVC: UIViewController {
 
@@ -26,11 +27,16 @@ class SplashVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-      
-    let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
-    self.navigationController?.pushViewController(objSigninvc, animated: true)
-        
-       
+        if UserDefaults.standard.object(forKey: "idtoken") != nil{
+            let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
+            self.navigationController?.pushViewController(swrvc, animated: true)
+
+        } else {
+          let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
+             self.navigationController?.pushViewController(objSigninvc, animated: true)
+                 
+        }
+
     }
 
 }

@@ -9,6 +9,7 @@ target 'SportsGravy' do
   pod 'IQKeyboardManagerSwift'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
   pod 'SWRevealViewController'
   # Pods for SportsGravy
 

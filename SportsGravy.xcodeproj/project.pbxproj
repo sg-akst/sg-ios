@@ -20,6 +20,10 @@
 		084663D723C49E2E00D5A72D /* roboto in Resources */ = {isa = PBXBuildFile; fileRef = 084663D623C49E2E00D5A72D /* roboto */; };
 		08507F5823BF423800CC968F /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
 		08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
+		08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8723C5F13B00CFB418 /* PostCell.swift */; };
+		08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */; };
+		08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8C23C5F53400CFB418 /* VideoVC.swift */; };
+		08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8E23C5F55500CFB418 /* RateVC.swift */; };
 		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
 		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
@@ -66,6 +70,10 @@
 		084663D623C49E2E00D5A72D /* roboto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = roboto; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
+		08AC5E8723C5F13B00CFB418 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		08AC5E8C23C5F53400CFB418 /* VideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVC.swift; sourceTree = "<group>"; };
+		08AC5E8E23C5F55500CFB418 /* RateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateVC.swift; sourceTree = "<group>"; };
 		08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidemenuVC.swift; sourceTree = "<group>"; };
 		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
 		08E3658523C4633B0063C6F4 /* fira-sans */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fira-sans"; sourceTree = "<group>"; };
@@ -185,6 +193,7 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				08AC5E8623C5F11300CFB418 /* PostCell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -192,6 +201,7 @@
 		081120FD23BDFCC800327FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				08AC5E8923C5F4FF00CFB418 /* Tabbar */,
 				08E3658123C456D70063C6F4 /* DashboardVC */,
 				08E3657E23C455D00063C6F4 /* SideMenu */,
 				080BF3B723BF5BC100084274 /* SinginupVC */,
@@ -241,6 +251,24 @@
 				08507F5A23BF519C00CC968F /* ForgotVC.swift */,
 			);
 			path = ForgotVC;
+			sourceTree = "<group>";
+		};
+		08AC5E8623C5F11300CFB418 /* PostCell */ = {
+			isa = PBXGroup;
+			children = (
+				08AC5E8723C5F13B00CFB418 /* PostCell.swift */,
+			);
+			path = PostCell;
+			sourceTree = "<group>";
+		};
+		08AC5E8923C5F4FF00CFB418 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */,
+				08AC5E8C23C5F53400CFB418 /* VideoVC.swift */,
+				08AC5E8E23C5F55500CFB418 /* RateVC.swift */,
+			);
+			path = Tabbar;
 			sourceTree = "<group>";
 		};
 		08E3657E23C455D00063C6F4 /* SideMenu */ = {
@@ -542,8 +570,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */,
+				08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */,
 				08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */,
 				080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */,
+				08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */,
 				081120CB23BDF77500327FF1 /* AppDelegate.swift in Sources */,
 				08507F5823BF423800CC968F /* SigninVC.swift in Sources */,
 				0811210223BE061B00327FF1 /* Reachability.swift in Sources */,
@@ -551,6 +582,7 @@
 				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
 				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
 				08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */,
+				08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
