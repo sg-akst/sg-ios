@@ -13,21 +13,12 @@ class SplashVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if Reachability.isConnectedToNetwork(){
-                print("Internet Connection Available!")
-            }else{
-                print("Internet Connection not Available!")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Internet Connection not Available!")
-
-            }
-        
-        
-    
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        if UserDefaults.standard.object(forKey: "idtoken") != nil{
+        if UserDefaults.standard.object(forKey: "UUID") != nil{
             let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
             self.navigationController?.pushViewController(swrvc, animated: true)
 
@@ -38,5 +29,5 @@ class SplashVC: UIViewController {
         }
 
     }
-
+    
 }

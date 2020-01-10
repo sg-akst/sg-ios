@@ -8,11 +8,15 @@
 
 import UIKit
 import SWRevealViewController
+import FirebaseFirestore
+import Kingfisher
+
+
 class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var post_tbl: UITableView!
-    let myArray = ["row 1", "row 2", "row 3", "row 4"]
+    var commonArray: NSMutableArray!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,24 +36,98 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
         }
         self.post_tbl.delegate = self
         self.post_tbl.dataSource = self
+        commonArray = NSMutableArray()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        getFeedMethod()
+        
+    }
+    func getFeedMethod()
+    {
+        Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
+        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+               
+               let db = Firestore.firestore()
+//              let docRef = db.collection("feed").document()
+              db.collection("feed").getDocuments() { (querySnapshot, err) in
+                  if let err = err {
+                      print("Error getting documents: \(err)")
+                  } else {
+                      //self.roleby_reasonArray = NSMutableArray()
+                      for document in querySnapshot!.documents {
+                          let data: NSDictionary = document.data() as NSDictionary
+                        let feedUserId: NSMutableArray = data.value(forKey: "feedToUserId") as! NSMutableArray
+                        for i in 0..<feedUserId.count
+                        {
+                            let roleDic: String = feedUserId[i] as! String
+                           // let role: String = roleDic.value(forKey: "role") as! String
+                            if(getuuid == roleDic as String)
+                            {
+                                self.commonArray.add(data)
+                            }
+                        }
+                        self.post_tbl.reloadData()
+                          print("\(document.documentID) => \(data)")
+                         // self.roleby_reasonArray.add(data)
+                      }
+//                      var filteredEvents: [String] = self.roleby_reasonArray.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
+//                      filteredEvents.sort(){$0 < $1}
+//                      print(filteredEvents)
+//                      let firstrole = filteredEvents[0]
+//                      self.roleArray = filteredEvents;
+//                      self.role_tbl.reloadData()
+//                      self.rolebaseddisplayviewMethod(SelectRole: firstrole)
+//                      self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height + 10
+
+                  }
+              }
+
+          
+          Constant.showInActivityIndicatory()
+          
+        }
+    
+    
     @objc func refresh(_ refreshControl: UIRefreshControl) {
         // Do your job, when done:
         refreshControl.endRefreshing()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return myArray.count
+            return commonArray.count
         }
 
         // create a cell for each table view row
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-            // create a new cell if needed or reuse an old one
             let cell:PostCell = self.post_tbl.dequeueReusableCell(withIdentifier: "post") as! PostCell
+            let Dic: NSDictionary = commonArray?[indexPath.row] as! NSDictionary
+            
+            cell.username_lbl?.text = "\(Dic.value(forKey: "feedPostedUser_firstName")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_middleInitial")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_lastName")!)" + "-" + "\(Dic.value(forKey: "feedPostedUser_role")!)"
+            let timestamp: Timestamp = Dic.value(forKey: "feedPostedDatetime") as! Timestamp
+             let datees: Date = timestamp.dateValue()
+             print(datees)
+             let dateFormatterGet = DateFormatter()
+             dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-            // set the text from the data model
-            cell.username_lbl?.text = myArray[indexPath.row]
+             let dateFormatterPrint = DateFormatter()
+             dateFormatterPrint.dateFormat = "MMM dd,yyyy HH:mm:ss a"
+             print(dateFormatterPrint.string(from: datees as Date))
 
+             cell.date_lbl.text = "Posted on \(dateFormatterPrint.string(from: datees as Date))"
+            let url = URL(string: "\(Dic.value(forKey: "feedImageURL") ?? "")")
+             if(url != nil)
+             {
+               cell.profileImg.kf.setImage(with: url)
+                 cell.profileImg.layer.cornerRadius = cell.profileImg.frame.size.width/2
+                 cell.profileImg.layer.backgroundColor = UIColor.lightGray.cgColor
+             }
+            let likeDic: NSDictionary = Dic.value(forKey: "likes") as! NSDictionary
+            cell.fav_count_lbl.text = likeDic.value(forKey: "count") as? String
+            let CommentDic: NSDictionary = Dic.value(forKey: "comments") as! NSDictionary
+            cell.comment_count_lbl.text = CommentDic.value(forKey: "count") as? String
+            cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
+            
             return cell
         }
 

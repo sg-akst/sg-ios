@@ -12,7 +12,18 @@ class Constant: NSObject {
     
     static let BaseUrl = "https://us-central1-sports-gravy-app.cloudfunctions.net/"
 
-    
+    static func internetconnection(vc: UIViewController)
+    {
+        if Reachability.isConnectedToNetwork()
+        {
+            print("Internet Connection Available!")
+                   
+        }else{
+          print("Internet Connection not Available!")
+          Constant.showAlertMessage(vc: vc, titleStr: "SportsGravy", messageStr: "Internet Connection not Available!")
+          }
+               
+    }
 
     
     struct ScreenSize

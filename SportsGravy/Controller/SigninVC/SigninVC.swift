@@ -69,20 +69,24 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         else
         {
            
-           
+            Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             Auth.auth().signIn(withEmail: email_txt.text!, password: password_txt.text!) {
                 [weak self] user, error in
                 guard self != nil else { return }
-                                let user = Auth.auth().currentUser
-                                                print(user!)
-                                user?.getIDTokenForcingRefresh(true) { idToken, error in
-                                    if error != nil {
-                                    // Handle error
-                                    return;
-                                  }
-                print(idToken!)
-                                    UserDefaults.standard.set(idToken, forKey: "idtoken")
+                               // let user = Auth.auth().currentUser
+                let userUUID = Auth.auth().currentUser?.uid
+                print(userUUID!)
+                
+                UserDefaults.standard.set(userUUID, forKey: "UUID")
+
+//                                user?.getIDTokenForcingRefresh(true) { idToken, error in
+//                                    if error != nil {
+//                                    // Handle error
+//                                    return;
+//                                  }
+//                print(idToken!)
+//                                    UserDefaults.standard.set(idToken, forKey: "idtoken")
 //                                  // Send token to your backend via HTTPS
 //                                  // ...
 //                                    self?.JsonParsing()
@@ -93,10 +97,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                                     self?.navigationController?.pushViewController(swrvc, animated: true)
 
 
-                                }
-//                                                let uid = user?.uid
-//                                                print(uid!)
-//                                UserDefaults.standard.set(uid, forKey: "uid")
+                               // }
 
             }
         }

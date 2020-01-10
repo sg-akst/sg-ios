@@ -16,10 +16,12 @@
 		081120ED23BDF77900327FF1 /* SportsGravyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120EC23BDF77900327FF1 /* SportsGravyUITests.swift */; };
 		0811210223BE061B00327FF1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
 		0811210623BE08DD00327FF1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
-		082AB50023C321F600D7A6E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */; };
 		084663D723C49E2E00D5A72D /* roboto in Resources */ = {isa = PBXBuildFile; fileRef = 084663D623C49E2E00D5A72D /* roboto */; };
 		08507F5823BF423800CC968F /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
 		08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
+		087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */; };
+		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
+		087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */; };
 		08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8723C5F13B00CFB418 /* PostCell.swift */; };
 		08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */; };
 		08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8C23C5F53400CFB418 /* VideoVC.swift */; };
@@ -66,10 +68,12 @@
 		081120EE23BDF77900327FF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0811210123BE061B00327FF1 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0811210523BE08DD00327FF1 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		084663D623C49E2E00D5A72D /* roboto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = roboto; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
+		087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecord.swift; sourceTree = "<group>"; };
+		087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		08AC5E8723C5F13B00CFB418 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		08AC5E8C23C5F53400CFB418 /* VideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVC.swift; sourceTree = "<group>"; };
@@ -184,7 +188,8 @@
 		081120FA23BDFCAD00327FF1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				082AB4FF23C321F600D7A6E5 /* GoogleService-Info.plist */,
+				087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */,
+				087E8B3A23C6F6E800D1F0FF /* Records */,
 				081120FE23BDFEAC00327FF1 /* Reachability */,
 			);
 			path = Model;
@@ -194,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				08AC5E8623C5F11300CFB418 /* PostCell */,
+				087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -251,6 +257,14 @@
 				08507F5A23BF519C00CC968F /* ForgotVC.swift */,
 			);
 			path = ForgotVC;
+			sourceTree = "<group>";
+		};
+		087E8B3A23C6F6E800D1F0FF /* Records */ = {
+			isa = PBXGroup;
+			children = (
+				087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */,
+			);
+			path = Records;
 			sourceTree = "<group>";
 		};
 		08AC5E8623C5F11300CFB418 /* PostCell */ = {
@@ -439,10 +453,10 @@
 			files = (
 				081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */,
 				084663D723C49E2E00D5A72D /* roboto in Resources */,
-				082AB50023C321F600D7A6E5 /* GoogleService-Info.plist in Resources */,
 				081120D423BDF77800327FF1 /* Assets.xcassets in Resources */,
 				08E3658623C4633B0063C6F4 /* fira-sans in Resources */,
 				081120D223BDF77500327FF1 /* Main.storyboard in Resources */,
+				087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,6 +595,8 @@
 				0811210623BE08DD00327FF1 /* Constant.swift in Sources */,
 				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
 				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
+				087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */,
+				087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */,
 				08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */,
 				08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */,
 			);

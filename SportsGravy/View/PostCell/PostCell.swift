@@ -15,6 +15,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var comment_lbl: UILabel!
     @IBOutlet weak var fav_count_lbl: UILabel!
     @IBOutlet weak var comment_count_lbl: UILabel!
+    @IBOutlet weak var profileImg: UIImageView!
 
 
 
