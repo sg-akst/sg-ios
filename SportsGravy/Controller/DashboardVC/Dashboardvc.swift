@@ -50,7 +50,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
                
                let db = Firestore.firestore()
-//              let docRef = db.collection("feed").document()
               db.collection("feed").getDocuments() { (querySnapshot, err) in
                   if let err = err {
                       print("Error getting documents: \(err)")
@@ -70,17 +69,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
                         }
                         self.post_tbl.reloadData()
                           print("\(document.documentID) => \(data)")
-                         // self.roleby_reasonArray.add(data)
                       }
-//                      var filteredEvents: [String] = self.roleby_reasonArray.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
-//                      filteredEvents.sort(){$0 < $1}
-//                      print(filteredEvents)
-//                      let firstrole = filteredEvents[0]
-//                      self.roleArray = filteredEvents;
-//                      self.role_tbl.reloadData()
-//                      self.rolebaseddisplayviewMethod(SelectRole: firstrole)
-//                      self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height + 10
-
                   }
               }
 

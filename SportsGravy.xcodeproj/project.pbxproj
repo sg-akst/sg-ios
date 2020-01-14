@@ -22,6 +22,8 @@
 		087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */; };
 		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
 		087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */; };
+		08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB404223CDD1C500E8A92E /* UserGroupCell.swift */; };
+		08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABF72423CC40180021BA72 /* UsergroupVC.swift */; };
 		08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8723C5F13B00CFB418 /* PostCell.swift */; };
 		08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */; };
 		08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8C23C5F53400CFB418 /* VideoVC.swift */; };
@@ -74,6 +76,8 @@
 		087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecord.swift; sourceTree = "<group>"; };
 		087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
+		08AB404223CDD1C500E8A92E /* UserGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupCell.swift; sourceTree = "<group>"; };
+		08ABF72423CC40180021BA72 /* UsergroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsergroupVC.swift; sourceTree = "<group>"; };
 		08AC5E8723C5F13B00CFB418 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		08AC5E8C23C5F53400CFB418 /* VideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVC.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				08AB404123CDD1A600E8A92E /* UserGroup */,
 				08AC5E8623C5F11300CFB418 /* PostCell */,
 				087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */,
 			);
@@ -207,6 +212,7 @@
 		081120FD23BDFCC800327FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				08ABF72323CC3FD70021BA72 /* UserGroup */,
 				08AC5E8923C5F4FF00CFB418 /* Tabbar */,
 				08E3658123C456D70063C6F4 /* DashboardVC */,
 				08E3657E23C455D00063C6F4 /* SideMenu */,
@@ -265,6 +271,22 @@
 				087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */,
 			);
 			path = Records;
+			sourceTree = "<group>";
+		};
+		08AB404123CDD1A600E8A92E /* UserGroup */ = {
+			isa = PBXGroup;
+			children = (
+				08AB404223CDD1C500E8A92E /* UserGroupCell.swift */,
+			);
+			path = UserGroup;
+			sourceTree = "<group>";
+		};
+		08ABF72323CC3FD70021BA72 /* UserGroup */ = {
+			isa = PBXGroup;
+			children = (
+				08ABF72423CC40180021BA72 /* UsergroupVC.swift */,
+			);
+			path = UserGroup;
 			sourceTree = "<group>";
 		};
 		08AC5E8623C5F11300CFB418 /* PostCell */ = {
@@ -584,7 +606,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */,
 				08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */,
+				08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */,
 				08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */,
 				08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */,
 				080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */,

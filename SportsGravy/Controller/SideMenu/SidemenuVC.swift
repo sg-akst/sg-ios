@@ -31,7 +31,9 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var roleArray: [String]!
     var roleby_reasonArray: NSMutableArray!
+    var getSameRoleArray: NSMutableArray!
     var isTeamEnable: String!
+    var getRole: String!
 
 
     override func viewDidLoad() {
@@ -40,12 +42,13 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.roleby_reasonArray = NSMutableArray()
         self.role_tbl.delegate = self
         self.role_tbl.dataSource = self
+        getuserDetail()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        getuserDetail()
-        
+
     }
     func getuserDetail()
     {
@@ -88,7 +91,10 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             for document in querySnapshot!.documents {
                                 let data: NSDictionary = document.data() as NSDictionary
                                 //print("\(document.documentID) => \(data)")
-                                self.roleby_reasonArray.add(data)
+//                                if(data.value(forKey: "team_id") as! String  != ""  &&  data.value(forKey: "team_id") != nil)
+//                                {
+                                   self.roleby_reasonArray.add(data)
+                                //}
                             }
                             var filteredEvents: [String] = self.roleby_reasonArray.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
                             filteredEvents.sort(){$0 < $1}
@@ -126,11 +132,12 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         let cell: SideMenuCell = self.role_tbl.dequeueReusableCell(withIdentifier: "sideMenu") as! SideMenuCell
         //let dic: NSDictionary = roleArray?[indexPath.row] as! NSDictionary
+        cell.roletype_lbl.isUserInteractionEnabled = true
 
         if(indexPath.row == 0)
         {
             cell.roleTitle_lbl?.text = "Role"
-            //cell.roletype_lbl.setTitleColor(UIColor.init(red: 90, green: 105, blue: 120, alpha: 1.0), for: .normal)
+            cell.roletype_lbl.isUserInteractionEnabled = false
 
         }
        
@@ -148,14 +155,14 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
 
            // method to run when table view cell is tapped
-           func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                print("You tapped cell number \(indexPath.row).")
-           }
+        }
     
     @objc func roleChangeMethod(_ sender: UIButton)
     {
         let buttonRow = sender.tag
-        let getRole: NSString = roleArray[buttonRow] as NSString
+        getRole = roleArray[buttonRow] as String
         let element = roleArray.remove(at: buttonRow)
         roleArray.insert(element, at: 0)
         role_tbl.reloadData()
@@ -183,6 +190,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     func rolebaseddisplayviewMethod(SelectRole: String)
     {
+        getSameRoleArray = NSMutableArray()
          for i in 0..<roleby_reasonArray.count
                    {
                     let roleDic: NSDictionary = roleby_reasonArray?[i] as! NSDictionary
@@ -190,6 +198,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                        if(role == SelectRole as String)
                        {
                         self.isTeamEnable = roleDic.value(forKey: "team_id") as? String
+                        getSameRoleArray.add(roleDic)
                        }
                    }
                    
@@ -217,5 +226,15 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             UserDefaults.standard.removeObject(forKey: "UUID")
         }
     }
+    
+    @IBAction func user_group_Action(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "usergroup") as! UsergroupVC
+        vc.getRolebyreasonDetailArray = self.getSameRoleArray
+        vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
+        self.revealViewController()?.present(vc, animated: true, completion: nil)
+       
+    }
+    
     
    }

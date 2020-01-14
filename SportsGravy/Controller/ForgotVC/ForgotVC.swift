@@ -89,11 +89,6 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
                 
                 self.showAlertMessage(titleStr: "Sports Gravy", messageStr: "Please check your Email")
                 Constant.showInActivityIndicatory()
-                               
-               
-              
-                
-                
 
                }
            }
