@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import SwiftyJSON
 import Kingfisher
+import FirebaseFirestore
 
 class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -232,9 +233,24 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let vc = storyboard?.instantiateViewController(withIdentifier: "usergroup") as! UsergroupVC
         vc.getRolebyreasonDetailArray = self.getSameRoleArray
         vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
-        self.revealViewController()?.present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
        
     }
-    
+    @IBAction func tag_Action(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "tag") as! TagVC
+        vc.getRolebyreasonDetailArray = self.getSameRoleArray
+        vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
+        self.navigationController?.pushViewController(vc, animated: true)
+       
+    }
+    @IBAction func canned_response_Action(_ sender: UIButton)
+       {
+           let vc = storyboard?.instantiateViewController(withIdentifier: "Can_response") as! CannedResponseVC
+           vc.getRolebyreasonDetailArray = self.getSameRoleArray
+           vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
+           self.navigationController?.pushViewController(vc, animated: true)
+          
+       }
     
    }

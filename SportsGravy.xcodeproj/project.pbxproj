@@ -28,6 +28,11 @@
 		08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */; };
 		08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8C23C5F53400CFB418 /* VideoVC.swift */; };
 		08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8E23C5F55500CFB418 /* RateVC.swift */; };
+		08B610D923D04E3E00CD8A61 /* TagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610D823D04E3E00CD8A61 /* TagVC.swift */; };
+		08B610DC23D0524D00CD8A61 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DB23D0524D00CD8A61 /* TagCell.swift */; };
+		08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */; };
+		08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E023D069AA00CD8A61 /* TagCreateVC.swift */; };
+		08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */; };
 		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
 		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
@@ -82,6 +87,11 @@
 		08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		08AC5E8C23C5F53400CFB418 /* VideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVC.swift; sourceTree = "<group>"; };
 		08AC5E8E23C5F55500CFB418 /* RateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateVC.swift; sourceTree = "<group>"; };
+		08B610D823D04E3E00CD8A61 /* TagVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagVC.swift; sourceTree = "<group>"; };
+		08B610DB23D0524D00CD8A61 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseVC.swift; sourceTree = "<group>"; };
+		08B610E023D069AA00CD8A61 /* TagCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreateVC.swift; sourceTree = "<group>"; };
+		08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseCreateVC.swift; sourceTree = "<group>"; };
 		08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidemenuVC.swift; sourceTree = "<group>"; };
 		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
 		08E3658523C4633B0063C6F4 /* fira-sans */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fira-sans"; sourceTree = "<group>"; };
@@ -202,6 +212,7 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				08B610DA23D0523100CD8A61 /* Tag */,
 				08AB404123CDD1A600E8A92E /* UserGroup */,
 				08AC5E8623C5F11300CFB418 /* PostCell */,
 				087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */,
@@ -212,6 +223,8 @@
 		081120FD23BDFCC800327FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				08B610DD23D0538D00CD8A61 /* CannnedResponse */,
+				08B610D723D04DFF00CD8A61 /* Tag */,
 				08ABF72323CC3FD70021BA72 /* UserGroup */,
 				08AC5E8923C5F4FF00CFB418 /* Tabbar */,
 				08E3658123C456D70063C6F4 /* DashboardVC */,
@@ -305,6 +318,32 @@
 				08AC5E8E23C5F55500CFB418 /* RateVC.swift */,
 			);
 			path = Tabbar;
+			sourceTree = "<group>";
+		};
+		08B610D723D04DFF00CD8A61 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				08B610D823D04E3E00CD8A61 /* TagVC.swift */,
+				08B610E023D069AA00CD8A61 /* TagCreateVC.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
+		08B610DA23D0523100CD8A61 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				08B610DB23D0524D00CD8A61 /* TagCell.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
+		08B610DD23D0538D00CD8A61 /* CannnedResponse */ = {
+			isa = PBXGroup;
+			children = (
+				08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */,
+				08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */,
+			);
+			path = CannnedResponse;
 			sourceTree = "<group>";
 		};
 		08E3657E23C455D00063C6F4 /* SideMenu */ = {
@@ -608,7 +647,10 @@
 			files = (
 				08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */,
 				08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */,
+				08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */,
 				08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */,
+				08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */,
+				08B610DC23D0524D00CD8A61 /* TagCell.swift in Sources */,
 				08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */,
 				08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */,
 				080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */,
@@ -617,6 +659,8 @@
 				08507F5823BF423800CC968F /* SigninVC.swift in Sources */,
 				0811210223BE061B00327FF1 /* Reachability.swift in Sources */,
 				0811210623BE08DD00327FF1 /* Constant.swift in Sources */,
+				08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */,
+				08B610D923D04E3E00CD8A61 /* TagVC.swift in Sources */,
 				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
 				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
 				087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */,

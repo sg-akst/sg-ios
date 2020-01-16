@@ -1,8 +1,8 @@
 //
-//  UsergroupVC.swift
+//  CannedResponseVC.swift
 //  SportsGravy
 //
-//  Created by CSS on 13/01/20.
+//  Created by CSS on 16/01/20.
 //  Copyright © 2020 CSS. All rights reserved.
 //
 
@@ -11,11 +11,16 @@ import SWRevealViewController
 import Firebase
 import FirebaseFirestore
 
-class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
-    
-    
+
+
+class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate,CreateCanresponseDelegate {
+    func passorderArray(select: NSMutableArray!) {
+          self.addorderArray = select
+        tableView(self.canned_response_tbl, didSelectRowAt: self.addorderArray!.lastObject as! IndexPath)
+    }
+
     @IBOutlet var addorderview: UIView!
-    @IBOutlet weak var usergroup_tbl: UITableView!
+    @IBOutlet weak var canned_response_tbl: UITableView!
     @IBOutlet weak var createGroupView: UIView!
 
     var getRolebyreasonDetailArray: NSMutableArray!
@@ -45,10 +50,10 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.revealViewController()?.delegate = self
-        usergroup_tbl.delegate = self
-        usergroup_tbl.dataSource = self
+        canned_response_tbl.delegate = self
+        canned_response_tbl.dataSource = self
         commonArray = NSMutableArray() as? [String]
-        usergroup_tbl.tableFooterView = UIView()
+        canned_response_tbl.tableFooterView = UIView()
         self.addorderArray = NSMutableArray()
 
         getorganization()
@@ -98,7 +103,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         if(commonArray.count > 0)
         {
             commonArray.removeAll { $0 == "" }
-            usergroup_tbl.reloadData()
+            canned_response_tbl.reloadData()
 
         }
 
@@ -280,7 +285,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
         if(isTeam == false)
         {
-        let cell: UITableViewCell = self.usergroup_tbl.dequeueReusableCell(withIdentifier: "user")!
+        let cell: UITableViewCell = self.canned_response_tbl.dequeueReusableCell(withIdentifier: "can_respons_user")!
         cell.textLabel?.text = commonArray?[indexPath.row]
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
@@ -289,26 +294,16 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
          }
         else
         {
-            let cell: UserGroupCell = self.usergroup_tbl.dequeueReusableCell(withIdentifier: "teamcell") as! UserGroupCell
+            let cell: UserGroupCell = self.canned_response_tbl.dequeueReusableCell(withIdentifier: "can_response_cell") as! UserGroupCell
             let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
-            let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
             let count : Int = dic.value(forKey: "count") as! Int
-            let groupType : String = dic.value(forKey: "group_type") as! String
             cell.delete_enable_img.tag = indexPath.row
             cell.delete_enable_img.addTarget(self, action: #selector(deleteGroup_Method), for: .touchUpInside)
-            var filtered = String ()
-
-            for i in 0..<userArray.count
-            {
-                let dic: NSDictionary = userArray[i] as! NSDictionary
-                let appendStr: String = "\(dic.value(forKey: "first_name")!)" + " " + "\(dic.value(forKey: "last_name")!)" as String
-                filtered.append(appendStr + ", ")
-            }
-            cell.displayName_lbl?.text = dic.value(forKey: "display_name") as? String
-            cell.delete_enable_img.tintColor = (count > 0 || groupType == "System_Group") ? UIColor.gray : UIColor.red
-            cell.username_lbl?.text = "\(filtered)"
+            cell.displayName_lbl?.text = dic.value(forKey: "cannedResponseDesc") as? String
+            cell.delete_enable_img.tintColor = (count > 0 ) ? UIColor.gray : UIColor.red
+            cell.username_lbl?.text = dic.value(forKey: "cannedResponseTitle") as? String
             cell.selectionStyle = .none
-            cell.accessoryType =  (count > 0 || groupType == "System_Group") ? .none : .disclosureIndicator
+            cell.accessoryType =  (count > 0) ? .none : .disclosureIndicator
 
                 return cell
         }
@@ -350,8 +345,17 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             }
 //
             orderviewheight.constant = 90
-            getmembergroup()
+            getCannedresponsegroup()
         }
+        }
+        else
+        {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "can_response_create") as! CannedResponseCreateVC
+            vc.getorderArray = addorderArray
+            vc.isCreate = false
+            vc.delegate = self
+            vc.updateArray = self.TeamArray[indexPath.row] as! NSDictionary 
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     @objc func deleteGroup_Method(_ sender: UIButton)
@@ -359,8 +363,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         let indexno = sender.tag
         let teamDic: NSDictionary = self.TeamArray?[indexno] as! NSDictionary
         let count : Int = teamDic.value(forKey: "count") as! Int
-        let groupType : String = teamDic.value(forKey: "group_type") as! String
-        let isDelete: Bool = (count > 0 || groupType == "System_Group") ? false : true
+        let isDelete: Bool = (count > 0 ) ? false : true
         if(isDelete == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
@@ -372,7 +375,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                        //Cancel Action
                    }))
             alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-                self.getmembergroup()
+                self.getCannedresponsegroup()
                                   }))
             
             self.present(alert, animated: true, completion: nil)
@@ -381,7 +384,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         }
 
     }
-    func getmembergroup()
+    func getCannedresponsegroup()
     {
         Constant.internetconnection(vc: self)
                Constant.showActivityIndicatory(uiView: self.view)
@@ -389,7 +392,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
         
-        docRef.collection("MemberGroup").getDocuments() { (querySnapshot, err) in
+        docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
                          if let err = err {
                              print("Error getting documents: \(err)")
                          } else {
@@ -404,7 +407,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                             }
                             self.isTeam = true
                             self.createGroupView.isHidden = false
-                            self.usergroup_tbl.reloadData()
+                            self.canned_response_tbl.reloadData()
                             Constant.showInActivityIndicatory()
 
                         }
@@ -417,5 +420,13 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         self.navigationController?.popViewController(animated: true)
 //        self.revealViewController()?.dismiss(animated: true, completion: nil)
     }
-
+    @IBAction func createcanresponse(_ sender: UIButton)
+       {
+          
+           let vc = storyboard?.instantiateViewController(withIdentifier: "can_response_create") as! CannedResponseCreateVC
+           vc.getorderArray = addorderArray
+           vc.isCreate = true
+           vc.delegate = self
+           self.navigationController?.pushViewController(vc, animated: true)
+       }
 }
