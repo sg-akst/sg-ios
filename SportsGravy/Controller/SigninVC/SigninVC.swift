@@ -79,17 +79,6 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                 print(userUUID!)
                 
                 UserDefaults.standard.set(userUUID, forKey: "UUID")
-
-//                                user?.getIDTokenForcingRefresh(true) { idToken, error in
-//                                    if error != nil {
-//                                    // Handle error
-//                                    return;
-//                                  }
-//                print(idToken!)
-//                                    UserDefaults.standard.set(idToken, forKey: "idtoken")
-//                                  // Send token to your backend via HTTPS
-//                                  // ...
-//                                    self?.JsonParsing()
                                     Constant.showInActivityIndicatory()
 
 

@@ -2421,12 +2421,15 @@ multiple sports organizations.</string>
                                     <constraint firstAttribute="height" constant="50" id="yrB-Js-aJf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
-                                <state key="normal" title="DELETE SDFDSFDF">
+                                <state key="normal" title="DELETE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="deleteGroup_Method:" destination="LLh-lB-shN" eventType="touchUpInside" id="pFj-qI-oe5"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Canned Response Copy Below" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NdC-QG-ZZG">
                                 <rect key="frame" x="20" y="246" width="335" height="40"/>

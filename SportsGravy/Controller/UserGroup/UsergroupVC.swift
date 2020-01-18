@@ -27,7 +27,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     var getdifferentSeasonArray: NSMutableArray!
     var addorderArray: NSMutableArray!
     var commonArray: [String]!
-    
+    var getTeamId: String!
+
     
     var getSelectRole: String!
     var getOrganization: String!
@@ -345,6 +346,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 if(self.commonArray[indexPath.row] == role)
                 {
                     getrolebySeasonid = roleDic.value(forKey: "role_by_season_id") as? String
+                    getTeamId = roleDic.value(forKey: "team_id") as? String
 
                 }
             }
@@ -372,15 +374,13 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                        //Cancel Action
                    }))
             alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-                self.getmembergroup()
-                                  }))
+                self.deleteMethod(rolebyDic: teamDic)
+                }))
             
             self.present(alert, animated: true, completion: nil)
-            
-            
         }
-
     }
+    
     func getmembergroup()
     {
         Constant.internetconnection(vc: self)
@@ -411,6 +411,50 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                     }
         
     }
+    func deleteMethod(rolebyDic: NSDictionary)
+    {
+        Constant.internetconnection(vc: self)
+             Constant.showActivityIndicatory(uiView: self.view)
+             let getuuid = UserDefaults.standard.string(forKey: "UUID")
+             let db = Firestore.firestore()
+             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
+             docRef.collection("MemberGroup").document("\(rolebyDic.value(forKey: "user_groupId")!)").delete()
+             { err in
+                 if let err = err {
+                     print("Error removing document: \(err)")
+                 } else {
+                     print("Document successfully removed!")
+                     let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
+                     let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+                     docrefs.collection("MemberGroup").document("\(rolebyDic.value(forKey: "user_groupId")!)").delete()
+                     { err in
+                         if let err = err {
+                             print("Error removing document: \(err)")
+                         } else {
+                             print("Document successfully removed!")
+                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+                             addDoc.collection("MemberGroup").document("\(rolebyDic.value(forKey: "user_groupId")!)").delete()
+                             { err in
+                                 if let err = err {
+                                     print("Error removing document: \(err)")
+                                 } else {
+                                     print("Document successfully removed!")
+                                     Constant.showInActivityIndicatory()
+                                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
+                                     self.getmembergroup()
+                                 }
+                             }
+
+                         }
+
+                     }
+                     Constant.showInActivityIndicatory()
+
+
+                 }
+             }
+        }
+       
     @IBAction func cancelbtn(_ sender: UIButton)
     {
         //self.dismiss(animated: true, completion: nil)

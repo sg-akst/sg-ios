@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import Firebase
 
 protocol PassSelectorderDelegate: AnyObject {
-    func selectorderArray(select:NSMutableArray!)
+    func selectorderArray(select:NSMutableArray!,selectindex: UIButton)
+    func createAfterCallMethod()
 }
 
 class TagCreateVC: UIViewController, UITextFieldDelegate {
@@ -17,6 +20,10 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var SelectorderView: UIView!
     @IBOutlet weak var tag_txt: UITextField!
+    var rolebySeasonid: String!
+    var getrolebyorganizationArray: NSMutableArray!
+    var getTeamId: String!
+
     weak var delegate:PassSelectorderDelegate?
 
     
@@ -40,8 +47,9 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         self.addOrderView.frame = self.SelectorderView.bounds
         for i in 0..<self.getorderArray.count
         {
+            let btn_width = (i==0) ? 30 : 70
             
-            let frame1 = (i > 3) ? (getorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 ) : (getorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 )
+            let frame1 = (i > 3) ? (getorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 ) : (getorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
             let button = UIButton(frame: frame1)
             button.setTitle("\(getorderArray[i] as! String)", for: .normal)
             let lastIndex: Int = getorderArray.count-1
@@ -70,25 +78,52 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     
     @objc func orderselectmethod(_ sender: UIButton)
     {
-        let getTag = sender.tag
-        for i in 0..<self.getorderArray.count
-        {
-            if(i <= getTag)
-            {
-                print("before\(i)")
-            }
-            else
-            {
-                print("after\(i)")
-                self.getorderArray.removeObject(at: i)
 
-            }
-        }
-        self.delegate?.selectorderArray(select: self.getorderArray)
+        self.delegate?.selectorderArray(select: self.getorderArray,selectindex: sender)
+        self.navigationController?.popViewController(animated: true)
+  
     }
     @IBAction func createtag(_ sender: UIButton)
     {
-        
+        Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
+        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+        let db = Firestore.firestore()
+        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
+        docRef.collection("Tags").document("\(tag_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "tag_id": "\(tag_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+        { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+                let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
+                let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+                docrefs.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+                { err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                        print(self.getorderArray.lastObject!)
+                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+                        addDoc.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+                        { err in
+                            if let err = err {
+                                print("Error writing document: \(err)")
+                            } else {
+                                print("Document successfully written!")
+                                Constant.showInActivityIndicatory()
+                                //Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Tag Creat Successfully")
+                                self.delegate?.createAfterCallMethod()
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    }
+                }
+
+            }
+            Constant.showInActivityIndicatory()
+        }
     }
     @IBAction func cancelbtn(_ sender: UIButton)
     {

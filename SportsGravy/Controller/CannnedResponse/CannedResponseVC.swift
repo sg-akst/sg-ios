@@ -14,10 +14,15 @@ import FirebaseFirestore
 
 
 class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate,CreateCanresponseDelegate {
-    func passorderArray(select: NSMutableArray!) {
-          self.addorderArray = select
-        tableView(self.canned_response_tbl, didSelectRowAt: self.addorderArray!.lastObject as! IndexPath)
+    func passorderArray(select: NSMutableArray!, selectindex: UIButton) {
+        self.addorderArray = select
+        addTitle_btn.tag = selectindex.tag
+        addTitle_btn.sendActions(for:  .touchUpInside)
     }
+    func createAfterCallMethod() {
+        getCannedresponsegroup()
+    }
+    
 
     @IBOutlet var addorderview: UIView!
     @IBOutlet weak var canned_response_tbl: UITableView!
@@ -32,7 +37,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     var getdifferentSeasonArray: NSMutableArray!
     var addorderArray: NSMutableArray!
     var commonArray: [String]!
-    
+    var getTeamId: String!
+
     
     var getSelectRole: String!
     var getOrganization: String!
@@ -43,6 +49,9 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     var getrolebySeasonid: String!
     var TeamArray: NSMutableArray!
     var isTeam : Bool = false
+    var addTitle_btn: UIButton!
+
+    
    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
     
 
@@ -64,6 +73,11 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         createGroupView.isHidden = true
 
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
+    
     func getuserDetail()
     {
         if(self.addOrder != nil)
@@ -76,26 +90,26 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         {
             
             let frame1 = (i > 3) ? (addorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 ) : (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 )
-            let button = UIButton(frame: frame1)
-            button.setTitle("\(addorderArray[i] as! String)", for: .normal)
+            addTitle_btn = UIButton(frame: frame1)
+            addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
             let lastIndex: Int = addorderArray.count-1
             
             if(lastIndex == i)
            {
-            button.setTitleColor(UIColor.gray, for: .normal)
+            addTitle_btn.setTitleColor(UIColor.gray, for: .normal)
 
             }
             else
            {
-            button.setTitleColor(UIColor.blue, for: .normal)
+            addTitle_btn.setTitleColor(UIColor.blue, for: .normal)
 
             }
             
-            button.titleLabel?.textAlignment = .center
-            button.sizeToFit()
-            button.tag = i
-            self.addOrder.addSubview(button)
-            button.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+            addTitle_btn.titleLabel?.textAlignment = .center
+            addTitle_btn.sizeToFit()
+            addTitle_btn.tag = i
+            self.addOrder.addSubview(addTitle_btn)
+            addTitle_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
 
         }
        
@@ -192,8 +206,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     {
          if(getSameSeasonArray.count > 0)
                 {
-        //            self.commonArray = NSMutableArray()
-        //            self.commonArray = getSameSeasonArray
                     self.addorderArray.add(" > \(getSeason!)")
                     let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                   
@@ -243,17 +255,15 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         else if(selecttag == 3)
         {
             print("season")
-            //self.addorderArray = NSMutableArray()
-
             self.addorderArray.removeLastObject()
-//             commonArray.append(self.getSeason)
             getuserDetail()
-            //self.commonArray.append(getSeason)
 
         }
-        else
+        else if(selecttag == 4)
         {
             print("Team")
+            isTeam = true
+            getuserDetail()
 
         }
     }
@@ -340,6 +350,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                 if(self.commonArray[indexPath.row] == role)
                 {
                     getrolebySeasonid = roleDic.value(forKey: "role_by_season_id") as? String
+                    getTeamId = roleDic.value(forKey: "team_id") as? String
 
                 }
             }
@@ -354,7 +365,10 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             vc.getorderArray = addorderArray
             vc.isCreate = false
             vc.delegate = self
-            vc.updateArray = self.TeamArray[indexPath.row] as! NSDictionary 
+            vc.updateArray = self.TeamArray[indexPath.row] as? NSDictionary
+            vc.rolebySeasonid = self.getrolebySeasonid
+            vc.getrolebyorganizationArray = getSameOrganization
+            vc.getTeamId = getTeamId
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -375,7 +389,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                        //Cancel Action
                    }))
             alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-                self.getCannedresponsegroup()
+                self.deleteMethod(rolebyDic: teamDic)
                                   }))
             
             self.present(alert, animated: true, completion: nil)
@@ -416,10 +430,53 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     @IBAction func cancelbtn(_ sender: UIButton)
     {
-        //self.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
-//        self.revealViewController()?.dismiss(animated: true, completion: nil)
     }
+    
+    func deleteMethod(rolebyDic: NSDictionary)
+   {
+        Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
+        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+        let db = Firestore.firestore()
+    let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
+        docRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle")!)").delete()
+        { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+                let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
+                let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+                docrefs.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle")!)").delete()
+                { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                        let addDoc = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+                        addDoc.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle")!)").delete()
+                        { err in
+                            if let err = err {
+                                print("Error removing document: \(err)")
+                            } else {
+                                print("Document successfully removed!")
+                                Constant.showInActivityIndicatory()
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "CannedResponse Removed Successfully")
+                                self.getCannedresponsegroup()
+                            }
+                        }
+
+                    }
+
+                }
+                Constant.showInActivityIndicatory()
+
+
+            }
+        }
+   }
+    
     @IBAction func createcanresponse(_ sender: UIButton)
        {
           
@@ -427,6 +484,10 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
            vc.getorderArray = addorderArray
            vc.isCreate = true
            vc.delegate = self
+        vc.rolebySeasonid = self.getrolebySeasonid
+        vc.getrolebyorganizationArray = getSameOrganization
+        vc.getTeamId = self.getTeamId
+
            self.navigationController?.pushViewController(vc, animated: true)
        }
 }

@@ -12,10 +12,14 @@ import FirebaseFirestore
 import SWRevealViewController
 
 class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWRevealViewControllerDelegate, PassSelectorderDelegate {
-    func selectorderArray(select: NSMutableArray!) {
+    func createAfterCallMethod() {
+        getTag()
+    }
+    
+    func selectorderArray(select: NSMutableArray!, selectindex: UIButton) {
         self.addorderArray = select
-        //getuserDetail()
-        tableView(self.tag_tbl, didSelectRowAt: self.addorderArray?.lastObject as! IndexPath)
+        addTitle_btn.tag = selectindex.tag
+        addTitle_btn.sendActions(for:  .touchUpInside)
     }
     
 
@@ -42,8 +46,12 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         var yPos = CGFloat()
         var addOrder: UIView!
         var getrolebySeasonid: String!
+        var getTeamId: String!
         var TeamArray: NSMutableArray!
         var isTeam : Bool = false
+        var addTitle_btn: UIButton!
+    
+    
        @IBOutlet weak var orderviewheight: NSLayoutConstraint!
         
 
@@ -75,28 +83,29 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             self.addOrder.frame = self.addorderview.bounds
             for i in 0..<self.addorderArray.count
             {
-                
-                let frame1 = (i > 3) ? (addorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 ) : (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 )
-                let button = UIButton(frame: frame1)
-                button.setTitle("\(addorderArray[i] as! String)", for: .normal)
+                let btn_width = (i==0) ? 30 : 70
+                let frame1 = (i > 3) ? (addorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 ) : (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
+                addTitle_btn = UIButton(frame: frame1)
+                addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                 let lastIndex: Int = addorderArray.count-1
                 
                 if(lastIndex == i)
                {
-                button.setTitleColor(UIColor.gray, for: .normal)
-
+                addTitle_btn.setTitleColor(UIColor.gray, for: .normal)
+                addTitle_btn.isUserInteractionEnabled = false
                 }
                 else
                {
-                button.setTitleColor(UIColor.blue, for: .normal)
+                addTitle_btn.setTitleColor(UIColor.blue, for: .normal)
+                addTitle_btn.isUserInteractionEnabled = true
 
                 }
                 
-                button.titleLabel?.textAlignment = .center
-                button.sizeToFit()
-                button.tag = i
-                self.addOrder.addSubview(button)
-                button.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+                addTitle_btn.titleLabel?.textAlignment = .center
+                addTitle_btn.sizeToFit()
+                addTitle_btn.tag = i
+                self.addOrder.addSubview(addTitle_btn)
+                addTitle_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
 
             }
            
@@ -179,7 +188,6 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                                self.getSeason = roleDic.value(forKey: "season_label") as? String
                                getSameSeasonArray.add(roleDic)
                             getrolebySeasonid = roleDic.value(forKey: "role_by_season_id") as? String
-                            //"@distinctUnionOfObjects.role_by_season_id") as! String)
 
                            }
                            else
@@ -193,10 +201,10 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         {
              if(getSameSeasonArray.count > 0)
                     {
-            //            self.commonArray = NSMutableArray()
-            //            self.commonArray = getSameSeasonArray
-                        self.addorderArray.add(" > \(getSeason!)")
+            
+                        self.addorderArray.add(" > \(self.getSeason!)")
                         let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                        
                       
                         self.commonArray.append(contentsOf: filteredEvents)
                         
@@ -244,13 +252,9 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             else if(selecttag == 3)
             {
                 print("season")
-                //self.addorderArray = NSMutableArray()
 
                 self.addorderArray.removeLastObject()
-    //             commonArray.append(self.getSeason)
                 getuserDetail()
-                //self.commonArray.append(getSeason)
-
             }
             else
             {
@@ -340,7 +344,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                     if(self.commonArray[indexPath.row] == role)
                     {
                         getrolebySeasonid = roleDic.value(forKey: "role_by_season_id") as? String
-
+                        getTeamId = roleDic.value(forKey: "team_id") as? String
                     }
                 }
                 orderviewheight.constant = 90
@@ -365,7 +369,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                            //Cancel Action
                        }))
                 alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-                    self.getTag()
+                    self.deleteMethod(rolebyDic: teamDic)
                         }))
                 
                 self.present(alert, animated: true, completion: nil)
@@ -404,6 +408,51 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                         }
             
         }
+    
+    func deleteMethod(rolebyDic: NSDictionary)
+     {
+          Constant.internetconnection(vc: self)
+          Constant.showActivityIndicatory(uiView: self.view)
+          let getuuid = UserDefaults.standard.string(forKey: "UUID")
+          let db = Firestore.firestore()
+          let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
+          docRef.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+          { err in
+              if let err = err {
+                  print("Error removing document: \(err)")
+              } else {
+                  print("Document successfully removed!")
+                  let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
+                  let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+                  docrefs.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+                  { err in
+                      if let err = err {
+                          print("Error removing document: \(err)")
+                      } else {
+                          print("Document successfully removed!")
+                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+                          addDoc.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+                          { err in
+                              if let err = err {
+                                  print("Error removing document: \(err)")
+                              } else {
+                                  print("Document successfully removed!")
+                                  Constant.showInActivityIndicatory()
+                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "CannedResponse Removed Successfully")
+                                  self.getTag()
+                              }
+                          }
+
+                      }
+
+                  }
+                  Constant.showInActivityIndicatory()
+
+
+              }
+          }
+     }
+    
         @IBAction func cancelbtn(_ sender: UIButton)
         {
             self.navigationController?.popViewController(animated: true)
@@ -415,6 +464,9 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         let vc = storyboard?.instantiateViewController(withIdentifier: "tag_create") as! TagCreateVC
         vc.getorderArray = addorderArray
         vc.delegate = self
+        vc.rolebySeasonid = self.getrolebySeasonid
+        vc.getrolebyorganizationArray = getSameOrganization
+        vc.getTeamId = self.getTeamId
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
