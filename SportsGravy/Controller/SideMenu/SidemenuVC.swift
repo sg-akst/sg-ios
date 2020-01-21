@@ -252,5 +252,11 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
            self.navigationController?.pushViewController(vc, animated: true)
           
        }
+    @IBAction func profileBtn(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "acprofile") as! AccountProfileVC
+       
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
    }

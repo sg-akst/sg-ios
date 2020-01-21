@@ -11,7 +11,18 @@ import SWRevealViewController
 import Firebase
 import FirebaseFirestore
 
-class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, CreateusergroupDelegate {
+    func passorderArray(select: NSMutableArray!, selectindex: UIButton) {
+        self.addorderArray = select
+        addTitle_btn.tag = selectindex.tag
+        addTitle_btn.sendActions(for:  .touchUpInside)
+        
+    }
+    
+    func createAfterCallMethod() {
+        getmembergroup()
+    }
+    
     
     
     @IBOutlet var addorderview: UIView!
@@ -28,7 +39,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     var addorderArray: NSMutableArray!
     var commonArray: [String]!
     var getTeamId: String!
-
+    var isCreate : Bool!
     
     var getSelectRole: String!
     var getOrganization: String!
@@ -39,6 +50,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     var getrolebySeasonid: String!
     var TeamArray: NSMutableArray!
     var isTeam : Bool = false
+    var addTitle_btn: UIButton!
+
    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
     
 
@@ -72,26 +85,26 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         {
             
             let frame1 = (i > 3) ? (addorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 ) : (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 )
-            let button = UIButton(frame: frame1)
-            button.setTitle("\(addorderArray[i] as! String)", for: .normal)
+            addTitle_btn = UIButton(frame: frame1)
+            addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
             let lastIndex: Int = addorderArray.count-1
             
             if(lastIndex == i)
            {
-            button.setTitleColor(UIColor.gray, for: .normal)
+            addTitle_btn.setTitleColor(UIColor.gray, for: .normal)
 
             }
             else
            {
-            button.setTitleColor(UIColor.blue, for: .normal)
+            addTitle_btn.setTitleColor(UIColor.blue, for: .normal)
 
             }
             
-            button.titleLabel?.textAlignment = .center
-            button.sizeToFit()
-            button.tag = i
-            self.addOrder.addSubview(button)
-            button.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+            addTitle_btn.titleLabel?.textAlignment = .center
+            addTitle_btn.sizeToFit()
+            addTitle_btn.tag = i
+            self.addOrder.addSubview(addTitle_btn)
+            addTitle_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
 
         }
        
@@ -239,18 +252,14 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         else if(selecttag == 3)
         {
             print("season")
-            //self.addorderArray = NSMutableArray()
-
             self.addorderArray.removeLastObject()
-//             commonArray.append(self.getSeason)
             getuserDetail()
-            //self.commonArray.append(getSeason)
-
         }
         else
         {
             print("Team")
-
+            isTeam = true
+            getuserDetail()
         }
     }
     
@@ -355,6 +364,22 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             getmembergroup()
         }
         }
+        else
+        {
+            //let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
+            //let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
+           let vc = storyboard?.instantiateViewController(withIdentifier: "userGroup_create") as! UserGroupCreateVC
+           vc.getorderArray = addorderArray
+           vc.isCreate = false
+           vc.delegate = self
+            vc.updateArray = TeamArray?[indexPath.row] as? NSDictionary
+           vc.rolebySeasonid = self.getrolebySeasonid
+           vc.getrolebyorganizationArray = getSameOrganization
+           vc.getTeamId = getTeamId
+            
+            vc.getGroupDetails = self.TeamArray
+           self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     @objc func deleteGroup_Method(_ sender: UIButton)
     {
@@ -369,7 +394,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         }
         else
         {
-            let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete custom group?", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete \(teamDic.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        //Cancel Action
                    }))
@@ -454,6 +479,20 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                  }
              }
         }
+    @IBAction func createusergroup(_ sender: UIButton)
+    {
+       
+        let vc = storyboard?.instantiateViewController(withIdentifier: "userGroup_create") as! UserGroupCreateVC
+        vc.getorderArray = addorderArray
+        vc.isCreate = true
+        vc.delegate = self
+        vc.rolebySeasonid = self.getrolebySeasonid
+        vc.getrolebyorganizationArray = getSameOrganization
+        vc.getTeamId = self.getTeamId
+        vc.getGroupDetails = self.TeamArray
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
        
     @IBAction func cancelbtn(_ sender: UIButton)
     {

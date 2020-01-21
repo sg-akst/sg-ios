@@ -172,7 +172,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                     let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
                     let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
                     
-                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
+                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
                     { err in
                         if let err = err {
                             print("Error updating document: \(err)")
@@ -181,7 +181,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                         } else {
                             print("Document successfully updated")
                             let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
+                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
                             { err in
                                 if let err = err {
                                     print("Error updating document: \(err)")
