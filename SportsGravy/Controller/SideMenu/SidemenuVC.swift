@@ -91,11 +91,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             self.roleby_reasonArray = NSMutableArray()
                             for document in querySnapshot!.documents {
                                 let data: NSDictionary = document.data() as NSDictionary
-                                //print("\(document.documentID) => \(data)")
-//                                if(data.value(forKey: "team_id") as! String  != ""  &&  data.value(forKey: "team_id") != nil)
-//                                {
                                    self.roleby_reasonArray.add(data)
-                                //}
                             }
                             var filteredEvents: [String] = self.roleby_reasonArray.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
                             filteredEvents.sort(){$0 < $1}
@@ -255,7 +251,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func profileBtn(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "acprofile") as! AccountProfileVC
-       
+        vc.getAllrole = self.roleby_reasonArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

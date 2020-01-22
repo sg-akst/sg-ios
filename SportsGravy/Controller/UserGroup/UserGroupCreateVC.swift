@@ -168,11 +168,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.selectpersonArray.append(dics)
 
         }
-//        else
-//        {
-//            cell.checkbox.backgroundColor =  UIColor.clear
-//
-//        }
     }
     }
    return cell

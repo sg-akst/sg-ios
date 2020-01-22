@@ -312,7 +312,14 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             {
                 let dic: NSDictionary = userArray[i] as! NSDictionary
                 let appendStr: String = "\(dic.value(forKey: "first_name")!)" + " " + "\(dic.value(forKey: "last_name")!)" as String
-                filtered.append(appendStr + ", ")
+                if(i == userArray.count-1)
+                {
+                    filtered.append(appendStr)
+                }
+                else
+                {
+                    filtered.append(appendStr + ", ")
+                }
             }
             cell.displayName_lbl?.text = dic.value(forKey: "display_name") as? String
             cell.delete_enable_img.tintColor = (count > 0 || groupType == "System_Group") ? UIColor.gray : UIColor.red

@@ -23,6 +23,12 @@
 		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
 		087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */; };
 		089C0C6523D706B2008A33DA /* AccountProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C0C6423D706B2008A33DA /* AccountProfileVC.swift */; };
+		089F228723D851F0008B110D /* OrganizationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228623D851F0008B110D /* OrganizationVC.swift */; };
+		089F228923D85A40008B110D /* UsernameEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228823D85A40008B110D /* UsernameEditVC.swift */; };
+		089F228B23D85A79008B110D /* PasswordEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228A23D85A79008B110D /* PasswordEditVC.swift */; };
+		089F228D23D85AC2008B110D /* MobileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228C23D85AC2008B110D /* MobileEditVC.swift */; };
+		089F228F23D85AD8008B110D /* GenderEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228E23D85AD8008B110D /* GenderEditVC.swift */; };
+		089F229123D85AEE008B110D /* AddressEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F229023D85AEE008B110D /* AddressEditVC.swift */; };
 		08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB404223CDD1C500E8A92E /* UserGroupCell.swift */; };
 		08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABF72423CC40180021BA72 /* UsergroupVC.swift */; };
 		08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8723C5F13B00CFB418 /* PostCell.swift */; };
@@ -86,6 +92,12 @@
 		087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		089C0C6423D706B2008A33DA /* AccountProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProfileVC.swift; sourceTree = "<group>"; };
+		089F228623D851F0008B110D /* OrganizationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationVC.swift; sourceTree = "<group>"; };
+		089F228823D85A40008B110D /* UsernameEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameEditVC.swift; sourceTree = "<group>"; };
+		089F228A23D85A79008B110D /* PasswordEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordEditVC.swift; sourceTree = "<group>"; };
+		089F228C23D85AC2008B110D /* MobileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileEditVC.swift; sourceTree = "<group>"; };
+		089F228E23D85AD8008B110D /* GenderEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderEditVC.swift; sourceTree = "<group>"; };
+		089F229023D85AEE008B110D /* AddressEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditVC.swift; sourceTree = "<group>"; };
 		08AB404223CDD1C500E8A92E /* UserGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupCell.swift; sourceTree = "<group>"; };
 		08ABF72423CC40180021BA72 /* UsergroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsergroupVC.swift; sourceTree = "<group>"; };
 		08AC5E8723C5F13B00CFB418 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -299,6 +311,12 @@
 			isa = PBXGroup;
 			children = (
 				089C0C6423D706B2008A33DA /* AccountProfileVC.swift */,
+				089F228623D851F0008B110D /* OrganizationVC.swift */,
+				089F228823D85A40008B110D /* UsernameEditVC.swift */,
+				089F228A23D85A79008B110D /* PasswordEditVC.swift */,
+				089F228C23D85AC2008B110D /* MobileEditVC.swift */,
+				089F228E23D85AD8008B110D /* GenderEditVC.swift */,
+				089F229023D85AEE008B110D /* AddressEditVC.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -665,6 +683,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				089F228D23D85AC2008B110D /* MobileEditVC.swift in Sources */,
+				089F228B23D85A79008B110D /* PasswordEditVC.swift in Sources */,
 				08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */,
 				08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */,
 				089C0C6523D706B2008A33DA /* AccountProfileVC.swift in Sources */,
@@ -676,16 +696,20 @@
 				08B0374623D580E000FB9DFC /* UserGroupCreateVC.swift in Sources */,
 				08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */,
 				08B0374A23D5AD0E00FB9DFC /* GroubHeaderCell.swift in Sources */,
+				089F228723D851F0008B110D /* OrganizationVC.swift in Sources */,
 				08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */,
+				089F228F23D85AD8008B110D /* GenderEditVC.swift in Sources */,
 				080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */,
 				08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */,
 				081120CB23BDF77500327FF1 /* AppDelegate.swift in Sources */,
+				089F229123D85AEE008B110D /* AddressEditVC.swift in Sources */,
 				08507F5823BF423800CC968F /* SigninVC.swift in Sources */,
 				0811210223BE061B00327FF1 /* Reachability.swift in Sources */,
 				0811210623BE08DD00327FF1 /* Constant.swift in Sources */,
 				08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */,
 				08B610D923D04E3E00CD8A61 /* TagVC.swift in Sources */,
 				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
+				089F228923D85A40008B110D /* UsernameEditVC.swift in Sources */,
 				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
 				087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */,
 				087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */,
