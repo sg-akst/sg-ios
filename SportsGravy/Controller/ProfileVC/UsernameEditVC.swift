@@ -9,29 +9,33 @@
 import UIKit
 import Firebase
 import FirebaseFirestoreSwift
+import STPopup
 
-class UsernameEditVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+protocol UsernameEditDelegate: AnyObject {
+    func usernameupdateSuccess()
+
+}
+
+class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
+    func selectoptionString(selectSuffix: String) {
+        self.suffix_name_txt.text = selectSuffix
+    }
+    
     
     @IBOutlet weak var first_name_txt: UITextField!
     @IBOutlet weak var middle_name_txt: UITextField!
     @IBOutlet weak var last_name_txt: UITextField!
     @IBOutlet weak var suffix_name_txt: UITextField!
-    @IBOutlet weak var suffix_tbl: UITableView!
-    @IBOutlet weak var suffix_view: UIView!
-
-
+    weak var delegate:UsernameEditDelegate?
     var userDetailDic: NSDictionary!
-    var isSuffix: Bool!
-    var suffixArray: [String] = ["Jr","Sr","II","III","IV","V"]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         first_name_txt.delegate = self
         middle_name_txt.delegate = self
         last_name_txt.delegate = self
         suffix_name_txt.delegate = self
-        suffix_tbl.delegate = self
-        suffix_tbl.dataSource = self
+        
         bottomlineMethod(selecttext: first_name_txt)
         bottomlineMethod(selecttext: middle_name_txt)
         bottomlineMethod(selecttext: last_name_txt)
@@ -40,12 +44,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate, UITableViewDelegate
         self.middle_name_txt.text = userDetailDic.value(forKey: "middle_initial") as? String
         self.last_name_txt.text = userDetailDic.value(forKey: "last_name") as? String
         self.suffix_name_txt.text = userDetailDic.value(forKey: "suffix") as? String
-        suffix_view.layer.cornerRadius = 5
-        suffix_view.layer.borderColor = UIColor.lightGray.cgColor
-        suffix_view.layer.borderWidth = 1
-        suffix_view.layer.masksToBounds = true
-        suffix_view.isHidden = true
-        isSuffix = false
+    
         
         
     }
@@ -58,48 +57,18 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate, UITableViewDelegate
         selecttext.layer.addSublayer(bottomLine)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return self.suffixArray.count
-              }
-       func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-           return 40.0
-       }
-
-              // create a cell for each table view row
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = self.suffix_tbl.dequeueReusableCell(withIdentifier: "usercell")!
-        cell.textLabel?.text = self.suffixArray[indexPath.row]
-           return cell
-           }
-
-              // method to run when table view cell is tapped
-       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                  print("You tapped cell number \(indexPath.row).")
-        self.suffix_name_txt.text = self.suffixArray[indexPath.row]
-        suffix_view.isHidden = true
-        isSuffix = false
-           }
-    
-    
     @IBAction func selectsuffix(_ sender: UIButton)
     {
-        if(isSuffix == false)
-        {
-            self.suffix_view.isHidden = false
-            isSuffix = true
-        }
-        else
-        {
-            self.suffix_view.isHidden = true
-            isSuffix = false
-        }
-    }
-    @IBAction func cancel(_ sender: UIButton)
-    {
-        self.suffix_view.isHidden = true
-        isSuffix = false
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
+        vc.Title = "Select Suffix"
+        vc.suffixArray = ["Jr","Sr","II","III","IV","V"]
+        vc.delegate = self
+        vc.contentSizeInPopup = CGSize(width: 300.0, height: 345.0)
+        let popup = STPopupController(rootViewController: vc)
+        popup.containerView.layer.cornerRadius = 4;
+        popup.navigationBarHidden = true
+        popup.transitionStyle = STPopupTransitionStyle.fade
+        popup.present(in: self)
     }
     @IBAction func usernameUpdate(_ sender: UIButton)
     {
@@ -134,11 +103,27 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate, UITableViewDelegate
             } else {
                 print("Document successfully updated")
                 Constant.showInActivityIndicatory()
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Suffix Update Successfully")
+                self.alertermsg(msg: "Suffix Update Successfully")
+
             }
         }
     }
     }
+    func alertermsg(msg: String)
+    {
+        let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+        self.delegate?.usernameupdateSuccess()
+        self.navigationController?.popViewController(animated: true)
+
+               }))
+//        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
+//         }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
     
     @IBAction func Editusercancelbtn(_ sender: UIButton)
     {

@@ -54,23 +54,13 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
         else
         {
         Constant.internetconnection(vc: self)
-                Constant.showActivityIndicatory(uiView: self.view)
-        //let getuuid = UserDefaults.standard.string(forKey: "UUID")
-       // let db = Firestore.firestore()
+        Constant.showActivityIndicatory(uiView: self.view)
         Auth.auth().currentUser?.updatePassword(to: self.newpw_txt.text!, completion: { (Error) in
-            
+        Constant.showInActivityIndicatory()
+        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password successfully updated")
+            self.navigationController?.popViewController(animated: true)
         })
         }
-//        db.collection("users").document("\(getuuid!)").updateData(["first_name": "\(first_name_txt.text!)", "middle_initial" : "\(middle_name_txt.text!)", "last_name" : "\(last_name_txt.text!)", "suffix" : "\(suffix_name_txt.text!)"])
-//        { err in
-//            if let err = err {
-//                print("Error updating document: \(err)")
-//                Constant.showInActivityIndicatory()
-//
-//            } else {
-//                print("Document successfully updated")
-//            }
-//        }
 
     }
     @IBAction func EditPasswordcancelbtn(_ sender: UIButton)

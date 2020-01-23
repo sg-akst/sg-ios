@@ -9,17 +9,29 @@
 import UIKit
 import FirebaseFirestoreSwift
 import Firebase
+import STPopup
 
-class GenderEditVC: UIViewController,UITextFieldDelegate {
+protocol genderEditDelegate: AnyObject {
+    func genderupdateSuccess()
+
+}
+
+
+class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
+    func selectoptionString(selectSuffix: String) {
+        self.gender_txt.text = selectSuffix
+    }
+    
 
     @IBOutlet weak var gender_txt: UITextField!
     var getalldoc: NSDictionary!
+    weak var delegate:genderEditDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         gender_txt.delegate = self
         bottomlineMethod(selecttext: gender_txt)
-        gender_txt.text = getalldoc.value(forKey: "gender") as! String
+        gender_txt.text = getalldoc.value(forKey: "gender") as? String
         
     }
     func bottomlineMethod(selecttext: UITextField)
@@ -31,6 +43,21 @@ class GenderEditVC: UIViewController,UITextFieldDelegate {
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }
+    @IBAction func selectGender(_ sender: UIButton)
+       {
+           let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
+           vc.Title = "Select Gender"
+           vc.suffixArray = ["Male","Female","Other"]
+           vc.delegate = self
+           vc.contentSizeInPopup = CGSize(width: 300.0, height: 195.0)
+
+           let popup = STPopupController(rootViewController: vc)
+           popup.containerView.layer.cornerRadius = 4;
+           popup.navigationBarHidden = true
+           popup.transitionStyle = STPopupTransitionStyle.fade
+           popup.present(in: self)
+       }
+    
     @IBAction func genderUpdate(_ sender: UIButton)
     {
         if(gender_txt.text == nil || gender_txt.text?.isEmpty == true)
@@ -41,7 +68,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate {
         else
         {
         Constant.internetconnection(vc: self)
-                Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         db.collection("users").document("\(getuuid!)").updateData(["gender": "\(gender_txt.text!)"])
@@ -52,10 +79,28 @@ class GenderEditVC: UIViewController,UITextFieldDelegate {
 
             } else {
                 print("Document successfully updated")
+                Constant.showInActivityIndicatory()
+                self.alertermsg(msg: "Gender successfully updated")
             }
         }
         }
     }
+    func alertermsg(msg: String)
+        {
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+            self.delegate?.genderupdateSuccess()
+            self.navigationController?.popViewController(animated: true)
+
+                   }))
+    //        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
+    //         }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+    
+        
     @IBAction func EditGendercancelbtn(_ sender: UIButton)
     {
        self.navigationController?.popViewController(animated: true)

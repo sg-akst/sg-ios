@@ -27,6 +27,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         self.password_txt.delegate = self
         revealController = SWRevealViewController()
         
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -46,10 +47,6 @@ class SigninVC: UIViewController, UITextFieldDelegate {
          textField.resignFirstResponder()
          return true
      }
-
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//         return true
-//     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
          
@@ -76,17 +73,19 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                 guard self != nil else { return }
                                // let user = Auth.auth().currentUser
                 let userUUID = Auth.auth().currentUser?.uid
-                print(userUUID!)
-                
+                if(userUUID != nil)
+                {
+                    print(userUUID!)
+
                 UserDefaults.standard.set(userUUID, forKey: "UUID")
                                     Constant.showInActivityIndicatory()
-
-
-                                    let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
-                                    self?.navigationController?.pushViewController(swrvc, animated: true)
-
-
-                               // }
+                let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
+                self?.navigationController?.pushViewController(swrvc, animated: true)
+            }
+                else
+                {
+                    Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invaild Password")
+                }
 
             }
         }

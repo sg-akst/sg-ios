@@ -90,7 +90,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-        docRef.collection("Tags").document("\(tag_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "tag_id": "\(tag_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+        docRef.collection("Tags").document("\(tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
         { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -98,7 +98,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                 print("Document successfully written!")
                 let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
                 let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                docrefs.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+                docrefs.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
                 { err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -106,7 +106,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                         print("Document successfully written!")
                         print(self.getorderArray.lastObject!)
                         let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+                        addDoc.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
                         { err in
                             if let err = err {
                                 print("Error writing document: \(err)")

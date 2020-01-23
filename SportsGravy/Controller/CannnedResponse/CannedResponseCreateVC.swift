@@ -117,7 +117,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-        docRef.collection("CannedResponse").document("\(canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(canRespons_tittle_txt.text!)","cannedResponseDesc":"\(canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+        docRef.collection("CannedResponse").document("\(canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(canRespons_tittle_txt.text!)","cannedResponseDesc":"\(canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
         { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -125,7 +125,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                 print("Document successfully written!")
                 let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
                 let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                docrefs.collection("CannedResponse").document("\(self.canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+                docrefs.collection("CannedResponse").document("\(self.canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
                 { err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -133,15 +133,13 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                         print("Document successfully written!")
                         print(self.getorderArray.lastObject!)
                         let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("CannedResponse").document("\(self.canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : ""] )
+                        addDoc.collection("CannedResponse").document("\(self.canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
                         { err in
                             if let err = err {
                                 print("Error writing document: \(err)")
                             } else {
                                 print("Document successfully written!")
                                 Constant.showInActivityIndicatory()
-                                //Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "CannedResponse Creat Successfully")
-                                //self.selectOption_btn.sendActions(for: .touchUpInside)
                                 self.delegate?.createAfterCallMethod()
                                 self.navigationController?.popViewController(animated: false)
 
@@ -161,7 +159,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
                  let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")            
-            docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
+            docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -172,7 +170,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                     let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
                     let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
                     
-                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
+                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
                     { err in
                         if let err = err {
                             print("Error updating document: \(err)")
@@ -181,7 +179,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                         } else {
                             print("Document successfully updated")
                             let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date().timeIntervalSince1970])
+                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
                             { err in
                                 if let err = err {
                                     print("Error updating document: \(err)")

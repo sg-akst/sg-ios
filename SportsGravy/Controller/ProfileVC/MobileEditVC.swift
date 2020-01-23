@@ -10,10 +10,17 @@ import UIKit
 import FirebaseFirestoreSwift
 import Firebase
 
+protocol mobileEditDelegate: AnyObject {
+    func mobileupdateSuccess()
+
+}
+
 class MobileEditVC: UIViewController {
 
     @IBOutlet weak var mobile_txt: UITextField!
     var getAllDic: NSDictionary!
+    weak var delegate:mobileEditDelegate?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +46,7 @@ class MobileEditVC: UIViewController {
         else
         {
         Constant.internetconnection(vc: self)
-                Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         db.collection("users").document("\(getuuid!)").updateData(["mobile_phone": "\(mobile_txt.text!)"])
@@ -51,12 +58,27 @@ class MobileEditVC: UIViewController {
             } else {
                 print("Document successfully updated")
                 Constant.showInActivityIndicatory()
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Suffix Update Successfully")
+                self.alertermsg(msg: "Mobile number successfully updated")
 
             }
         }
         }
     }
+    func alertermsg(msg: String)
+        {
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+            self.delegate?.mobileupdateSuccess()
+            self.navigationController?.popViewController(animated: true)
+
+                   }))
+    //        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
+    //         }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        
     @IBAction func EditMobilecancelbtn(_ sender: UIButton)
     {
        self.navigationController?.popViewController(animated: true)

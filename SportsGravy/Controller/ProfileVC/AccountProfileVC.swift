@@ -10,8 +10,28 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import Kingfisher
+import FirebaseStorage
 
-class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UsernameEditDelegate,mobileEditDelegate,genderEditDelegate,addressEditDelegate {
+    func addressupdateSuccess() {
+        getInformation()
+
+    }
+    
+    func genderupdateSuccess() {
+        getInformation()
+
+    }
+    
+    func mobileupdateSuccess() {
+       getInformation()
+
+    }
+    
+    func usernameupdateSuccess() {
+        getInformation()
+    }
+    
     
     @IBOutlet weak var role_lbl: UILabel!
     @IBOutlet weak var email_lbl: UILabel!
@@ -24,7 +44,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet weak var organization_lbl: UILabel!
 
     @IBOutlet weak var username_lbl: UILabel!
-    @IBOutlet weak var usernameEdit_btn: UIButton!
+//    @IBOutlet weak var usernameEdit_btn: UIButton!
     @IBOutlet weak var date_lbl: UILabel!
     @IBOutlet weak var porfile_img: UIButton!
     @IBOutlet weak var profile_imag: UIImageView!
@@ -100,7 +120,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             if(url != nil)
                             {
                             
-                              self.profile_imag.kf.setImage(with: url)
+                                self.profile_imag.kf.setImage(with: url)
                                 self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
                                 self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
                             }
@@ -116,7 +136,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             let dobDate = dateFormatter.string(from: date!)
                             self.dob_lbl.text = "\(dobDate)"
                             let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
-                            self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "\(getaddress.value(forKey: "country_code")!)"
+                            self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
                 
                             
                           } else {
@@ -157,11 +177,43 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             self.present(imagePickerController, animated: true, completion: nil)
         }
     }
-    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+         dismiss(animated: true, completion: nil)
+     }
+     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+            self.dismiss(animated: true, completion: nil)
+     
+            let profileImageFromPicker = info[UIImagePickerControllerOriginalImage] as! UIImage
+             
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+             
+            let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
+             
+            let store = Storage.storage()
+            let user = Auth.auth().currentUser
+            if let user = user{
+                let storeRef = store.reference().child("profileavatar/\(user.uid).jpg")
+//                ASProgressHud.showHUDAddedTo(self.view, animated: true, type: .default)
+                let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
+//                    ASProgressHud.hideHUDForView(self.view, animated: true)
+                    guard let _ = metadata else {
+                        print("error occurred: \(error.debugDescription)")
+                        return
+                    }
+     
+                    self.profile_imag.image = profileImageFromPicker
+                }
+                 
+            }
+             
+        }
     @IBAction func usernameEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatename") as! UsernameEditVC
         vc.userDetailDic = alldoc
+        vc.delegate = self
        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func passwordEdit(_ sender: UIButton)
@@ -173,17 +225,20 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "UpdateMobile") as! MobileEditVC
         vc.getAllDic = alldoc
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func genderEdit(_ sender: UIButton)
     {
        let vc = storyboard?.instantiateViewController(withIdentifier: "updateGender") as! GenderEditVC
         vc.getalldoc = alldoc
+        vc.delegate = self
        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func addressEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "Update_address") as! AddressEditVC
+        vc.addressDetailDic = alldoc
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func organisationEdit(_ sender: UIButton)

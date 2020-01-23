@@ -321,7 +321,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
             let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-            docRef.collection("MemberGroup").document("\(group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "display_name": "\(group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : "", "user_groupId": "\(group_tittle_txt.text!)","user_list" : self.selectpersonArray] )
+            docRef.collection("MemberGroup").document("\(group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "", "user_groupId": "\(group_tittle_txt.text!)","user_list" : self.selectpersonArray] )
             { err in
                     if let err = err {
                            print("Error writing document: \(err)")
@@ -329,7 +329,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     print("Document successfully written!")
                     let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
                     let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                        docrefs.collection("MemberGroup").document("\(self.group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : "", "group_type": "Custom_Group", "user_groupId" : "\(self.group_tittle_txt.text!)", "user_list": self.selectpersonArray] )
+                        docrefs.collection("MemberGroup").document("\(self.group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)", "updated_datetime" : Date(), "updated_uid" : "", "group_type": "Custom_Group", "user_groupId" : "\(self.group_tittle_txt.text!)", "user_list": self.selectpersonArray] )
                     { err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -337,7 +337,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     print("Document successfully written!")
                     print(self.getorderArray.lastObject!)
                     let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("MemberGroup").document("\(self.group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date().timeIntervalSince1970,"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)", "updated_datetime" : Date().timeIntervalSince1970, "updated_uid" : "", "user_groupId": "\(self.group_tittle_txt.text!)", "user_list" : self.selectpersonArray] )
+                        addDoc.collection("MemberGroup").document("\(self.group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)", "updated_datetime" : Date(), "updated_uid" : "", "user_groupId": "\(self.group_tittle_txt.text!)", "user_list" : self.selectpersonArray] )
                         { err in
                             if let err = err {
                                            print("Error writing document: \(err)")
@@ -364,7 +364,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
                  let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-            docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date().timeIntervalSince1970])
+            docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -375,7 +375,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
                     let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
                     
-                    docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date().timeIntervalSince1970])
+                    docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
                     { err in
                         if let err = err {
                             print("Error updating document: \(err)")
@@ -384,7 +384,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                         } else {
                             print("Document successfully updated")
                             let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                            addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date().timeIntervalSince1970])
+                            addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
                             { err in
                                 if let err = err {
                                     print("Error updating document: \(err)")

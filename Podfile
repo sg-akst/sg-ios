@@ -15,6 +15,8 @@ target 'SportsGravy' do
   pod 'SwiftyJSON'
 pod 'Kingfisher'
   pod 'SWRevealViewController'
+  pod 'STPopup'
+pod 'Firebase/Storage'
   # Pods for SportsGravy
 
   target 'SportsGravyTests' do

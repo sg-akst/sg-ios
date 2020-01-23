@@ -43,6 +43,7 @@
 		08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */; };
 		08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E023D069AA00CD8A61 /* TagCreateVC.swift */; };
 		08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */; };
+		08D60E4F23D9786F000D411D /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D60E4E23D9786F000D411D /* PopVC.swift */; };
 		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
 		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
@@ -112,6 +113,7 @@
 		08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseVC.swift; sourceTree = "<group>"; };
 		08B610E023D069AA00CD8A61 /* TagCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreateVC.swift; sourceTree = "<group>"; };
 		08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseCreateVC.swift; sourceTree = "<group>"; };
+		08D60E4E23D9786F000D411D /* PopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVC.swift; sourceTree = "<group>"; };
 		08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidemenuVC.swift; sourceTree = "<group>"; };
 		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
 		08E3658523C4633B0063C6F4 /* fira-sans */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fira-sans"; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 		081120FD23BDFCC800327FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				08D60E4D23D9785A000D411D /* PopVC */,
 				089C0C6323D7065B008A33DA /* ProfileVC */,
 				08B610DD23D0538D00CD8A61 /* CannnedResponse */,
 				08B610D723D04DFF00CD8A61 /* Tag */,
@@ -382,6 +385,14 @@
 				08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */,
 			);
 			path = CannnedResponse;
+			sourceTree = "<group>";
+		};
+		08D60E4D23D9785A000D411D /* PopVC */ = {
+			isa = PBXGroup;
+			children = (
+				08D60E4E23D9786F000D411D /* PopVC.swift */,
+			);
+			path = PopVC;
 			sourceTree = "<group>";
 		};
 		08E3657E23C455D00063C6F4 /* SideMenu */ = {
@@ -689,6 +700,7 @@
 				08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */,
 				089C0C6523D706B2008A33DA /* AccountProfileVC.swift in Sources */,
 				08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */,
+				08D60E4F23D9786F000D411D /* PopVC.swift in Sources */,
 				08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */,
 				08B0374823D5971500FB9DFC /* UsergroupCreateCell.swift in Sources */,
 				08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */,

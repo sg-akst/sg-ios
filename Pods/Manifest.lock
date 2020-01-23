@@ -174,6 +174,9 @@ PODS:
     - FirebaseAnalytics (= 6.1.7)
   - Firebase/CoreOnly (6.14.0):
     - FirebaseCore (= 6.5.0)
+  - Firebase/Storage (6.14.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 3.4.3)
   - FirebaseAnalytics (6.1.7):
     - FirebaseCore (~> 6.5)
     - FirebaseInstanceID (~> 4.2)
@@ -221,6 +224,10 @@ PODS:
     - FirebaseCore (~> 6.5)
     - GoogleUtilities/Environment (~> 6.4)
     - GoogleUtilities/UserDefaults (~> 6.4)
+  - FirebaseStorage (3.4.3):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleAppMeasurement (6.1.7):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -276,6 +283,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - STPopup (1.8.7)
   - SwiftyJSON (5.0.0)
   - SWRevealViewController (2.3.0)
 
@@ -283,9 +291,11 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/Storage
   - FirebaseFirestoreSwift
   - IQKeyboardManagerSwift
   - Kingfisher
+  - STPopup
   - SwiftyJSON
   - SWRevealViewController
 
@@ -303,6 +313,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstanceID
+    - FirebaseStorage
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -314,6 +325,7 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - nanopb
+    - STPopup
     - SwiftyJSON
     - SWRevealViewController
 
@@ -330,6 +342,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseFirestoreSwift: 0437bb10d83f8161a9131da1739998254c78fdf5
   FirebaseInstanceID: ce993a3c3670a8f5d47ce371ac5d143c560608c5
+  FirebaseStorage: 93fe2f8190a01bfb2b2c4932df7d679744c4ef1d
   GoogleAppMeasurement: db118eb61a97dd8c4f7014e368d3c335cbbcf80a
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: 202d7cdf9c4a7d81a2bb7f7e7e1ba6faa421b1f2
@@ -341,9 +354,10 @@ SPEC CHECKSUMS:
   Kingfisher: dc6e0f53bb5b12c3e75bedb0e01bbd7a640eea69
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
 
-PODFILE CHECKSUM: 6b21db587c67f15eb82ab535544d305f08673f06
+PODFILE CHECKSUM: 1d20f0dc77f06d0697d5ed855dbad13fa9889828
 
 COCOAPODS: 1.8.4
