@@ -104,7 +104,6 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                         print("Error writing document: \(err)")
                     } else {
                         print("Document successfully written!")
-                        print(self.getorderArray.lastObject!)
                         let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
                         addDoc.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
                         { err in

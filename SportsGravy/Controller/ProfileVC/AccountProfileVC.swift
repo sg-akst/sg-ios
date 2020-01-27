@@ -11,8 +11,15 @@ import Firebase
 import FirebaseFirestoreSwift
 import Kingfisher
 import FirebaseStorage
+import Alamofire
 
-class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UsernameEditDelegate,mobileEditDelegate,genderEditDelegate,addressEditDelegate {
+struct Category {
+    let name : String
+    var items : [[String:Any]]
+}
+
+class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UsernameEditDelegate,mobileEditDelegate,genderEditDelegate,addressEditDelegate, UITableViewDelegate, UITableViewDataSource {
+   
     func addressupdateSuccess() {
         getInformation()
 
@@ -51,12 +58,21 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet weak var profile_scroll: UIScrollView!
     var getAllrole: NSMutableArray!
     var alldoc: NSDictionary!
+    var playerListArray: NSMutableArray!
+    var guardiansListArray: NSMutableArray!
+    var organizationListArray: NSMutableArray!
+
+    @IBOutlet weak var player_tbl: UITableView!
+    @IBOutlet weak var player_tbl_height: NSLayoutConstraint!
+
+    var sections = [Category]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
        var filteredEvents: [String] = self.getAllrole.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
        filteredEvents.sort(){$0 < $1}
-       print(filteredEvents)
+      
         var filtered = String ()
 
         for i in 0..<filteredEvents.count
@@ -71,29 +87,22 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                 filtered.append(dic + ", ")
             }
         }
-       
-        var organizationabbv = self.getAllrole.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
-        organizationabbv.sort(){$0 < $1}
-        print(organizationabbv)
-        var filteredabbravation = String ()
-        filteredabbravation.append(organizationabbv[0])
-        organization_abbv_lbl.text = "\(filteredabbravation)"
-        
-        var organisationname = self.getAllrole.value(forKeyPath: "@distinctUnionOfObjects.organization_name") as! [String]
-         organisationname.sort(){$0 < $1}
-        var filterorganizationname = String ()
-        filterorganizationname.append(organisationname[0])
-        organization_lbl.text = "\(filterorganizationname)"
-        
+       player_tbl.delegate = self
+       player_tbl.dataSource = self
+
         role_lbl.text = filtered
+        playerListArray = NSMutableArray()
+        guardiansListArray = NSMutableArray()
+        organizationListArray = NSMutableArray()
         
         getInformation()
+       
     }
     
     func getInformation()
     {
         Constant.internetconnection(vc: self)
-                Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
                        
                        let db = Firestore.firestore()
@@ -107,7 +116,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             
                             let timestamp: Timestamp = self.alldoc.value(forKey: "created_datetime") as! Timestamp
                             let datees: Date = timestamp.dateValue()
-                            print(datees)
+                          
                             let dateFormatterGet = DateFormatter()
                             dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
@@ -138,14 +147,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
                             self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
                 
-                            
+                           
                           } else {
                               print("Document does not exist")
                           }
                         Constant.showInActivityIndicatory()
                         
                       }
-
+ self.getplayerlist()
     }
     @IBAction func updateprofileImage(_ sender: UIButton)
     {
@@ -195,9 +204,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             let user = Auth.auth().currentUser
             if let user = user{
                 let storeRef = store.reference().child("profileavatar/\(user.uid).jpg")
-//                ASProgressHud.showHUDAddedTo(self.view, animated: true, type: .default)
                 let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
-//                    ASProgressHud.hideHUDForView(self.view, animated: true)
                     guard let _ = metadata else {
                         print("error occurred: \(error.debugDescription)")
                         return
@@ -209,11 +216,300 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             }
              
         }
+    
+    func getplayerlist()
+    {
+        Constant.internetconnection(vc: self)
+        //Constant.showActivityIndicatory(uiView: self.view)
+        let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
+        let header = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+         var param:[String:AnyObject] = [:]
+        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+        
+        Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+            if(!(response.error != nil)){
+                switch (response.result)
+                {
+                case .success(_):
+                    if let data = response.result.value{
+                        let info = data as? NSDictionary
+                        let statusCode = info?["status"] as? Bool
+                        //let message = info?["message"] as? String
+
+                        if(statusCode == true)
+                        {
+                            let result = info?["data"] as! NSArray
+                           
+                            self.playerListArray = NSMutableArray()
+                            self.playerListArray = result.mutableCopy() as? NSMutableArray
+                            self.getGuardians()
+
+                        }
+                        else
+                        {
+                           // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+                        }
+                       // Constant.showInActivityIndicatory()
+                    }
+                    break
+
+                case .failure(_):
+                    Constant.showInActivityIndicatory()
+
+                    break
+                }
+            }
+            else
+            {
+                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+                Constant.showInActivityIndicatory()
+
+            }
+        }
+    }
+    
+    func getGuardians()
+    {
+            Constant.internetconnection(vc: self)
+           // Constant.showActivityIndicatory(uiView: self.view)
+            let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
+            let header = [
+                "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+             var param:[String:AnyObject] = [:]
+            param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+            
+            Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+                if(!(response.error != nil)){
+                    switch (response.result)
+                    {
+                    case .success(_):
+                        if let data = response.result.value{
+                            let info = data as? NSDictionary
+                            let statusCode = info?["status"] as? Bool
+                            //let message = info?["message"] as? String
+
+                            if(statusCode == true)
+                            {
+                                let result = info?["data"] as! NSArray
+                                
+                                self.guardiansListArray = NSMutableArray()
+                                self.guardiansListArray = result.mutableCopy() as? NSMutableArray
+                                self.GetOrganization()
+
+                            }
+                            else
+                            {
+                               // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+                            }
+                            //Constant.showInActivityIndicatory()
+                        }
+                        break
+
+                    case .failure(_):
+                       // Constant.showInActivityIndicatory()
+
+                        break
+                    }
+                }
+                else
+                {
+                    //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+                   // Constant.showInActivityIndicatory()
+
+                }
+            }
+        
+        }
+    
+    func GetOrganization()
+    {
+        Constant.internetconnection(vc: self)
+       // Constant.showActivityIndicatory(uiView: self.view)
+        let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
+        let header = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+         var param:[String:AnyObject] = [:]
+        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+        
+        Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+            if(!(response.error != nil)){
+                switch (response.result)
+                {
+                case .success(_):
+                    if let data = response.result.value{
+                        let info = data as? NSDictionary
+                        let statusCode = info?["status"] as? Bool
+                        //let message = info?["message"] as? String
+
+                        if(statusCode == true)
+                        {
+                            let result = info?["data"] as! NSArray
+                            
+                            self.organizationListArray = NSMutableArray()
+                            self.organizationListArray = result.mutableCopy() as? NSMutableArray
+                            self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]]),Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])
+                            ]
+                            let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + 1
+                            self.player_tbl_height.constant = CGFloat(height * 88)
+                            self.player_tbl.reloadData()
+
+                            self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.player_tbl.frame.origin.y + self.player_tbl_height.constant + 60)
+                           
+                        }
+                        else
+                        {
+                           // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+                        }
+                        Constant.showInActivityIndicatory()
+                    }
+                    break
+
+                case .failure(_):
+                    Constant.showInActivityIndicatory()
+
+                    break
+                }
+            }
+            else
+            {
+                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+                Constant.showInActivityIndicatory()
+
+            }
+        }
+    
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+              guard let tableView = view as? UITableViewHeaderFooterView else { return }
+        tableView.backgroundColor = UIColor.white
+       // tableView.textLabel?.backgroundColor = UIColor.white
+              tableView.textLabel?.textColor = UIColor.black
+        
+          }
+   
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+       
+        return self.sections[section].name
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90.0
+    }
+     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+         return UITableViewAutomaticDimension
+     }
+
+     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+         return 44.0
+     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+            let items = self.sections[section].items
+            return items.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: Playercell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! Playercell
+        //  var dict = itemsA[indexPath.section]
+        
+        
+            let items = self.sections[indexPath.section].items
+            let item = items[indexPath.row]
+        
+        cell.username_lbl?.text = (indexPath.section == 0) ? "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" : item["email_address"] as! String
+        cell.gender_lbl.text = item["gender"] as? String
+        cell.selectionStyle = .none
+        if(indexPath.section == 0 || indexPath.section == 1)
+        {
+        if(item["is_signup_completed"] as! Bool == true)
+        {
+            cell.active_user_imag.image = UIImage(named: "activeuser")
+            cell.active_user_imag.tintColor = UIColor.green
+            cell.invite_btn.tintColor = UIColor.blue
+            cell.invite_btn.isUserInteractionEnabled = true
+            cell.accessoryType = .disclosureIndicator
+        }
+        else if(item["is_signup_completed"] as! Bool == false && item["is_invited"] as! Bool == true && item["email_address"] as? String != nil)
+        {
+            cell.invite_btn.setTitle("Reinvite", for: .normal)
+            cell.invite_btn.tintColor = UIColor.blue
+            cell.invite_btn.isUserInteractionEnabled = true
+
+            cell.active_user_imag.image = UIImage(named: "inactiveUser")
+            cell.active_user_imag.tintColor = UIColor.gray
+        }
+        else if(item["is_signup_completed"] as! Bool == false && item["is_invited"] as! Bool == false && item["email_address"] as? String != nil)
+        {
+            cell.invite_btn.setTitle("Pending", for: .normal)
+            cell.invite_btn.tintColor = UIColor.gray
+            cell.invite_btn.isUserInteractionEnabled = false
+
+            cell.active_user_imag.image = UIImage(named: "inactiveUser")
+            cell.active_user_imag.tintColor = UIColor.gray
+        }
+        else if(item["is_signup_completed"] as! Bool == false && item["is_invited"] as! Bool == false && item["email_address"] as? String == nil)
+        {
+            cell.invite_btn.setTitle("Invite", for: .normal)
+            cell.active_user_imag.image = UIImage(named: "inactiveUser")
+            cell.active_user_imag.tintColor = UIColor.gray
+        }
+        }
+        else
+        {
+            let dic: NSArray = item["sports"] as! NSArray
+            let sportsname: NSDictionary = dic[0] as! NSDictionary
+            cell.username_lbl.text = item["abbrev"] as? String
+            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
+            cell.accessoryType = .disclosureIndicator
+
+
+        }
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+      
+        let items = self.sections[indexPath.section].items
+        let item = items[indexPath.row]
+        if(indexPath.section == 0)
+        {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "playerProfile") as! PlayerProfileVC
+            vc.playerDetails = item as NSDictionary
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if(indexPath.section == 1)
+        {
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "updatename") as! PlayerProfileVC
+//            vc.userDetailDic = alldoc
+//            vc.delegate = self
+//            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if(indexPath.section == 2)
+        {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
+            vc.organizationDetails = item as NSDictionary
+            //vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+
+    }
+    
     @IBAction func usernameEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatename") as! UsernameEditVC
         vc.userDetailDic = alldoc
         vc.delegate = self
+        vc.isUpdateName = true
        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func passwordEdit(_ sender: UIButton)
@@ -226,6 +522,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         let vc = storyboard?.instantiateViewController(withIdentifier: "UpdateMobile") as! MobileEditVC
         vc.getAllDic = alldoc
         vc.delegate = self
+        vc.isUpdatePage = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func genderEdit(_ sender: UIButton)
@@ -233,12 +530,16 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
        let vc = storyboard?.instantiateViewController(withIdentifier: "updateGender") as! GenderEditVC
         vc.getalldoc = alldoc
         vc.delegate = self
+        vc.isUpdateGender = true
+
        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func addressEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "Update_address") as! AddressEditVC
         vc.addressDetailDic = alldoc
+        vc.delegate = self
+        vc.isUpdate = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func organisationEdit(_ sender: UIButton)

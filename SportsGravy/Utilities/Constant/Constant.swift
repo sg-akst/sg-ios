@@ -8,9 +8,15 @@
 
 import UIKit
 
+ let BaseUrl = "https://us-central1-sports-gravy-app.cloudfunctions.net/"
+
+
 class Constant: NSObject {
-    
-    static let BaseUrl = "https://us-central1-sports-gravy-app.cloudfunctions.net/"
+    static let sharedinstance = Constant()
+
+    var getPlayerbyuid:String = BaseUrl + "getPlayersByUid?"
+    var getGuardiansbyuid:String = BaseUrl + "getGuardiansByUid?"
+    var getOrganizationbyuid: String = BaseUrl + "getOrganizationByUid?"
 
     static func internetconnection(vc: UIViewController)
     {

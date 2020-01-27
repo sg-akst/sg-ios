@@ -52,6 +52,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
     var isSlectState: Bool!
     var updateAddress: NSDictionary!
     weak var delegate:addressEditDelegate?
+    var isUpdate: Bool!
 
 
     override func viewDidLoad() {
@@ -62,7 +63,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         bottomlineMethod(selecttext: state_txt)
         bottomlineMethod(selecttext: potel_txt)
         bottomlineMethod(selecttext: country_txt)
-        updateAddress = addressDetailDic.value(forKey: "address") as? NSDictionary
+        updateAddress = self.addressDetailDic.value(forKey: "address") as? NSDictionary
         self.street1_txt.text = updateAddress.value(forKey: "street1") as? String
         self.street2_txt.text = updateAddress.value(forKey: "street2") as? String
         self.city_txt.text    = updateAddress.value(forKey: "city") as? String
@@ -94,7 +95,6 @@ class AddressEditVC: UIViewController,PopViewDelegate {
 
                 for document in querySnapshot!.documents {
                 let data: NSDictionary = document.data() as NSDictionary
-                print("\(document.documentID) => \(data)")
                 self.getCountryArray.add(data)
                }
             Constant.showInActivityIndicatory()
@@ -117,7 +117,6 @@ class AddressEditVC: UIViewController,PopViewDelegate {
 
                 for document in querySnapshot!.documents {
                 let data: NSDictionary = document.data() as NSDictionary
-                print("\(document.documentID) => \(data)")
                 self.getStateArray.add(data)
                 Constant.showInActivityIndicatory()
                 self.getcountryDetails()
@@ -169,11 +168,11 @@ class AddressEditVC: UIViewController,PopViewDelegate {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
 
         }
-        else if(self.street2_txt.text == nil || self.street2_txt.text?.isEmpty == true)
-        {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
-
-        }
+//        else if(self.street2_txt.text == nil || self.street2_txt.text?.isEmpty == true)
+//        {
+//            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
+//
+//        }
         else if(self.city_txt.text == nil || self.city_txt.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter city")
@@ -198,16 +197,21 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         {
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
+            
+            
+            
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
+            
             let db = Firestore.firestore()
-            //let editaddress: NSMutableDictionary =  self.updateAddress.mutableCopy() as! NSMutableDictionary
-            updateAddress.setValue(self.street1_txt.text, forKey: "street1")
-            updateAddress.setValue(self.street2_txt.text, forKey: "street2")
-            updateAddress.setValue(self.city_txt.text, forKey: "city")
-            updateAddress.setValue(self.potel_txt.text, forKey: "postal_code")
-            updateAddress.setValue(self.state_txt.text, forKey: "state")
-            updateAddress.setValue(self.country_txt.text, forKey: "country_code")
-            db.collection("users").document("\(getuuid!)").updateData(["street1":"\(self.street1_txt.text!)","street2": "\(self.street2_txt.text!)","city": "\(self.city_txt.text!)","postal_code": "\(self.potel_txt.text!)","state": "\(self.state_txt.text!)","country_code": "\(self.country_txt.text!)","address": updateAddress, "updated_datetime" : Date()])
+            self.updateAddress.setValue(self.street1_txt.text!, forKey: "street1")
+            self.updateAddress.setValue(self.street2_txt.text!, forKey: "street2")
+            updateAddress.setValue(self.city_txt.text!, forKey: "city")
+            updateAddress.setValue(self.potel_txt.text!, forKey: "postal_code")
+            updateAddress.setValue(self.state_txt.text!, forKey: "state")
+            updateAddress.setValue(self.country_txt.text!, forKey: "country_code")
+           
+            let updatePage = (isUpdate == true) ? getuuid : self.addressDetailDic.value(forKey: "user_id") as? String
+            db.collection("users").document("\(updatePage!)").updateData(["street1":"\(self.street1_txt.text!)","street2": "\(self.street2_txt.text!)","city": "\(self.city_txt.text!)","postal_code": "\(self.potel_txt.text!)","state": "\(self.state_txt.text!)","country_code": "\(self.country_txt.text!)","address": self.updateAddress, "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")

@@ -15,18 +15,19 @@ protocol mobileEditDelegate: AnyObject {
 
 }
 
-class MobileEditVC: UIViewController {
+class MobileEditVC: UIViewController{
 
     @IBOutlet weak var mobile_txt: UITextField!
     var getAllDic: NSDictionary!
     weak var delegate:mobileEditDelegate?
+    var isUpdatePage: Bool!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         //mobile_txt.delegate = self
         bottomlineMethod(selecttext: mobile_txt)
-        mobile_txt.text = getAllDic.value(forKey: "mobile_phone") as? String
+        mobile_txt.text = self.getAllDic.value(forKey: "mobile_phone") as? String
 
     }
     func bottomlineMethod(selecttext: UITextField)
@@ -49,7 +50,10 @@ class MobileEditVC: UIViewController {
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
-        db.collection("users").document("\(getuuid!)").updateData(["mobile_phone": "\(mobile_txt.text!)"])
+            
+        let UpdateID = (isUpdatePage == true) ? getuuid : self.getAllDic.value(forKey: "user_id") as? String
+            
+        db.collection("users").document("\(UpdateID!)").updateData(["mobile_phone": "\(mobile_txt.text!)"])
         { err in
             if let err = err {
                 print("Error updating document: \(err)")

@@ -394,7 +394,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
 
                                  for document in querySnapshot!.documents {
                                      let data: NSDictionary = document.data() as NSDictionary
-                                     print("\(document.documentID) => \(data)")
+                                     
                                     self.TeamArray.add(data)
                                     
             

@@ -9,14 +9,15 @@ target 'SportsGravy' do
   pod 'IQKeyboardManagerSwift'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
-#  pod 'Firebase/Database'
-   pod 'Firebase/Core'
+  pod 'Firebase/Core'
   pod 'FirebaseFirestoreSwift'
   pod 'SwiftyJSON'
-pod 'Kingfisher'
+  pod 'Kingfisher'
   pod 'SWRevealViewController'
   pod 'STPopup'
-pod 'Firebase/Storage'
+  pod 'Firebase/Storage'
+  pod 'Alamofire'
+
   # Pods for SportsGravy
 
   target 'SportsGravyTests' do

@@ -72,7 +72,19 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                 [weak self] user, error in
                 guard self != nil else { return }
                                // let user = Auth.auth().currentUser
+                
+                Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                    if error != nil {
+                                    // Handle error
+                                    return;
+                                  }
+                                    print("Token=>\(idToken!)")
+                                    UserDefaults.standard.set(idToken, forKey: "idtoken")
+                                }
+                
+                
                 let userUUID = Auth.auth().currentUser?.uid
+            
                 if(userUUID != nil)
                 {
                     print(userUUID!)
@@ -86,6 +98,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                 {
                     Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invaild Password")
                 }
+                 
 
             }
         }

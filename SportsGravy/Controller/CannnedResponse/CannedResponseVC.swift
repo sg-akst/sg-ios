@@ -339,7 +339,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
         else
         {
-           print(getSeason)
            self.addorderArray.add("> \(self.commonArray[indexPath.row])")
             getuserDetail()
            
@@ -414,7 +413,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
                              for document in querySnapshot!.documents {
                                  let data: NSDictionary = document.data() as NSDictionary
-                                 print("\(document.documentID) => \(data)")
                                 self.TeamArray.add(data)
                                 
         

@@ -28,6 +28,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     @IBOutlet weak var suffix_name_txt: UITextField!
     weak var delegate:UsernameEditDelegate?
     var userDetailDic: NSDictionary!
+    var isUpdateName: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,8 +94,9 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
+            let updatePage = (isUpdateName == true) ? getuuid : userDetailDic.value(forKey: "user_id") as? String
         let db = Firestore.firestore()
-        db.collection("users").document("\(getuuid!)").updateData(["first_name": "\(first_name_txt.text!)", "middle_initial" : "\(middle_name_txt.text!)", "last_name" : "\(last_name_txt.text!)", "suffix" : "\(suffix_name_txt.text!)"])
+        db.collection("users").document("\(updatePage!)").updateData(["first_name": "\(first_name_txt.text!)", "middle_initial" : "\(middle_name_txt.text!)", "last_name" : "\(last_name_txt.text!)", "suffix" : "\(suffix_name_txt.text!)"])
         { err in
             if let err = err {
                 print("Error updating document: \(err)")

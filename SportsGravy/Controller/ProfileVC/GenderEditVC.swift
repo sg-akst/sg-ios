@@ -26,6 +26,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     @IBOutlet weak var gender_txt: UITextField!
     var getalldoc: NSDictionary!
     weak var delegate:genderEditDelegate?
+    var isUpdateGender: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +72,8 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
-        db.collection("users").document("\(getuuid!)").updateData(["gender": "\(gender_txt.text!)"])
+        let updatePage = (isUpdateGender == true) ? getuuid : self.getalldoc.value(forKey: "user_id") as? String
+        db.collection("users").document("\(updatePage!)").updateData(["gender": "\(gender_txt.text!)"])
         { err in
             if let err = err {
                 print("Error updating document: \(err)")

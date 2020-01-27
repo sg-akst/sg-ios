@@ -16,6 +16,8 @@
 		081120ED23BDF77900327FF1 /* SportsGravyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120EC23BDF77900327FF1 /* SportsGravyUITests.swift */; };
 		0811210223BE061B00327FF1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
 		0811210623BE08DD00327FF1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
+		0814208323DEEDF5006E0087 /* SittingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814208223DEEDF5006E0087 /* SittingsVC.swift */; };
+		0814208623DEF890006E0087 /* SittingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814208523DEF890006E0087 /* SittingCell.swift */; };
 		084663D723C49E2E00D5A72D /* roboto in Resources */ = {isa = PBXBuildFile; fileRef = 084663D623C49E2E00D5A72D /* roboto */; };
 		08507F5823BF423800CC968F /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
 		08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
@@ -43,6 +45,8 @@
 		08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */; };
 		08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E023D069AA00CD8A61 /* TagCreateVC.swift */; };
 		08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */; };
+		08BC6C3E23DAEF090046A7F7 /* Playercell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3D23DAEF090046A7F7 /* Playercell.swift */; };
+		08BC6C4023DB04790046A7F7 /* PlayerProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */; };
 		08D60E4F23D9786F000D411D /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D60E4E23D9786F000D411D /* PopVC.swift */; };
 		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
 		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
@@ -86,6 +90,8 @@
 		081120EE23BDF77900327FF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0811210123BE061B00327FF1 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0811210523BE08DD00327FF1 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		0814208223DEEDF5006E0087 /* SittingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SittingsVC.swift; sourceTree = "<group>"; };
+		0814208523DEF890006E0087 /* SittingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SittingCell.swift; sourceTree = "<group>"; };
 		084663D623C49E2E00D5A72D /* roboto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = roboto; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
@@ -113,6 +119,8 @@
 		08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseVC.swift; sourceTree = "<group>"; };
 		08B610E023D069AA00CD8A61 /* TagCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreateVC.swift; sourceTree = "<group>"; };
 		08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseCreateVC.swift; sourceTree = "<group>"; };
+		08BC6C3D23DAEF090046A7F7 /* Playercell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playercell.swift; sourceTree = "<group>"; };
+		08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerProfileVC.swift; sourceTree = "<group>"; };
 		08D60E4E23D9786F000D411D /* PopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVC.swift; sourceTree = "<group>"; };
 		08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidemenuVC.swift; sourceTree = "<group>"; };
 		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
@@ -234,6 +242,8 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0814208423DEF869006E0087 /* Sitting */,
+				08BC6C3C23DAEEDD0046A7F7 /* Profile */,
 				08B610DA23D0523100CD8A61 /* Tag */,
 				08AB404123CDD1A600E8A92E /* UserGroup */,
 				08AC5E8623C5F11300CFB418 /* PostCell */,
@@ -286,6 +296,14 @@
 			path = Constant;
 			sourceTree = "<group>";
 		};
+		0814208423DEF869006E0087 /* Sitting */ = {
+			isa = PBXGroup;
+			children = (
+				0814208523DEF890006E0087 /* SittingCell.swift */,
+			);
+			path = Sitting;
+			sourceTree = "<group>";
+		};
 		08507F5623BF421100CC968F /* SigninVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +338,8 @@
 				089F228C23D85AC2008B110D /* MobileEditVC.swift */,
 				089F228E23D85AD8008B110D /* GenderEditVC.swift */,
 				089F229023D85AEE008B110D /* AddressEditVC.swift */,
+				08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */,
+				0814208223DEEDF5006E0087 /* SittingsVC.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -385,6 +405,14 @@
 				08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */,
 			);
 			path = CannnedResponse;
+			sourceTree = "<group>";
+		};
+		08BC6C3C23DAEEDD0046A7F7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				08BC6C3D23DAEF090046A7F7 /* Playercell.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		08D60E4D23D9785A000D411D /* PopVC */ = {
@@ -702,6 +730,7 @@
 				08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */,
 				08D60E4F23D9786F000D411D /* PopVC.swift in Sources */,
 				08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */,
+				0814208623DEF890006E0087 /* SittingCell.swift in Sources */,
 				08B0374823D5971500FB9DFC /* UsergroupCreateCell.swift in Sources */,
 				08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */,
 				08B610DC23D0524D00CD8A61 /* TagCell.swift in Sources */,
@@ -711,11 +740,13 @@
 				089F228723D851F0008B110D /* OrganizationVC.swift in Sources */,
 				08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */,
 				089F228F23D85AD8008B110D /* GenderEditVC.swift in Sources */,
+				0814208323DEEDF5006E0087 /* SittingsVC.swift in Sources */,
 				080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */,
 				08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */,
 				081120CB23BDF77500327FF1 /* AppDelegate.swift in Sources */,
 				089F229123D85AEE008B110D /* AddressEditVC.swift in Sources */,
 				08507F5823BF423800CC968F /* SigninVC.swift in Sources */,
+				08BC6C3E23DAEF090046A7F7 /* Playercell.swift in Sources */,
 				0811210223BE061B00327FF1 /* Reachability.swift in Sources */,
 				0811210623BE08DD00327FF1 /* Constant.swift in Sources */,
 				08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */,
@@ -723,6 +754,7 @@
 				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
 				089F228923D85A40008B110D /* UsernameEditVC.swift in Sources */,
 				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
+				08BC6C4023DB04790046A7F7 /* PlayerProfileVC.swift in Sources */,
 				087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */,
 				087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */,
 				08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */,

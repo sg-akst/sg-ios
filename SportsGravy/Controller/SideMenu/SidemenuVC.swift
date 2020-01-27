@@ -254,5 +254,10 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         vc.getAllrole = self.roleby_reasonArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+    @IBAction func sittingsBtn(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "sittings") as! SittingsVC
+        //vc.getAllrole = self.roleby_reasonArray
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
    }
