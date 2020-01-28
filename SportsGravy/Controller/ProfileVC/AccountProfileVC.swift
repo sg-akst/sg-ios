@@ -348,6 +348,18 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             
                             self.organizationListArray = NSMutableArray()
                             self.organizationListArray = result.mutableCopy() as? NSMutableArray
+//                            if(self.playerListArray.count > 0)
+//                            {
+//                                self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]])]
+//                            }
+//                            else if(self.guardiansListArray.count > 0)
+//                            {
+//                                self.sections = [Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]])]
+//                            }
+//                            else if(self.organizationListArray.count > 0)
+//                            {
+//                                self.sections = [Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])]
+//                            }
                             self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]]),Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])
                             ]
                             let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + 1
@@ -425,11 +437,13 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             let items = self.sections[indexPath.section].items
             let item = items[indexPath.row]
         
-        cell.username_lbl?.text = (indexPath.section == 0) ? "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" : item["email_address"] as! String
-        cell.gender_lbl.text = item["gender"] as? String
+       
+       
         cell.selectionStyle = .none
         if(indexPath.section == 0 || indexPath.section == 1)
         {
+             cell.username_lbl?.text = (indexPath.section == 0) ? "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" : item["email_address"] as! String
+             cell.gender_lbl.text = item["gender"] as? String
         if(item["is_signup_completed"] as! Bool == true)
         {
             cell.active_user_imag.image = UIImage(named: "activeuser")

@@ -649,14 +649,27 @@
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-oi-YGe">
+                                        <rect key="frame" x="335" y="15" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="Dic-SY-fmO"/>
+                                            <constraint firstAttribute="height" constant="30" id="bwv-hK-oQV"/>
+                                        </constraints>
+                                        <state key="normal" image="setmenu"/>
+                                        <connections>
+                                            <action selector="sortingUserBtn_Action:" destination="5hG-9P-cU4" eventType="touchUpInside" id="atc-24-gal"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="jN4-oi-YGe" firstAttribute="top" secondItem="E1l-Hc-IfL" secondAttribute="top" constant="15" id="0fT-vg-Z7y"/>
                                     <constraint firstItem="E1l-Hc-IfL" firstAttribute="trailing" secondItem="qy5-hf-F6B" secondAttribute="trailing" constant="15" id="KTI-qQ-MeV"/>
                                     <constraint firstItem="IkK-Jq-aDU" firstAttribute="top" secondItem="E1l-Hc-IfL" secondAttribute="top" constant="15" id="OZ0-gV-D09"/>
                                     <constraint firstAttribute="height" constant="60" id="Vbd-A6-dqz"/>
                                     <constraint firstItem="IkK-Jq-aDU" firstAttribute="leading" secondItem="E1l-Hc-IfL" secondAttribute="leading" constant="10" id="YDs-Pd-1iU"/>
                                     <constraint firstItem="qy5-hf-F6B" firstAttribute="leading" secondItem="IkK-Jq-aDU" secondAttribute="trailing" constant="15" id="asK-UC-Hjx"/>
+                                    <constraint firstItem="E1l-Hc-IfL" firstAttribute="trailing" secondItem="jN4-oi-YGe" secondAttribute="trailing" constant="10" id="ffu-tU-b9i"/>
                                     <constraint firstItem="qy5-hf-F6B" firstAttribute="top" secondItem="E1l-Hc-IfL" secondAttribute="top" constant="15" id="xig-h8-iGM"/>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="E1l-Hc-IfL"/>
@@ -786,6 +799,7 @@
                         <outlet property="addorderview" destination="gav-BK-9vg" id="R9b-2l-xAZ"/>
                         <outlet property="createGroupView" destination="8Ec-xc-BRA" id="5n5-Cj-bTs"/>
                         <outlet property="orderviewheight" destination="iv3-6T-GVa" id="ydV-Fu-8cI"/>
+                        <outlet property="sortingUser" destination="jN4-oi-YGe" id="TSO-KY-YXk"/>
                         <outlet property="usergroup_tbl" destination="aK3-WE-NuL" id="TkE-y6-emn"/>
                     </connections>
                 </viewController>
@@ -834,7 +848,6 @@
                                         <connections>
                                             <action selector="cancelbtn:" destination="TRf-yp-E1X" eventType="touchUpInside" id="5Mf-Pt-ncs"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="IdM-f2-Cmc"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="e3G-xi-pVu"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="fth-n6-C4W"/>
                                         </connections>
                                     </button>
@@ -2509,7 +2522,7 @@ multiple sports organizations.</string>
                                         <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" image="cancel"/>
                                         <connections>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="0b4-Fa-d2M"/>
+                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="TeW-N5-paP"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="YBz-bf-AbL"/>
                                         </connections>
                                     </button>
@@ -2522,6 +2535,17 @@ multiple sports organizations.</string>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfK-cy-kSf">
+                                        <rect key="frame" x="335" y="15" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ThS-Wt-XlL"/>
+                                            <constraint firstAttribute="width" constant="30" id="kqK-XL-5ri"/>
+                                        </constraints>
+                                        <state key="normal" image="setmenu"/>
+                                        <connections>
+                                            <action selector="sortingBtn_Action:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="pGC-XE-c7b"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2529,6 +2553,8 @@ multiple sports organizations.</string>
                                     <constraint firstItem="jWG-N5-25o" firstAttribute="trailing" secondItem="qIh-0K-R0o" secondAttribute="trailing" constant="15" id="AgS-Jv-xzn"/>
                                     <constraint firstItem="qIh-0K-R0o" firstAttribute="leading" secondItem="Qou-Wc-U6c" secondAttribute="trailing" constant="15" id="B1W-f1-vuM"/>
                                     <constraint firstItem="Qou-Wc-U6c" firstAttribute="leading" secondItem="jWG-N5-25o" secondAttribute="leading" constant="10" id="Ipv-K0-KOR"/>
+                                    <constraint firstItem="jWG-N5-25o" firstAttribute="trailing" secondItem="jfK-cy-kSf" secondAttribute="trailing" constant="10" id="Y7H-h1-oKb"/>
+                                    <constraint firstItem="jfK-cy-kSf" firstAttribute="top" secondItem="jWG-N5-25o" secondAttribute="top" constant="15" id="axT-2L-8BP"/>
                                     <constraint firstItem="qIh-0K-R0o" firstAttribute="top" secondItem="jWG-N5-25o" secondAttribute="top" constant="15" id="prG-E8-5Rt"/>
                                     <constraint firstAttribute="height" constant="60" id="t9z-7g-NEp"/>
                                 </constraints>
@@ -2646,6 +2672,7 @@ multiple sports organizations.</string>
                         <outlet property="addorderview" destination="igT-cG-rG5" id="j8E-Ee-bxf"/>
                         <outlet property="createGroupView" destination="DTN-cv-hi9" id="0Cs-6t-JeP"/>
                         <outlet property="orderviewheight" destination="78i-nB-OZs" id="chg-ue-id0"/>
+                        <outlet property="sorting" destination="jfK-cy-kSf" id="okC-6J-83I"/>
                         <outlet property="tag_tbl" destination="Yyi-Rs-Fxb" id="bZj-kQ-MsL"/>
                     </connections>
                 </viewController>
@@ -2675,7 +2702,6 @@ multiple sports organizations.</string>
                                         <state key="normal" image="cancel"/>
                                         <connections>
                                             <action selector="cancelbtn:" destination="5Mm-Nw-f6R" eventType="touchUpInside" id="3GE-fM-dvf"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="99G-tS-SP8"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="vtS-7C-qPj"/>
                                         </connections>
                                     </button>
@@ -2796,12 +2822,25 @@ multiple sports organizations.</string>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ay-I0-7dG">
+                                        <rect key="frame" x="335" y="15" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="LLE-G4-pO4"/>
+                                            <constraint firstAttribute="width" constant="30" id="zR8-uM-tY0"/>
+                                        </constraints>
+                                        <state key="normal" image="setmenu"/>
+                                        <connections>
+                                            <action selector="sortingCannedBtn_Action:" destination="vM1-Yx-SNJ" eventType="touchUpInside" id="8pg-on-v43"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="kO9-Lk-Ock" firstAttribute="trailing" secondItem="2ay-I0-7dG" secondAttribute="trailing" constant="10" id="4jQ-fb-3S0"/>
                                     <constraint firstItem="OkE-gO-wD6" firstAttribute="top" secondItem="kO9-Lk-Ock" secondAttribute="top" constant="15" id="7dJ-Wc-B61"/>
                                     <constraint firstItem="kO9-Lk-Ock" firstAttribute="trailing" secondItem="OkE-gO-wD6" secondAttribute="trailing" constant="15" id="Dgw-yU-ARG"/>
                                     <constraint firstItem="OkE-gO-wD6" firstAttribute="leading" secondItem="TMo-2e-caf" secondAttribute="trailing" constant="15" id="HXR-Jv-Hfa"/>
+                                    <constraint firstItem="2ay-I0-7dG" firstAttribute="top" secondItem="kO9-Lk-Ock" secondAttribute="top" constant="15" id="ZTm-QX-aKH"/>
                                     <constraint firstItem="TMo-2e-caf" firstAttribute="top" secondItem="kO9-Lk-Ock" secondAttribute="top" constant="15" id="fVe-70-IWL"/>
                                     <constraint firstItem="TMo-2e-caf" firstAttribute="leading" secondItem="kO9-Lk-Ock" secondAttribute="leading" constant="10" id="mdZ-dx-v9H"/>
                                     <constraint firstAttribute="height" constant="60" id="tiR-5U-P5u"/>
@@ -2934,6 +2973,7 @@ multiple sports organizations.</string>
                         <outlet property="canned_response_tbl" destination="Vvo-mN-47y" id="xjV-EH-hl9"/>
                         <outlet property="createGroupView" destination="ua0-fK-6Zb" id="aWe-wb-JMS"/>
                         <outlet property="orderviewheight" destination="2sA-8u-cz3" id="Zat-B4-h1q"/>
+                        <outlet property="sortingCanned" destination="2ay-I0-7dG" id="7sn-JO-XJO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JK1-0d-6i2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2961,7 +3001,6 @@ multiple sports organizations.</string>
                                         <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" image="cancel"/>
                                         <connections>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="Bur-BM-gxa"/>
                                             <action selector="cancelbtn:" destination="LLh-lB-shN" eventType="touchUpInside" id="cIc-ei-LMT"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="osV-nF-ZFJ"/>
                                         </connections>
@@ -2971,7 +3010,7 @@ multiple sports organizations.</string>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40.5" id="VBo-Sp-kot"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="23"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -3098,6 +3137,158 @@ multiple sports organizations.</string>
             </objects>
             <point key="canvasLocation" x="4136.8000000000002" y="769.56521739130437"/>
         </scene>
+        <!--SortingVC-->
+        <scene sceneID="yZI-5p-Wgz">
+            <objects>
+                <viewController storyboardIdentifier="sorting" id="Dga-Bn-LKs" customClass="SortingVC" customModule="SportsGravy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="psD-kW-e3X">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeD-FF-qkq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cg-zZ-Ak1">
+                                        <rect key="frame" x="10" y="15" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="acr-Uy-J5y"/>
+                                            <constraint firstAttribute="height" constant="40" id="eyd-Je-hw2"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <state key="normal" image="cancel"/>
+                                        <connections>
+                                            <action selector="Sortingcancelbtn:" destination="Dga-Bn-LKs" eventType="touchUpInside" id="hVg-xG-NwR"/>
+                                            <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="J4f-6J-sNe"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort Create Response" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VT9-n3-2vh">
+                                        <rect key="frame" x="65" y="15" width="295" height="40.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40.5" id="2Lw-Ew-K2V"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="1Cg-zZ-Ak1" firstAttribute="leading" secondItem="EBZ-p5-K0K" secondAttribute="leading" constant="10" id="DqS-R8-sKv"/>
+                                    <constraint firstItem="VT9-n3-2vh" firstAttribute="leading" secondItem="1Cg-zZ-Ak1" secondAttribute="trailing" constant="15" id="RT2-hx-frn"/>
+                                    <constraint firstItem="VT9-n3-2vh" firstAttribute="top" secondItem="EBZ-p5-K0K" secondAttribute="top" constant="15" id="du6-UN-43D"/>
+                                    <constraint firstItem="1Cg-zZ-Ak1" firstAttribute="top" secondItem="EBZ-p5-K0K" secondAttribute="top" constant="15" id="eOV-ar-7vc"/>
+                                    <constraint firstItem="EBZ-p5-K0K" firstAttribute="trailing" secondItem="VT9-n3-2vh" secondAttribute="trailing" constant="15" id="m8Y-Xo-Wei"/>
+                                    <constraint firstAttribute="height" constant="60" id="yqd-vk-G9j"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="EBZ-p5-K0K"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAv-Mt-hWf">
+                                <rect key="frame" x="0.0" y="61" width="375" height="90"/>
+                                <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="EIy-DJ-xCI"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aee-iL-lrt">
+                                <rect key="frame" x="20" y="577" width="335" height="50"/>
+                                <color key="backgroundColor" red="0.46666666670000001" green="0.82745098039999998" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="pOX-fA-LJy"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="qgb-c2-9AG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
+                                <state key="normal" title="UPDATE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="updatesorting:" destination="Dga-Bn-LKs" eventType="touchUpInside" id="Bw8-Hs-a8W"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DaV-nm-dzz">
+                                <rect key="frame" x="0.0" y="152" width="375" height="415"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sortCell" rowHeight="84" id="pHj-YL-glh" customClass="SortingCell" customModule="SportsGravy" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="84"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pHj-YL-glh" id="2qs-FF-qR5">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNV-Ng-tks">
+                                                    <rect key="frame" x="10" y="5" width="355" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="hXv-67-DWr"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="18"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alS-4I-D2b">
+                                                    <rect key="frame" x="10" y="40" width="355" height="39"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.27843137254901962" green="0.32156862745098036" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="alS-4I-D2b" secondAttribute="trailing" constant="10" id="DfU-Gy-rkd"/>
+                                                <constraint firstItem="alS-4I-D2b" firstAttribute="top" secondItem="oNV-Ng-tks" secondAttribute="bottom" constant="5" id="Pvo-bp-hWn"/>
+                                                <constraint firstItem="oNV-Ng-tks" firstAttribute="top" secondItem="2qs-FF-qR5" secondAttribute="top" constant="5" id="Ty6-gz-epK"/>
+                                                <constraint firstAttribute="trailing" secondItem="oNV-Ng-tks" secondAttribute="trailing" constant="10" id="Un5-gb-osM"/>
+                                                <constraint firstItem="alS-4I-D2b" firstAttribute="leading" secondItem="2qs-FF-qR5" secondAttribute="leading" constant="10" id="cSA-gs-FLd"/>
+                                                <constraint firstAttribute="bottom" secondItem="alS-4I-D2b" secondAttribute="bottom" constant="5" id="eR4-mo-Rjv"/>
+                                                <constraint firstItem="oNV-Ng-tks" firstAttribute="leading" secondItem="2qs-FF-qR5" secondAttribute="leading" constant="10" id="lVI-46-cEW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="detail_lbl" destination="alS-4I-D2b" id="orz-J2-epD"/>
+                                            <outlet property="username_lbl" destination="oNV-Ng-tks" id="yLP-bp-dl4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Dga-Bn-LKs" id="fWv-KH-oxB"/>
+                                    <outlet property="delegate" destination="Dga-Bn-LKs" id="eDC-De-cUx"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="AAv-Mt-hWf" firstAttribute="leading" secondItem="YPw-ix-hmU" secondAttribute="leading" id="0tW-t7-zeH"/>
+                            <constraint firstItem="xeD-FF-qkq" firstAttribute="leading" secondItem="YPw-ix-hmU" secondAttribute="leading" id="67z-q2-aRT"/>
+                            <constraint firstItem="Aee-iL-lrt" firstAttribute="top" secondItem="DaV-nm-dzz" secondAttribute="bottom" constant="10" id="A0Q-h3-s5S"/>
+                            <constraint firstItem="AAv-Mt-hWf" firstAttribute="top" secondItem="xeD-FF-qkq" secondAttribute="bottom" constant="1" id="BQy-Ht-eUK"/>
+                            <constraint firstItem="YPw-ix-hmU" firstAttribute="trailing" secondItem="Aee-iL-lrt" secondAttribute="trailing" constant="20" id="Bi3-pX-QU2"/>
+                            <constraint firstItem="YPw-ix-hmU" firstAttribute="trailing" secondItem="Aee-iL-lrt" secondAttribute="trailing" constant="20" id="CUk-Ie-fK7"/>
+                            <constraint firstItem="DaV-nm-dzz" firstAttribute="leading" secondItem="AAv-Mt-hWf" secondAttribute="leading" id="HdR-Mg-rz9"/>
+                            <constraint firstItem="Aee-iL-lrt" firstAttribute="leading" secondItem="YPw-ix-hmU" secondAttribute="leading" constant="20" id="N0Q-J6-whN"/>
+                            <constraint firstItem="AAv-Mt-hWf" firstAttribute="trailing" secondItem="YPw-ix-hmU" secondAttribute="trailing" id="apA-hd-ye8"/>
+                            <constraint firstItem="DaV-nm-dzz" firstAttribute="trailing" secondItem="AAv-Mt-hWf" secondAttribute="trailing" id="cai-qs-Q54"/>
+                            <constraint firstItem="YPw-ix-hmU" firstAttribute="bottom" secondItem="Aee-iL-lrt" secondAttribute="bottom" constant="40" id="fSd-6M-KSo"/>
+                            <constraint firstItem="Aee-iL-lrt" firstAttribute="leading" secondItem="YPw-ix-hmU" secondAttribute="leading" constant="20" id="l8B-y1-Klt"/>
+                            <constraint firstItem="DaV-nm-dzz" firstAttribute="top" secondItem="AAv-Mt-hWf" secondAttribute="bottom" constant="1" id="ltg-QR-9zI"/>
+                            <constraint firstItem="xeD-FF-qkq" firstAttribute="top" secondItem="YPw-ix-hmU" secondAttribute="top" id="sib-ED-nlj"/>
+                            <constraint firstItem="xeD-FF-qkq" firstAttribute="trailing" secondItem="YPw-ix-hmU" secondAttribute="trailing" id="tYy-Kd-MWt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YPw-ix-hmU"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="SelectorderView" destination="AAv-Mt-hWf" id="YAM-iv-ey6"/>
+                        <outlet property="Title_lbl" destination="VT9-n3-2vh" id="Q0l-gz-JPx"/>
+                        <outlet property="sorting_tbl" destination="DaV-nm-dzz" id="P8h-hF-KhC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="twx-2g-X5s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3496.8000000000002" y="1437.9310344827588"/>
+        </scene>
         <!--SittingsVC-->
         <scene sceneID="HMm-zc-xnH">
             <objects>
@@ -3119,18 +3310,17 @@ multiple sports organizations.</string>
                                         <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" image="cancel"/>
                                         <connections>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="ndk-KS-g84"/>
                                             <action selector="cancelbtn:" destination="LLh-lB-shN" eventType="touchUpInside" id="tV0-IB-yKQ"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="KFa-jw-bsF"/>
                                             <action selector="settingcancelbtn:" destination="hpK-N0-Hqq" eventType="touchUpInside" id="Pb9-KA-gEM"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Response" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7k-vm-qHr">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7k-vm-qHr">
                                         <rect key="frame" x="65" y="15" width="295" height="40.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40.5" id="aJR-iz-YaL"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="24"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -3260,7 +3450,6 @@ multiple sports organizations.</string>
                                         <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" image="cancel"/>
                                         <connections>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="9vF-mL-gtb"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="a9E-Hj-9cW"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="EBq-OY-hhU"/>
                                         </connections>
@@ -3464,7 +3653,6 @@ multiple sports organizations.</string>
                                         <state key="normal" image="back"/>
                                         <connections>
                                             <action selector="EditPasswordcancelbtn:" destination="eaf-KR-aty" eventType="touchUpInside" id="A4l-BP-IQH"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="NeC-MI-2iG"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="dJ4-ku-2ok"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="LXh-eO-CWr"/>
                                         </connections>
@@ -3674,7 +3862,6 @@ multiple sports organizations.</string>
                                         <connections>
                                             <action selector="EditMobilecancelbtn:" destination="GhN-Bg-5la" eventType="touchUpInside" id="jbq-s8-F1b"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="OpG-ge-mvu"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="XRb-HE-Sch"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="Mn6-M6-gla"/>
                                         </connections>
                                     </button>
@@ -3815,7 +4002,6 @@ multiple sports organizations.</string>
                                         <connections>
                                             <action selector="EditGendercancelbtn:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="kDK-Js-xY8"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="h7P-An-DbE"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="mf4-h5-ayZ"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="HV4-yQ-Izs"/>
                                         </connections>
                                     </button>
@@ -3998,7 +4184,6 @@ multiple sports organizations.</string>
                                         <connections>
                                             <action selector="EditAddresscancelbtn:" destination="UkH-s6-0Nt" eventType="touchUpInside" id="NA9-0r-aYI"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="4sU-VR-FY3"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="6es-sA-9Vr"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="z7l-7n-F8P"/>
                                         </connections>
                                     </button>
@@ -4282,7 +4467,6 @@ multiple sports organizations.</string>
                                         <state key="normal" image="back"/>
                                         <connections>
                                             <action selector="Editusercancelbtn:" destination="puM-CO-OCg" eventType="touchUpInside" id="bqx-xe-5Nc"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="CrT-WZ-rNf"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="D4k-NH-INL"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="Sip-rw-jLy"/>
                                         </connections>
@@ -4549,7 +4733,6 @@ multiple sports organizations.</string>
                                         <state key="normal" image="back"/>
                                         <connections>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="hg9-zD-vcF"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="hpy-Ue-KUp"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="MPC-oc-yYf"/>
                                             <action selector="organizationcancelbtn:" destination="K9w-Dq-WZ4" eventType="touchUpInside" id="9Kx-vR-XO3"/>
                                         </connections>
@@ -5133,7 +5316,6 @@ multiple sports organizations.</string>
                                         <state key="normal" image="back"/>
                                         <connections>
                                             <action selector="cancelbtn:" destination="sak-gN-6D2" eventType="touchUpInside" id="1fU-uD-s0c"/>
-                                            <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="3Gi-ma-YgC"/>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="iU2-5k-fph"/>
                                             <action selector="menuBtn:" destination="w06-3F-AEu" eventType="touchUpInside" id="AkR-5b-QSf"/>
                                         </connections>

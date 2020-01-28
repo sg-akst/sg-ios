@@ -26,6 +26,8 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         @IBOutlet var addorderview: UIView!
         @IBOutlet weak var tag_tbl: UITableView!
         @IBOutlet weak var createGroupView: UIView!
+        @IBOutlet weak var sorting: UIButton!
+
 
 
         var getRolebyreasonDetailArray: NSMutableArray!
@@ -71,6 +73,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             getTeammethod()
             getuserDetail()
             createGroupView.isHidden = true
+            sorting.isHidden = true
 
         }
         func getuserDetail()
@@ -83,8 +86,9 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             self.addOrder.frame = self.addorderview.bounds
             for i in 0..<self.addorderArray.count
             {
-                let btn_width = (i==0) ? 30 : 70
-                let frame1 = (i > 3) ? (addorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 ) : (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
+                let btn_width =  70
+                let frame1 = (i > 3) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 70), y: 10, width: btn_width, height: 40 )
+                //: (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
                 addTitle_btn = UIButton(frame: frame1)
                 addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                 let lastIndex: Int = addorderArray.count-1
@@ -100,8 +104,15 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                 addTitle_btn.isUserInteractionEnabled = true
 
                 }
-                
-                addTitle_btn.titleLabel?.textAlignment = .center
+                if(i==0)
+                {
+                addTitle_btn.titleLabel?.textAlignment = .right
+                }
+                else
+                {
+                 addTitle_btn.titleLabel?.textAlignment = .center
+
+                }
                 addTitle_btn.sizeToFit()
                 addTitle_btn.tag = i
                 self.addOrder.addSubview(addTitle_btn)
@@ -348,6 +359,16 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                     }
                 }
                 orderviewheight.constant = 90
+                if (UserDefaults.standard.bool(forKey: "2") == true)
+                {
+                    sorting.isHidden = false
+
+                }
+                else
+                {
+                    sorting.isHidden = true
+
+                }
                 getTag()
             }
             }
@@ -385,27 +406,52 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                    let getuuid = UserDefaults.standard.string(forKey: "UUID")
                     let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-            
-            docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
-                             if let err = err {
-                                 print("Error getting documents: \(err)")
-                             } else {
-                                self.TeamArray = NSMutableArray()
+            if (UserDefaults.standard.bool(forKey: "2") == true)
+            {
+                docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                                 if let err = err {
+                                     print("Error getting documents: \(err)")
+                                 } else {
+                                    self.TeamArray = NSMutableArray()
 
-                                 for document in querySnapshot!.documents {
-                                     let data: NSDictionary = document.data() as NSDictionary
-                                     
-                                    self.TeamArray.add(data)
-                                    
-            
+                                     for document in querySnapshot!.documents {
+                                         let data: NSDictionary = document.data() as NSDictionary
+                                         
+                                        self.TeamArray.add(data)
+                
+                                    }
+                                    self.isTeam = true
+                                    self.createGroupView.isHidden = false
+                                    self.tag_tbl.reloadData()
+                                    Constant.showInActivityIndicatory()
+
                                 }
-                                self.isTeam = true
-                                self.createGroupView.isHidden = false
-                                self.tag_tbl.reloadData()
-                                Constant.showInActivityIndicatory()
-
                             }
-                        }
+            }
+            else
+            {
+                docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                 if let err = err {
+                                     print("Error getting documents: \(err)")
+                                 } else {
+                                    self.TeamArray = NSMutableArray()
+
+                                     for document in querySnapshot!.documents {
+                                         let data: NSDictionary = document.data() as NSDictionary
+                                         
+                                        self.TeamArray.add(data)
+                
+                                    }
+                                    self.isTeam = true
+                                    self.createGroupView.isHidden = false
+                                    self.tag_tbl.reloadData()
+                                    Constant.showInActivityIndicatory()
+
+                                }
+                            }
+
+            }
+            
             
         }
     
@@ -469,4 +515,14 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         vc.getTeamId = self.getTeamId
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func sortingBtn_Action(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "sorting") as! SortingVC
+        vc.getorderArray = addorderArray
+        vc.sortingOrderArray = self.TeamArray
+        vc.selectType = "Tags"
+        vc.getorganizationDetails = self.getRolebyreasonDetailArray
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

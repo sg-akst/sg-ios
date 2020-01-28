@@ -27,6 +27,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     @IBOutlet var addorderview: UIView!
     @IBOutlet weak var canned_response_tbl: UITableView!
     @IBOutlet weak var createGroupView: UIView!
+    @IBOutlet weak var sortingCanned: UIButton!
+
 
     var getRolebyreasonDetailArray: NSMutableArray!
     var getSameOrganization: NSMutableArray!
@@ -71,6 +73,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         getTeammethod()
         getuserDetail()
         createGroupView.isHidden = true
+        sortingCanned.isHidden = true
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -355,6 +358,16 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             }
 //
             orderviewheight.constant = 90
+            if (UserDefaults.standard.bool(forKey: "3") == true)
+                {
+                    self.sortingCanned.isHidden = false
+
+                }
+            else
+            {
+                self.sortingCanned.isHidden = true
+
+            }
             getCannedresponsegroup()
         }
         }
@@ -404,8 +417,9 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                let getuuid = UserDefaults.standard.string(forKey: "UUID")
                 let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-        
-        docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
+        if (UserDefaults.standard.bool(forKey: "3") == true)
+                   {
+                    docRef.collection("CannedResponse").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
                          if let err = err {
                              print("Error getting documents: \(err)")
                          } else {
@@ -424,7 +438,29 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
                         }
                     }
-        
+        }
+        else
+        {
+            docRef.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                    if let err = err {
+                                        print("Error getting documents: \(err)")
+                                    } else {
+                                       self.TeamArray = NSMutableArray()
+
+                                        for document in querySnapshot!.documents {
+                                            let data: NSDictionary = document.data() as NSDictionary
+                                           self.TeamArray.add(data)
+                                           
+                   
+                                       }
+                                       self.isTeam = true
+                                       self.createGroupView.isHidden = false
+                                       self.canned_response_tbl.reloadData()
+                                       Constant.showInActivityIndicatory()
+
+                                   }
+                               }
+        }
     }
     @IBAction func cancelbtn(_ sender: UIButton)
     {
@@ -486,6 +522,16 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         vc.getrolebyorganizationArray = getSameOrganization
         vc.getTeamId = self.getTeamId
 
+           self.navigationController?.pushViewController(vc, animated: true)
+       }
+    
+    @IBAction func sortingCannedBtn_Action(_ sender: UIButton)
+       {
+           let vc = storyboard?.instantiateViewController(withIdentifier: "sorting") as! SortingVC
+           vc.getorderArray = addorderArray
+           vc.sortingOrderArray = self.TeamArray
+           vc.selectType = "CannedResponse"
+        vc.getorganizationDetails = getRolebyreasonDetailArray
            self.navigationController?.pushViewController(vc, animated: true)
        }
 }

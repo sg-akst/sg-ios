@@ -28,6 +28,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     @IBOutlet var addorderview: UIView!
     @IBOutlet weak var usergroup_tbl: UITableView!
     @IBOutlet weak var createGroupView: UIView!
+    @IBOutlet weak var sortingUser: UIButton!
+
 
     var getRolebyreasonDetailArray: NSMutableArray!
     var getSameOrganization: NSMutableArray!
@@ -71,7 +73,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         getTeammethod()
         getuserDetail()
         createGroupView.isHidden = true
-
+        sortingUser.isHidden = true
     }
     func getuserDetail()
     {
@@ -368,6 +370,16 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             }
 //
             orderviewheight.constant = 90
+            if (UserDefaults.standard.bool(forKey: "1") == true)
+            {
+                sortingUser.isHidden = false
+
+            }
+            else
+            {
+                sortingUser.isHidden = true
+
+            }
             getmembergroup()
         }
         }
@@ -421,7 +433,10 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
         
-        docRef.collection("MemberGroup").getDocuments() { (querySnapshot, err) in
+        if (UserDefaults.standard.bool(forKey: "1") == true)
+        {
+        
+            docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
                          if let err = err {
                              print("Error getting documents: \(err)")
                          } else {
@@ -441,6 +456,28 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
                         }
                     }
+        }
+        else
+        {
+            docRef.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                    if let err = err {
+                                        print("Error getting documents: \(err)")
+                                    } else {
+                                       self.TeamArray = NSMutableArray()
+
+                                        for document in querySnapshot!.documents {
+                                            let data: NSDictionary = document.data() as NSDictionary
+                                            print("\(document.documentID) => \(data)")
+                                           self.TeamArray.add(data)
+                                       }
+                                       self.isTeam = true
+                                       self.createGroupView.isHidden = false
+                                       self.usergroup_tbl.reloadData()
+                                       Constant.showInActivityIndicatory()
+
+                                   }
+                               }
+        }
         
     }
     func deleteMethod(rolebyDic: NSDictionary)
@@ -473,6 +510,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                      print("Document successfully removed!")
                                      Constant.showInActivityIndicatory()
                                      Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
+                                   
                                      self.getmembergroup()
                                  }
                              }
@@ -507,5 +545,13 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         self.navigationController?.popViewController(animated: true)
 //        self.revealViewController()?.dismiss(animated: true, completion: nil)
     }
-
+    @IBAction func sortingUserBtn_Action(_ sender: UIButton)
+    {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "sorting") as! SortingVC
+        vc.getorderArray = addorderArray
+        vc.sortingOrderArray = self.TeamArray
+        vc.getorganizationDetails = getRolebyreasonDetailArray
+        vc.selectType = "MemberGroup"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
