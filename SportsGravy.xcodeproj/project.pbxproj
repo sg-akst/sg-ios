@@ -49,7 +49,6 @@
 		08BC6C4023DB04790046A7F7 /* PlayerProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */; };
 		08C17D5E23E02B3800D51B62 /* SortingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C17D5D23E02B3800D51B62 /* SortingVC.swift */; };
 		08C17D6123E0428C00D51B62 /* SortingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C17D6023E0428C00D51B62 /* SortingCell.swift */; };
-		08C17D6223E0563900D51B62 /* SortingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C17D5D23E02B3800D51B62 /* SortingVC.swift */; };
 		08D60E4F23D9786F000D411D /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D60E4E23D9786F000D411D /* PopVC.swift */; };
 		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
 		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
@@ -794,7 +793,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				081120E223BDF77900327FF1 /* SportsGravyTests.swift in Sources */,
-				08C17D6223E0563900D51B62 /* SortingVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

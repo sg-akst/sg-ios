@@ -83,6 +83,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                       self.profileimg.kf.setImage(with: url)
                         self.profileimg.layer.cornerRadius = self.profileimg.frame.size.width/2
                         self.profileimg.layer.backgroundColor = UIColor.lightGray.cgColor
+                        self.profileimg.contentMode = .scaleAspectFill
+
                     }
                     docRef.collection("roles_by_season").getDocuments() { (querySnapshot, err) in
                         if let err = err {
@@ -142,7 +144,9 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         {
             cell.roletype_lbl.setTitleColor(UIColor.init(red: 0, green: 0, blue: 255, alpha: 1.0), for: .normal)
         }
-        cell.roletype_lbl?.setTitle(roleArray?[indexPath.row], for: .normal)
+     
+        cell.roletype_lbl?.setTitle(roleArray?[indexPath.row].capitalized, for: .normal)
+
         cell.roletype_lbl.tag = indexPath.row
         cell.roletype_lbl.addTarget(self, action: #selector(roleChangeMethod), for: .touchUpInside)
         cell.roletype_lbl.sizeToFit()
@@ -221,6 +225,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let vc = storyboard.instantiateViewController(withIdentifier: "Signin_page") as! SigninVC
             self.navigationController?.pushViewController(vc, animated: true)
             UserDefaults.standard.removeObject(forKey: "UUID")
+            UserDefaults.standard.removeObject(forKey: "idtoken")
         }
     }
     

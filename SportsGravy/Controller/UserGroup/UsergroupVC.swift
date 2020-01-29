@@ -551,6 +551,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         vc.getorderArray = addorderArray
         vc.sortingOrderArray = self.TeamArray
         vc.getorganizationDetails = getRolebyreasonDetailArray
+        vc.rolebySeasonid = self.getrolebySeasonid as NSString?
+        vc.getTeamId = self.getTeamId as NSString?
         vc.selectType = "MemberGroup"
         self.navigationController?.pushViewController(vc, animated: true)
     }

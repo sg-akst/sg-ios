@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import Foundation
 import Alamofire
+import SwiftyJSON
 
 class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -22,6 +24,8 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var selectType: String!
     var getorganizationDetails: NSMutableArray!
     var updateArray = [NSDictionary]()
+    var rolebySeasonid: NSString!
+    var getTeamId: NSString!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,63 +146,69 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-           let movedObject = self.sortingOrderArray[sourceIndexPath.row]
-        //sortingOrderArray.remove(sourceIndexPath.row)
-       // self.sortingOrderArray.insert(movedObject, at: destinationIndexPath.row)
+        
+        let item : NSDictionary = sortingOrderArray?[sourceIndexPath.row] as! NSDictionary;
+        self.sortingOrderArray.removeObject(at: sourceIndexPath.row)
+        self.sortingOrderArray.insert(item, at: destinationIndexPath.row)
+        
+        
+//           let movedObject = self.sortingOrderArray[sourceIndexPath.row]
+//        self.sortingOrderArray.remove(sourceIndexPath.row)
+//        self.sortingOrderArray.insert(movedObject, at: destinationIndexPath.row)
           // debugPrint("\(sourceIndexPath.row) => \(destinationIndexPath.row)")
            // To check for correctness enable: self.tableView.reloadData()
-        self.sortingOrderArray.replaceObject(at: destinationIndexPath.row, with: movedObject)
-        self.updateArray = self.sortingOrderArray as! [NSDictionary]
+        //self.sortingOrderArray.replaceObject(at: destinationIndexPath.row, with: movedObject)
+        //self.updateArray = self.sortingOrderArray as? [String]
+        for i in 0..<self.sortingOrderArray.count
+        {
+            let dic: NSMutableDictionary = self.sortingOrderArray?[i] as! NSMutableDictionary
+            dic.removeObject(forKey: "updated_datetime")
+            if(selectType == "CannedResponse")
+            {
+                dic.removeObject(forKey: "created_datetime")
+
+            }
+            self.updateArray.append(dic)
+        }
+        print("\(self.updateArray)")
        }
     @IBAction func updatesorting(_ sender: UIButton)
     {
         Constant.internetconnection(vc: self)
-        //Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
+        Constant.internetconnection(vc: self)
         let testStatusUrl: String = Constant.sharedinstance.updateSorting
-        let header = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
-         var param:[String:AnyObject] = [:]
+        let header  = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken"),"Content-Type" : "application/json"]
         let organization: NSDictionary = self.getorganizationDetails?[0] as! NSDictionary
-//        param["organization_id"] = organization.value(forKey: "organization_id") as! String as AnyObject
-//        param["sports_id"] = organization.value(forKey: "sport_id") as AnyObject?
-//        param["season_id"] = organization.value(forKey: "season_id") as AnyObject?
-//        param["team_id"] = organization.value(forKey: "team_id") as AnyObject?
-//        param["auth_id"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-//        param["roleBySeason_id"] = organization.value(forKey: "role_by_season_id") as AnyObject?
-//        param["title"] = selectType as AnyObject?
-//        param["updateObj"] = self.updateArray as AnyObject
-//        
-        
-        let parameter: [String: AnyObject] = [
-            "organization_id" : organization.value(forKey: "organization_id") as AnyObject,
-            "sports_id" : organization.value(forKey: "sport_id") as AnyObject,
-            "season_id" : organization.value(forKey: "season_id") as AnyObject,
-             "team_id" : organization.value(forKey: "team_id") as AnyObject,
-              "auth_id" : UserDefaults.standard.string(forKey: "UUID") as AnyObject,
-              "roleBySeason_id" : organization.value(forKey: "role_by_season_id") as AnyObject,
-               "title" : selectType as AnyObject,
-            "updateObj": self.updateArray as AnyObject]
+        let parameter: [String: Any] = [
+            "organization_id" : organization.value(forKey: "organization_id") as! String,
+            "sports_id" : organization.value(forKey: "sport_id") as! String,
+            "season_id" : organization.value(forKey: "season_id") as! String,
+             "team_id" : getTeamId as String,
+             "auth_id" : UserDefaults.standard.string(forKey: "UUID")!,
+              "roleBySeason_id" : rolebySeasonid as String,
+               "title" : selectType as String,
+               "updateObj": self.updateArray]
         
         let urlString = "\(testStatusUrl)"
-                   let url = URL.init(string: urlString)
-        Alamofire.request(url!, method: .put, parameters: parameter, encoding: JSONEncoding.default, headers: header as! HTTPHeaders).responseJSON { response in
+        let url = URL.init(string: urlString)
+        print("parameter=>\(parameter)")
+        Alamofire.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON { response in
                         switch response.result
                        {
                        case .success(let json):
                         let jsonData = json
                            print(jsonData)
+                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(self.selectType!) Successfully Updated")
                         case .failure(let error): break
-                          // self.errorFailer(error: error)
+                           //self.errorFailer(error: error)
                        }
+                        Constant.showInActivityIndicatory()
+
                    }
         
-//        Alamofire.request(., method: "http://myserver.com", parameters: parameters, encoding: .JSON)
-//            .responseJSON { request, response, JSON, error in
-//                print(response)
-//                print(JSON)
-//                print(error)
-//            }
-        
+
         
         
         

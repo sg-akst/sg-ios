@@ -532,6 +532,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
            vc.sortingOrderArray = self.TeamArray
            vc.selectType = "CannedResponse"
         vc.getorganizationDetails = getRolebyreasonDetailArray
+        vc.rolebySeasonid = self.getrolebySeasonid as NSString?
+        vc.getTeamId = self.getTeamId as NSString?
            self.navigationController?.pushViewController(vc, animated: true)
        }
 }

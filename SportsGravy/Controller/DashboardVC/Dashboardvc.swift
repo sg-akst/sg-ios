@@ -16,6 +16,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var post_tbl: UITableView!
+    @IBOutlet weak var emptyfeed_img: UIImageView!
+
     var commonArray: NSMutableArray!
 
     override func viewDidLoad() {
@@ -37,6 +39,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.post_tbl.delegate = self
         self.post_tbl.dataSource = self
         commonArray = NSMutableArray()
+        post_tbl.tableFooterView = UIView()
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -68,6 +72,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
                             }
                         }
                         self.post_tbl.reloadData()
+                        self.emptyfeed_img.isHidden = (self.commonArray.count == 0) ? false : true
                           print("\(document.documentID) => \(data)")
                       }
                   }
@@ -75,6 +80,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
           
           Constant.showInActivityIndicatory()
+      
+        
+        
+        
           
         }
     

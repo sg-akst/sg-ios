@@ -132,6 +132,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                 self.profile_imag.kf.setImage(with: url)
                                 self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
                                 self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
+                                self.profile_imag.contentMode = .scaleAspectFill
+
                             }
                             self.email_lbl.text = self.alldoc.value(forKey: "email_address") as? String
                             self.gender_lbl.text = self.alldoc.value(forKey: "gender") as? String
@@ -147,14 +149,15 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
                             self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
                 
-                           
+                           Constant.showInActivityIndicatory()
+
                           } else {
                               print("Document does not exist")
                           }
                         Constant.showInActivityIndicatory()
-                        
+                        self.getplayerlist()
+
                       }
- self.getplayerlist()
     }
     @IBAction func updateprofileImage(_ sender: UIButton)
     {
@@ -220,7 +223,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     func getplayerlist()
     {
         Constant.internetconnection(vc: self)
-        //Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
         let header = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
@@ -243,6 +246,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                            
                             self.playerListArray = NSMutableArray()
                             self.playerListArray = result.mutableCopy() as? NSMutableArray
+                             Constant.showInActivityIndicatory()
+
                             self.getGuardians()
 
                         }
@@ -250,7 +255,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         {
                            // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                         }
-                       // Constant.showInActivityIndicatory()
+                        Constant.showInActivityIndicatory()
                     }
                     break
 
@@ -272,7 +277,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     func getGuardians()
     {
             Constant.internetconnection(vc: self)
-           // Constant.showActivityIndicatory(uiView: self.view)
+            Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
             let header = [
                 "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
@@ -295,6 +300,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                 
                                 self.guardiansListArray = NSMutableArray()
                                 self.guardiansListArray = result.mutableCopy() as? NSMutableArray
+                                Constant.showInActivityIndicatory()
+
                                 self.GetOrganization()
 
                             }
@@ -302,7 +309,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             {
                                // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                             }
-                            //Constant.showInActivityIndicatory()
+                            Constant.showInActivityIndicatory()
                         }
                         break
 
@@ -325,7 +332,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     func GetOrganization()
     {
         Constant.internetconnection(vc: self)
-       // Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
         let header = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
@@ -348,26 +355,30 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             
                             self.organizationListArray = NSMutableArray()
                             self.organizationListArray = result.mutableCopy() as? NSMutableArray
-//                            if(self.playerListArray.count > 0)
-//                            {
-//                                self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]])]
-//                            }
-//                            else if(self.guardiansListArray.count > 0)
-//                            {
-//                                self.sections = [Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]])]
-//                            }
-//                            else if(self.organizationListArray.count > 0)
-//                            {
-//                                self.sections = [Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])]
-//                            }
-                            self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]]),Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])
-                            ]
-                            let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + 1
-                            self.player_tbl_height.constant = CGFloat(height * 88)
+                            if(self.playerListArray.count > 0)
+                            {
+                                //let player = [Category(name:"Player", items:self.playerListArray as! [[String : Any]])]
+                                self.sections.append(Category(name:"Player", items:self.playerListArray as! [[String : Any]]))
+                            }
+                             if(self.guardiansListArray.count > 0)
+                            {
+                                //self.sections = [Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]])]
+                                self.sections.append(Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]))
+                            }
+                             if(self.organizationListArray.count > 0)
+                            {
+                               // self.sections = [Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])]
+                                self.sections.append(Category(name:"Organization", items:self.organizationListArray as! [[String : Any]]))
+                            }
+//                            self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]]),Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])
+//                            ]
+                            let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
+                            self.player_tbl_height.constant = CGFloat(height * 88) + 50
                             self.player_tbl.reloadData()
 
                             self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.player_tbl.frame.origin.y + self.player_tbl_height.constant + 60)
-                           
+                           Constant.showInActivityIndicatory()
+
                         }
                         else
                         {
@@ -396,9 +407,13 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
               guard let tableView = view as? UITableViewHeaderFooterView else { return }
         tableView.backgroundColor = UIColor.white
-       // tableView.textLabel?.backgroundColor = UIColor.white
-              tableView.textLabel?.textColor = UIColor.black
-        
+        tableView.textLabel?.textColor = UIColor.black
+        view.tintColor = UIColor.clear
+        let sepFrame: CGRect = CGRect(x: 0, y: view.frame.size.height-1, width: self.view.frame.size.width, height: 1);
+        let seperatorView = UIView.init(frame: sepFrame)
+        seperatorView.backgroundColor = UIColor.init(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1.0)
+        view.addSubview(seperatorView)
+
           }
    
     
@@ -411,15 +426,17 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
        
         return self.sections[section].name
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90.0
     }
      func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-         return UITableViewAutomaticDimension
+        return 50
      }
+    
 
      func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-         return 44.0
+         return 50.0
      }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -431,17 +448,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: Playercell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! Playercell
-        //  var dict = itemsA[indexPath.section]
-        
-        
             let items = self.sections[indexPath.section].items
             let item = items[indexPath.row]
-        
-       
-       
         cell.selectionStyle = .none
+        if(self.playerListArray.count>0 || self.guardiansListArray.count>0)
+        {
         if(indexPath.section == 0 || indexPath.section == 1)
         {
+           
              cell.username_lbl?.text = (indexPath.section == 0) ? "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" : item["email_address"] as! String
              cell.gender_lbl.text = item["gender"] as? String
         if(item["is_signup_completed"] as! Bool == true)
@@ -477,7 +491,17 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             cell.active_user_imag.tintColor = UIColor.gray
         }
         }
-        else
+            else
+        {
+            let dic: NSArray = item["sports"] as! NSArray
+            let sportsname: NSDictionary = dic[0] as! NSDictionary
+            cell.username_lbl.text = item["abbrev"] as? String
+            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
+            cell.accessoryType = .disclosureIndicator
+
+            }
+        }
+       else
         {
             let dic: NSArray = item["sports"] as! NSArray
             let sportsname: NSDictionary = dic[0] as! NSDictionary

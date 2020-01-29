@@ -522,6 +522,9 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         vc.sortingOrderArray = self.TeamArray
         vc.selectType = "Tags"
         vc.getorganizationDetails = self.getRolebyreasonDetailArray
+        vc.rolebySeasonid = self.getrolebySeasonid as NSString?
+        vc.getTeamId = self.getTeamId as NSString?
+
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
