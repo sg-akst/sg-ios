@@ -74,6 +74,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         getuserDetail()
         createGroupView.isHidden = true
         sortingCanned.isHidden = true
+        self.canned_response_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -289,7 +291,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         }
         else
         {
-           return 80.0
+           return 90.0
         }
      }
 
@@ -316,7 +318,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             cell.delete_enable_img.tintColor = (count > 0 ) ? UIColor.gray : UIColor.red
             cell.username_lbl?.text = dic.value(forKey: "cannedResponseTitle") as? String
             cell.selectionStyle = .none
-            cell.accessoryType =  (count > 0) ? .none : .disclosureIndicator
+            cell.accessoryType =  .disclosureIndicator //(count > 0) ? .none : 
 
                 return cell
         }
@@ -392,7 +394,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         let isDelete: Bool = (count > 0 ) ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "system generated user group cant able to delete")
         }
         else
         {

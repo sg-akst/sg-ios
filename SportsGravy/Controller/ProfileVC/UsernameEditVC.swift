@@ -64,11 +64,11 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         vc.Title = "Select Suffix"
         vc.suffixArray = ["Jr","Sr","II","III","IV","V"]
         vc.delegate = self
-        vc.contentSizeInPopup = CGSize(width: 300.0, height: 345.0)
+        vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: 345.0)
         let popup = STPopupController(rootViewController: vc)
         popup.containerView.layer.cornerRadius = 4;
         popup.navigationBarHidden = true
-        popup.transitionStyle = STPopupTransitionStyle.fade
+        popup.style = .bottomSheet
         popup.present(in: self)
     }
     @IBAction func usernameUpdate(_ sender: UIButton)
@@ -119,8 +119,6 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         self.navigationController?.popViewController(animated: true)
 
                }))
-//        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-//         }))
         
         self.present(alert, animated: true, completion: nil)
         

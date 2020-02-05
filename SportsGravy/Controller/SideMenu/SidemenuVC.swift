@@ -28,6 +28,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var userviewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var logoutypositionConstraint: NSLayoutConstraint!
+
 
     
     var roleArray: [String]!
@@ -43,12 +45,13 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.roleby_reasonArray = NSMutableArray()
         self.role_tbl.delegate = self
         self.role_tbl.dataSource = self
-        getuserDetail()
-
+getuserDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+      
+
 
     }
     func getuserDetail()
@@ -102,8 +105,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             self.roleArray = filteredEvents;
                             self.role_tbl.reloadData()
                             self.rolebaseddisplayviewMethod(SelectRole: firstrole)
-                            self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height + 10
-
+                            self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height
+                            Constant.showInActivityIndicatory()
                         }
                     }
 
@@ -111,8 +114,10 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                    
                   } else {
                       print("Document does not exist")
+                    Constant.showInActivityIndicatory()
+
                   }
-                Constant.showInActivityIndicatory()
+                //Constant.showInActivityIndicatory()
                 
               }
 
@@ -151,6 +156,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.roletype_lbl.addTarget(self, action: #selector(roleChangeMethod), for: .touchUpInside)
         cell.roletype_lbl.sizeToFit()
         cell.roletype_lbl.layoutIfNeeded()
+        cell.selectionStyle = .none
     
         return cell
         }
@@ -208,12 +214,15 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                        self.user_view.isHidden = false
                        self.setting_btn.isHidden = false
                     self.userviewHeightConstraint.constant = 175
+                    self.logoutypositionConstraint.constant = self.setting_btn.frame.size.height-20
 
                    }
                    else{
                        self.user_view.isHidden = true
                        self.setting_btn.isHidden = true
                     self.userviewHeightConstraint.constant = 0
+                    self.logoutypositionConstraint.constant = -(self.setting_btn.frame.size.height)
+
                    }
     }
     

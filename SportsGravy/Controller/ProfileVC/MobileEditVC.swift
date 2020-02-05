@@ -40,7 +40,7 @@ class MobileEditVC: UIViewController{
     }
     @IBAction func mobileUpdate(_ sender: UIButton)
     {
-        if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true)
+        if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true || isValidMobile(testStr: mobile_txt.text!) == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
         }
@@ -53,7 +53,7 @@ class MobileEditVC: UIViewController{
             
         let UpdateID = (isUpdatePage == true) ? getuuid : self.getAllDic.value(forKey: "user_id") as? String
             
-        db.collection("users").document("\(UpdateID!)").updateData(["mobile_phone": "\(mobile_txt.text!)"])
+        db.collection("users").document("\(UpdateID!)").updateData(["mobile_phone": "+1\(mobile_txt.text!)"])
         { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -67,6 +67,11 @@ class MobileEditVC: UIViewController{
             }
         }
         }
+    }
+    func isValidMobile(testStr:String) -> Bool {
+        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
+        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
+        return mobileTest.evaluate(with: testStr)
     }
     func alertermsg(msg: String)
         {

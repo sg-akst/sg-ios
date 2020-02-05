@@ -74,6 +74,8 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             getuserDetail()
             createGroupView.isHidden = true
             sorting.isHidden = true
+            self.tag_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
 
         }
         func getuserDetail()
@@ -381,11 +383,11 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             let isDelete: Bool = (count > 0) ? false : true
             if(isDelete == false)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
+                Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Tag is tied with feed,so cant able to delete")
             }
             else
             {
-                let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete custom group?", preferredStyle: UIAlertController.Style.alert);
+                let alert = UIAlertController(title: " Delete Tag ", message: "Are you sure want to delete custom group?", preferredStyle: UIAlertController.Style.alert);
                 alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                            //Cancel Action
                        }))
@@ -484,7 +486,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                               } else {
                                   print("Document successfully removed!")
                                   Constant.showInActivityIndicatory()
-                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "CannedResponse Removed Successfully")
+                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Tag Removed Successfully")
                                   self.getTag()
                               }
                           }

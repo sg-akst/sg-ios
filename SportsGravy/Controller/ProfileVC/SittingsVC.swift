@@ -55,7 +55,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     cell.segment_btn.tag = indexPath.row
     cell.title_lbl?.text = dic.value(forKey: "title") as? String
     cell.subtitle_lbl.text = dic.value(forKey: "subTitle") as? String
-    cell.segment_btn.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
+    //cell.segment_btn.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
     cell.segment_btn.tag = indexPath.row
     if(UserDefaults.standard.integer(forKey: ("\(indexPath.row)")) == indexPath.row)
     {

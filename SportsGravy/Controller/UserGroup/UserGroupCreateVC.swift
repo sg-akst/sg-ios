@@ -65,7 +65,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.groubdelete_btn.isHidden = false
             self.groupcreate_btn.isHidden = false
             self.group_tittle_txt.isUserInteractionEnabled = false
-            self.groupcreate_btn.setTitle("UPDATE", for: .normal)
+            self.groupcreate_btn.setTitle("Update", for: .normal)
             self.group_tittle_txt.text = self.updateArray.value(forKey: "display_name") as? String
         }
         getGroupDetailMethod()
@@ -74,6 +74,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
        
 
     }
+   
     func getuserDetail()
        {
            self.addOrderView = UIView()
@@ -186,17 +187,22 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableCell(withIdentifier: "headerCell") as? GroubHeaderCell
         let section = groubSection[section].title
-
         header?.header_title_lbl?.text = "\(section)"
-
-        return header
+        return header?.contentView
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
-            let section = groubSection[indexPath.section]
-            section.userlist.removeObject(at: indexPath.item)
-            tableView.reloadData()
-        }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+////        if (editingStyle == UITableViewCellEditingStyle.delete) {
+////            let section = groubSection[indexPath.section]
+////            section.userlist.removeObject(at: indexPath.item)
+////            tableView.reloadData()
+////        }
+//    }
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
     }
     @objc func selectplayer(_ sender: UIButton)
     {
@@ -316,11 +322,18 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     {
         if(isCreate == true)
         {
+            if(group_tittle_txt.text == nil || group_tittle_txt.text?.isEmpty == true)
+            {
+                Constant.showAlertMessage(vc: self, titleStr: "SportGravy", messageStr: "Please enter group title")
+            }
+            else
+            {
             Constant.internetconnection(vc: self)
-            Constant.showActivityIndicatory(uiView: self.view)
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
             let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
+                Constant.showActivityIndicatory(uiView: self.view)
+
             docRef.collection("MemberGroup").document("\(group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "", "user_groupId": "\(group_tittle_txt.text!)","user_list" : self.selectpersonArray] )
             { err in
                     if let err = err {
@@ -345,9 +358,9 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                         print("Document successfully written!")
                         Constant.showInActivityIndicatory()
                                     
-                        self.delegate?.createAfterCallMethod()
-                        self.navigationController?.popViewController(animated: false)
-
+//                        self.delegate?.createAfterCallMethod()
+//                        self.navigationController?.popViewController(animated: false)
+                         self.alertermsg(msg: "User group successfully created")
                                        }
                                    }
                                }
@@ -356,6 +369,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                        }
                        Constant.showInActivityIndicatory()
                    }
+            }
         }
         else
         {
@@ -393,9 +407,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                 } else {
                                     print("Document successfully updated")
                                     Constant.showInActivityIndicatory()
-                                    self.delegate?.createAfterCallMethod()
-                                    self.navigationController?.popViewController(animated: false)
-
+                                   
+                                    self.alertermsg(msg: "User group successfully updated")
                                     
                                 }
                             }
@@ -407,6 +420,19 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             }
         }
     }
+     func alertermsg(msg: String)
+        {
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+    //        self.delegate?.usernameupdateSuccess()
+            self.navigationController?.popViewController(animated: true)
+                self.delegate?.createAfterCallMethod()
+                self.navigationController?.popViewController(animated: false)
+                   }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
     
     
         @IBAction func cancelbtn(_ sender: UIButton)

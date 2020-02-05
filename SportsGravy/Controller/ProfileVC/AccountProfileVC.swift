@@ -90,11 +90,12 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
        player_tbl.delegate = self
        player_tbl.dataSource = self
 
-        role_lbl.text = filtered
+        role_lbl.text = filtered.capitalized
         playerListArray = NSMutableArray()
         guardiansListArray = NSMutableArray()
         organizationListArray = NSMutableArray()
-        
+        self.player_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
         getInformation()
        
     }
@@ -202,7 +203,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             metadata.contentType = "image/jpeg"
              
             let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
-             
+        Constant.showActivityIndicatory(uiView: self.view)
             let store = Storage.storage()
             let user = Auth.auth().currentUser
             if let user = user{
@@ -214,6 +215,32 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                     }
      
                     self.profile_imag.image = profileImageFromPicker
+                    storeRef.downloadURL { (URL, error) -> Void in
+                      if (error != nil) {
+                        // Handle any errors
+                      } else {
+                        // Get the download URL for 'images/stars.jpg'
+
+                        let UrlString = URL!.absoluteString
+                        print(UrlString)
+                        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+                        let db = Firestore.firestore()
+                            
+                        db.collection("users").document("\(getuuid!)").updateData(["profile_image": "\(UrlString)"])
+                              { err in
+                                  if let err = err {
+                                      print("Error updating document: \(err)")
+                                      Constant.showInActivityIndicatory()
+
+                                  } else {
+                                      print("Document successfully updated")
+                                      Constant.showInActivityIndicatory()
+                                      //self.alertermsg(msg: "Mobile number successfully updated")
+
+                                  }
+                              }
+                      }
+                    }
                 }
                  
             }
@@ -370,13 +397,11 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                // self.sections = [Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])]
                                 self.sections.append(Category(name:"Organization", items:self.organizationListArray as! [[String : Any]]))
                             }
-//                            self.sections = [Category(name:"Player", items:self.playerListArray as! [[String : Any]]),Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])
-//                            ]
                             let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
-                            self.player_tbl_height.constant = CGFloat(height * 88) + 50
+                            self.player_tbl_height.constant = (height>2) ? CGFloat(height * 68) :CGFloat(height * 62)
                             self.player_tbl.reloadData()
 
-                            self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.player_tbl.frame.origin.y + self.player_tbl_height.constant + 60)
+                            self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.player_tbl.frame.origin.y + self.player_tbl_height.constant)
                            Constant.showInActivityIndicatory()
 
                         }
@@ -407,36 +432,43 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
               guard let tableView = view as? UITableViewHeaderFooterView else { return }
         tableView.backgroundColor = UIColor.white
-        tableView.textLabel?.textColor = UIColor.black
+        //tableView.textLabel?.textColor = UIColor.black
         view.tintColor = UIColor.clear
+        
+        let headerLabel = UILabel(frame: CGRect(x: 10, y: 8, width:
+        tableView.bounds.size.width-5, height: 30))
+        headerLabel.font = UIFont(name: "Arial", size: 20)
+        headerLabel.textColor = UIColor.black
+        headerLabel.text = self.sections[section].name
+        headerLabel.sizeToFit()
+        view.addSubview(headerLabel)
+        
         let sepFrame: CGRect = CGRect(x: 0, y: view.frame.size.height-1, width: self.view.frame.size.width, height: 1);
         let seperatorView = UIView.init(frame: sepFrame)
         seperatorView.backgroundColor = UIColor.init(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1.0)
-        view.addSubview(seperatorView)
+            view.addSubview(seperatorView)
 
           }
    
-    
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.sections.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       
-        return self.sections[section].name
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//
+//        return self.sections[section].name
+//    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90.0
+        return 80.0
     }
      func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 45
      }
     
 
      func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-         return 50.0
+         return 45.0
      }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -468,7 +500,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         }
         else if(item["is_signup_completed"] as! Bool == false && item["is_invited"] as! Bool == true && item["email_address"] as? String != nil)
         {
-            cell.invite_btn.setTitle("Reinvite", for: .normal)
+            cell.invite_btn.setTitle("Re-invite", for: .normal)
             cell.invite_btn.tintColor = UIColor.blue
             cell.invite_btn.isUserInteractionEnabled = true
 
@@ -519,6 +551,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
       
         let items = self.sections[indexPath.section].items
         let item = items[indexPath.row]
+        if(self.playerListArray.count>0 || self.guardiansListArray.count>0)
+        {
         if(indexPath.section == 0)
         {
             let vc = storyboard?.instantiateViewController(withIdentifier: "playerProfile") as! PlayerProfileVC
@@ -532,7 +566,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
 //            vc.delegate = self
 //            self.navigationController?.pushViewController(vc, animated: true)
         }
-        else if(indexPath.section == 2)
+        }
+        else
         {
             let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
             vc.organizationDetails = item as NSDictionary
@@ -553,6 +588,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBAction func passwordEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatePW") as! PasswordEditVC
+        vc.getAllDic = alldoc
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func mobileEdit(_ sender: UIButton)
@@ -585,6 +621,18 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
        let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
        self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func logout_btnaction(_ sender: UIButton)
+       {
+            try! Auth.auth().signOut()
+           if let storyboard = self.storyboard {
+               
+               let vc = storyboard.instantiateViewController(withIdentifier: "Signin_page") as! SigninVC
+               self.navigationController?.pushViewController(vc, animated: true)
+               UserDefaults.standard.removeObject(forKey: "UUID")
+               UserDefaults.standard.removeObject(forKey: "idtoken")
+           }
+       }
+       
     @IBAction func cancelbtn(_ sender: UIButton)
     {
        self.navigationController?.popViewController(animated: true)

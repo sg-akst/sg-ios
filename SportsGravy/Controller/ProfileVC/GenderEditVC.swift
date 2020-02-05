@@ -50,12 +50,11 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
            vc.Title = "Select Gender"
            vc.suffixArray = ["Male","Female","Other"]
            vc.delegate = self
-           vc.contentSizeInPopup = CGSize(width: 300.0, height: 195.0)
-
+        vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: 195.0)
            let popup = STPopupController(rootViewController: vc)
            popup.containerView.layer.cornerRadius = 4;
            popup.navigationBarHidden = true
-           popup.transitionStyle = STPopupTransitionStyle.fade
+           popup.style = .bottomSheet
            popup.present(in: self)
        }
     

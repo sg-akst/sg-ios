@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlamofireImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>BoringSSL-GRPC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -59,6 +64,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FirebaseInstallations.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FirebaseInstanceID.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -94,17 +104,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>IQKeyboardManagerSwift-IQKeyboardManagerSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>IQKeyboardManagerSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>LayoutHelper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -120,6 +130,11 @@
 			<false/>
 		</dict>
 		<key>Pods-SportsGravyTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PromisesObjC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

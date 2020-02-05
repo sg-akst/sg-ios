@@ -17,10 +17,10 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let bottomBorder = CALayer()
-               bottomBorder.frame = CGRect(x:0, y: self.logoview.frame.size.height - 0.5, width: self.logoview.frame.size.width + 50, height: 0.5)
-                 bottomBorder.backgroundColor = UIColor.gray.cgColor
-               logoview.layer.addSublayer(bottomBorder)
+//        let bottomBorder = CALayer()
+//               bottomBorder.frame = CGRect(x:0, y: self.logoview.frame.size.height - 0.5, width: self.logoview.frame.size.width + 50, height: 0.5)
+//                 bottomBorder.backgroundColor = Constant.getUIColor(hex: "#C0CCDA")?.cgColor
+//               logoview.layer.addSublayer(bottomBorder)
         self.bordermethod(setborder: email_txt)
         self.email_txt.delegate = self
     }
@@ -71,9 +71,14 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func forgotbtn_Action(sender: UIButton)
     {
-        if Constant.isValidEmail(testStr: email_txt.text!) == false{
+        if(email_txt.text!.isEmpty)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter EmailID")
+
+        }
+        else if Constant.isValidEmail(testStr: email_txt.text!) == false{
             print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valide EmailID")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid EmailID")
         }
         else
         {

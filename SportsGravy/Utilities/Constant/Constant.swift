@@ -18,6 +18,7 @@ class Constant: NSObject {
     var getGuardiansbyuid:String = BaseUrl + "getGuardiansByUid?"
     var getOrganizationbyuid: String = BaseUrl + "getOrganizationByUid?"
     var updateSorting: String = BaseUrl + "updateSorting"
+    var signupString: String = BaseUrl + "getUserDetails"
 
     static func internetconnection(vc: UIViewController)
     {

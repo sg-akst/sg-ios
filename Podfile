@@ -5,18 +5,19 @@ target 'SportsGravy' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   
-#  pod 'Alamofire'
+  pod 'Alamofire'
   pod 'IQKeyboardManagerSwift'
-  pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
-  pod 'Firebase/Core'
   pod 'FirebaseFirestoreSwift'
   pod 'SwiftyJSON'
   pod 'Kingfisher'
   pod 'SWRevealViewController'
+  pod 'Firebase'
   pod 'STPopup'
   pod 'Firebase/Storage'
-  pod 'Alamofire'
+  pod 'LayoutHelper'
+  pod 'AlamofireImage'
+
 
   # Pods for SportsGravy
 

@@ -27,6 +27,8 @@ class PopVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
           super.viewDidLoad()
         title_lbl.text = Title
         popTbl.tableFooterView = UIView()
+//        self.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: 300);
+//        self.landscapeContentSizeInPopup = CGSize(width: 400, height: 200);
 
         
       }

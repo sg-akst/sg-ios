@@ -136,11 +136,11 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         let popviewheight : Float = Float(self.getStateArray.count * 45) + 60
         vc.suffixArray = filteredEvents
         vc.delegate = self
-        vc.contentSizeInPopup = CGSize(width: 300.0, height: Double(popviewheight))
+        vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: CGFloat(popviewheight))
         let popup = STPopupController(rootViewController: vc)
         popup.containerView.layer.cornerRadius = 4;
         popup.navigationBarHidden = true
-        popup.transitionStyle = STPopupTransitionStyle.fade
+        popup.style = .bottomSheet
         popup.present(in: self)
     }
     @IBAction func selectCountryCode(_ sender: UIButton)
@@ -153,7 +153,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
 
         vc.suffixArray = filteredEvents
         vc.delegate = self
-        vc.contentSizeInPopup = CGSize(width: 300.0, height: Double(popviewheight))
+        vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: CGFloat(popviewheight))
         let popup = STPopupController(rootViewController: vc)
         popup.containerView.layer.cornerRadius = 4;
         popup.navigationBarHidden = true

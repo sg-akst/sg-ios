@@ -7,53 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080BF3B823BF5BDE00084274 /* SignupVC.swift */; };
-		081120CB23BDF77500327FF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120CA23BDF77500327FF1 /* AppDelegate.swift */; };
+		080E845823E3F19E0092CDB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120CA23BDF77500327FF1 /* AppDelegate.swift */; };
+		080E845923E3F1A30092CDB3 /* UserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */; };
+		080E845A23E3F1A80092CDB3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
+		080E845B23E3F1AD0092CDB3 /* ChildernCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872E64823E2F725008170A0 /* ChildernCell.swift */; };
+		080E845C23E3F1B10092CDB3 /* SortingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C17D6023E0428C00D51B62 /* SortingCell.swift */; };
+		080E845D23E3F1B70092CDB3 /* SittingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814208523DEF890006E0087 /* SittingCell.swift */; };
+		080E845E23E3F1BE0092CDB3 /* Playercell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3D23DAEF090046A7F7 /* Playercell.swift */; };
+		080E845F23E3F1C20092CDB3 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DB23D0524D00CD8A61 /* TagCell.swift */; };
+		080E846023E3F1C70092CDB3 /* UserGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB404223CDD1C500E8A92E /* UserGroupCell.swift */; };
+		080E846123E3F1CA0092CDB3 /* UsergroupCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0374723D5971500FB9DFC /* UsergroupCreateCell.swift */; };
+		080E846223E3F1CE0092CDB3 /* GroubHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0374923D5AD0E00FB9DFC /* GroubHeaderCell.swift */; };
+		080E846323E3F1D30092CDB3 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8723C5F13B00CFB418 /* PostCell.swift */; };
+		080E846423E3F1D80092CDB3 /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */; };
+		080E846523E3F1FD0092CDB3 /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D60E4E23D9786F000D411D /* PopVC.swift */; };
+		080E846623E3F2140092CDB3 /* AccountProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C0C6423D706B2008A33DA /* AccountProfileVC.swift */; };
+		080E846723E3F2180092CDB3 /* OrganizationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228623D851F0008B110D /* OrganizationVC.swift */; };
+		080E846823E3F21E0092CDB3 /* UsernameEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228823D85A40008B110D /* UsernameEditVC.swift */; };
+		080E846923E3F2280092CDB3 /* PasswordEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228A23D85A79008B110D /* PasswordEditVC.swift */; };
+		080E846A23E3F22B0092CDB3 /* MobileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228C23D85AC2008B110D /* MobileEditVC.swift */; };
+		080E846B23E3F22F0092CDB3 /* GenderEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228E23D85AD8008B110D /* GenderEditVC.swift */; };
+		080E846C23E3F2330092CDB3 /* AddressEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F229023D85AEE008B110D /* AddressEditVC.swift */; };
+		080E846D23E3F2370092CDB3 /* PlayerProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */; };
+		080E846E23E3F23C0092CDB3 /* SittingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814208223DEEDF5006E0087 /* SittingsVC.swift */; };
+		080E846F23E3F2410092CDB3 /* CannedResponseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */; };
+		080E847023E3F2450092CDB3 /* CannedResponseCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */; };
+		080E847123E3F24A0092CDB3 /* TagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610D823D04E3E00CD8A61 /* TagVC.swift */; };
+		080E847223E3F24E0092CDB3 /* TagCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E023D069AA00CD8A61 /* TagCreateVC.swift */; };
+		080E847323E3F2520092CDB3 /* UsergroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABF72423CC40180021BA72 /* UsergroupVC.swift */; };
+		080E847423E3F2560092CDB3 /* UserGroupCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0374523D580E000FB9DFC /* UserGroupCreateVC.swift */; };
+		080E847523E3F2590092CDB3 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */; };
+		080E847623E3F25D0092CDB3 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8C23C5F53400CFB418 /* VideoVC.swift */; };
+		080E847723E3F2620092CDB3 /* RateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8E23C5F55500CFB418 /* RateVC.swift */; };
+		080E847823E3F2670092CDB3 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
+		080E847923E3F26B0092CDB3 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
+		080E847A23E3F26E0092CDB3 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080BF3B823BF5BDE00084274 /* SignupVC.swift */; };
+		080E847B23E3F2720092CDB3 /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CC2AE123E2E1D600F5DCB2 /* PersonalInfoVC.swift */; };
+		080E847C23E3F2770092CDB3 /* InvitePlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDF32623E2F34800400919 /* InvitePlayerVC.swift */; };
+		080E847D23E3F27B0092CDB3 /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
+		080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
+		080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5721A23BF3A13000C8852 /* SplashVC.swift */; };
+		080E848123E3F3490092CDB3 /* SortingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E848023E3F3490092CDB3 /* SortingVC.swift */; };
 		081120D223BDF77500327FF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 081120D023BDF77500327FF1 /* Main.storyboard */; };
 		081120D423BDF77800327FF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081120D323BDF77800327FF1 /* Assets.xcassets */; };
 		081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 081120D523BDF77800327FF1 /* LaunchScreen.storyboard */; };
 		081120E223BDF77900327FF1 /* SportsGravyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120E123BDF77900327FF1 /* SportsGravyTests.swift */; };
 		081120ED23BDF77900327FF1 /* SportsGravyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120EC23BDF77900327FF1 /* SportsGravyUITests.swift */; };
-		0811210223BE061B00327FF1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
-		0811210623BE08DD00327FF1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
-		0814208323DEEDF5006E0087 /* SittingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814208223DEEDF5006E0087 /* SittingsVC.swift */; };
-		0814208623DEF890006E0087 /* SittingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814208523DEF890006E0087 /* SittingCell.swift */; };
+		08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
 		084663D723C49E2E00D5A72D /* roboto in Resources */ = {isa = PBXBuildFile; fileRef = 084663D623C49E2E00D5A72D /* roboto */; };
-		08507F5823BF423800CC968F /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
-		08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5A23BF519C00CC968F /* ForgotVC.swift */; };
-		087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */; };
 		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
-		087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */; };
-		089C0C6523D706B2008A33DA /* AccountProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C0C6423D706B2008A33DA /* AccountProfileVC.swift */; };
-		089F228723D851F0008B110D /* OrganizationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228623D851F0008B110D /* OrganizationVC.swift */; };
-		089F228923D85A40008B110D /* UsernameEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228823D85A40008B110D /* UsernameEditVC.swift */; };
-		089F228B23D85A79008B110D /* PasswordEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228A23D85A79008B110D /* PasswordEditVC.swift */; };
-		089F228D23D85AC2008B110D /* MobileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228C23D85AC2008B110D /* MobileEditVC.swift */; };
-		089F228F23D85AD8008B110D /* GenderEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F228E23D85AD8008B110D /* GenderEditVC.swift */; };
-		089F229123D85AEE008B110D /* AddressEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F229023D85AEE008B110D /* AddressEditVC.swift */; };
-		08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB404223CDD1C500E8A92E /* UserGroupCell.swift */; };
-		08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABF72423CC40180021BA72 /* UsergroupVC.swift */; };
-		08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8723C5F13B00CFB418 /* PostCell.swift */; };
-		08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */; };
-		08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8C23C5F53400CFB418 /* VideoVC.swift */; };
-		08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5E8E23C5F55500CFB418 /* RateVC.swift */; };
-		08B0374623D580E000FB9DFC /* UserGroupCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0374523D580E000FB9DFC /* UserGroupCreateVC.swift */; };
-		08B0374823D5971500FB9DFC /* UsergroupCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0374723D5971500FB9DFC /* UsergroupCreateCell.swift */; };
-		08B0374A23D5AD0E00FB9DFC /* GroubHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0374923D5AD0E00FB9DFC /* GroubHeaderCell.swift */; };
-		08B610D923D04E3E00CD8A61 /* TagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610D823D04E3E00CD8A61 /* TagVC.swift */; };
-		08B610DC23D0524D00CD8A61 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DB23D0524D00CD8A61 /* TagCell.swift */; };
-		08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */; };
-		08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E023D069AA00CD8A61 /* TagCreateVC.swift */; };
-		08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */; };
-		08BC6C3E23DAEF090046A7F7 /* Playercell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3D23DAEF090046A7F7 /* Playercell.swift */; };
-		08BC6C4023DB04790046A7F7 /* PlayerProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */; };
-		08C17D5E23E02B3800D51B62 /* SortingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C17D5D23E02B3800D51B62 /* SortingVC.swift */; };
-		08C17D6123E0428C00D51B62 /* SortingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C17D6023E0428C00D51B62 /* SortingCell.swift */; };
-		08D60E4F23D9786F000D411D /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D60E4E23D9786F000D411D /* PopVC.swift */; };
-		08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */; };
-		08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E3658223C457090063C6F4 /* Dashboardvc.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
-		08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5721A23BF3A13000C8852 /* SplashVC.swift */; };
 		5C7B04535684E7D7A13709F6 /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 409505180767F5FA821B8A03 /* Pods_SportsGravy_SportsGravyUITests.framework */; };
 		6B454943E20E754F3C71288B /* Pods_SportsGravyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBF10040B9BC9E0BF9460D4 /* Pods_SportsGravyTests.framework */; };
 		EA770DDDE56B34DD5B49CF99 /* Pods_SportsGravy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC59F340BAA703F17AE90D20 /* Pods_SportsGravy.framework */; };
@@ -78,6 +81,7 @@
 
 /* Begin PBXFileReference section */
 		080BF3B823BF5BDE00084274 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
+		080E848023E3F3490092CDB3 /* SortingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingVC.swift; sourceTree = "<group>"; };
 		081120C723BDF77500327FF1 /* SportsGravy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsGravy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		081120CA23BDF77500327FF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		081120D123BDF77500327FF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 		084663D623C49E2E00D5A72D /* roboto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = roboto; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
+		0872E64823E2F725008170A0 /* ChildernCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildernCell.swift; sourceTree = "<group>"; };
 		087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecord.swift; sourceTree = "<group>"; };
 		087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
@@ -123,14 +128,14 @@
 		08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseCreateVC.swift; sourceTree = "<group>"; };
 		08BC6C3D23DAEF090046A7F7 /* Playercell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playercell.swift; sourceTree = "<group>"; };
 		08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerProfileVC.swift; sourceTree = "<group>"; };
-		08C17D5D23E02B3800D51B62 /* SortingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingVC.swift; sourceTree = "<group>"; };
 		08C17D6023E0428C00D51B62 /* SortingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingCell.swift; sourceTree = "<group>"; };
-		08C17D6323E060BB00D51B62 /* SortingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SortingVC.swift; path = SportsGravy/Controller/SortingOrder/SortingVC.swift; sourceTree = "<group>"; };
+		08CC2AE123E2E1D600F5DCB2 /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
 		08D60E4E23D9786F000D411D /* PopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVC.swift; sourceTree = "<group>"; };
 		08E3657F23C455ED0063C6F4 /* SidemenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidemenuVC.swift; sourceTree = "<group>"; };
 		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
 		08E3658523C4633B0063C6F4 /* fira-sans */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fira-sans"; sourceTree = "<group>"; };
 		08E5721A23BF3A13000C8852 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		08FDF32623E2F34800400919 /* InvitePlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayerVC.swift; sourceTree = "<group>"; };
 		1EBF10040B9BC9E0BF9460D4 /* Pods_SportsGravyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		409505180767F5FA821B8A03 /* Pods_SportsGravy_SportsGravyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy_SportsGravyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CDAF175FBD9AF7F33E7DE9D /* Pods-SportsGravy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravy/Pods-SportsGravy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -174,6 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				080BF3B823BF5BDE00084274 /* SignupVC.swift */,
+				08CC2AE123E2E1D600F5DCB2 /* PersonalInfoVC.swift */,
+				08FDF32623E2F34800400919 /* InvitePlayerVC.swift */,
 			);
 			path = SinginupVC;
 			sourceTree = "<group>";
@@ -181,7 +188,6 @@
 		081120BE23BDF77500327FF1 = {
 			isa = PBXGroup;
 			children = (
-				08C17D6323E060BB00D51B62 /* SortingVC.swift */,
 				081120C923BDF77500327FF1 /* SportsGravy */,
 				081120E023BDF77900327FF1 /* SportsGravyTests */,
 				081120EB23BDF77900327FF1 /* SportsGravyUITests */,
@@ -248,6 +254,7 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0872E64723E2F6F5008170A0 /* Signup */,
 				08C17D5F23E0427400D51B62 /* sorting */,
 				0814208423DEF869006E0087 /* Sitting */,
 				08BC6C3C23DAEEDD0046A7F7 /* Profile */,
@@ -326,6 +333,14 @@
 				08507F5A23BF519C00CC968F /* ForgotVC.swift */,
 			);
 			path = ForgotVC;
+			sourceTree = "<group>";
+		};
+		0872E64723E2F6F5008170A0 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				0872E64823E2F725008170A0 /* ChildernCell.swift */,
+			);
+			path = Signup;
 			sourceTree = "<group>";
 		};
 		087E8B3A23C6F6E800D1F0FF /* Records */ = {
@@ -426,7 +441,7 @@
 		08C17D5C23E02B0400D51B62 /* SortingOrder */ = {
 			isa = PBXGroup;
 			children = (
-				08C17D5D23E02B3800D51B62 /* SortingVC.swift */,
+				080E848023E3F3490092CDB3 /* SortingVC.swift */,
 			);
 			path = SortingOrder;
 			sourceTree = "<group>";
@@ -514,7 +529,7 @@
 				081120C323BDF77500327FF1 /* Sources */,
 				081120C423BDF77500327FF1 /* Frameworks */,
 				081120C523BDF77500327FF1 /* Resources */,
-				8F25B9DD3004ABDC296FF52F /* [CP] Embed Pods Frameworks */,
+				1958FCB76EA6B4899FC08F6C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -552,7 +567,7 @@
 				081120E423BDF77900327FF1 /* Sources */,
 				081120E523BDF77900327FF1 /* Frameworks */,
 				081120E623BDF77900327FF1 /* Resources */,
-				67A364DC9C9EC89236793EF3 /* [CP] Embed Pods Frameworks */,
+				DEA48183A32D1092BE8982A2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -639,6 +654,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1958FCB76EA6B4899FC08F6C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5ED11B8A7C8A518A606DBDB5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -661,40 +693,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		67A364DC9C9EC89236793EF3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8F25B9DD3004ABDC296FF52F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		ABC4B2A27D142323118BCCE8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -715,6 +713,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEA48183A32D1092BE8982A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EF9ACD826CA649569A4F463F /* [CP] Check Pods Manifest.lock */ = {
@@ -746,45 +761,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C17D5E23E02B3800D51B62 /* SortingVC.swift in Sources */,
-				089F228D23D85AC2008B110D /* MobileEditVC.swift in Sources */,
-				089F228B23D85A79008B110D /* PasswordEditVC.swift in Sources */,
-				08AB404323CDD1C500E8A92E /* UserGroupCell.swift in Sources */,
-				08AC5E8F23C5F55500CFB418 /* RateVC.swift in Sources */,
-				089C0C6523D706B2008A33DA /* AccountProfileVC.swift in Sources */,
-				08B610DF23D053B000CD8A61 /* CannedResponseVC.swift in Sources */,
-				08D60E4F23D9786F000D411D /* PopVC.swift in Sources */,
-				08C17D6123E0428C00D51B62 /* SortingCell.swift in Sources */,
-				08ABF72523CC40180021BA72 /* UsergroupVC.swift in Sources */,
-				0814208623DEF890006E0087 /* SittingCell.swift in Sources */,
-				08B0374823D5971500FB9DFC /* UsergroupCreateCell.swift in Sources */,
-				08B610E123D069AA00CD8A61 /* TagCreateVC.swift in Sources */,
-				08B610DC23D0524D00CD8A61 /* TagCell.swift in Sources */,
-				08B0374623D580E000FB9DFC /* UserGroupCreateVC.swift in Sources */,
-				08AC5E8D23C5F53400CFB418 /* VideoVC.swift in Sources */,
-				08B0374A23D5AD0E00FB9DFC /* GroubHeaderCell.swift in Sources */,
-				089F228723D851F0008B110D /* OrganizationVC.swift in Sources */,
-				08E5721B23BF3A13000C8852 /* SplashVC.swift in Sources */,
-				089F228F23D85AD8008B110D /* GenderEditVC.swift in Sources */,
-				0814208323DEEDF5006E0087 /* SittingsVC.swift in Sources */,
-				080BF3B923BF5BDE00084274 /* SignupVC.swift in Sources */,
-				08AC5E8B23C5F52300CFB418 /* CalendarVC.swift in Sources */,
-				081120CB23BDF77500327FF1 /* AppDelegate.swift in Sources */,
-				089F229123D85AEE008B110D /* AddressEditVC.swift in Sources */,
-				08507F5823BF423800CC968F /* SigninVC.swift in Sources */,
-				08BC6C3E23DAEF090046A7F7 /* Playercell.swift in Sources */,
-				0811210223BE061B00327FF1 /* Reachability.swift in Sources */,
-				0811210623BE08DD00327FF1 /* Constant.swift in Sources */,
-				08B610E323D069D500CD8A61 /* CannedResponseCreateVC.swift in Sources */,
-				08B610D923D04E3E00CD8A61 /* TagVC.swift in Sources */,
-				08E3658323C457090063C6F4 /* Dashboardvc.swift in Sources */,
-				089F228923D85A40008B110D /* UsernameEditVC.swift in Sources */,
-				08E3658023C455ED0063C6F4 /* SidemenuVC.swift in Sources */,
-				08BC6C4023DB04790046A7F7 /* PlayerProfileVC.swift in Sources */,
-				087E8B4423C74E4C00D1F0FF /* SideMenuCell.swift in Sources */,
-				087E8B3C23C6F70D00D1F0FF /* UserRecord.swift in Sources */,
-				08507F5B23BF519C00CC968F /* ForgotVC.swift in Sources */,
-				08AC5E8823C5F13B00CFB418 /* PostCell.swift in Sources */,
+				08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */,
+				080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */,
+				080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */,
+				080E847D23E3F27B0092CDB3 /* ForgotVC.swift in Sources */,
+				080E847C23E3F2770092CDB3 /* InvitePlayerVC.swift in Sources */,
+				080E847B23E3F2720092CDB3 /* PersonalInfoVC.swift in Sources */,
+				080E847A23E3F26E0092CDB3 /* SignupVC.swift in Sources */,
+				080E847923E3F26B0092CDB3 /* SidemenuVC.swift in Sources */,
+				080E847823E3F2670092CDB3 /* Dashboardvc.swift in Sources */,
+				080E847723E3F2620092CDB3 /* RateVC.swift in Sources */,
+				080E847623E3F25D0092CDB3 /* VideoVC.swift in Sources */,
+				080E847523E3F2590092CDB3 /* CalendarVC.swift in Sources */,
+				080E847423E3F2560092CDB3 /* UserGroupCreateVC.swift in Sources */,
+				080E847323E3F2520092CDB3 /* UsergroupVC.swift in Sources */,
+				080E847223E3F24E0092CDB3 /* TagCreateVC.swift in Sources */,
+				080E847123E3F24A0092CDB3 /* TagVC.swift in Sources */,
+				080E847023E3F2450092CDB3 /* CannedResponseCreateVC.swift in Sources */,
+				080E846F23E3F2410092CDB3 /* CannedResponseVC.swift in Sources */,
+				080E846E23E3F23C0092CDB3 /* SittingsVC.swift in Sources */,
+				080E846D23E3F2370092CDB3 /* PlayerProfileVC.swift in Sources */,
+				080E846C23E3F2330092CDB3 /* AddressEditVC.swift in Sources */,
+				080E846B23E3F22F0092CDB3 /* GenderEditVC.swift in Sources */,
+				080E846A23E3F22B0092CDB3 /* MobileEditVC.swift in Sources */,
+				080E846923E3F2280092CDB3 /* PasswordEditVC.swift in Sources */,
+				080E846823E3F21E0092CDB3 /* UsernameEditVC.swift in Sources */,
+				080E846723E3F2180092CDB3 /* OrganizationVC.swift in Sources */,
+				080E848123E3F3490092CDB3 /* SortingVC.swift in Sources */,
+				080E846623E3F2140092CDB3 /* AccountProfileVC.swift in Sources */,
+				080E846523E3F1FD0092CDB3 /* PopVC.swift in Sources */,
+				080E846423E3F1D80092CDB3 /* SideMenuCell.swift in Sources */,
+				080E846323E3F1D30092CDB3 /* PostCell.swift in Sources */,
+				080E846223E3F1CE0092CDB3 /* GroubHeaderCell.swift in Sources */,
+				080E846123E3F1CA0092CDB3 /* UsergroupCreateCell.swift in Sources */,
+				080E846023E3F1C70092CDB3 /* UserGroupCell.swift in Sources */,
+				080E845F23E3F1C20092CDB3 /* TagCell.swift in Sources */,
+				080E845E23E3F1BE0092CDB3 /* Playercell.swift in Sources */,
+				080E845D23E3F1B70092CDB3 /* SittingCell.swift in Sources */,
+				080E845C23E3F1B10092CDB3 /* SortingCell.swift in Sources */,
+				080E845B23E3F1AD0092CDB3 /* ChildernCell.swift in Sources */,
+				080E845A23E3F1A80092CDB3 /* Reachability.swift in Sources */,
+				080E845923E3F1A30092CDB3 /* UserRecord.swift in Sources */,
+				080E845823E3F19E0092CDB3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

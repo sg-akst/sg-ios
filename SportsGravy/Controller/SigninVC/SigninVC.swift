@@ -17,6 +17,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var email_txt: UITextField!
     @IBOutlet weak var password_txt: UITextField!
     var revealController: SWRevealViewController!
+    @IBOutlet weak var logoHeight: NSLayoutConstraint!
 
 
     override func viewDidLoad() {
@@ -31,14 +32,16 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        logoHeight.constant = self.view.frame.size.height/2
+       
     }
     func bordermethod(setborder: UITextField)
     {
-        let thickness: CGFloat = 1.0
+        let thickness: CGFloat = 0.5
 
         let bottomBorder = CALayer()
         bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: self.view.frame.size.width - 30, height:thickness)
-        bottomBorder.backgroundColor =  UIColor.lightGray.cgColor
+        bottomBorder.backgroundColor =  Constant.getUIColor(hex: "#C0CCDA")?.cgColor
         setborder.layer.addSublayer(bottomBorder)
     }
     
@@ -55,13 +58,17 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func signin_btnAction(_ sender: UIButton)
     {
-        if Constant.isValidEmail(testStr: email_txt.text!) == false{
-            print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valide EmailID")
-        }
-        else if(password_txt.text!.isEmpty)
+        if(email_txt.text!.isEmpty)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valide Password")
+          Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter EmailID")
+        }
+      else if Constant.isValidEmail(testStr: email_txt.text!) == false{
+            print("Validate EmailID")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid EmailID")
+        }
+        else if(password_txt.text!.isEmpty || password_txt.text!.count < 5)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid Password")
         }
         else
         {
@@ -93,11 +100,14 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                                     Constant.showInActivityIndicatory()
                 let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
                 self?.navigationController?.pushViewController(swrvc, animated: true)
+                    Constant.showInActivityIndicatory()
             }
-                else
-                {
-                    Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invaild Password")
-                }
+            else
+            {
+                Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invaild Password")
+                Constant.showInActivityIndicatory()
+
+            }
                  
 
             }

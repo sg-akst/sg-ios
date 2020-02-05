@@ -74,6 +74,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         getuserDetail()
         createGroupView.isHidden = true
         sortingUser.isHidden = true
+        self.usergroup_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
     }
     func getuserDetail()
     {
@@ -283,7 +285,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         }
         else
         {
-           return 80.0
+           return 90.0
         }
      }
 
@@ -409,7 +411,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         let isDelete: Bool = (count > 0 || groupType == "System_Group") ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Tag is tied with feed,so cant able to delete")
         }
         else
         {

@@ -155,10 +155,6 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //           let movedObject = self.sortingOrderArray[sourceIndexPath.row]
 //        self.sortingOrderArray.remove(sourceIndexPath.row)
 //        self.sortingOrderArray.insert(movedObject, at: destinationIndexPath.row)
-          // debugPrint("\(sourceIndexPath.row) => \(destinationIndexPath.row)")
-           // To check for correctness enable: self.tableView.reloadData()
-        //self.sortingOrderArray.replaceObject(at: destinationIndexPath.row, with: movedObject)
-        //self.updateArray = self.sortingOrderArray as? [String]
         for i in 0..<self.sortingOrderArray.count
         {
             let dic: NSMutableDictionary = self.sortingOrderArray?[i] as! NSMutableDictionary

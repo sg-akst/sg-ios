@@ -17,6 +17,8 @@ import FirebaseFirestore
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 var window: UIWindow?
+    var onlineStatusTimer : Timer!
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
@@ -38,17 +40,88 @@ var window: UIWindow?
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        DispatchQueue.main.async {
+                          self.startTimer()
+                      }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        DispatchQueue.main.async {
+            self.everyhalfnoonTimer()
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+   
+    func application(_ app: UIApplication, open openurl: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let url = "\(openurl)"
+        let queryItems = URLComponents(string: url)?.queryItems
+        let param1 = queryItems?.filter({$0.name == "uid"}).first
+        print(param1?.value as Any)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
 
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "Signup_page") as! SignupVC
+        viewController.uidString = param1?.value
+        let navigationController = UINavigationController.init(rootViewController: viewController)
+              
+        self.window?.rootViewController = navigationController
+        navigationController.navigationBar.isHidden = true
 
+              self.window?.makeKeyAndVisible()
+        
+        
+        return true
+    }
+    func startTimer(){
+        
+        let refreshToken: String = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+        if(refreshToken != "")
+        {
+            onlineStatusTimer = Timer.scheduledTimer(timeInterval:0.1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: false)
+            
+        }
+    }
+    func everyhalfnoonTimer(){
+          
+              let refreshToken: String = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+          if(refreshToken != "")
+          {
+              onlineStatusTimer = Timer.scheduledTimer(timeInterval:5.0 * 60.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+              
+              }
+          }
+    @objc func timerAction() {
+        let refreshToken: String = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+        if(refreshToken != "")
+        {
+            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                               if error != nil {
+                                               // Handle error
+                                               return;
+                                             }
+                                               print("Token=>\(idToken!)")
+                                               UserDefaults.standard.set(idToken, forKey: "idtoken")
+        }
+                           
+    }
+    }
+
+    func application(_ application: UIApplication,
+                            performFetchWithCompletionHandler completionHandler:
+               @escaping (UIBackgroundFetchResult) -> Void) {
+               print("1 hour")
+               DispatchQueue.main.async {
+                   self.startTimer()
+               }
+               // Check for new data.
+       //        if let newData = fetchUpdates() {
+       ////            addDataToFeed(newData: newData)
+       //            completionHandler(.newData)
+       //        }
+               completionHandler(.noData)
+           }
 }
 

@@ -60,9 +60,11 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
            self.delete_btn.isHidden = false
             self.create_btn.isHidden = false
             self.canRespons_tittle_txt.isUserInteractionEnabled = false
-            self.create_btn.setTitle("UPDATE", for: .normal)
+            self.create_btn.setTitle("Update", for: .normal)
             self.canRespons_tittle_txt.text = updateArray.value(forKey: "cannedResponseTitle") as? String
             self.canRespons_txv.text = updateArray.value(forKey: "cannedResponseDesc") as? String
+            let count : Int = updateArray.value(forKey: "count") as! Int
+            delete_btn.backgroundColor = (count > 0 ) ? UIColor.gray : UIColor.red
             
         }
         canRespons_txv.layer.borderColor = UIColor.darkGray.cgColor
@@ -112,6 +114,12 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
     {
         if(isCreate == true)
         {
+            if(canRespons_tittle_txt.text == nil || canRespons_tittle_txt.text?.isEmpty == true)
+            {
+                Constant.showAlertMessage(vc: self, titleStr: "SportGravy", messageStr: "Please enter Canned Response Tiltle")
+            }
+            else
+            {
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
@@ -140,8 +148,9 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                             } else {
                                 print("Document successfully written!")
                                 Constant.showInActivityIndicatory()
-                                self.delegate?.createAfterCallMethod()
-                                self.navigationController?.popViewController(animated: false)
+                                self.alertermsg(msg: "CannedResponse successfully Created")
+//                                self.delegate?.createAfterCallMethod()
+//                                self.navigationController?.popViewController(animated: false)
 
                             }
                         }
@@ -151,6 +160,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
             }
             Constant.showInActivityIndicatory()
         }
+            }
         }
         else
         {
@@ -188,8 +198,9 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                                 } else {
                                     print("Document successfully updated")
                                     Constant.showInActivityIndicatory()
-                                    self.delegate?.createAfterCallMethod()
-                                    self.navigationController?.popViewController(animated: false)
+                                    self.alertermsg(msg: "CannedResponse successfully updated")
+//                                    self.delegate?.createAfterCallMethod()
+//                                    self.navigationController?.popViewController(animated: false)
 
                                     
                                 }
@@ -204,6 +215,22 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         }
                
     }
+    
+    func alertermsg(msg: String)
+        {
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+    //        self.delegate?.usernameupdateSuccess()
+            self.navigationController?.popViewController(animated: true)
+                self.delegate?.createAfterCallMethod()
+                
+                   }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+    
+    
     func deleteMethod()
     {
         Constant.internetconnection(vc: self)
