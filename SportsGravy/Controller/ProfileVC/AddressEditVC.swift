@@ -157,7 +157,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         let popup = STPopupController(rootViewController: vc)
         popup.containerView.layer.cornerRadius = 4;
         popup.navigationBarHidden = true
-        popup.transitionStyle = STPopupTransitionStyle.fade
+        popup.style = .bottomSheet
         popup.present(in: self)
     }
     
@@ -220,7 +220,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
                 } else {
                     print("Document successfully updated")
                     Constant.showInActivityIndicatory()
-                    self.alertermsg(msg: "Address successfully updated")
+                    self.alertermsg(msg: "Address updated successfully")
 
                     
                 }

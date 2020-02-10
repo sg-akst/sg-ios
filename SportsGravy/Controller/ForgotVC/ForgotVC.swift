@@ -12,20 +12,17 @@ import Firebase
 class ForgotVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logoview: UIView!
     @IBOutlet weak var email_txt: UITextField!
+    @IBOutlet weak var logoviewheight:NSLayoutConstraint!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        let bottomBorder = CALayer()
-//               bottomBorder.frame = CGRect(x:0, y: self.logoview.frame.size.height - 0.5, width: self.logoview.frame.size.width + 50, height: 0.5)
-//                 bottomBorder.backgroundColor = Constant.getUIColor(hex: "#C0CCDA")?.cgColor
-//               logoview.layer.addSublayer(bottomBorder)
         self.bordermethod(setborder: email_txt)
         self.email_txt.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(true)
+        logoviewheight.constant = self.view.frame.size.height/2
        }
     func bordermethod(setborder: UITextField)
     {
@@ -73,12 +70,12 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
     {
         if(email_txt.text!.isEmpty)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter EmailID")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
 
         }
         else if Constant.isValidEmail(testStr: email_txt.text!) == false{
             print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid EmailID")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
         }
         else
         {

@@ -88,7 +88,7 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
         }
         if(self.confirm_lbl.text != self.confirm_lbl.text)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter password ")
 
         }
         if(self.suffix_lbl.text == "" || self.suffix_lbl.text?.isEmpty == true)

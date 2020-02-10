@@ -15,7 +15,7 @@ protocol mobileEditDelegate: AnyObject {
 
 }
 
-class MobileEditVC: UIViewController{
+class MobileEditVC: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var mobile_txt: UITextField!
     var getAllDic: NSDictionary!
@@ -25,7 +25,7 @@ class MobileEditVC: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //mobile_txt.delegate = self
+        mobile_txt.delegate = self
         bottomlineMethod(selecttext: mobile_txt)
         mobile_txt.text = self.getAllDic.value(forKey: "mobile_phone") as? String
 
@@ -38,6 +38,14 @@ class MobileEditVC: UIViewController{
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+   let currentCharacterCount = textField.text?.characters.count ?? 0
+    if (range.length + range.location > currentCharacterCount){
+        return false
+    }
+    let newLength = currentCharacterCount + string.characters.count - range.length
+    return newLength <= 10
+              }
     @IBAction func mobileUpdate(_ sender: UIButton)
     {
         if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true || isValidMobile(testStr: mobile_txt.text!) == false)
@@ -62,7 +70,7 @@ class MobileEditVC: UIViewController{
             } else {
                 print("Document successfully updated")
                 Constant.showInActivityIndicatory()
-                self.alertermsg(msg: "Mobile number successfully updated")
+                self.alertermsg(msg: "Mobile number Updated successfully")
 
             }
         }

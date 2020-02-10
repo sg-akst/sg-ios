@@ -43,33 +43,99 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     
     func getuserDetail()
     {
+        let buttons: NSMutableArray = NSMutableArray()
+        var indexOfLeftmostButtonOnCurrentLine: Int = 0
+        var runningWidth: CGFloat = 10.0
+        let maxWidth: CGFloat = 375.0
+        let horizontalSpaceBetweenButtons: CGFloat = 5.0
+        let verticalSpaceBetweenButtons: CGFloat = 5.0
         self.addOrderView = UIView()
         self.addOrderView.frame = self.SelectorderView.bounds
         for i in 0..<self.getorderArray.count
-        {
-            let btn_width = (i==0) ? 30 : 70
-            
-            let frame1 = (i > 3) ? (getorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 ) : (getorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
-            let button = UIButton(frame: frame1)
+        {            
+            let button: UIButton = UIButton(type: .roundedRect)
+            button.titleLabel?.font = UIFont(name: "Arial", size: 20)
             button.setTitle("\(getorderArray[i] as! String)", for: .normal)
+            let title: String = getorderArray?[i] as! String
+            button.translatesAutoresizingMaskIntoConstraints = false
+            let attrStr = NSMutableAttributedString(string: "\(title)")
+            if(i != 0)
+            {
+                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+            }
+            button.setAttributedTitle(attrStr, for: .normal)
             let lastIndex: Int = getorderArray.count-1
             
-            if(lastIndex == i)
-           {
-            button.setTitleColor(UIColor.gray, for: .normal)
+             if(lastIndex == i)
+            {
+             button.tintColor = UIColor.gray
+             button.setTitleColor(UIColor.gray, for: .normal)
+             button.isUserInteractionEnabled = false
+             }
+             else
+            {
+             button.tintColor = UIColor.blue
+             button.setTitleColor(UIColor.blue, for: .normal)
+             button.isUserInteractionEnabled = true
 
-            }
-            else
-           {
-            button.setTitleColor(UIColor.blue, for: .normal)
-
-            }
+             }
             
             button.titleLabel?.textAlignment = .center
             button.sizeToFit()
             button.tag = i
             self.addOrderView.addSubview(button)
             button.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+             if ((i == 0) || (runningWidth + button.frame.size.width > maxWidth)){
+                 runningWidth = button.frame.size.width
+                if(i==0)
+                {
+                    // first button (top left)
+                    // horizontal position: same as previous leftmost button (on line above)
+                   let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: self.addOrderView, attribute: .left, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                   button.setAttributedTitle(attrStr, for: .normal)
+                    addOrderView.addConstraint(horizontalConstraint)
+                    
+                    // vertical position:
+                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self.addOrderView, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                    self.addOrderView.addConstraint(verticalConstraint)
+                        
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                                //   [self.view addConstraint:verticalConstraint];
+
+                }
+                else{
+                    // put it in new line
+                    let previousLeftmostButton: UIButton = buttons.object(at: indexOfLeftmostButtonOnCurrentLine) as! UIButton
+
+                    // horizontal position: same as previous leftmost button (on line above)
+                    let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
+                    self.addOrderView.addConstraint(horizontalConstraint)
+
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+                   // [self.view addConstraint:horizontalConstraint];
+
+                    // vertical position:
+                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                    self.addOrderView.addConstraint(verticalConstraint)
+
+                    //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                    //[self.view addConstraint:verticalConstraint];
+
+                    indexOfLeftmostButtonOnCurrentLine = i
+                }
+            }
+            else
+            {
+                runningWidth += button.frame.size.width + horizontalSpaceBetweenButtons;
+
+                let previousButton: UIButton = buttons.object(at: i-1) as! UIButton
+                           
+                let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                self.addOrderView.addConstraint(horizontalConstraint)
+                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
+                self.addOrderView.addConstraint(verticalConstraint)
+            }
+            buttons.add(button)
 
         }
        
@@ -124,6 +190,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
             Constant.showInActivityIndicatory()
         }
     }
+    
     @IBAction func cancelbtn(_ sender: UIButton)
     {
       self.navigationController?.popViewController(animated: true)

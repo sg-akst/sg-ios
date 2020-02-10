@@ -77,32 +77,99 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
    
     func getuserDetail()
        {
+           let buttons: NSMutableArray = NSMutableArray()
+           var indexOfLeftmostButtonOnCurrentLine: Int = 0
+           var runningWidth: CGFloat = 10.0
+           let maxWidth: CGFloat = 375.0
+           let horizontalSpaceBetweenButtons: CGFloat = 5.0
+           let verticalSpaceBetweenButtons: CGFloat = 5.0
            self.addOrderView = UIView()
            self.addOrderView.frame = self.SelectorderView.bounds
            for i in 0..<self.getorderArray.count
            {
-               
-               let frame1 = (i > 3) ? (getorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 ) : (getorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 )
-               selectOption_btn = UIButton(frame: frame1)
+             selectOption_btn = UIButton(type: .roundedRect)
+               selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
                selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
+               let title: String = getorderArray?[i] as! String
+               selectOption_btn.translatesAutoresizingMaskIntoConstraints = false
+               let attrStr = NSMutableAttributedString(string: "\(title)")
+               if(i != 0)
+               {
+                   attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+               }
+               selectOption_btn.setAttributedTitle(attrStr, for: .normal)
                let lastIndex: Int = getorderArray.count-1
-               
+                          
                if(lastIndex == i)
-              {
-               selectOption_btn.setTitleColor(UIColor.gray, for: .normal)
+            {
+                selectOption_btn.tintColor = UIColor.gray
+                selectOption_btn.setTitleColor(UIColor.gray, for: .normal)
+                selectOption_btn.isUserInteractionEnabled = false
+                }
+                else
+                {
+            selectOption_btn.tintColor = UIColor.blue
+            selectOption_btn.setTitleColor(UIColor.blue, for: .normal)
+            selectOption_btn.isUserInteractionEnabled = true
 
-               }
-               else
-              {
-               selectOption_btn.setTitleColor(UIColor.blue, for: .normal)
-
-               }
+            }
                
                selectOption_btn.titleLabel?.textAlignment = .center
                selectOption_btn.sizeToFit()
                selectOption_btn.tag = i
                self.addOrderView.addSubview(selectOption_btn)
                selectOption_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+                if ((i == 0) || (runningWidth + selectOption_btn.frame.size.width > maxWidth)){
+                    runningWidth = selectOption_btn.frame.size.width
+                   if(i==0)
+                   {
+                       // first button (top left)
+                       // horizontal position: same as previous leftmost button (on line above)
+                      let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .left, relatedBy: .equal, toItem: self.addOrderView, attribute: .left, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                      selectOption_btn.setAttributedTitle(attrStr, for: .normal)
+                       addOrderView.addConstraint(horizontalConstraint)
+                       
+                       // vertical position:
+                       let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrderView, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                       self.addOrderView.addConstraint(verticalConstraint)
+                           
+                           //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                                   //   [self.view addConstraint:verticalConstraint];
+
+                   }
+                   else{
+                       // put it in new line
+                       let previousLeftmostButton: UIButton = buttons.object(at: indexOfLeftmostButtonOnCurrentLine) as! UIButton
+
+                       // horizontal position: same as previous leftmost button (on line above)
+                       let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
+                       self.addOrderView.addConstraint(horizontalConstraint)
+
+                           //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+                      // [self.view addConstraint:horizontalConstraint];
+
+                       // vertical position:
+                       let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                       self.addOrderView.addConstraint(verticalConstraint)
+
+                       //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                       //[self.view addConstraint:verticalConstraint];
+
+                       indexOfLeftmostButtonOnCurrentLine = i
+                   }
+               }
+               else
+               {
+                   runningWidth += selectOption_btn.frame.size.width + horizontalSpaceBetweenButtons;
+
+                   let previousButton: UIButton = buttons.object(at: i-1) as! UIButton
+                              
+                   let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                   self.addOrderView.addConstraint(horizontalConstraint)
+                   let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
+                   self.addOrderView.addConstraint(verticalConstraint)
+               }
+               buttons.add(selectOption_btn)
 
            }
           
@@ -190,13 +257,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         header?.header_title_lbl?.text = "\(section)"
         return header?.contentView
     }
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-////        if (editingStyle == UITableViewCellEditingStyle.delete) {
-////            let section = groubSection[indexPath.section]
-////            section.userlist.removeObject(at: indexPath.item)
-////            tableView.reloadData()
-////        }
-//    }
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
     }
@@ -221,7 +281,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         else
        {
         cell?.checkbox.backgroundColor = UIColor.green
-        let getvalue: NSMutableDictionary = dicvalu.userlist[0] as! NSMutableDictionary
+        let getvalue: NSMutableDictionary = dicvalu.userlist[sender.tag] as! NSMutableDictionary
 
         self.selectpersonArray.append(getvalue)
         }

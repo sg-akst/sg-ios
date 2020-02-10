@@ -37,21 +37,71 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }
+    // Textfiled delegate
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
+    {
+        // return NO to disallow editing.
+        return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        // became first responder
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool
+    {
+        // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
+        return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason)
+    {
+        // if implemented, called in place of textFieldDidEndEditing:
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool
+    {
+        // called when clear button pressed. return NO to ignore (no notifications)
+        return true
+    }
+   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+       if let text = textField.text {
+           let str = (text as NSString).replacingCharacters(in: range, with: string).replacingOccurrences(of: "(0)", with: "")
+           if !str.isEmpty {
+               textField.text = "" + str
+           } else {
+               textField.text = nil
+           }
+       }
+       return false
+   }
+
     @IBAction func passwordUpdate(_ sender: UIButton)
     {
         if(self.oldpw_txt.text == nil || self.oldpw_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter old password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter old password ")
 
         }
         else if(self.newpw_txt.text == nil || self.newpw_txt.text?.isEmpty == true || self.newpw_txt.text!.count < 5)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter new password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter new password ")
 
         }
+        else if(self.oldpw_txt.text != self.newpw_txt.text)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Old password and new password should not be same")
+        }
+            
         else if(self.newpw_txt.text != self.confirmpw_txt.text)
         {
-              Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check new password")
+              Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password and confirm password doesn’t match")
         }
         else
         {
@@ -62,7 +112,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
                 if error != nil {
                     //completion(error)
                     print(error!)
-                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "please enter vaild oldpassword")
+                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "please enter oldpassword")
                    Constant.showInActivityIndicatory()
 
                 }
@@ -72,7 +122,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
                         Constant.showInActivityIndicatory()
                         //Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password successfully updated")
                        // self.navigationController?.popViewController(animated: true)
-                        self.alertermsg(msg: "Password successfully updated")
+                        self.alertermsg(msg: "Password updated successfully")
                     })
                 }
             })

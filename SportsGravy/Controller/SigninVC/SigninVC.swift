@@ -60,15 +60,15 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     {
         if(email_txt.text!.isEmpty)
         {
-          Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter EmailID")
+          Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
         }
       else if Constant.isValidEmail(testStr: email_txt.text!) == false{
             print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid EmailID")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
         }
         else if(password_txt.text!.isEmpty || password_txt.text!.count < 5)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid Password")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Password")
         }
         else
         {

@@ -55,9 +55,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
     
    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.revealViewController()?.delegate = self
@@ -85,48 +82,132 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     
     func getuserDetail()
     {
-        if(self.addOrder != nil)
-        {
-           self.addOrder.removeFromSuperview()
-        }
-        self.addOrder = UIView()
-        self.addOrder.frame = self.addorderview.bounds
-        for i in 0..<self.addorderArray.count
-        {
+            let buttons: NSMutableArray = NSMutableArray()
+            var indexOfLeftmostButtonOnCurrentLine: Int = 0
+            var runningWidth: CGFloat = 10.0
+            let maxWidth: CGFloat = 375.0
+            let horizontalSpaceBetweenButtons: CGFloat = 5.0
+            let verticalSpaceBetweenButtons: CGFloat = 5.0
+            if(self.addOrder != nil)
+            {
+               self.addOrder.removeFromSuperview()
+            }
+            self.addOrder = UIView()
+            self.addOrder.frame = self.addorderview.bounds
+            for i in 0..<self.addorderArray.count
+            {
+                addTitle_btn = UIButton(type: .roundedRect)
+    
+                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+                addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
+                let title: String = addorderArray?[i] as! String
+                addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
+                let attrStr = NSMutableAttributedString(string: "\(title)")
+               
+                if(i != 0)
+                {
+                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                }
+               addTitle_btn.setAttributedTitle(attrStr, for: .normal)
+
+                let lastIndex: Int = addorderArray.count-1
+               
+                if(lastIndex == i)
+               {
+                addTitle_btn.tintColor = UIColor.gray
+                addTitle_btn.setTitleColor(UIColor.gray, for: .normal)
+                addTitle_btn.isUserInteractionEnabled = false
+                }
+                else
+               {
+                addTitle_btn.tintColor = UIColor.blue
+                addTitle_btn.setTitleColor(UIColor.blue, for: .normal)
+                addTitle_btn.isUserInteractionEnabled = true
+
+                }
+                addTitle_btn.sizeToFit()
+                addTitle_btn.tag = i
+                self.addOrder.addSubview(addTitle_btn)
+                addTitle_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+                if ((i == 0) || (runningWidth + addTitle_btn.frame.size.width > maxWidth))
+                 {
+                     runningWidth = addTitle_btn.frame.size.width
+                    if(i==0)
+                    {
+                        // first button (top left)
+                        // horizontal position: same as previous leftmost button (on line above)
+                       let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: self.addOrder, attribute: .left, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                       addTitle_btn.setAttributedTitle(attrStr, for: .normal)
+                        addOrder.addConstraint(horizontalConstraint)
+                        
+                        // vertical position:
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrder, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                        self.addOrder.addConstraint(verticalConstraint)
+                            
+                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                                    //   [self.view addConstraint:verticalConstraint];
+
+                    }
+                    else{
+                        // put it in new line
+                        let previousLeftmostButton: UIButton = buttons.object(at: indexOfLeftmostButtonOnCurrentLine) as! UIButton
+
+                        // horizontal position: same as previous leftmost button (on line above)
+                        let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
+                        self.addOrder.addConstraint(horizontalConstraint)
+
+                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+                       // [self.view addConstraint:horizontalConstraint];
+
+                        // vertical position:
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                        self.addOrder.addConstraint(verticalConstraint)
+
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                        //[self.view addConstraint:verticalConstraint];
+
+                        indexOfLeftmostButtonOnCurrentLine = i
+                    }
+                }
+                else
+                {
+                    runningWidth += addTitle_btn.frame.size.width + horizontalSpaceBetweenButtons;
+
+                    let previousButton: UIButton = buttons.object(at: i-1) as! UIButton  //[buttons objectAtIndex:(i-1)];
+
+                               // horizontal position: right from previous button
+                    let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                    self.addOrder.addConstraint(horizontalConstraint)
+                        
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeRight multiplier:1.0f constant:horizontalSpaceBetweenButtons];
+                              // [self.view addConstraint:horizontalConstraint];
+
+                               // vertical position same as previous button
+                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
+                    self.addOrder.addConstraint(verticalConstraint)
+
+                        
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+                             //  [self.view addConstraint:verticalConstraint];
+                }
+                buttons.add(addTitle_btn)
+
+                
+            }
+           
+            self.addorderview.addSubview(addOrder)
             
-            let frame1 = (i > 3) ? (addorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 ) : (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: 70, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: 70, height: 40 )
-            addTitle_btn = UIButton(frame: frame1)
-            addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
-            let lastIndex: Int = addorderArray.count-1
+             
             
-            if(lastIndex == i)
-           {
-            addTitle_btn.setTitleColor(UIColor.gray, for: .normal)
+            
+            if(commonArray.count > 0)
+            {
+                commonArray.removeAll { $0 == "" }
+                canned_response_tbl.reloadData()
 
             }
-            else
-           {
-            addTitle_btn.setTitleColor(UIColor.blue, for: .normal)
-
-            }
-            
-            addTitle_btn.titleLabel?.textAlignment = .center
-            addTitle_btn.sizeToFit()
-            addTitle_btn.tag = i
-            self.addOrder.addSubview(addTitle_btn)
-            addTitle_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
 
         }
-       
-        self.addorderview.addSubview(addOrder)
-        if(commonArray.count > 0)
-        {
-            commonArray.removeAll { $0 == "" }
-            canned_response_tbl.reloadData()
-
-        }
-
-    }
     func getorganization()
     {
         self.commonArray = NSMutableArray() as? [String]

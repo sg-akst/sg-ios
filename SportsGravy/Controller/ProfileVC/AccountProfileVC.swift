@@ -374,8 +374,6 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                     if let data = response.result.value{
                         let info = data as? NSDictionary
                         let statusCode = info?["status"] as? Bool
-                        //let message = info?["message"] as? String
-
                         if(statusCode == true)
                         {
                             let result = info?["data"] as! NSArray
@@ -384,18 +382,15 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             self.organizationListArray = result.mutableCopy() as? NSMutableArray
                             if(self.playerListArray.count > 0)
                             {
-                                //let player = [Category(name:"Player", items:self.playerListArray as! [[String : Any]])]
-                                self.sections.append(Category(name:"Player", items:self.playerListArray as! [[String : Any]]))
+                              self.sections.append(Category(name:"Player", items:self.playerListArray as! [[String : Any]]))
                             }
                              if(self.guardiansListArray.count > 0)
                             {
-                                //self.sections = [Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]])]
                                 self.sections.append(Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]))
                             }
                              if(self.organizationListArray.count > 0)
                             {
-                               // self.sections = [Category(name:"Organization", items:self.organizationListArray as! [[String : Any]])]
-                                self.sections.append(Category(name:"Organization", items:self.organizationListArray as! [[String : Any]]))
+                             self.sections.append(Category(name:"Organization", items:self.organizationListArray as! [[String : Any]]))
                             }
                             let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
                             self.player_tbl_height.constant = (height>2) ? CGFloat(height * 68) :CGFloat(height * 62)
@@ -437,11 +432,21 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         
         let headerLabel = UILabel(frame: CGRect(x: 10, y: 8, width:
         tableView.bounds.size.width-5, height: 30))
-        headerLabel.font = UIFont(name: "Arial", size: 20)
+        headerLabel.font = UIFont(name: "Arial-BoldMT", size: 20)
         headerLabel.textColor = UIColor.black
         headerLabel.text = self.sections[section].name
         headerLabel.sizeToFit()
+        
         view.addSubview(headerLabel)
+        if(self.guardiansListArray.count > 0 && section == 1)
+       {
+        let invite: UIButton = UIButton.init(frame: CGRect(x: tableView.bounds.size.width - 150, y: 10, width: 130, height: 30))
+        invite.setTitle("Invite Guardian", for: .normal)
+        invite.setTitleColor(UIColor.blue, for: .normal)
+        invite.addTarget(self, action: #selector(inviteGuardian), for: .touchUpInside)
+        view.addSubview(invite)
+        }
+         
         
         let sepFrame: CGRect = CGRect(x: 0, y: view.frame.size.height-1, width: self.view.frame.size.width, height: 1);
         let seperatorView = UIView.init(frame: sepFrame)
@@ -483,13 +488,30 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             let items = self.sections[indexPath.section].items
             let item = items[indexPath.row]
         cell.selectionStyle = .none
+        cell.invite_btn.tag = indexPath.section
+        cell.invite_btn.addTarget(self, action: #selector(reinvite), for: .touchUpInside)
         if(self.playerListArray.count>0 || self.guardiansListArray.count>0)
         {
-        if(indexPath.section == 0 || indexPath.section == 1)
+            if(indexPath.section == 0  || indexPath.section == 1)
         {
            
-             cell.username_lbl?.text = (indexPath.section == 0) ? "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" : item["email_address"] as! String
-             cell.gender_lbl.text = item["gender"] as? String
+            if(indexPath.section == 0)
+            {
+             cell.username_lbl?.text = "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
+            cell.gender_lbl.text =  item["gender"] as? String
+            }
+            else
+            {
+                cell.username_lbl?.text =  item["email_address"] as? String
+                let playDIC : NSDictionary  =  self.playerListArray?[0] as! NSDictionary
+                //print(playerguardian)
+                let playerGuardianArray: NSArray = playDIC.value(forKey: "parent_user_id") as! NSArray
+                let contained = playerGuardianArray.contains("\(item["user_id"]!)")
+                cell.gender_lbl.text = (contained) ? "Guardian of \(username_lbl.text!)" : "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
+                
+            }
+            
+        
         if(item["is_signup_completed"] as! Bool == true)
         {
             cell.active_user_imag.image = UIImage(named: "activeuser")
@@ -509,7 +531,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         }
         else if(item["is_signup_completed"] as! Bool == false && item["is_invited"] as! Bool == false && item["email_address"] as? String != nil)
         {
-            cell.invite_btn.setTitle("Pending", for: .normal)
+            //Pending
+            cell.invite_btn.setTitle("Re-invite", for: .normal)
             cell.invite_btn.tintColor = UIColor.gray
             cell.invite_btn.isUserInteractionEnabled = false
 
@@ -575,6 +598,47 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             self.navigationController?.pushViewController(vc, animated: true)
         }
 
+    }
+    @objc func reinvite(_ sender: UIButton)
+    {
+        print("tag:\(sender.tag)")
+        
+        let button = sender
+        let cell = button.superview?.superview as? Playercell
+        let indexPaths = player_tbl.indexPath(for: cell!)
+        let dicvalu = sections[indexPaths!.section]
+        print(dicvalu)
+        let getvalue: NSDictionary = dicvalu.items[sender.tag] as NSDictionary
+
+        let invite: Bool = getvalue.value(forKey: "is_invited")! as! Bool
+        let signup: Bool = getvalue.value(forKey: "is_signup_completed")! as! Bool
+        if(invite == true && signup == false)
+        {
+//          Constant.internetconnection(vc: self)
+//                 Constant.showActivityIndicatory(uiView: self.view)
+//                 let getuuid = UserDefaults.standard.string(forKey: "UUID")
+                  let db = Firestore.firestore()
+            db.collection("users").document(getvalue["user_id"] as! String).updateData(["is_invited": false])
+            { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                    Constant.showInActivityIndicatory()
+
+                } else {
+                    print("Document successfully updated")
+                    Constant.showInActivityIndicatory()
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Re-invite successfully")
+                }
+            }
+        }
+        
+    }
+    
+    @objc func inviteGuardian(_ sender: UIButton)
+    {
+        let vc: InviteGuardianVC = (self.storyboard?.instantiateViewController(identifier: "guardian"))!
+        vc.player_list_Array = self.playerListArray
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func usernameEdit(_ sender: UIButton)

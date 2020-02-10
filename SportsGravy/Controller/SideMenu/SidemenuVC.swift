@@ -67,7 +67,7 @@ getuserDetail()
                   
                   if let document = document, document.exists {
                    let doc: NSDictionary = document.data()! as NSDictionary
-                    self.username_lbl.text = "\(doc.value(forKey: "first_name")!)" + " " + "\(doc.value(forKey: "middle_initial")!)" + " " + "\(doc.value(forKey: "last_name")!)"
+                    self.username_lbl.text = "\(doc.value(forKey: "first_name")!)" + " " + "\(doc.value(forKey: "middle_initial")!)" + " " + "\(doc.value(forKey: "last_name")!)" +  " " + "\(doc.value(forKey: "suffix")!)"
                     
                    let timestamp: Timestamp = doc.value(forKey: "created_datetime") as! Timestamp
                     let datees: Date = timestamp.dateValue()

@@ -81,7 +81,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
             } else {
                 print("Document successfully updated")
                 Constant.showInActivityIndicatory()
-                self.alertermsg(msg: "Gender successfully updated")
+                self.alertermsg(msg: "Gender updated successfully")
             }
         }
         }

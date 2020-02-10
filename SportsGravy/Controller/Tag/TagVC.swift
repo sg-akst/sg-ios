@@ -19,17 +19,13 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
     func selectorderArray(select: NSMutableArray!, selectindex: UIButton) {
         self.addorderArray = select
         addTitle_btn.tag = selectindex.tag
-        addTitle_btn.sendActions(for:  .touchUpInside)
+       // addTitle_btn.sendActions(for:  .touchUpInside)
     }
-    
 
         @IBOutlet var addorderview: UIView!
         @IBOutlet weak var tag_tbl: UITableView!
         @IBOutlet weak var createGroupView: UIView!
         @IBOutlet weak var sorting: UIButton!
-
-
-
         var getRolebyreasonDetailArray: NSMutableArray!
         var getSameOrganization: NSMutableArray!
         var getdifferentOrganization: NSMutableArray!
@@ -39,8 +35,6 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         var getdifferentSeasonArray: NSMutableArray!
         var addorderArray: NSMutableArray!
         var commonArray: [String]!
-        
-        
         var getSelectRole: String!
         var getOrganization: String!
         var getSport: String!
@@ -53,12 +47,15 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         var isTeam : Bool = false
         var addTitle_btn: UIButton!
     
+    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
+    var stackView : UIStackView?
+       var outerStackView : UIStackView?
+       var label1 = UILabel()
+       var label2 = UILabel()
+       var heightAnchor : NSLayoutConstraint?
+       var widthAnchor : NSLayoutConstraint?
     
-       @IBOutlet weak var orderviewheight: NSLayoutConstraint!
-        
-
-        
-        override func viewDidLoad() {
+override func viewDidLoad() {
             super.viewDidLoad()
             self.revealViewController()?.delegate = self
             tag_tbl.delegate = self
@@ -66,7 +63,6 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             commonArray = NSMutableArray() as? [String]
             tag_tbl.tableFooterView = UIView()
             self.addorderArray = NSMutableArray()
-
             getorganization()
             getsportsmethod()
             getSeasonmethod()
@@ -75,11 +71,16 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             createGroupView.isHidden = true
             sorting.isHidden = true
             self.tag_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
-
+           
         }
         func getuserDetail()
         {
+            let buttons: NSMutableArray = NSMutableArray()
+            var indexOfLeftmostButtonOnCurrentLine: Int = 0
+            var runningWidth: CGFloat = 10.0
+            let maxWidth: CGFloat = 375.0
+            let horizontalSpaceBetweenButtons: CGFloat = 5.0
+            let verticalSpaceBetweenButtons: CGFloat = 5.0
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -88,41 +89,110 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             self.addOrder.frame = self.addorderview.bounds
             for i in 0..<self.addorderArray.count
             {
-                let btn_width =  70
-                let frame1 = (i > 3) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 70), y: 10, width: btn_width, height: 40 )
-                //: (addorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
-                addTitle_btn = UIButton(frame: frame1)
+                addTitle_btn = UIButton(type: .roundedRect)
+    
+                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
                 addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
+                let title: String = addorderArray?[i] as! String
+                addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
+                let attrStr = NSMutableAttributedString(string: "\(title)")
+               
+                if(i != 0)
+                {
+                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                }
+               addTitle_btn.setAttributedTitle(attrStr, for: .normal)
+
                 let lastIndex: Int = addorderArray.count-1
-                
+               
                 if(lastIndex == i)
                {
+                addTitle_btn.tintColor = UIColor.gray
                 addTitle_btn.setTitleColor(UIColor.gray, for: .normal)
                 addTitle_btn.isUserInteractionEnabled = false
                 }
                 else
                {
+                addTitle_btn.tintColor = UIColor.blue
                 addTitle_btn.setTitleColor(UIColor.blue, for: .normal)
                 addTitle_btn.isUserInteractionEnabled = true
-
-                }
-                if(i==0)
-                {
-                addTitle_btn.titleLabel?.textAlignment = .right
-                }
-                else
-                {
-                 addTitle_btn.titleLabel?.textAlignment = .center
 
                 }
                 addTitle_btn.sizeToFit()
                 addTitle_btn.tag = i
                 self.addOrder.addSubview(addTitle_btn)
                 addTitle_btn.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+                if ((i == 0) || (runningWidth + addTitle_btn.frame.size.width > maxWidth))
+                 {
+                     runningWidth = addTitle_btn.frame.size.width
+                    if(i==0)
+                    {
+                        // first button (top left)
+                        // horizontal position: same as previous leftmost button (on line above)
+                       let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: self.addOrder, attribute: .left, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                       addTitle_btn.setAttributedTitle(attrStr, for: .normal)
+                        addOrder.addConstraint(horizontalConstraint)
+                        
+                        // vertical position:
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrder, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                        self.addOrder.addConstraint(verticalConstraint)
+                            
+                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                                    //   [self.view addConstraint:verticalConstraint];
 
+                    }
+                    else{
+                        // put it in new line
+                        let previousLeftmostButton: UIButton = buttons.object(at: indexOfLeftmostButtonOnCurrentLine) as! UIButton
+
+                        // horizontal position: same as previous leftmost button (on line above)
+                        let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
+                        self.addOrder.addConstraint(horizontalConstraint)
+
+                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+                       // [self.view addConstraint:horizontalConstraint];
+
+                        // vertical position:
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                        self.addOrder.addConstraint(verticalConstraint)
+
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
+                        //[self.view addConstraint:verticalConstraint];
+
+                        indexOfLeftmostButtonOnCurrentLine = i
+                    }
+                }
+                else
+                {
+                    runningWidth += addTitle_btn.frame.size.width + horizontalSpaceBetweenButtons;
+
+                    let previousButton: UIButton = buttons.object(at: i-1) as! UIButton  //[buttons objectAtIndex:(i-1)];
+
+                               // horizontal position: right from previous button
+                    let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+                    self.addOrder.addConstraint(horizontalConstraint)
+                        
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeRight multiplier:1.0f constant:horizontalSpaceBetweenButtons];
+                              // [self.view addConstraint:horizontalConstraint];
+
+                               // vertical position same as previous button
+                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
+                    self.addOrder.addConstraint(verticalConstraint)
+
+                        
+                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+                             //  [self.view addConstraint:verticalConstraint];
+                }
+                buttons.add(addTitle_btn)
+
+                
             }
            
             self.addorderview.addSubview(addOrder)
+            
+             
+            
+            
             if(commonArray.count > 0)
             {
                 commonArray.removeAll { $0 == "" }
@@ -215,7 +285,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
              if(getSameSeasonArray.count > 0)
                     {
             
-                        self.addorderArray.add(" > \(self.getSeason!)")
+                        self.addorderArray.add("> \(self.getSeason!)")
                         let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                         
                       
@@ -231,12 +301,10 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             orderviewheight.constant = 50
             isTeam = false
             createGroupView.isHidden = true
-
             if(selecttag == 0)
             {
                 print("All")
                 self.addorderArray = NSMutableArray()
-
                 getorganization()
                 getuserDetail()
             }
@@ -244,28 +312,23 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             {
                 print("organization")
                 self.addorderArray = NSMutableArray()
-
                 getorganization()
                 getsportsmethod()
                 getuserDetail()
-
             }
             else if(selecttag == 2)
             {
                 print("Sport")
                 self.addorderArray = NSMutableArray()
-
                 getorganization()
                 getsportsmethod()
                 getSeasonmethod()
                 commonArray.append(self.getSeason)
                 getuserDetail()
-
             }
             else if(selecttag == 3)
             {
                 print("season")
-
                 self.addorderArray.removeLastObject()
                 getuserDetail()
             }
@@ -285,9 +348,8 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
             {
                 return self.TeamArray.count
             }
-                }
+        }
          func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
             if(isTeam == false)
                    {
              return 40.0
@@ -297,7 +359,6 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                return 50.0
             }
          }
-
                 // create a cell for each table view row
          func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -325,12 +386,8 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                     return cell
             }
         }
-        
-        
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            
             print("You tapped cell number \(indexPath.row).")
-           
             if(isTeam == false)
             {
             if(self.addorderArray.count < 4)
@@ -349,7 +406,6 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                print(getSeason)
                self.addorderArray.add("> \(self.commonArray[indexPath.row])")
                 getuserDetail()
-               
                 for i in 0..<self.getRolebyreasonDetailArray.count
                 {
                      let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
@@ -361,15 +417,14 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                     }
                 }
                 orderviewheight.constant = 90
+
                 if (UserDefaults.standard.bool(forKey: "2") == true)
                 {
                     sorting.isHidden = false
-
                 }
                 else
                 {
                     sorting.isHidden = true
-
                 }
                 getTag()
             }
@@ -394,9 +449,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                 alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
                     self.deleteMethod(rolebyDic: teamDic)
                         }))
-                
                 self.present(alert, animated: true, completion: nil)
-                
                 
             }
 
@@ -440,9 +493,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
 
                                      for document in querySnapshot!.documents {
                                          let data: NSDictionary = document.data() as NSDictionary
-                                         
-                                        self.TeamArray.add(data)
-                
+                                         self.TeamArray.add(data)
                                     }
                                     self.isTeam = true
                                     self.createGroupView.isHidden = false
@@ -451,10 +502,7 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
 
                                 }
                             }
-
             }
-            
-            
         }
     
     func deleteMethod(rolebyDic: NSDictionary)
@@ -490,25 +538,18 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
                                   self.getTag()
                               }
                           }
-
                       }
-
                   }
                   Constant.showInActivityIndicatory()
-
-
               }
           }
      }
-    
-        @IBAction func cancelbtn(_ sender: UIButton)
-        {
-            self.navigationController?.popViewController(animated: true)
-        }
-
+    @IBAction func cancelbtn(_ sender: UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
     @IBAction func createTag(_ sender: UIButton)
     {
-       
         let vc = storyboard?.instantiateViewController(withIdentifier: "tag_create") as! TagCreateVC
         vc.getorderArray = addorderArray
         vc.delegate = self
@@ -526,8 +567,14 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         vc.getorganizationDetails = self.getRolebyreasonDetailArray
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?
         vc.getTeamId = self.getTeamId as NSString?
-
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+}
+extension String{
+    func width(withConstraintedHeight height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin], attributes: [.font: font], context: nil)
+
+        return ceil(boundingBox.width)
+    }
 }
