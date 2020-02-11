@@ -43,8 +43,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
 
         canRespons_tittle_txt.delegate = self
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: canRespons_tittle_txt.frame.height - 1, width: self.view.frame.width-40, height: 1.0)
-        bottomLine.backgroundColor = UIColor.gray.cgColor
+        bottomLine.frame = CGRect(x: -20, y: canRespons_tittle_txt.frame.height - 1, width: self.view.frame.width, height: 1.0)
+        bottomLine.backgroundColor = UIColor.lightGray.cgColor
         canRespons_tittle_txt.borderStyle = UITextBorderStyle.none
         canRespons_tittle_txt.layer.addSublayer(bottomLine)
         if(isCreate == true)
@@ -215,9 +215,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                             } else {
                                 print("Document successfully written!")
                                 Constant.showInActivityIndicatory()
-                                self.alertermsg(msg: "CannedResponse successfully Created")
-//                                self.delegate?.createAfterCallMethod()
-//                                self.navigationController?.popViewController(animated: false)
+                                self.alertermsg(msg: "CannedResponse created successfully ")
+//
 
                             }
                         }
@@ -265,9 +264,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                                 } else {
                                     print("Document successfully updated")
                                     Constant.showInActivityIndicatory()
-                                    self.alertermsg(msg: "CannedResponse successfully updated")
-//                                    self.delegate?.createAfterCallMethod()
-//                                    self.navigationController?.popViewController(animated: false)
+                                    self.alertermsg(msg: "CannedResponse updated successfully ")
+//
 
                                     
                                 }
@@ -327,8 +325,9 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                             } else {
                                 print("Document successfully removed!")
                                 Constant.showInActivityIndicatory()
-                                self.delegate?.createAfterCallMethod()
-                                self.navigationController?.popViewController(animated: false)
+                                self.alertermsg(msg: "\(self.updateArray.value(forKey: "cannedResponseTitle")!) deleted successfully")
+//                                self.delegate?.createAfterCallMethod()
+//                                self.navigationController?.popViewController(animated: false)
                             }
                         }
 
@@ -353,7 +352,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
            }
            else
            {
-               let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete custom group?", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(canRespons_tittle_txt.text!)", preferredStyle: UIAlertController.Style.alert);
                alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                           //Cancel Action
                       }))

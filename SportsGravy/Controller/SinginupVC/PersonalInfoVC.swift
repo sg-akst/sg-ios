@@ -9,7 +9,7 @@
 import UIKit
 import STPopup
 
-class PersonalInfoVC: UIViewController,PopViewDelegate {
+class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     func selectoptionString(selectSuffix: String) {
         self.suffix_lbl.text = selectSuffix
     }
@@ -29,6 +29,15 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        firstname_lbl.delegate = self
+        lastname_lbl.delegate = self
+        middlename_lbl.delegate = self
+        dob_lbl.delegate = self
+        mobile_lbl.delegate = self
+        email_lbl.delegate = self
+        password_lbl.delegate = self
+        suffix_lbl.delegate = self
+        confirm_lbl.delegate = self
         bordermethod(setborder: firstname_lbl)
         bordermethod(setborder: lastname_lbl)
         bordermethod(setborder: middlename_lbl)
@@ -38,6 +47,7 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
         bordermethod(setborder: password_lbl)
         bordermethod(setborder: suffix_lbl)
         bordermethod(setborder: confirm_lbl)
+        
         self.firstname_lbl.text = self.userdetails.value(forKey: "first_name") as? String
         self.middlename_lbl.text = self.userdetails.value(forKey: "middle_initial") as? String
         self.lastname_lbl.text = self.userdetails.value(forKey: "last_name") as? String
@@ -68,11 +78,11 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
            vc.Title = "Select Suffix"
            vc.suffixArray = ["Jr","Sr","II","III","IV","V"]
            vc.delegate = self
-        vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: 345.0)
+        vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width - 20, height: 345.0)
            let popup = STPopupController(rootViewController: vc)
            popup.containerView.layer.cornerRadius = 4;
            popup.navigationBarHidden = true
-           popup.transitionStyle = STPopupTransitionStyle.fade
+        popup.style = .bottomSheet
            popup.present(in: self)
        }
     @IBAction func nextbtn(_ sender: UIButton)
@@ -82,15 +92,7 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please choose date of birth ")
 
         }
-        if(self.password_lbl.text == "" || self.password_lbl.text?.isEmpty == true)
-        {
-            
-        }
-        if(self.confirm_lbl.text != self.confirm_lbl.text)
-        {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter password ")
-
-        }
+        
         if(self.suffix_lbl.text == "" || self.suffix_lbl.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select suffix ")
@@ -99,6 +101,16 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
         if(isValidEmail(self.email_lbl.text!) == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check email id ")
+
+        }
+        if(self.password_lbl.text == "" || self.password_lbl.text?.isEmpty == true)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter password ")
+
+        }
+        if(self.password_lbl.text != self.confirm_lbl.text)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password and confirm password doesn’t match")
 
         }
         if(isValidMobile(testStr: self.mobile_lbl.text!) == false)
@@ -119,8 +131,17 @@ class PersonalInfoVC: UIViewController,PopViewDelegate {
         return emailPred.evaluate(with: email)
     }
     func isValidMobile(testStr:String) -> Bool {
-        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
-        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
-        return mobileTest.evaluate(with: testStr)
+        let range = NSRange(location: 0, length: testStr.count)
+        let regex = try! NSRegularExpression(pattern: "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}")
+        if regex.firstMatch(in: testStr, options: [], range: range) != nil{
+            print("Phone number is valid")
+            return true
+        }else{
+            return false
+        }
+        
+//        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
+//        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
+//        return mobileTest.evaluate(with: testStr)
     }
 }

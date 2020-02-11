@@ -386,7 +386,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             }
                              if(self.guardiansListArray.count > 0)
                             {
-                                self.sections.append(Category(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]))
+                                self.sections.append(Category(name:"Other Guardians", items:self.guardiansListArray as! [[String : Any]]))
                             }
                              if(self.organizationListArray.count > 0)
                             {

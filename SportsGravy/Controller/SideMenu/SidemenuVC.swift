@@ -45,6 +45,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.roleby_reasonArray = NSMutableArray()
         self.role_tbl.delegate = self
         self.role_tbl.dataSource = self
+        role_tbl.sizeToFit()
 getuserDetail()
     }
     

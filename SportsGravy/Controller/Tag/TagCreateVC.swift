@@ -34,8 +34,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         tag_txt.delegate = self
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: tag_txt.frame.height - 1, width: self.view.frame.width-40, height: 1.0)
-        bottomLine.backgroundColor = UIColor.gray.cgColor
+        bottomLine.frame = CGRect(x: -20.0, y: tag_txt.frame.height - 1, width: self.view.frame.width, height: 1.0)
+        bottomLine.backgroundColor = UIColor.lightGray.cgColor
         tag_txt.borderStyle = UITextBorderStyle.none
         tag_txt.layer.addSublayer(bottomLine)
         getuserDetail()
@@ -178,9 +178,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                             } else {
                                 print("Document successfully written!")
                                 Constant.showInActivityIndicatory()
-                                //Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Tag Creat Successfully")
-                                self.delegate?.createAfterCallMethod()
-                                self.navigationController?.popViewController(animated: true)
+                                self.alertermsg(msg: "Tag created successfully")
+                               
                             }
                         }
                     }
@@ -190,9 +189,23 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
             Constant.showInActivityIndicatory()
         }
     }
+    func alertermsg(msg: String)
+        {
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+                self.delegate?.createAfterCallMethod()
+                self.navigationController?.popViewController(animated: false)
+                   }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
     
-    @IBAction func cancelbtn(_ sender: UIButton)
-    {
-      self.navigationController?.popViewController(animated: true)
-    }
+    
+        @IBAction func cancelbtn(_ sender: UIButton)
+        {
+          self.navigationController?.popViewController(animated: true)
+        }
+    
+
 }

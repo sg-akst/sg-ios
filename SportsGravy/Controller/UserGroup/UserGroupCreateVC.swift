@@ -49,7 +49,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         getuserDetail()
        
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: group_tittle_txt.frame.height - 1, width: self.view.frame.width-40, height: 1.0)
+        bottomLine.frame = CGRect(x: 0.0, y: group_tittle_txt.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.gray.cgColor
         group_tittle_txt.borderStyle = UITextBorderStyle.none
         group_tittle_txt.layer.addSublayer(bottomLine)
@@ -66,11 +66,12 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.groupcreate_btn.isHidden = false
             self.group_tittle_txt.isUserInteractionEnabled = false
             self.groupcreate_btn.setTitle("Update", for: .normal)
-            self.group_tittle_txt.text = self.updateArray.value(forKey: "display_name") as? String
+            self.group_tittle_txt.text = "\(self.updateArray.value(forKey: "display_name")!)"
         }
         getGroupDetailMethod()
        group_create_tbl.allowsMultipleSelection = true
         group_create_tbl.tableFooterView = UIView()
+        group_create_tbl.sizeToFit()
        
 
     }
@@ -271,17 +272,29 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         let cell = button.superview?.superview as? UsergroupCreateCell
         let indexPaths = group_create_tbl.indexPath(for: cell!)
         let dicvalu = groubSection![indexPaths!.section]
+        let getuserlist: NSMutableDictionary = dicvalu.userlist[0] as! NSMutableDictionary
+        let getvalue: NSDictionary = getuserlist.copy() as! NSDictionary
+        
+
         print(dicvalu)
         
        if cell?.checkbox.backgroundColor == UIColor.green
         {
             cell?.checkbox.backgroundColor = UIColor.clear
-            self.selectpersonArray.remove(at: button.tag)
+            for i in 0..<self.selectpersonArray.count
+            {
+                let dic: NSDictionary = self.selectpersonArray[i] 
+                if(getvalue.value(forKey: "user_id") as! String  == dic.value(forKey: "user_id") as! String)
+                {
+                    self.selectpersonArray.remove(at: i)
+
+                }
+            }
         }
         else
        {
         cell?.checkbox.backgroundColor = UIColor.green
-        let getvalue: NSMutableDictionary = dicvalu.userlist[sender.tag] as! NSMutableDictionary
+        //let getvalue: NSMutableDictionary = dicvalu.userlist[0] as! NSMutableDictionary
 
         self.selectpersonArray.append(getvalue)
         }
@@ -319,7 +332,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                }
                else
                {
-                let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete \(updateArray.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
+                let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(updateArray.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
                    alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                               //Cancel Action
                           }))
@@ -364,7 +377,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                         Constant.showInActivityIndicatory()
                                        // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
                                         //self.getmembergroup()
-                                        self.delegate?.createAfterCallMethod()
+                                        self.alertermsg(msg: "\(self.updateArray.value(forKey: "user_groupId")!) deleted successfully")
+                                        
                                     }
                                 }
 
@@ -420,7 +434,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                     
 //                        self.delegate?.createAfterCallMethod()
 //                        self.navigationController?.popViewController(animated: false)
-                         self.alertermsg(msg: "User group successfully created")
+                         self.alertermsg(msg: "Usergroup created successfully ")
                                        }
                                    }
                                }
@@ -468,7 +482,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                     print("Document successfully updated")
                                     Constant.showInActivityIndicatory()
                                    
-                                    self.alertermsg(msg: "User group successfully updated")
+                                    self.alertermsg(msg: "Usergroup updated successfully ")
                                     
                                 }
                             }
@@ -484,8 +498,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         {
             let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
-    //        self.delegate?.usernameupdateSuccess()
-            self.navigationController?.popViewController(animated: true)
                 self.delegate?.createAfterCallMethod()
                 self.navigationController?.popViewController(animated: false)
                    }))

@@ -39,6 +39,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         comment_btn.setTitle("\(commentDic.value(forKey: "count")!)", for: .normal)
         let feedId = selectComment.value(forKey: "feed_id")
         commentListMethod(feedid: feedId as! String)
+        comment_tbl.sizeToFit()
         
     }
     

@@ -11,7 +11,8 @@ import UIKit
 class ChildernCell: UITableViewCell {
     
     @IBOutlet weak var username_lbl: UILabel!
-    @IBOutlet weak var emailid_txt: UITextField!
+    @IBOutlet weak var emailid_txt: UILabel!
+    @IBOutlet weak var age_lbl: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

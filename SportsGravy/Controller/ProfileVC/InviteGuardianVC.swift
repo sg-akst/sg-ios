@@ -26,6 +26,7 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         bottomlineMethod(selecttext: guardianmobil_txt)
         bottomlineMethod(selecttext: guardianemail_txt)
+        playerlist_tbl.sizeToFit()
         
         
     }
@@ -143,8 +144,6 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
                 }
                 Constant.showInActivityIndicatory()
-
-
             }
         }
     }
@@ -174,15 +173,6 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         return false
     }
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//    let currentCharacterCount = textField.text?.characters.count ?? 0
-//     if (range.length + range.location > currentCharacterCount){
-//         return false
-//     }
-//     let newLength = currentCharacterCount + string.characters.count - range.length
-//     return newLength <= 10
-//               
-//    }
      @IBAction func cancelbtn(_ sender: UIButton)
     {
         self.navigationController?.popViewController(animated: true)

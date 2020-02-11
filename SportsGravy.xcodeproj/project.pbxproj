@@ -59,11 +59,12 @@
 		08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
 		082D264B23F15AC100E22307 /* InviteGuardianVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D264A23F15AC100E22307 /* InviteGuardianVC.swift */; };
 		082D264D23F1769B00E22307 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D264C23F1769B00E22307 /* InviteCell.swift */; };
-		084663D723C49E2E00D5A72D /* roboto in Resources */ = {isa = PBXBuildFile; fileRef = 084663D623C49E2E00D5A72D /* roboto */; };
 		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
+		08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */; };
+		08FD6B0C23F2AAE100AA4096 /* ConguralutionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */; };
 		5C7B04535684E7D7A13709F6 /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 409505180767F5FA821B8A03 /* Pods_SportsGravy_SportsGravyUITests.framework */; };
 		6B454943E20E754F3C71288B /* Pods_SportsGravyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBF10040B9BC9E0BF9460D4 /* Pods_SportsGravyTests.framework */; };
 		EA770DDDE56B34DD5B49CF99 /* Pods_SportsGravy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC59F340BAA703F17AE90D20 /* Pods_SportsGravy.framework */; };
@@ -110,7 +111,6 @@
 		0814208523DEF890006E0087 /* SittingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SittingCell.swift; sourceTree = "<group>"; };
 		082D264A23F15AC100E22307 /* InviteGuardianVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteGuardianVC.swift; sourceTree = "<group>"; };
 		082D264C23F1769B00E22307 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
-		084663D623C49E2E00D5A72D /* roboto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = roboto; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
 		0872E64823E2F725008170A0 /* ChildernCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildernCell.swift; sourceTree = "<group>"; };
@@ -149,6 +149,8 @@
 		08E3658223C457090063C6F4 /* Dashboardvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboardvc.swift; sourceTree = "<group>"; };
 		08E3658523C4633B0063C6F4 /* fira-sans */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fira-sans"; sourceTree = "<group>"; };
 		08E5721A23BF3A13000C8852 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermAndConditionVC.swift; sourceTree = "<group>"; };
+		08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConguralutionVC.swift; sourceTree = "<group>"; };
 		08FDF32623E2F34800400919 /* InvitePlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayerVC.swift; sourceTree = "<group>"; };
 		1EBF10040B9BC9E0BF9460D4 /* Pods_SportsGravyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		409505180767F5FA821B8A03 /* Pods_SportsGravy_SportsGravyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy_SportsGravyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +197,8 @@
 				080BF3B823BF5BDE00084274 /* SignupVC.swift */,
 				08CC2AE123E2E1D600F5DCB2 /* PersonalInfoVC.swift */,
 				08FDF32623E2F34800400919 /* InvitePlayerVC.swift */,
+				08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */,
+				08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */,
 			);
 			path = SinginupVC;
 			sourceTree = "<group>";
@@ -502,7 +506,6 @@
 		08E3658423C462D60063C6F4 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				084663D623C49E2E00D5A72D /* roboto */,
 				08E3658523C4633B0063C6F4 /* fira-sans */,
 			);
 			path = Font;
@@ -650,7 +653,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */,
-				084663D723C49E2E00D5A72D /* roboto in Resources */,
 				081120D423BDF77800327FF1 /* Assets.xcassets in Resources */,
 				08E3658623C4633B0063C6F4 /* fira-sans in Resources */,
 				081120D223BDF77500327FF1 /* Main.storyboard in Resources */,
@@ -782,6 +784,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */,
 				08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */,
 				080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */,
 				080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */,
@@ -801,6 +804,7 @@
 				080E847323E3F2520092CDB3 /* UsergroupVC.swift in Sources */,
 				080E847223E3F24E0092CDB3 /* TagCreateVC.swift in Sources */,
 				080E847123E3F24A0092CDB3 /* TagVC.swift in Sources */,
+				08FD6B0C23F2AAE100AA4096 /* ConguralutionVC.swift in Sources */,
 				080E847023E3F2450092CDB3 /* CannedResponseCreateVC.swift in Sources */,
 				080E846F23E3F2410092CDB3 /* CannedResponseVC.swift in Sources */,
 				080E846E23E3F23C0092CDB3 /* SittingsVC.swift in Sources */,

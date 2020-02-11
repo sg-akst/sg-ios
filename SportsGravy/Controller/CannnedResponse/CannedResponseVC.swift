@@ -72,7 +72,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         createGroupView.isHidden = true
         sortingCanned.isHidden = true
         self.canned_response_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
+        self.canned_response_tbl.sizeToFit()
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -383,6 +383,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         {
         let cell: UITableViewCell = self.canned_response_tbl.dequeueReusableCell(withIdentifier: "can_respons_user")!
         cell.textLabel?.text = commonArray?[indexPath.row]
+            cell.textLabel?.textColor = UIColor.blue
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
      
@@ -425,7 +426,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
         else
         {
-           self.addorderArray.add("> \(self.commonArray[indexPath.row])")
+           self.addorderArray.add(" > \(self.commonArray[indexPath.row])")
             getuserDetail()
            
             for i in 0..<self.getRolebyreasonDetailArray.count
@@ -479,7 +480,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         }
         else
         {
-            let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete custom group?", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(teamDic.value(forKey: "cannedResponseTitle")!)", preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        //Cancel Action
                    }))
@@ -579,7 +580,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                             } else {
                                 print("Document successfully removed!")
                                 Constant.showInActivityIndicatory()
-                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "CannedResponse Removed Successfully")
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
                                 self.getCannedresponsegroup()
                             }
                         }

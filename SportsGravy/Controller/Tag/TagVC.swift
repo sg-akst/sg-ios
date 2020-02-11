@@ -71,7 +71,7 @@ override func viewDidLoad() {
             createGroupView.isHidden = true
             sorting.isHidden = true
             self.tag_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-           
+    self.tag_tbl.sizeToFit()
         }
         func getuserDetail()
         {
@@ -366,6 +366,7 @@ override func viewDidLoad() {
             {
             let cell: UITableViewCell = self.tag_tbl.dequeueReusableCell(withIdentifier: "taguser")!
             cell.textLabel?.text = commonArray?[indexPath.row]
+            cell.textLabel?.textColor = UIColor.blue
             cell.selectionStyle = .none
             cell.accessoryType = .disclosureIndicator
          
@@ -404,7 +405,7 @@ override func viewDidLoad() {
             else
             {
                print(getSeason)
-               self.addorderArray.add("> \(self.commonArray[indexPath.row])")
+               self.addorderArray.add(" > \(self.commonArray[indexPath.row])")
                 getuserDetail()
                 for i in 0..<self.getRolebyreasonDetailArray.count
                 {
@@ -442,9 +443,8 @@ override func viewDidLoad() {
             }
             else
             {
-                let alert = UIAlertController(title: " Delete Tag ", message: "Are you sure want to delete custom group?", preferredStyle: UIAlertController.Style.alert);
+                let alert = UIAlertController(title: " Delete Tag? ", message: "Are you sure want to delete \(teamDic.value(forKey: "tag_id")!)", preferredStyle: UIAlertController.Style.alert);
                 alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
-                           //Cancel Action
                        }))
                 alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
                     self.deleteMethod(rolebyDic: teamDic)
@@ -534,7 +534,7 @@ override func viewDidLoad() {
                               } else {
                                   print("Document successfully removed!")
                                   Constant.showInActivityIndicatory()
-                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Tag Removed Successfully")
+                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_id")!) Removed Successfully")
                                   self.getTag()
                               }
                           }

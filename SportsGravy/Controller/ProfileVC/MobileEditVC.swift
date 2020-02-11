@@ -77,9 +77,19 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
         }
     }
     func isValidMobile(testStr:String) -> Bool {
-        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
-        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
-        return mobileTest.evaluate(with: testStr)
+        
+        let range = NSRange(location: 0, length: testStr.count)
+        let regex = try! NSRegularExpression(pattern: "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}")
+        if regex.firstMatch(in: testStr, options: [], range: range) != nil{
+            print("Phone number is valid")
+            return true
+        }else{
+            return false
+        }
+        
+//        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
+//        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
+//        return mobileTest.evaluate(with: testStr)
     }
     func alertermsg(msg: String)
         {

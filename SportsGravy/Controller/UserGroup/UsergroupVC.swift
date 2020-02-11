@@ -75,6 +75,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         createGroupView.isHidden = true
         sortingUser.isHidden = true
         self.usergroup_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.usergroup_tbl.sizeToFit()
 
     }
     func getuserDetail()
@@ -140,9 +141,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                         // vertical position:
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrder, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
-                            
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                    //   [self.view addConstraint:verticalConstraint];
 
                     }
                     else{
@@ -201,6 +199,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             {
                 commonArray.removeAll { $0 == "" }
                 usergroup_tbl.reloadData()
+//                let indexPath = IndexPath(row: 0, section: 0)
+//                self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
 
             }
 
@@ -380,6 +380,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         {
         let cell: UITableViewCell = self.usergroup_tbl.dequeueReusableCell(withIdentifier: "user")!
         cell.textLabel?.text = commonArray?[indexPath.row]
+        cell.textLabel?.textColor = UIColor.blue
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
      
@@ -440,7 +441,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         else
         {
            print(getSeason)
-           self.addorderArray.add("> \(self.commonArray[indexPath.row])")
+           self.addorderArray.add(" > \(self.commonArray[indexPath.row])")
             getuserDetail()
            
             for i in 0..<self.getRolebyreasonDetailArray.count
@@ -471,8 +472,16 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         }
         else
         {
-            //let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
+            let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
             //let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
+            let count : Int = dic.value(forKey: "count") as! Int
+            let groupType : String = dic.value(forKey: "group_type") as! String
+            if(count > 0 || groupType == "System_Group")
+            {
+                
+            }
+            else
+            {
            let vc = storyboard?.instantiateViewController(withIdentifier: "userGroup_create") as! UserGroupCreateVC
            vc.getorderArray = addorderArray
            vc.isCreate = false
@@ -484,6 +493,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             
             vc.getGroupDetails = self.TeamArray
            self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     @objc func deleteGroup_Method(_ sender: UIButton)
@@ -499,7 +509,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         }
         else
         {
-            let alert = UIAlertController(title: " Delete User Group ", message: "Are you sure want to delete \(teamDic.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(teamDic.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        //Cancel Action
                    }))
@@ -535,10 +545,14 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                 
         
                             }
+                            
                             self.isTeam = true
                             self.createGroupView.isHidden = false
                             self.usergroup_tbl.reloadData()
+//                            let indexPath = IndexPath(row: 0, section: 0)
+//                            self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
                             Constant.showInActivityIndicatory()
+
 
                         }
                     }
@@ -559,6 +573,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                        self.isTeam = true
                                        self.createGroupView.isHidden = false
                                        self.usergroup_tbl.reloadData()
+//                                        let indexPath = IndexPath(row: 0, section: 0)
+//                                        self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
                                        Constant.showInActivityIndicatory()
 
                                    }

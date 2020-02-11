@@ -18,35 +18,38 @@ class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.children_tbl.delegate = self
+        self.children_tbl.dataSource = self
+        self.children_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
          let dic = userdetails
+        children_tbl.sizeToFit()
+        
+        let playerlist: NSArray = dic?.value(forKey: "children") as! NSArray
         chidArray = NSMutableArray()
+        self.chidArray = playerlist.mutableCopy() as? NSMutableArray
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-                   return self.chidArray.count
+    return self.chidArray.count
             
-                   }
-            func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    }
+func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-              
-                  return 50.0
-            
+            return 70.0
             }
+// create a cell for each table view row
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-                   // create a cell for each table view row
-            func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        
-                   let cell: ChildernCell = self.children_tbl.dequeueReusableCell(withIdentifier: "tagcell") as! ChildernCell
-                   let dic: NSDictionary = chidArray?[indexPath.row] as! NSDictionary
-                   let count : Int = dic.value(forKey: "count") as! Int
-                   //cell.delete_enable_img.tag = indexPath.row
-                  // cell.delete_enable_img.addTarget(self, action: #selector(deleteGroup_Method), for: .touchUpInside)
-                   cell.username_lbl?.text = dic.value(forKey: "tag_id") as? String
-                   //cell.delete_enable_img.tintColor = (count > 0) ? UIColor.gray : UIColor.red
-                   cell.selectionStyle = .none
-                   cell.accessoryType = .none
+let cell: ChildernCell = self.children_tbl.dequeueReusableCell(withIdentifier: "InviteFriend_cell") as! ChildernCell
+let dic: NSDictionary = chidArray?[indexPath.row] as! NSDictionary
+    cell.username_lbl.text = "\(dic.value(forKey: "first_name")!)" + " " + "\(dic.value(forKey: "last_name")!)"
+    cell.emailid_txt.text = dic.value(forKey: "email_address") as? String
+    cell.age_lbl.text = "Age: \(dic.value(forKey: "age")!)"
+    cell.selectionStyle = .none
+    cell.accessoryType = .none
 
                        return cell
             

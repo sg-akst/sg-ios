@@ -31,6 +31,7 @@ class SittingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             sittingslistArray.add(createList)
         }
         sitting_tbl.tableFooterView = UIView()
+        sitting_tbl.sizeToFit()
 
 
     }
