@@ -62,6 +62,7 @@
 		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
+		08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
 		08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */; };
 		08FD6B0C23F2AAE100AA4096 /* ConguralutionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */; };
@@ -126,6 +127,7 @@
 		089F228C23D85AC2008B110D /* MobileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileEditVC.swift; sourceTree = "<group>"; };
 		089F228E23D85AD8008B110D /* GenderEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderEditVC.swift; sourceTree = "<group>"; };
 		089F229023D85AEE008B110D /* AddressEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditVC.swift; sourceTree = "<group>"; };
+		08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppaParentFormVC.swift; sourceTree = "<group>"; };
 		08AB404223CDD1C500E8A92E /* UserGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupCell.swift; sourceTree = "<group>"; };
 		08ABF72423CC40180021BA72 /* UsergroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsergroupVC.swift; sourceTree = "<group>"; };
 		08AC5E8723C5F13B00CFB418 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				08FDF32623E2F34800400919 /* InvitePlayerVC.swift */,
 				08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */,
 				08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */,
+				08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */,
 			);
 			path = SinginupVC;
 			sourceTree = "<group>";
@@ -816,6 +819,7 @@
 				080E846823E3F21E0092CDB3 /* UsernameEditVC.swift in Sources */,
 				080E846723E3F2180092CDB3 /* OrganizationVC.swift in Sources */,
 				080E848123E3F3490092CDB3 /* SortingVC.swift in Sources */,
+				08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */,
 				0808875623ED470F001A0191 /* PostImageDetailCell.swift in Sources */,
 				0808875223ED3BEE001A0191 /* PostImageVC.swift in Sources */,
 				080E846623E3F2140092CDB3 /* AccountProfileVC.swift in Sources */,

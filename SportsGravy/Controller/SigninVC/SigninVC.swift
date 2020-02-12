@@ -54,7 +54,17 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
          
      }
-
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+          if let text = textField.text {
+              let str = (text as NSString).replacingCharacters(in: range, with: string).replacingOccurrences(of: "(0)", with: "")
+              if !str.isEmpty {
+                  textField.text = "" + str
+              } else {
+                  textField.text = nil
+              }
+          }
+          return false
+      }
     
     @IBAction func signin_btnAction(_ sender: UIButton)
     {
@@ -66,10 +76,16 @@ class SigninVC: UIViewController, UITextFieldDelegate {
             print("Validate EmailID")
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
         }
-        else if(password_txt.text!.isEmpty || password_txt.text!.count < 5)
+        else if(password_txt.text!.isEmpty)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Password")
         }
+        else if(password_txt.text!.count < 5)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Invalid username or Password please try again")
+
+        }
+            
         else
         {
            
@@ -104,7 +120,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
             }
             else
             {
-                Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invaild Password")
+                Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invalid username or Password please try again")
                 Constant.showInActivityIndicatory()
 
             }

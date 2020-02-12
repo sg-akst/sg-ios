@@ -38,19 +38,26 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-   let currentCharacterCount = textField.text?.characters.count ?? 0
-    if (range.length + range.location > currentCharacterCount){
-        return false
-    }
-    let newLength = currentCharacterCount + string.characters.count - range.length
-    return newLength <= 10
-              }
+   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return textField.text!.count < 17 || string == ""
+      }
+//    if textField.text == mobile_txt.text {
+//    let allowedCharacters = CharacterSet(charactersIn:"+0123456789 ()")//Here change this characters based on your requirement
+//    let characterSet = CharacterSet(charactersIn: string)
+//        return string.characters.count < 10
+        
+
+//return true
+//    }
     @IBAction func mobileUpdate(_ sender: UIButton)
     {
-        if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true || isValidMobile(testStr: mobile_txt.text!) == false)
+        if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
+        }
+        else if(isValidMobile(testStr: mobile_txt.text!) == false)
+        {
+           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter vaild mobile number")
         }
         else
         {
@@ -61,7 +68,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
             
         let UpdateID = (isUpdatePage == true) ? getuuid : self.getAllDic.value(forKey: "user_id") as? String
             
-        db.collection("users").document("\(UpdateID!)").updateData(["mobile_phone": "+1\(mobile_txt.text!)"])
+        db.collection("users").document("\(UpdateID!)").updateData(["mobile_phone": "\(mobile_txt.text!)"])
         { err in
             if let err = err {
                 print("Error updating document: \(err)")

@@ -21,21 +21,28 @@ struct Category {
 class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UsernameEditDelegate,mobileEditDelegate,genderEditDelegate,addressEditDelegate, UITableViewDelegate, UITableViewDataSource {
    
     func addressupdateSuccess() {
+        isdelegate = true
         getInformation()
 
     }
     
     func genderupdateSuccess() {
+        isdelegate = true
+
         getInformation()
 
     }
     
     func mobileupdateSuccess() {
+        isdelegate = true
+
        getInformation()
 
     }
     
     func usernameupdateSuccess() {
+        isdelegate = true
+
         getInformation()
     }
     
@@ -61,6 +68,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     var playerListArray: NSMutableArray!
     var guardiansListArray: NSMutableArray!
     var organizationListArray: NSMutableArray!
+    var isdelegate: Bool!
 
     @IBOutlet weak var player_tbl: UITableView!
     @IBOutlet weak var player_tbl_height: NSLayoutConstraint!
@@ -95,8 +103,9 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         guardiansListArray = NSMutableArray()
         organizationListArray = NSMutableArray()
         self.player_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
+isdelegate = false
         getInformation()
+      
        
     }
     
@@ -151,12 +160,16 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
                 
                            Constant.showInActivityIndicatory()
+                            if(self.isdelegate == false)
+                            {
+                                self.getplayerlist()
+                            }
 
                           } else {
                               print("Document does not exist")
                           }
                         Constant.showInActivityIndicatory()
-                        self.getplayerlist()
+                        
 
                       }
     }
@@ -377,12 +390,12 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         if(statusCode == true)
                         {
                             let result = info?["data"] as! NSArray
-                            
+                            //self.sections = [Category] ()
                             self.organizationListArray = NSMutableArray()
                             self.organizationListArray = result.mutableCopy() as? NSMutableArray
                             if(self.playerListArray.count > 0)
                             {
-                              self.sections.append(Category(name:"Player", items:self.playerListArray as! [[String : Any]]))
+                              self.sections.append(Category(name:"Players", items:self.playerListArray as! [[String : Any]]))
                             }
                              if(self.guardiansListArray.count > 0)
                             {
@@ -390,10 +403,10 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             }
                              if(self.organizationListArray.count > 0)
                             {
-                             self.sections.append(Category(name:"Organization", items:self.organizationListArray as! [[String : Any]]))
+                             self.sections.append(Category(name:"Organizations", items:self.organizationListArray as! [[String : Any]]))
                             }
                             let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
-                            self.player_tbl_height.constant = (height>2) ? CGFloat(height * 68) :CGFloat(height * 62)
+                            self.player_tbl_height.constant = (height>2) ? CGFloat(height * 80) :CGFloat(height * 80)
                             self.player_tbl.reloadData()
 
                             self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.player_tbl.frame.origin.y + self.player_tbl_height.constant)
@@ -450,7 +463,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         
         let sepFrame: CGRect = CGRect(x: 0, y: view.frame.size.height-1, width: self.view.frame.size.width, height: 1);
         let seperatorView = UIView.init(frame: sepFrame)
-        seperatorView.backgroundColor = UIColor.init(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1.0)
+        seperatorView.backgroundColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
             view.addSubview(seperatorView)
 
           }
@@ -465,7 +478,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
 //    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        return 90.0
     }
      func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 45
@@ -548,7 +561,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         }
             else
         {
-            let dic: NSArray = item["sports"] as! NSArray
+            let dic: NSArray = (item["sports"] as? NSArray ?? nil)!
             let sportsname: NSDictionary = dic[0] as! NSDictionary
             cell.username_lbl.text = item["abbrev"] as? String
             cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
@@ -561,7 +574,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             let dic: NSArray = item["sports"] as! NSArray
             let sportsname: NSDictionary = dic[0] as! NSDictionary
             cell.username_lbl.text = item["abbrev"] as? String
-            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
+            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name")!)"
             cell.accessoryType = .disclosureIndicator
 
 

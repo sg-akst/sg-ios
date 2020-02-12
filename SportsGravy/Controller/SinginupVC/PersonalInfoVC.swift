@@ -140,8 +140,5 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
             return false
         }
         
-//        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
-//        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
-//        return mobileTest.evaluate(with: testStr)
     }
 }

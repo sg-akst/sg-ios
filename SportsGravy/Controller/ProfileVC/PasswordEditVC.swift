@@ -89,14 +89,19 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter old password ")
 
         }
+            
         else if(self.newpw_txt.text == nil || self.newpw_txt.text?.isEmpty == true || self.newpw_txt.text!.count < 5)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter new password ")
 
         }
-        else if(self.oldpw_txt.text != self.newpw_txt.text)
+        else if(self.oldpw_txt.text == self.newpw_txt.text)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Old password and new password should not be same")
+        }
+        else if(self.confirmpw_txt.text == nil || self.confirmpw_txt.text?.isEmpty == true)
+        {
+                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter confirm password")
         }
             
         else if(self.newpw_txt.text != self.confirmpw_txt.text)
@@ -112,7 +117,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
                 if error != nil {
                     //completion(error)
                     print(error!)
-                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "please enter oldpassword")
+                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "please enter vaild oldpassword")
                    Constant.showInActivityIndicatory()
 
                 }

@@ -11,6 +11,7 @@ import SWRevealViewController
 import FirebaseFirestore
 import Kingfisher
 import AlamofireImage
+import Firebase
 import AVKit
 
 
