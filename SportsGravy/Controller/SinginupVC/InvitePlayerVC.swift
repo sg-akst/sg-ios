@@ -12,14 +12,35 @@ struct editText {
     let email : String
 }
 
-class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, ParentconsentDelegate {
+    func parentconsentform() {
+        
+        let checkcount = UserDefaults.standard.integer(forKey: "13belowagecount")
+        if(checkcount < emilladdArray.count)
+        {
+            self.emilladdArray.removeObject(at: 0)
+            
+        }
+        let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(identifier: "coppaform"))!
+        objcoppaparentVC.delegate = self
+        objcoppaparentVC.details = emilladdArray
+        objcoppaparentVC.parentDetails = parententerdetails
+        
+        self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+        
+        
+    }
     
     @IBOutlet var children_tbl: UITableView!
+
     
     var userdetails: NSDictionary!
     var chidArray: NSMutableArray!
     var allCellsText = [editText]()
-
+    var belowAgecount: Int = 0
+    var emilladdArray: NSMutableArray!
+    var isParentconsent: Bool!
+    var parententerdetails: NSMutableDictionary!
 
     
     override func viewDidLoad() {
@@ -31,6 +52,7 @@ class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.children_tbl.dataSource = self
         self.children_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         children_tbl.sizeToFit()
+       
 
         
     }
@@ -75,6 +97,13 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         //allCellsText.append(textField.text)
+        print("texttag=>\(textField.tag)")
+        let oldic: NSDictionary = self.chidArray?[textField.tag] as! NSDictionary
+        var replaceDic: NSMutableDictionary = NSMutableDictionary()
+        replaceDic = oldic.mutableCopy() as! NSMutableDictionary
+        replaceDic.setValue(textField.text, forKey: "email_address")
+        let assigndic: NSDictionary = replaceDic.copy() as! NSDictionary
+        self.chidArray.replaceObject(at: textField.tag, with: assigndic)
         if(textField.text! != "")
         {
            self.allCellsText.append(editText(id: textField.tag, email: textField.text!))
@@ -87,20 +116,38 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = selectbutton.superview as? ChildernCell
         cell?.inviteBtn.sendActions(for: .touchUpInside)
         
-        let emilladdArray = NSMutableArray()
-        for i in 0..<chidArray.count
+        emilladdArray = NSMutableArray()
+        for i in 0..<self.allCellsText.count
         {
             //sender.tag = i
-            
-            let dic: NSDictionary = chidArray?[i] as! NSDictionary
-
-            if(cell?.emailid_txt.text != nil)
+            let getdetail = allCellsText[i]
+            let getTag = getdetail.id
+            let getemail: String = getdetail.email
+            let dic: NSDictionary = chidArray?[getTag] as! NSDictionary
+            if(getemail.isEmpty == false && (dic.value(forKey: "age") != nil))
             {
+                belowAgecount += 1
                 emilladdArray.add(dic)
             }
-           // print(dic)
-            
         }
+        UserDefaults.standard.set(belowAgecount, forKey: "13belowagecount")
+
+        if(self.emilladdArray.count > 0)
+        {
+            let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(identifier: "coppaform"))!
+            objcoppaparentVC.delegate = self
+            objcoppaparentVC.details = emilladdArray
+            objcoppaparentVC.parentDetails = parententerdetails
+            
+            self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+        }
+        else
+        {
+           let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
+            //objcoppaparentVC.details = emilladdArray
+            self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+        }
+        
         
     }
 

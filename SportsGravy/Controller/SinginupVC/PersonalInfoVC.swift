@@ -68,7 +68,7 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
            let thickness: CGFloat = 1.0
 
            let bottomBorder = CALayer()
-        bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: self.view.frame.size.width - 10, height:thickness)
+        bottomBorder.frame = CGRect(x:0, y: setborder.frame.size.height - thickness, width: setborder.frame.size.width, height:thickness)
              bottomBorder.backgroundColor = UIColor.lightGray.cgColor
            setborder.layer.addSublayer(bottomBorder)
        }
@@ -85,22 +85,48 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         popup.style = .bottomSheet
            popup.present(in: self)
        }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField == self.mobile_lbl)
+        {
+          return textField.text!.count < 17 || string == ""
+        }
+        else
+        {
+           return true
+        }
+    }
     @IBAction func nextbtn(_ sender: UIButton)
     {
-        if(self.dob_lbl.text == "" || self.dob_lbl.text?.isEmpty == true)
-        {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please choose date of birth ")
-
-        }
-        
         if(self.suffix_lbl.text == "" || self.suffix_lbl.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select suffix ")
 
         }
+        
+        if(self.dob_lbl.text == "" || self.dob_lbl.text?.isEmpty == true)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please choose date of birth ")
+
+        }
+        if(self.email_lbl.text == "" || self.email_lbl.text?.isEmpty == true)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter email address ")
+
+        }
+       
         if(isValidEmail(self.email_lbl.text!) == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check email id ")
+
+        }
+        if(self.mobile_lbl.text == "" || self.mobile_lbl.text?.isEmpty == true)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number ")
+
+        }
+        if(isValidMobile(testStr: self.mobile_lbl.text!) == false)
+        {
+           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check mobile number ")
 
         }
         if(self.password_lbl.text == "" || self.password_lbl.text?.isEmpty == true)
@@ -108,19 +134,33 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter password ")
 
         }
+        if(self.confirm_lbl.text == "" || self.confirm_lbl.text?.isEmpty == true)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter confirm password ")
+
+        }
         if(self.password_lbl.text != self.confirm_lbl.text)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password and confirm password doesn’t match")
 
         }
-        if(isValidMobile(testStr: self.mobile_lbl.text!) == false)
-        {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check mobile number ")
-
-        }
+       
         else{
+            
+            let getparentdetails: NSMutableDictionary = NSMutableDictionary()
+            getparentdetails.setValue(firstname_lbl.text, forKey: "first_name")
+            getparentdetails.setValue(middlename_lbl.text, forKey: "middle_name")
+            getparentdetails.setValue(lastname_lbl.text, forKey: "last_name")
+            getparentdetails.setValue(email_lbl.text, forKey: "email_address")
+            getparentdetails.setValue(dob_lbl.text, forKey: "dob")
+            getparentdetails.setValue(mobile_lbl.text, forKey: "mobile_number")
+            getparentdetails.setValue(suffix_lbl.text, forKey: "suffix")
+            getparentdetails.setValue(confirm_lbl.text, forKey: "confirm_password")
+            getparentdetails.setValue(password_lbl.text, forKey: "password")
+            
             let objpersonalVC: InvitePlayerVC = (self.storyboard?.instantiateViewController(identifier: "inviteplayer"))!
             objpersonalVC.userdetails = userdetails
+            objpersonalVC.parententerdetails = getparentdetails
             self.navigationController?.pushViewController(objpersonalVC, animated: true)
         }
     }

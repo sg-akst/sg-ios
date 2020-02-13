@@ -20,6 +20,7 @@ class Constant: NSObject {
     var updateSorting: String = BaseUrl + "updateSorting"
     var signupString: String = BaseUrl + "getUserDetails"
     var inviteGuardianUrl: String = BaseUrl + "inviteNewGuardianProfile"
+    var signupUrl: String = BaseUrl + "signUpUser"
 
     static func internetconnection(vc: UIViewController)
     {
