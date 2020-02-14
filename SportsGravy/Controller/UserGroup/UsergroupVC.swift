@@ -655,7 +655,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         vc.getorganizationDetails = getRolebyreasonDetailArray
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?
         vc.getTeamId = self.getTeamId as NSString?
-        vc.selectType = "MemberGroup"
+        vc.selectType = "User Group"
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

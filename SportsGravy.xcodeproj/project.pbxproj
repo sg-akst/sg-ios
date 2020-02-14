@@ -59,6 +59,11 @@
 		08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210523BE08DD00327FF1 /* Constant.swift */; };
 		082D264B23F15AC100E22307 /* InviteGuardianVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D264A23F15AC100E22307 /* InviteGuardianVC.swift */; };
 		082D264D23F1769B00E22307 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D264C23F1769B00E22307 /* InviteCell.swift */; };
+		084C618223F6A551005613B3 /* ReactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618123F6A551005613B3 /* ReactionVC.swift */; };
+		084C618423F6A78C005613B3 /* ReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618323F6A78C005613B3 /* ReactionCell.swift */; };
+		084C618623F6AC84005613B3 /* PostTagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618523F6AC84005613B3 /* PostTagVC.swift */; };
+		084C618823F6AEF8005613B3 /* PostCannedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618723F6AEF8005613B3 /* PostCannedVC.swift */; };
+		084C618A23F6B59A005613B3 /* PostUsergroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618923F6B59A005613B3 /* PostUsergroupVC.swift */; };
 		087E8B4223C7019A00D1F0FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087E8B4123C7019A00D1F0FF /* GoogleService-Info.plist */; };
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
@@ -112,6 +117,11 @@
 		0814208523DEF890006E0087 /* SittingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SittingCell.swift; sourceTree = "<group>"; };
 		082D264A23F15AC100E22307 /* InviteGuardianVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteGuardianVC.swift; sourceTree = "<group>"; };
 		082D264C23F1769B00E22307 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		084C618123F6A551005613B3 /* ReactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionVC.swift; sourceTree = "<group>"; };
+		084C618323F6A78C005613B3 /* ReactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionCell.swift; sourceTree = "<group>"; };
+		084C618523F6AC84005613B3 /* PostTagVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTagVC.swift; sourceTree = "<group>"; };
+		084C618723F6AEF8005613B3 /* PostCannedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCannedVC.swift; sourceTree = "<group>"; };
+		084C618923F6B59A005613B3 /* PostUsergroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUsergroupVC.swift; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
 		0872E64823E2F725008170A0 /* ChildernCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildernCell.swift; sourceTree = "<group>"; };
@@ -415,6 +425,7 @@
 				088625F323EC347E008E7CCD /* CommentCell.swift */,
 				0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */,
 				0808875523ED470F001A0191 /* PostImageDetailCell.swift */,
+				084C618323F6A78C005613B3 /* ReactionCell.swift */,
 			);
 			path = PostCell;
 			sourceTree = "<group>";
@@ -502,6 +513,10 @@
 				08E3658223C457090063C6F4 /* Dashboardvc.swift */,
 				088625F123EC334C008E7CCD /* CommentVC.swift */,
 				0808875123ED3BEE001A0191 /* PostImageVC.swift */,
+				084C618123F6A551005613B3 /* ReactionVC.swift */,
+				084C618523F6AC84005613B3 /* PostTagVC.swift */,
+				084C618723F6AEF8005613B3 /* PostCannedVC.swift */,
+				084C618923F6B59A005613B3 /* PostUsergroupVC.swift */,
 			);
 			path = DashboardVC;
 			sourceTree = "<group>";
@@ -796,12 +811,15 @@
 				080E847C23E3F2770092CDB3 /* InvitePlayerVC.swift in Sources */,
 				080E847B23E3F2720092CDB3 /* PersonalInfoVC.swift in Sources */,
 				082D264D23F1769B00E22307 /* InviteCell.swift in Sources */,
+				084C618A23F6B59A005613B3 /* PostUsergroupVC.swift in Sources */,
 				080E847A23E3F26E0092CDB3 /* SignupVC.swift in Sources */,
 				080E847923E3F26B0092CDB3 /* SidemenuVC.swift in Sources */,
 				080E847823E3F2670092CDB3 /* Dashboardvc.swift in Sources */,
 				0808875423ED46F2001A0191 /* PostimageHeaderCell.swift in Sources */,
+				084C618823F6AEF8005613B3 /* PostCannedVC.swift in Sources */,
 				080E847723E3F2620092CDB3 /* RateVC.swift in Sources */,
 				080E847623E3F25D0092CDB3 /* VideoVC.swift in Sources */,
+				084C618623F6AC84005613B3 /* PostTagVC.swift in Sources */,
 				080E847523E3F2590092CDB3 /* CalendarVC.swift in Sources */,
 				080E847423E3F2560092CDB3 /* UserGroupCreateVC.swift in Sources */,
 				080E847323E3F2520092CDB3 /* UsergroupVC.swift in Sources */,
@@ -823,6 +841,7 @@
 				0808875623ED470F001A0191 /* PostImageDetailCell.swift in Sources */,
 				0808875223ED3BEE001A0191 /* PostImageVC.swift in Sources */,
 				080E846623E3F2140092CDB3 /* AccountProfileVC.swift in Sources */,
+				084C618423F6A78C005613B3 /* ReactionCell.swift in Sources */,
 				080E846523E3F1FD0092CDB3 /* PopVC.swift in Sources */,
 				080E846423E3F1D80092CDB3 /* SideMenuCell.swift in Sources */,
 				080E846323E3F1D30092CDB3 /* PostCell.swift in Sources */,
@@ -832,6 +851,7 @@
 				080E846023E3F1C70092CDB3 /* UserGroupCell.swift in Sources */,
 				080E845F23E3F1C20092CDB3 /* TagCell.swift in Sources */,
 				080E845E23E3F1BE0092CDB3 /* Playercell.swift in Sources */,
+				084C618223F6A551005613B3 /* ReactionVC.swift in Sources */,
 				080E845D23E3F1B70092CDB3 /* SittingCell.swift in Sources */,
 				080E845C23E3F1B10092CDB3 /* SortingCell.swift in Sources */,
 				088625F223EC334C008E7CCD /* CommentVC.swift in Sources */,

@@ -106,23 +106,23 @@ class CoppaParentFormVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-         playerdetails = self.details?[0] as! NSDictionary
-               self.childname_lbl.text = "\(playerdetails.value(forKey: "first_name")!)" + " " + "\(playerdetails.value(forKey: "last_name")!)"
-               self.childemail_lbl.text = playerdetails.value(forKey: "email_address") as? String
-               self.child_dob_lbl.text = playerdetails.value(forKey: "date_of_birth") as? String
+        playerdetails = self.details?[0] as? NSDictionary
+               self.childname_lbl.text = "" + "\(playerdetails.value(forKey: "first_name")!)" + " " + "\(playerdetails.value(forKey: "last_name")!)"
+               self.childemail_lbl.text = " " + "\(playerdetails.value(forKey: "email_address")!)"
+               self.child_dob_lbl.text = " " + "\(playerdetails.value(forKey: "date_of_birth")!)"
                let getaddtress: NSDictionary = playerdetails.value(forKey: "address") as! NSDictionary
-               self.child_mailing_lbl.text = "\(getaddtress.value(forKey: "street1")!)" + " " + "\(getaddtress.value(forKey: "street2")!)" + "\n" + "\(getaddtress.value(forKey: "city")!)" + " " + "\(getaddtress.value(forKey: "country_code")!)" + "\n" + "\(getaddtress.value(forKey: "postal_code")!)"
+               self.child_mailing_lbl.text = " " + "\(getaddtress.value(forKey: "street1")!)" + " " + "\(getaddtress.value(forKey: "street2")!)" + "\n" + "\(getaddtress.value(forKey: "city")!)" + " " + "\(getaddtress.value(forKey: "country_code")!)" + "\n" + "\(getaddtress.value(forKey: "postal_code")!)"
                let getroleinfo: NSDictionary = playerdetails.value(forKey: "roleInfo") as! NSDictionary
-               self.sport_lbl.text = getroleinfo.value(forKey: "sport_name") as? String
-               self.season_lbl.text = getroleinfo.value(forKey: "season_label") as? String
-               self.level_lbl.text = getroleinfo.value(forKey: "level_name") as? String
+               self.sport_lbl.text = " " + "\(getroleinfo.value(forKey: "sport_name")!)"
+               self.season_lbl.text = " " + "\(getroleinfo.value(forKey: "season_label")!)"
+               self.level_lbl.text = " " + "\(getroleinfo.value(forKey: "level_name")!)"
                let getorgzationAddress: NSDictionary = getroleinfo.value(forKey: "organization_Address") as! NSDictionary
-               self.sport_organization_lbl.text = "\(getroleinfo.value(forKey: "organization_abbrev")!)" + "\n"
+               self.sport_organization_lbl.text = " " + "\(getroleinfo.value(forKey: "organization_abbrev")!)" + "\n"
                    + "\(getorgzationAddress.value(forKey: "street1")!)" + "\(getorgzationAddress.value(forKey: "street2")!)" + "\n" + "\(getorgzationAddress.value(forKey: "city")!)" + "\(getorgzationAddress.value(forKey: "state")!)" + "\n" + "\(getorgzationAddress.value(forKey: "country_code")!)" + "\(getorgzationAddress.value(forKey: "postal_code")!)"
-        self.parents_lbl.text = "\(parentDetails.value(forKey: "first_name")!)" + "" + "\(parentDetails.value(forKey: "middle_name")!)" + "" + "\(parentDetails.value(forKey: "last_name")!)"
-        self.relationship_lbl.text = "Guardian"
-        self.parent_email_lbl.text = parentDetails.value(forKey: "email_address") as? String
-        self.parent_phone_lbl.text = parentDetails.value(forKey: "mobile_number") as? String
+        self.parents_lbl.text = " " + "\(parentDetails.value(forKey: "first_name")!)" + "" + "\(parentDetails.value(forKey: "middle_name")!)" + "" + "\(parentDetails.value(forKey: "last_name")!)"
+        self.relationship_lbl.text = " Guardian"
+        self.parent_email_lbl.text = " " + "\(parentDetails.value(forKey: "email_address")!)"
+        self.parent_phone_lbl.text = " " + "\(parentDetails.value(forKey: "mobile_number")!)"
      }
 
     @IBAction func acceptbtn(_ sender: UIButton)
@@ -180,6 +180,8 @@ class CoppaParentFormVC: UIViewController {
             {
                 let objterm: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
                 objterm.parentdetails = (parentDetails.copy() as! NSDictionary)
+                objterm.useruid = playerdetails.value(forKey: "user_id") as? String
+                
                 self.navigationController?.pushViewController(objterm, animated: true)
             }
             else

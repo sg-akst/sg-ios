@@ -40,6 +40,8 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let feedId = selectComment.value(forKey: "feed_id")
         commentListMethod(feedid: feedId as! String)
         comment_tbl.sizeToFit()
+        comment_tbl.tableFooterView = UIView()
+
         
     }
     
@@ -144,7 +146,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        {
             //self.comment_btn.tintColor = UIColor.red
             let Commentcount: Int = Int("\(commentDic.value(forKey: "count")!)")! + 1
-            self.like_btn.setTitle("\(Commentcount)", for: .normal)
+            self.comment_btn.setTitle("\(Commentcount)", for: .normal)
             let addUserlist: NSMutableArray = NSMutableArray()
             addUserlist.add(getuuid)
             userlist = addUserlist.copy() as! NSArray
@@ -193,7 +195,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                            Constant.showInActivityIndicatory()
 
                        } else {
-                        db.collection("feed").document("\(userFeedid)").collection("feedComments").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)", "comment_desc": "\(self.comment_txt.text!)"])
+                        db.collection("feed").document("\(userFeedid)").collection("feedComments").document().setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)", "comment_desc": "\(self.comment_txt.text!)"])
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
@@ -203,6 +205,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 print("Document successfully updated")
                                 //self.comment_tbl.reloadData()
                                 Constant.showInActivityIndicatory()
+                                self.comment_txt.text = ""
                                 self.commentListMethod(feedid: userFeedid)
 
 

@@ -315,7 +315,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                        case .success(let json):
                         let jsonData = json
                            print(jsonData)
-                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(self.selectType!) Updated Successfully ")
+                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Updated Successfully ")
                         case .failure(let error): break
                            //self.errorFailer(error: error)
                        }

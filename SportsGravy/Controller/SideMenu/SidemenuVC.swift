@@ -165,6 +165,8 @@ getuserDetail()
            // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                print("You tapped cell number \(indexPath.row).")
+        let role_str = roleArray[indexPath.row]
+        UserDefaults.standard.set(role_str, forKey: "Role")
         }
     
     @objc func roleChangeMethod(_ sender: UIButton)

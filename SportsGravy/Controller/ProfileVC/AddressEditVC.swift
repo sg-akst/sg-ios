@@ -76,7 +76,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
     func bottomlineMethod(selecttext: UITextField)
     {
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: selecttext.frame.height - 1, width: self.view.frame.width-40, height: 1.0)
+        bottomLine.frame = CGRect(x: 0.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.gray.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)

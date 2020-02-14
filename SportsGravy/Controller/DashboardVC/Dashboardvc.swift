@@ -101,7 +101,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let cell:PostCell = self.post_tbl.dequeueReusableCell(withIdentifier: "post") as! PostCell
             let Dic: NSDictionary = self.commonArray?[indexPath.row] as! NSDictionary
             
-            cell.username_lbl?.text = "\(Dic.value(forKey: "feedPostedUser_firstName")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_middleInitial")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_lastName")!)" + "-" + "\(Dic.value(forKey: "feedPostedUser_role")!)"
+            cell.username_lbl?.text = "\(Dic.value(forKey: "feedPostedUser_firstName")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_middleInitial")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_lastName")!)" + " - " + "\(Dic.value(forKey: "feedPostedUser_role")!)" .capitalized
             let timestamp: Timestamp = Dic.value(forKey: "feedPostedDatetime") as! Timestamp
              let datees: Date = timestamp.dateValue()
              print(datees)
@@ -415,7 +415,7 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
     @objc func commentDetail(_ sender: UIButton)
     {
         let button = sender
-        let indexno = sender.tag
+        let indexno = button.tag
         //let cell = button.superview?.superview as? PostCell
         let Dic: NSDictionary = self.commonArray?[indexno] as! NSDictionary
         let objCommentvc: CommentVC = (self.storyboard?.instantiateViewController(identifier: "comment"))!

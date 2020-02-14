@@ -12,6 +12,7 @@ import Alamofire
 class TermAndConditionVC: UIViewController {
 
     var parentdetails: NSDictionary!
+    var useruid: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +36,14 @@ class TermAndConditionVC: UIViewController {
                    Constant.showActivityIndicatory(uiView: self.view)
                    let testStatusUrl: String = Constant.sharedinstance.signupUrl
                     var param:[String:AnyObject] = [:]
-        param["children"] = "\(getplayerlist!)" as AnyObject
+        param["children"] = getplayerlist as AnyObject
         param["city"] = "" as AnyObject
         param["confirm_password"] = parentdetails.value(forKey: "confirm_password") as AnyObject?
         param["country_code"] = "" as AnyObject
-        param["date_of_birth"] = parentdetails.value(forKey: "dob") as AnyObject?
+        param["date_of_birth"] = "\(parentdetails.value(forKey: "dob")!)" as AnyObject
         param["email"] = parentdetails.value(forKey: "email_address") as AnyObject?
         param["first_name"] = parentdetails.value(forKey: "first_name") as AnyObject?
-        param[""] = "" as AnyObject
+        param["gender"] = "" as AnyObject
         param["is_condition_applied"] = true as AnyObject
         param["last_name"] = parentdetails.value(forKey: "last_name") as AnyObject?
         param["middle_initial"] = parentdetails.value(forKey: "middle_name") as AnyObject?
@@ -53,9 +54,9 @@ class TermAndConditionVC: UIViewController {
         param["street1"] = "" as AnyObject
         param["street2"] = "" as AnyObject
         param["suffix"] = parentdetails.value(forKey: "suffix") as AnyObject?
-        param["uid"] = "" as AnyObject
+        param["uid"] = useruid as AnyObject?
                    
-                   Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:DataResponse<Any>) in
+        Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:DataResponse<Any>) in
                        if(!(response.error != nil)){
                            switch (response.result)
                            {
@@ -66,10 +67,10 @@ class TermAndConditionVC: UIViewController {
                                    if(statusCode == true)
                                    {
                                        let result = info?["data"] as! NSDictionary
-//                                       self.email_txt.text = result.value(forKey: "email_address") as? String
-//                                       self.userdetails = result
-                                      Constant.showInActivityIndicatory()
 
+                                      Constant.showInActivityIndicatory()
+                                    let objcongz: ConguralutionVC = (self.storyboard?.instantiateViewController(identifier: "congz"))!
+                                    self.navigationController?.pushViewController(objcongz, animated: true)
                                    }
                                    Constant.showInActivityIndicatory()
                                }

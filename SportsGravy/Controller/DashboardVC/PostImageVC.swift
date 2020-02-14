@@ -94,25 +94,30 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
        }
 
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           return 44.0
+           return 40.0
        }
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return UITableViewAutomaticDimension
         }
 
         func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-            return 44.0
+            return 40.0
         }
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+    
+       func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
             let header = tableView.dequeueReusableCell(withIdentifier: "postheader") as? PostimageHeaderCell
-            let section = postsections[section].title
-            header?.name_lbl.text = "\(section)"
+            let sections = postsections[section].title
+            header?.name_lbl.text = "\(sections)"
             header?.add_btn.layer.cornerRadius = 2
             header?.add_btn.layer.borderWidth = 1
             header?.add_btn.layer.borderColor = UIColor.white.cgColor
-            header?.add_btn.tag = Int(section)!
+            header?.add_btn.tag = section
             header?.add_btn.addTarget(self, action: #selector(directview), for: .touchUpInside)
-            
+        let sepFrame: CGRect = CGRect(x: 0, y: (header?.frame.size.height)!-1, width: self.view.frame.size.width, height: 1);
+            let seperatorView = UIView.init(frame: sepFrame)
+            seperatorView.backgroundColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
+        header?.addSubview(seperatorView)
             return header?.contentView
         }
    
@@ -149,14 +154,18 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         print(button)
         if(button == 0)
         {
-            
+          let objPosttag: PostUsergroupVC = (self.storyboard?.instantiateViewController(identifier: "postuser"))!
+            self.navigationController?.pushViewController(objPosttag, animated: true)
         }
         else if(button == 1)
         {
-            
+            let objPosttag: PostTagVC = (self.storyboard?.instantiateViewController(identifier: "posttag"))!
+            self.navigationController?.pushViewController(objPosttag, animated: true)
         }
         else if(button == 2)
         {
+            let objReaction: ReactionVC = (self.storyboard?.instantiateViewController(identifier:"reactionvc"))!
+            self.navigationController?.pushViewController(objReaction, animated: true)
             
         }
         else if(button == 3)
@@ -164,5 +173,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
             
         }
     }
-
+    @IBAction func backpostbtn(_ sender: UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
