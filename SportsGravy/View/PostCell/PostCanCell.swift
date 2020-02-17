@@ -1,18 +1,17 @@
 //
-//  PostImageDetailCell.swift
+//  PostCanCell.swift
 //  SportsGravy
 //
-//  Created by CSS on 07/02/20.
+//  Created by CSS on 18/02/20.
 //  Copyright © 2020 CSS. All rights reserved.
 //
 
 import UIKit
 
-class PostImageDetailCell: UITableViewCell {
-
-    @IBOutlet weak var detail_btn: UIButton!
-    @IBOutlet weak var commonview: UIView!
-    @IBOutlet weak var cancel_btn: UIButton!
+class PostCanCell: UITableViewCell {
+    
+    @IBOutlet weak var can_title_lbl: UILabel!
+    @IBOutlet weak var can_desc_lbl: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

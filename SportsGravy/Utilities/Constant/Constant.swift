@@ -21,6 +21,7 @@ class Constant: NSObject {
     var signupString: String = BaseUrl + "getUserDetails"
     var inviteGuardianUrl: String = BaseUrl + "inviteNewGuardianProfile"
     var signupUrl: String = BaseUrl + "signUpUser"
+    var FeedPostUrl: String = BaseUrl + "postFeed"
 
     static func internetconnection(vc: UIViewController)
     {

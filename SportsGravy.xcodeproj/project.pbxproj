@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0805FB0923FA58D800AD3426 /* PostUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0805FB0823FA58D800AD3426 /* PostUserCell.swift */; };
 		0808875223ED3BEE001A0191 /* PostImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0808875123ED3BEE001A0191 /* PostImageVC.swift */; };
 		0808875423ED46F2001A0191 /* PostimageHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */; };
 		0808875623ED470F001A0191 /* PostImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0808875523ED470F001A0191 /* PostImageDetailCell.swift */; };
@@ -68,6 +69,7 @@
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
 		08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */; };
+		08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B5631223FB368000D90E23 /* PostCanCell.swift */; };
 		08E3658623C4633B0063C6F4 /* fira-sans in Resources */ = {isa = PBXBuildFile; fileRef = 08E3658523C4633B0063C6F4 /* fira-sans */; };
 		08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */; };
 		08FD6B0C23F2AAE100AA4096 /* ConguralutionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */; };
@@ -94,6 +96,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0805FB0823FA58D800AD3426 /* PostUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserCell.swift; sourceTree = "<group>"; };
 		0808875123ED3BEE001A0191 /* PostImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageVC.swift; sourceTree = "<group>"; };
 		0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostimageHeaderCell.swift; sourceTree = "<group>"; };
 		0808875523ED470F001A0191 /* PostImageDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageDetailCell.swift; sourceTree = "<group>"; };
@@ -147,6 +150,7 @@
 		08B0374523D580E000FB9DFC /* UserGroupCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupCreateVC.swift; sourceTree = "<group>"; };
 		08B0374723D5971500FB9DFC /* UsergroupCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsergroupCreateCell.swift; sourceTree = "<group>"; };
 		08B0374923D5AD0E00FB9DFC /* GroubHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroubHeaderCell.swift; sourceTree = "<group>"; };
+		08B5631223FB368000D90E23 /* PostCanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCanCell.swift; sourceTree = "<group>"; };
 		08B610D823D04E3E00CD8A61 /* TagVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagVC.swift; sourceTree = "<group>"; };
 		08B610DB23D0524D00CD8A61 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseVC.swift; sourceTree = "<group>"; };
@@ -426,6 +430,8 @@
 				0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */,
 				0808875523ED470F001A0191 /* PostImageDetailCell.swift */,
 				084C618323F6A78C005613B3 /* ReactionCell.swift */,
+				0805FB0823FA58D800AD3426 /* PostUserCell.swift */,
+				08B5631223FB368000D90E23 /* PostCanCell.swift */,
 			);
 			path = PostCell;
 			sourceTree = "<group>";
@@ -806,6 +812,7 @@
 				08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */,
 				080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */,
 				080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */,
+				08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */,
 				088625F423EC347E008E7CCD /* CommentCell.swift in Sources */,
 				080E847D23E3F27B0092CDB3 /* ForgotVC.swift in Sources */,
 				080E847C23E3F2770092CDB3 /* InvitePlayerVC.swift in Sources */,
@@ -838,6 +845,7 @@
 				080E846723E3F2180092CDB3 /* OrganizationVC.swift in Sources */,
 				080E848123E3F3490092CDB3 /* SortingVC.swift in Sources */,
 				08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */,
+				0805FB0923FA58D800AD3426 /* PostUserCell.swift in Sources */,
 				0808875623ED470F001A0191 /* PostImageDetailCell.swift in Sources */,
 				0808875223ED3BEE001A0191 /* PostImageVC.swift in Sources */,
 				080E846623E3F2140092CDB3 /* AccountProfileVC.swift in Sources */,

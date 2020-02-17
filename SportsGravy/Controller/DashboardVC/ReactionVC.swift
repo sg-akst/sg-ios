@@ -8,8 +8,15 @@
 
 import UIKit
 
+protocol SelectReactionDelegate: AnyObject {
+    func selectReactionDetail(userDetail: NSDictionary)
+
+}
+
 class ReactionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var reaction_tbl: UITableView!
+    weak var delegate:SelectReactionDelegate?
+
     
     var mydic: NSArray = [["reation_title": "Thumbs Up", "reaction_image": "like"],["reation_title" : "Neutral", "reaction_image": "emotion"], ["reation_title" : "Thumbs Down", "reaction_image": "dislike"]]
     override func viewDidLoad() {
@@ -40,7 +47,9 @@ class ReactionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
      
-       
+        self.delegate?.selectReactionDetail(userDetail: self.mydic[indexPath.row] as! NSDictionary)
+        self.navigationController?.popViewController(animated: true)
+        
     }
     @IBAction func backpostReactionbtn(_ sender: UIButton)
        {

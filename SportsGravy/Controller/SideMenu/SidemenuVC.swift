@@ -46,7 +46,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.role_tbl.delegate = self
         self.role_tbl.dataSource = self
         role_tbl.sizeToFit()
-getuserDetail()
+        getuserDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +68,7 @@ getuserDetail()
                   
                   if let document = document, document.exists {
                    let doc: NSDictionary = document.data()! as NSDictionary
+                    
                     self.username_lbl.text = "\(doc.value(forKey: "first_name")!)" + " " + "\(doc.value(forKey: "middle_initial")!)" + " " + "\(doc.value(forKey: "last_name")!)" +  " " + "\(doc.value(forKey: "suffix")!)"
                     
                    let timestamp: Timestamp = doc.value(forKey: "created_datetime") as! Timestamp
@@ -161,12 +162,10 @@ getuserDetail()
     
         return cell
         }
-
-           // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-               print("You tapped cell number \(indexPath.row).")
-        let role_str = roleArray[indexPath.row]
-        UserDefaults.standard.set(role_str, forKey: "Role")
+        print("You tapped cell number \(indexPath.row).")
+//        let role_str = roleArray[indexPath.row]
+//        UserDefaults.standard.set(role_str, forKey: "Role")
         }
     
     @objc func roleChangeMethod(_ sender: UIButton)
@@ -175,6 +174,8 @@ getuserDetail()
         getRole = roleArray[buttonRow] as String
         let element = roleArray.remove(at: buttonRow)
         roleArray.insert(element, at: 0)
+        UserDefaults.standard.set(element, forKey: "Role")
+
         role_tbl.reloadData()
         //self.isTeamEnable = ""
         

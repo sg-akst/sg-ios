@@ -1,18 +1,17 @@
 //
-//  PostImageDetailCell.swift
+//  PostUserCell.swift
 //  SportsGravy
 //
-//  Created by CSS on 07/02/20.
+//  Created by CSS on 17/02/20.
 //  Copyright © 2020 CSS. All rights reserved.
 //
 
 import UIKit
 
-class PostImageDetailCell: UITableViewCell {
-
-    @IBOutlet weak var detail_btn: UIButton!
-    @IBOutlet weak var commonview: UIView!
-    @IBOutlet weak var cancel_btn: UIButton!
+class PostUserCell: UITableViewCell {
+    
+    @IBOutlet weak var title_name_lbl: UILabel!
+    @IBOutlet weak var groub_img: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +21,6 @@ class PostImageDetailCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 
 }

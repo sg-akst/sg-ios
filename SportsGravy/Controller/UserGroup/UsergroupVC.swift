@@ -527,7 +527,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                Constant.showActivityIndicatory(uiView: self.view)
                let getuuid = UserDefaults.standard.string(forKey: "UUID")
                 let db = Firestore.firestore()
-        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
+        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.getrolebySeasonid!)")
         
         if (UserDefaults.standard.bool(forKey: "1") == true)
         {
