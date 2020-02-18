@@ -76,7 +76,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
     func bottomlineMethod(selecttext: UITextField)
     {
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
+        bottomLine.frame = CGRect(x: -10.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.gray.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
@@ -165,7 +165,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
     {
         if(self.street1_txt.text == nil || self.street1_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter address")
 
         }
 //        else if(self.street2_txt.text == nil || self.street2_txt.text?.isEmpty == true)
@@ -175,22 +175,22 @@ class AddressEditVC: UIViewController,PopViewDelegate {
 //        }
         else if(self.city_txt.text == nil || self.city_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter city")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter city")
 
         }
         else if(self.potel_txt.text == nil || self.potel_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter potelcode")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter potelcode")
 
         }
         else if(self.state_txt.text == nil || self.state_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select state")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select state")
 
         }
         else if(self.country_txt.text == nil || self.country_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select country")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select country")
 
         }
         else
@@ -229,7 +229,7 @@ class AddressEditVC: UIViewController,PopViewDelegate {
     }
     func alertermsg(msg: String)
     {
-        let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.addressupdateSuccess()
         self.navigationController?.popViewController(animated: true)

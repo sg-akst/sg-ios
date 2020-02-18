@@ -24,6 +24,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var canRespons_txv: UITextView!
     @IBOutlet weak var create_btn: UIButton!
     @IBOutlet weak var delete_btn: UIButton!
+    @IBOutlet weak var navigation_title_lbl: UILabel!
     
     
     
@@ -52,6 +53,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
             self.delete_btn.isHidden = true
             self.create_btn.isHidden = false
             self.canRespons_tittle_txt.isUserInteractionEnabled = true
+            navigation_title_lbl.text = "Create Response"
+
 
             
         }
@@ -60,6 +63,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
            self.delete_btn.isHidden = false
             self.create_btn.isHidden = false
             self.canRespons_tittle_txt.isUserInteractionEnabled = false
+            navigation_title_lbl.text = "Update Response"
             self.create_btn.setTitle("Update", for: .normal)
             self.canRespons_tittle_txt.text = updateArray.value(forKey: "cannedResponseTitle") as? String
             self.canRespons_txv.text = updateArray.value(forKey: "cannedResponseDesc") as? String
@@ -67,8 +71,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
             delete_btn.backgroundColor = (count > 0 ) ? UIColor.gray : UIColor.red
             
         }
-        canRespons_txv.layer.borderColor = UIColor.darkGray.cgColor
-        canRespons_txv.layer.borderWidth = 0.5
+        canRespons_txv.layer.borderColor = UIColor.black.cgColor
+        canRespons_txv.layer.borderWidth = 1.0
         canRespons_txv.layer.masksToBounds = true
         getuserDetail()
     }
@@ -183,7 +187,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         {
             if(canRespons_tittle_txt.text == nil || canRespons_tittle_txt.text?.isEmpty == true)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "SportGravy", messageStr: "Please enter Canned Response Tiltle")
+                Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter Canned Response Tiltle")
             }
             else
             {
@@ -215,7 +219,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                             } else {
                                 print("Document successfully written!")
                                 Constant.showInActivityIndicatory()
-                                self.alertermsg(msg: "CannedResponse created successfully ")
+                                self.alertermsg(msg: "Canned Response created successfully ")
 //
 
                             }
@@ -264,7 +268,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
                                 } else {
                                     print("Document successfully updated")
                                     Constant.showInActivityIndicatory()
-                                    self.alertermsg(msg: "CannedResponse updated successfully ")
+                                    self.alertermsg(msg: "Canned Response updated successfully ")
 //
 
                                     
@@ -283,7 +287,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
     
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
     //        self.delegate?.usernameupdateSuccess()
             self.navigationController?.popViewController(animated: true)

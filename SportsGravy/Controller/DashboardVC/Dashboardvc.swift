@@ -209,27 +209,13 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                  cell.postimageviewHeight.constant = 0
                  cell.pageControl.isHidden = true
                 
-//                let videoExists = Dic.value(forKey: "feedVideoURL") != nil
-//                 if(videoExists)
-//                 {
-//                   // cell.video_view.isHidden = false
-//                    let postvideo : String = Dic.value(forKey: "feedVideoURL") as! String
-//                    let videoURL = NSURL(string: "\(postvideo)")
-//                    let player = AVPlayer(url: videoURL! as URL)
-//
-//                    let playerLayer = AVPlayerLayer(player: player)
-//                    playerLayer.frame = cell.bounds
-//                    cell.postimageScroll.layer.addSublayer(playerLayer)
-//                 cell.postimageviewHeight.constant = 350
-//
-//                }
-                
             }
             cell.postimageScroll.isPagingEnabled = true
             cell.postimageScroll.delegate = self
             cell.pageControl.addTarget(self, action: #selector(turnPage), for: .valueChanged)
             cell.pageControl.currentPage = 0;
             cell.pageControl.numberOfPages = postimageArray.count;
+            cell.selectionStyle = .none
             return cell
         }
 

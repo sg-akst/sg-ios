@@ -34,7 +34,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         sorting_tbl.tableFooterView = UIView()
 
         self.sorting_tbl.isEditing = true
-        Title_lbl.text = "Sort \(selectType!)"
+        Title_lbl.text = (selectType == "MemberGroup") ? "Sort User Group" : selectType
         sorting_tbl.sizeToFit()
         getuserDetail()
 
@@ -315,7 +315,8 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                        case .success(let json):
                         let jsonData = json
                            print(jsonData)
-                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Updated Successfully ")
+                        let str = ("MemberGroup" == self.selectType) ? "User Group" : self.selectType
+                        Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: " \(str!) Sorted Successfully ")
                         case .failure(let error): break
                            //self.errorFailer(error: error)
                        }

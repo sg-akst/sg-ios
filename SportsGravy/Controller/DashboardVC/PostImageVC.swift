@@ -36,7 +36,9 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
          }
          let sectionIndex = IndexSet(integer: 2)
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-         postTbl_height.constant = CGFloat(self.postsections.count * 60)
+        
+         postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
+        
 
     }
     
@@ -55,9 +57,15 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                  
              }// Ok
          }
+//        for i in 0..<postsections.count
+//        {
+//            
+//        }
+        
+        
          let sectionIndex = IndexSet(integer: 3)
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-         postTbl_height.constant = CGFloat(self.postsections.count * 60)
+         postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
 
     }
     
@@ -70,18 +78,18 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
              if(index == 1)
              {
                postsections[index].userlist = userTeam
-                 
-             }// Ok
+             }
+
          }
+          print("usercount:\(sectionCount!)")
          let sectionIndex = IndexSet(integer: 1)
+
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-         postTbl_height.constant = CGFloat(self.postsections.count * 60)
+        postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
 
     }
     
-    let imageviewcontroller = UIImagePickerController()
-
-    
+    let imageviewcontroller = UIImagePickerController()    
     func selectuserGroubDetail(userDetail: NSMutableArray) {
         let userTeam: NSDictionary = userDetail[0] as! NSDictionary
         teamList = userTeam
@@ -116,7 +124,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var postvideo: UIImageView!
     @IBOutlet weak var postTbl_height: NSLayoutConstraint!
     var postsections = [PostGroupSection]()
-    
+    var sectionCount: Int!
+
     var teamList: NSDictionary = [:]
     var tagList = [String: String]()
     var reactionList = [String: String]()
@@ -191,9 +200,11 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
             let items = self.postsections[section].userlist
+            
             if (items.count > 0) {
                 return 1
             }
+            sectionCount = items.count
             return self.postsections[section].userlist.count
            
         }
@@ -251,6 +262,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             header?.add_btn.layer.borderWidth = 1
             header?.add_btn.layer.borderColor = UIColor.white.cgColor
             header?.add_btn.tag = section
+            
             header?.add_btn.addTarget(self, action: #selector(directview), for: .touchUpInside)
         let sepFrame: CGRect = CGRect(x: 0, y: (header?.frame.size.height)!-1, width: self.view.frame.size.width, height: 1);
             let seperatorView = UIView.init(frame: sepFrame)
@@ -307,7 +319,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 
             }
             else{
-                Constant.showAlertMessage(vc: self, titleStr: "Sport Gravy", messageStr: "Please select usergroup above team to get ")
+                Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select user group above team to get hash tag ")
             }
             
         }
@@ -330,7 +342,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             self.navigationController?.pushViewController(objcanned, animated: true)
             }
             else{
-                 Constant.showAlertMessage(vc: self, titleStr: "Sport Gravy", messageStr: "Please select usergroup above team to get ")
+                 Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select user group above team to get canned response")
             }
         }
     }
@@ -497,6 +509,16 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     @IBAction func FeedPost(_ sender: UIButton)
     {
+        if(SelectgetrolebySeasonid == nil)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select user gruop")
+        }
+        else if(self.post_content_txt.text == "" || self.post_content_txt.text == nil)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please type post content")
+        }
+        else
+        {
         let getUserorgInfo: NSDictionary = teamList
             Constant.internetconnection(vc: self)
                        Constant.showActivityIndicatory(uiView: self.view)
@@ -558,7 +580,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                        if(statusCode == true)
                                        {
                                            let result = info?["message"] as! String
-                                        Constant.showAlertMessage(vc: self, titleStr: "Sport Gravy", messageStr: result)
+                                        Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: result)
                                           Constant.showInActivityIndicatory()
 //                                       
                                        }
@@ -582,7 +604,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
     }
     
-    
+    }
     
     
 //    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

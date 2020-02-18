@@ -17,6 +17,8 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var comment_txt: UITextField!
     @IBOutlet weak var comment_tbl: UITableView!
     @IBOutlet weak var send_btn: UIButton!
+    @IBOutlet weak var commentlist_view: UIView!
+
     var selectComment: NSDictionary!
     var commentArray: NSMutableArray!
     var getuuid: String!
@@ -174,12 +176,23 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
                 for document in querySnapshot!.documents {
                     let data: NSDictionary = document.data() as NSDictionary
-                       self.commentArray.add(data)
+                    self.commentArray.add(data)
                 }
 
                self.comment_tbl.reloadData()
                 Constant.showInActivityIndicatory()
             }
+            
+            if(self.commentArray.count>0)
+            {
+                self.commentlist_view.isHidden = true
+            }
+            else
+            {
+                self.commentlist_view.isHidden = false
+
+            }
+            
         }
         
     }

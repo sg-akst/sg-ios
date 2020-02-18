@@ -38,6 +38,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     var organizationListArray: NSMutableArray!
     
      var sections = [ProfileCategory]()
+    var player_id : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +48,6 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         guardiansListArray = NSMutableArray()
         organizationListArray = NSMutableArray()
         getplayerDetail()
-        
-       
-        
-                   
     }
     func getplayerDetail()
     {
@@ -64,7 +61,9 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                           
                           if let document = document, document.exists {
                             let playerInfo = document.data()! as NSDictionary
+                            print("Player=>\(playerInfo)")
                             self.username_lbl.text = "\(playerInfo.value(forKey: "first_name")!)" + " " + "\(playerInfo.value(forKey: "middle_initial")!)" + " " + "\( playerInfo.value(forKey: "last_name")!)"
+                            self.player_id = playerInfo.value(forKey: "user_id") as! String
                                    let timestamp: Timestamp = playerInfo.value(forKey: "created_datetime") as! Timestamp
                                                               let datees: Date = timestamp.dateValue()
                                                              
@@ -138,7 +137,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                 {
                                    // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                                 }
-                                //Constant.showInActivityIndicatory()
+                                
                             }
                             break
 
@@ -183,7 +182,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                 let result = info?["data"] as! NSArray
                                 self.organizationListArray = NSMutableArray()
                                 self.organizationListArray = result.mutableCopy() as? NSMutableArray
-                                self.sections = [ProfileCategory(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), ProfileCategory(name:"Organization", items:self.organizationListArray as! [[String : Any]])
+                                self.sections = [ProfileCategory(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]])
                                 ]
                                 let height: Int = self.guardiansListArray.count + self.organizationListArray.count + 1
                                 self.playerprofile_tbl_height.constant = CGFloat(height * 75)
@@ -219,6 +218,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
                   guard let tableView = view as? UITableViewHeaderFooterView else { return }
                   // tableView.backgroundView?.backgroundColor = UIColor.black
+                 tableView.backgroundColor = UIColor.white
+
                   tableView.textLabel?.textColor = UIColor.black
               }
        
@@ -309,6 +310,53 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
            getplayerDetail()
        }
        
+    func RemovePlayerconnection()
+    {
+            Constant.internetconnection(vc: self)
+            Constant.showActivityIndicatory(uiView: self.view)
+            let testStatusUrl: String = Constant.sharedinstance.signupString
+             var param:[String:AnyObject] = [:]
+       // param["uid"] = "zHhMZCuvhtrd87Q0vN65" as AnyObject
+         param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+        param["player_id"] = player_id as AnyObject?
+            Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:DataResponse<Any>) in
+                if(!(response.error != nil)){
+                    switch (response.result)
+                    {
+                    case .success(_):
+                        if let data = response.result.value{
+                            let info = data as? NSDictionary
+                            let statusCode = info?["status"] as? Bool
+                            if(statusCode == true)
+                            {
+                                let result = info?["data"] as! NSDictionary
+                                
+                               Constant.showInActivityIndicatory()
+
+                            }
+                            Constant.showInActivityIndicatory()
+                        }
+                        break
+
+                    case .failure(_):
+                        Constant.showInActivityIndicatory()
+
+                        break
+                    }
+                }
+                else
+                {
+                    Constant.showInActivityIndicatory()
+
+                }
+            }
+        
+        }
+    
+    @IBAction func removeconnection(_ sender: UIButton)
+    {
+        RemovePlayerconnection()
+    }
     
     @IBAction func usernameEdit(_ sender: UIButton)
        {

@@ -52,7 +52,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     func bottomlineMethod(selecttext: UITextField)
     {
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: selecttext.frame.height - 1, width: self.view.frame.width-40, height: 1.0)
+        bottomLine.frame = CGRect(x: -10.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.gray.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
@@ -75,19 +75,19 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     {
         if(self.first_name_txt.text == nil || self.first_name_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Firstname ")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please Enter Firstname ")
         }
        else if(self.middle_name_txt.text == nil || self.middle_name_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Middlename")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please Enter Middlename")
         }
       else if(self.last_name_txt.text == nil || self.last_name_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter lastname")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please Enter lastname")
         }
       else if(self.suffix_name_txt.text == nil || self.suffix_name_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select suffix ")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select suffix ")
         }
       else
         {
@@ -113,7 +113,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     }
     func alertermsg(msg: String)
     {
-        let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
         self.delegate?.usernameupdateSuccess()
         self.navigationController?.popViewController(animated: true)

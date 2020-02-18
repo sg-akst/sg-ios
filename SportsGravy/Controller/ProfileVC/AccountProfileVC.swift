@@ -532,6 +532,7 @@ isdelegate = false
             cell.invite_btn.tintColor = UIColor.blue
             cell.invite_btn.isUserInteractionEnabled = true
             cell.accessoryType = .disclosureIndicator
+           
         }
         else if(item["is_signup_completed"] as! Bool == false && item["is_invited"] as! Bool == true && item["email_address"] as? String != nil)
         {
@@ -565,8 +566,14 @@ isdelegate = false
             let sportsname: NSDictionary = dic[0] as! NSDictionary
             cell.username_lbl.text = item["abbrev"] as? String
             cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
+//            if(indexPath.sections == 2)
+//            {
+//                cell.accessoryType = .none
+//            }
+//            else
+//            {
             cell.accessoryType = .disclosureIndicator
-
+           // }
             }
         }
        else
@@ -602,6 +609,14 @@ isdelegate = false
 //            vc.delegate = self
 //            self.navigationController?.pushViewController(vc, animated: true)
         }
+        else if(indexPath.section == 2)
+            {
+                let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
+                vc.organizationDetails = item as NSDictionary
+                //vc.delegate = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            
         }
         else
         {
@@ -640,7 +655,7 @@ isdelegate = false
                 } else {
                     print("Document successfully updated")
                     Constant.showInActivityIndicatory()
-                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Re-invite successfully")
+                    Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Re-invite successfully")
                 }
             }
         }

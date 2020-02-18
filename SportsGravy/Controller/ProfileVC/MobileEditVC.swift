@@ -33,7 +33,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     func bottomlineMethod(selecttext: UITextField)
     {
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
+        bottomLine.frame = CGRect(x: -10.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.gray.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
@@ -53,11 +53,11 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     {
         if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter mobile number")
         }
         else if(isValidMobile(testStr: mobile_txt.text!) == false)
         {
-           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter vaild mobile number")
+           Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter vaild mobile number")
         }
         else
         {
@@ -100,7 +100,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.mobileupdateSuccess()
             self.navigationController?.popViewController(animated: true)

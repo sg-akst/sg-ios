@@ -151,6 +151,11 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func createtag(_ sender: UIButton)
     {
+        if(tag_txt.text == nil || tag_txt.text == "")
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter Tag name")
+        }
+        else {
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
@@ -188,10 +193,11 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
             }
             Constant.showInActivityIndicatory()
         }
+        }
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                 self.delegate?.createAfterCallMethod()
                 self.navigationController?.popViewController(animated: false)

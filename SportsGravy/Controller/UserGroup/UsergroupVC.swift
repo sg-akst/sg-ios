@@ -611,7 +611,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                  } else {
                                      print("Document successfully removed!")
                                      Constant.showInActivityIndicatory()
-                                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
+                                     Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "MemberGroup Removed Successfully")
                                    
                                      self.getmembergroup()
                                  }
@@ -655,7 +655,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         vc.getorganizationDetails = getRolebyreasonDetailArray
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?
         vc.getTeamId = self.getTeamId as NSString?
-        vc.selectType = "User Group"
+        vc.selectType = "MemberGroup"
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

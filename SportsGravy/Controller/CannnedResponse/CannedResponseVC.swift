@@ -580,7 +580,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                             } else {
                                 print("Document successfully removed!")
                                 Constant.showInActivityIndicatory()
-                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
+                                Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
                                 self.getCannedresponsegroup()
                             }
                         }

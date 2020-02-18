@@ -22,6 +22,7 @@ class Constant: NSObject {
     var inviteGuardianUrl: String = BaseUrl + "inviteNewGuardianProfile"
     var signupUrl: String = BaseUrl + "signUpUser"
     var FeedPostUrl: String = BaseUrl + "postFeed"
+    var RemovePlayerUrl: String = BaseUrl + "accountRemoveConnection"
 
     static func internetconnection(vc: UIViewController)
     {
@@ -31,7 +32,7 @@ class Constant: NSObject {
                    
         }else{
           print("Internet Connection not Available!")
-          Constant.showAlertMessage(vc: vc, titleStr: "SportsGravy", messageStr: "Internet Connection not Available!")
+          Constant.showAlertMessage(vc: vc, titleStr: "Sports Gravy", messageStr: "Internet Connection not Available!")
           }
                
     }

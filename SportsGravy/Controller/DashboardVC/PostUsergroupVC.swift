@@ -403,7 +403,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                     cell.groub_img.imageView?.image = UIImage(named: "user")
                     cell.groub_img.tag = indexPath.row
                     cell.groub_img.addTarget(self, action: #selector(SelectTeamName), for: .touchUpInside)
-                    cell.groub_img.tintColor = UIColor.blue
+                    cell.groub_img.setTitleColor(UIColor.blue, for: .normal)
                     cell.selectionStyle = .none
                     cell.accessoryType = .disclosureIndicator
                 return cell

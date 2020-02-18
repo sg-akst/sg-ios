@@ -39,7 +39,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     {
         
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
+        bottomLine.frame = CGRect(x: -10.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.gray.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
@@ -62,7 +62,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     {
         if(gender_txt.text == nil || gender_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select Gender")
+            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select Gender")
 
         }
         else
@@ -88,7 +88,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.genderupdateSuccess()
             self.navigationController?.popViewController(animated: true)
