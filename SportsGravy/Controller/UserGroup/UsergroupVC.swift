@@ -611,7 +611,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                  } else {
                                      print("Document successfully removed!")
                                      Constant.showInActivityIndicatory()
-                                     Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "MemberGroup Removed Successfully")
+                                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "User Group Removed Successfully")
                                    
                                      self.getmembergroup()
                                  }

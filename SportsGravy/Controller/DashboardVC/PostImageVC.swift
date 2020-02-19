@@ -281,20 +281,20 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
             print("You tapped cell number \(indexPath.section).")
-            let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
-
-            let currentCell = tableView.cellForRow(at: indexPath!) as! UsergroupCreateCell
-
-            if(currentCell.isSelected)
-            {
-                currentCell.checkbox.backgroundColor = UIColor.green
-
-            }
-            else
-            {
-                currentCell.checkbox.backgroundColor = UIColor.clear
-               
-            }
+           // let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+//
+//            let currentCell = tableView.cellForRow(at: indexPath!) as! UsergroupCreateCell
+//
+//            if(currentCell.isSelected)
+//            {
+//                currentCell.checkbox.backgroundColor = UIColor.green
+//
+//            }
+//            else
+//            {
+//                currentCell.checkbox.backgroundColor = UIColor.clear
+//
+//            }
 
         }
         
@@ -319,7 +319,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 
             }
             else{
-                Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select user group above team to get hash tag ")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user group above team to get hash tag ")
             }
             
         }
@@ -342,7 +342,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             self.navigationController?.pushViewController(objcanned, animated: true)
             }
             else{
-                 Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select user group above team to get canned response")
+                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user group above team to get canned response")
             }
         }
     }
@@ -511,11 +511,11 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     {
         if(SelectgetrolebySeasonid == nil)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select user gruop")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user gruop")
         }
         else if(self.post_content_txt.text == "" || self.post_content_txt.text == nil)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please type post content")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please type post content")
         }
         else
         {
@@ -580,7 +580,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                        if(statusCode == true)
                                        {
                                            let result = info?["message"] as! String
-                                        Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: result)
+                                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: result)
                                           Constant.showInActivityIndicatory()
 //                                       
                                        }

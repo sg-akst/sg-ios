@@ -187,7 +187,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         {
             if(canRespons_tittle_txt.text == nil || canRespons_tittle_txt.text?.isEmpty == true)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter Canned Response Tiltle")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Canned Response Tiltle")
             }
             else
             {
@@ -287,7 +287,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
     
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
     //        self.delegate?.usernameupdateSuccess()
             self.navigationController?.popViewController(animated: true)

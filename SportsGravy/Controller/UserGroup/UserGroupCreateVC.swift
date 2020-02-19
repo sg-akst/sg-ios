@@ -48,11 +48,12 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         group_tittle_txt.delegate = self
         group_create_tbl.delegate = self
         group_create_tbl.dataSource = self
+        selectpersonArray = NSMutableArray()
         getuserDetail()
        
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: -10.0, y: group_tittle_txt.frame.height - 1, width: self.view.frame.width, height: 1.0)
-        bottomLine.backgroundColor = UIColor.gray.cgColor
+        bottomLine.frame = CGRect(x: -10.0, y: group_tittle_txt.frame.height, width: self.view.frame.width, height: 0.3)
+        bottomLine.backgroundColor = UIColor.lightGray.cgColor
         group_tittle_txt.borderStyle = UITextBorderStyle.none
         group_tittle_txt.layer.addSublayer(bottomLine)
         if(isCreate == true)
@@ -233,7 +234,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     if(isCreate == false)
     {
     let userSelectArray: NSMutableArray = updateArray.value(forKey: "user_list") as! NSMutableArray
-        selectpersonArray = NSMutableArray()
+    
     for i in 0..<userSelectArray.count
     {
         let dics: NSMutableDictionary = userSelectArray[i] as! NSMutableDictionary
@@ -284,27 +285,47 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         
 
         print(dicvalu)
-        
+       
        if cell?.checkbox.backgroundColor == UIColor.green
         {
-            let userSelectArray: NSMutableArray = updateArray.value(forKey: "user_list") as! NSMutableArray
+//            if(isCreate == false)
+//            {
+            //let userSelectArray: NSMutableArray = updateArray.value(forKey: "user_list") as! NSMutableArray
 
-            cell?.checkbox.backgroundColor = UIColor.clear
-            for i in 0..<userSelectArray.count
+              cell?.checkbox.backgroundColor = UIColor.clear
+
+                for i in 0..<self.selectpersonArray.count
             {
-                let dic: NSDictionary = userSelectArray[i] as! NSDictionary
+                if(self.selectpersonArray.count > i)
+                {
+                let dic: NSDictionary = self.selectpersonArray[i] as! NSDictionary
+                
                 if(getvalue.value(forKey: "user_id") as! String  == dic.value(forKey: "user_id") as! String)
                 {
-                    self.selectpersonArray.remove(i)
+                    self.selectpersonArray.removeObject(at: i)
 
                 }
+                }
             }
-        }
+//        }
+//            else
+//            {
+//                cell?.checkbox.backgroundColor = UIColor.clear
+//                for i in 0..<self.selectpersonArray.count
+//                {
+//                    if(self.selectpersonArray.count > 0)
+//                    let dic: NSDictionary = self.selectpersonArray[i] as! NSDictionary
+//                    if(getvalue.value(forKey: "user_id") as! String  == dic.value(forKey: "user_id") as! String)
+//                    {
+//                        self.selectpersonArray.removeObject(at: i)
+//
+//                    }
+//                }
+//            }
+       }
         else
        {
         cell?.checkbox.backgroundColor = UIColor.green
-        //let getvalue: NSMutableDictionary = dicvalu.userlist[0] as! NSMutableDictionary
-
         self.selectpersonArray.add(getvalue)
         }
         
@@ -407,7 +428,11 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         {
             if(group_tittle_txt.text == nil || group_tittle_txt.text?.isEmpty == true)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter user group name")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter user group name")
+            }
+            else if(selectpersonArray.count == 0)
+            {
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user to create custom group")
             }
             else
             {
@@ -456,6 +481,12 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         else
         {
+            if(self.selectpersonArray.count == 0)
+            {
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user to update custom group")
+            }
+            else
+           {
            Constant.internetconnection(vc: self)
                  Constant.showActivityIndicatory(uiView: self.view)
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
@@ -502,10 +533,11 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
         }
+      }
     }
      func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                 self.delegate?.createAfterCallMethod()
                 self.navigationController?.popViewController(animated: false)

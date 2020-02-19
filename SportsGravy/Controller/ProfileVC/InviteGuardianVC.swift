@@ -96,16 +96,16 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     {
         if(guardianemail_txt.text!.isEmpty)
           {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter email address")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter email address")
           }
         else if Constant.isValidEmail(testStr: guardianemail_txt.text!) == false{
               print("Validate EmailID")
-              Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter valid email address")
+              Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
           }
        else if(guardianmobil_txt.text == nil || guardianmobil_txt.text?.isEmpty == true
             || isValidMobile(testStr: guardianmobil_txt.text!) == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter mobile number")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
         }
         else
         {
@@ -133,7 +133,7 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                  let jsonData = json
                     print(jsonData)
                  let dic: NSDictionary = jsonData as! NSDictionary
-                 Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "\(dic.value(forKey: "message")!)")
+                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(dic.value(forKey: "message")!)")
                     Constant.showInActivityIndicatory()
 
                     

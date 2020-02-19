@@ -153,7 +153,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     {
         if(tag_txt.text == nil || tag_txt.text == "")
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter Tag name")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Tag name")
         }
         else {
         Constant.internetconnection(vc: self)
@@ -197,7 +197,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                 self.delegate?.createAfterCallMethod()
                 self.navigationController?.popViewController(animated: false)

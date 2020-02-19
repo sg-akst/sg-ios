@@ -316,7 +316,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         let jsonData = json
                            print(jsonData)
                         let str = ("MemberGroup" == self.selectType) ? "User Group" : self.selectType
-                        Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: " \(str!) Sorted Successfully ")
+                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: " \(str!) Sorted Successfully ")
                         case .failure(let error): break
                            //self.errorFailer(error: error)
                        }

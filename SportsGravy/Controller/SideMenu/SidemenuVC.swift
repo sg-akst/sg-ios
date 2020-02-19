@@ -46,13 +46,15 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.role_tbl.delegate = self
         self.role_tbl.dataSource = self
         role_tbl.sizeToFit()
+       self.settings_view.isHidden = true
+        self.user_view.isHidden = true
         getuserDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
       
-
+         
 
     }
     func getuserDetail()
@@ -109,6 +111,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             self.rolebaseddisplayviewMethod(SelectRole: firstrole)
                             self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height
                             Constant.showInActivityIndicatory()
+                            self.settings_view.isHidden = false
+                            self.user_view.isHidden = false
                         }
                     }
 

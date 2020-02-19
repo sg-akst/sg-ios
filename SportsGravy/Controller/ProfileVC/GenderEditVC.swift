@@ -62,7 +62,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     {
         if(gender_txt.text == nil || gender_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please select Gender")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select Gender")
 
         }
         else
@@ -88,7 +88,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.genderupdateSuccess()
             self.navigationController?.popViewController(animated: true)

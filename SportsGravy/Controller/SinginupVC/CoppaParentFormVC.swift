@@ -193,7 +193,7 @@ class CoppaParentFormVC: UIViewController {
         }
         else
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please accept the parent consent form")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please accept the parent consent form")
         }
     }
     

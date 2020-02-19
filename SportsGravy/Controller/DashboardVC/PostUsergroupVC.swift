@@ -429,8 +429,15 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                          print(getSeason)
                        if(postGroupArray.count > 0)
                         {
+                            let str: String = addorderArray?.lastObject as! String
+                            let str1 = str.dropFirst(2)
                             self.addorderArray.add("> \(getLevel!)")
 
+                            if( str1 == self.getLevel)
+                            {
+                                self.addorderArray.removeLastObject()
+                            }
+                           
                             self.commonArray = NSMutableArray() as? [String]
                        
                              let filteredEvents: [String] = self.postGroupArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]

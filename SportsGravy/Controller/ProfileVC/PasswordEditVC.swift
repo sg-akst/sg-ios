@@ -86,27 +86,27 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
     {
         if(self.oldpw_txt.text == nil || self.oldpw_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter old password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter old password ")
 
         }
             
         else if(self.newpw_txt.text == nil || self.newpw_txt.text?.isEmpty == true || self.newpw_txt.text!.count < 5)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter new password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter new password ")
 
         }
         else if(self.oldpw_txt.text == self.newpw_txt.text)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Old password and new password should not be same")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Old password and new password should not be same")
         }
         else if(self.confirmpw_txt.text == nil || self.confirmpw_txt.text?.isEmpty == true)
         {
-                  Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter confirm password")
+                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter confirm password")
         }
             
         else if(self.newpw_txt.text != self.confirmpw_txt.text)
         {
-              Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Password and confirm password doesn’t match")
+              Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password and confirm password doesn’t match")
         }
         else
         {
@@ -117,7 +117,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
                 if error != nil {
                     //completion(error)
                     print(error!)
-                     Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "please enter vaild oldpassword")
+                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "please enter vaild oldpassword")
                    Constant.showInActivityIndicatory()
 
                 }
@@ -137,7 +137,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
     
     func alertermsg(msg: String)
     {
-        let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
 //        self.delegate?.usernameupdateSuccess()
         self.navigationController?.popViewController(animated: true)

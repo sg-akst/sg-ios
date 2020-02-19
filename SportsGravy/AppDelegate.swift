@@ -47,7 +47,7 @@ var window: UIWindow?
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         DispatchQueue.main.async {
-            self.everyhalfnoonTimer()
+            //self.everyhalfnoonTimer()
         }
     }
 
@@ -84,30 +84,34 @@ var window: UIWindow?
             
         }
     }
-    func everyhalfnoonTimer(){
-          
-              let refreshToken: String = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
-          if(refreshToken != "")
-          {
-              onlineStatusTimer = Timer.scheduledTimer(timeInterval:5.0 * 60.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-              
-              }
-          }
+//    func everyhalfnoonTimer(){
+//          
+//            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+//                                 if error != nil {
+//                                                 
+//                                                 return;
+//                                               }
+//                                                 print("Token=>\(idToken!)")
+//                UserDefaults.standard.removeObject(forKey: "idtoken")
+//                UserDefaults.standard.set(idToken, forKey: "idtoken")
+//                                             }
+//          }
     @objc func timerAction() {
-        let refreshToken: String = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
-        if(refreshToken != "")
-        {
+//        let refreshToken: String = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+//        if(refreshToken != "")
+//        {
             Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                                if error != nil {
                                                // Handle error
                                                return;
                                              }
                                                print("Token=>\(idToken!)")
-                                               UserDefaults.standard.set(idToken, forKey: "idtoken")
+                UserDefaults.standard.removeObject(forKey: "idtoken")
+                UserDefaults.standard.set(idToken, forKey: "idtoken")
         }
                            
     }
-    }
+   // }
 
     func application(_ application: UIApplication,
                             performFetchWithCompletionHandler completionHandler:

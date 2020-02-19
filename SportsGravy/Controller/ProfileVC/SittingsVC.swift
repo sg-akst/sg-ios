@@ -106,25 +106,25 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             {
                 UserDefaults.standard.set(true, forKey: "\(button.tag)")
                
-                    Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Feed Post Only when wifi is connected")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Feed Post Only when wifi is connected")
             }
             if(button.tag == 1)
             {
                 UserDefaults.standard.set(true, forKey: "\(button.tag)")
-                    Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "User group based on custom sort order")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "User group based on custom sort order")
 
             }
             if(button.tag == 2)
             {
                 UserDefaults.standard.set(true, forKey: "\(button.tag)")
 
-                    Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Custom tag based on custom sort order")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Custom tag based on custom sort order")
             }
             if(button.tag == 3)
             {
                 UserDefaults.standard.set(true, forKey: "\(button.tag)")
 
-                    Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Canned Response based on custom sort order")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Canned Response based on custom sort order")
             }
           } else {
 
@@ -132,22 +132,22 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
            if(button.tag == 0)
            {
                UserDefaults.standard.set(false, forKey: "\(button.tag)")
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Feed Post with both wifi and mobile network")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Feed Post with both wifi and mobile network")
            }
            if(button.tag == 1)
            {
                UserDefaults.standard.set(false, forKey: "\(button.tag)")
-             Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "User group based on frequently used order ")
+             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "User group based on frequently used order ")
            }
            if(button.tag == 2)
            {
                UserDefaults.standard.set(false, forKey: "\(button.tag)")
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Custom Tag based on frequently used order")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Custom Tag based on frequently used order")
            }
            if(button.tag == 3)
            {
                UserDefaults.standard.set(false, forKey: "\(button.tag)")
-             Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Canned Response based on frequently used order")
+             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Canned Response based on frequently used order")
            }
           }
 

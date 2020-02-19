@@ -32,7 +32,7 @@ class Constant: NSObject {
                    
         }else{
           print("Internet Connection not Available!")
-          Constant.showAlertMessage(vc: vc, titleStr: "Sports Gravy", messageStr: "Internet Connection not Available!")
+          Constant.showAlertMessage(vc: vc, titleStr: "SportsGravy", messageStr: "Internet Connection not Available!")
           }
                
     }

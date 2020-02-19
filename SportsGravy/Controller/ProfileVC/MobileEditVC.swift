@@ -39,25 +39,51 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
         selecttext.layer.addSublayer(bottomLine)
     }
    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return textField.text!.count < 17 || string == ""
+        guard let text = textField.text else { return false }
+           let newString = (text as NSString).replacingCharacters(in: range, with: string)
+           textField.text = formattedNumber(number: newString)
+           return false
       }
-//    if textField.text == mobile_txt.text {
-//    let allowedCharacters = CharacterSet(charactersIn:"+0123456789 ()")//Here change this characters based on your requirement
-//    let characterSet = CharacterSet(charactersIn: string)
-//        return string.characters.count < 10
-        
-
-//return true
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        // When you start editing check if there is nothing, in that case add the entire mask
+//        if let text = textField.text, text == "" || text == "+1 (XXX) XXX-XXXX" {
+//            textField.text = "DD/MM/YYYY"
+//            textField.textColor = .lightGray
+//            textField.setCursor(position: text.count)
+//        }
 //    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text != "" && text != "+1 (XXX) XXX-XXXX" {
+            // Do something with your value
+        } else {
+            textField.text = ""
+        }
+    }
+    func formattedNumber(number: String) -> String {
+        let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let mask = "+X (XXX) XXX-XXXX"
+
+        var result = ""
+        var index = cleanPhoneNumber.startIndex
+        for ch in mask where index < cleanPhoneNumber.endIndex {
+            if ch == "X" {
+                result.append(cleanPhoneNumber[index])
+                index = cleanPhoneNumber.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        return result
+    }
     @IBAction func mobileUpdate(_ sender: UIButton)
     {
         if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter mobile number")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
         }
         else if(isValidMobile(testStr: mobile_txt.text!) == false)
         {
-           Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Please enter vaild mobile number")
+           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter vaild mobile number")
         }
         else
         {
@@ -100,7 +126,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "Sports Gravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.mobileupdateSuccess()
             self.navigationController?.popViewController(animated: true)

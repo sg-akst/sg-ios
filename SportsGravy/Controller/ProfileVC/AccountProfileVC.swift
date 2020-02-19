@@ -278,22 +278,26 @@ isdelegate = false
                     if let data = response.result.value{
                         let info = data as? NSDictionary
                         let statusCode = info?["status"] as? Bool
-                        //let message = info?["message"] as? String
+                        let message = info?["message"] as? String
 
                         if(statusCode == true)
                         {
                             let result = info?["data"] as! NSArray
-                           
                             self.playerListArray = NSMutableArray()
                             self.playerListArray = result.mutableCopy() as? NSMutableArray
                              Constant.showInActivityIndicatory()
-
                             self.getGuardians()
 
                         }
                         else
                         {
-                           // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+                            if(message == "unauthorized user")
+                            {
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.timerAction()
+                                self.getplayerlist()
+                            }
+                           
                         }
                         Constant.showInActivityIndicatory()
                     }
@@ -655,7 +659,7 @@ isdelegate = false
                 } else {
                     print("Document successfully updated")
                     Constant.showInActivityIndicatory()
-                    Constant.showAlertMessage(vc: self, titleStr: "Sports Gravy", messageStr: "Re-invite successfully")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Re-invite successfully")
                 }
             }
         }
