@@ -8,8 +8,8 @@
 
 import UIKit
 
- let BaseUrl = "https://us-central1-sports-gravy-app.cloudfunctions.net/"
-
+ //let BaseUrl = "https://us-central1-sports-gravy-app.cloudfunctions.net/"
+  let BaseUrl = "https://us-central1-sportsgravy-testing.cloudfunctions.net/"
 
 class Constant: NSObject {
     static let sharedinstance = Constant()

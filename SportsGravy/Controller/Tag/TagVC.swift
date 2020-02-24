@@ -11,7 +11,19 @@ import Firebase
 import FirebaseFirestore
 import SWRevealViewController
 
-class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWRevealViewControllerDelegate, PassSelectorderDelegate {
+class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWRevealViewControllerDelegate, PassSelectorderDelegate, SortorderDelegate {
+    func sortingOrderTagupdateSuccess() {
+        getTag()
+    }
+    
+    func sortingOrderUsergroupupdateSuccess() {
+        
+    }
+    
+    func sortingOrderCannedupdateSuccess() {
+        
+    }
+    
     func createAfterCallMethod() {
         getTag()
     }
@@ -71,7 +83,7 @@ override func viewDidLoad() {
             createGroupView.isHidden = true
             sorting.isHidden = true
             self.tag_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    self.tag_tbl.sizeToFit()
+            self.tag_tbl.sizeToFit()
         }
         func getuserDetail()
         {
@@ -91,7 +103,7 @@ override func viewDidLoad() {
             {
                 addTitle_btn = UIButton(type: .roundedRect)
     
-                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
                 addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                 let title: String = addorderArray?[i] as! String
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -149,15 +161,10 @@ override func viewDidLoad() {
                         let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                         self.addOrder.addConstraint(horizontalConstraint)
 
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                       // [self.view addConstraint:horizontalConstraint];
-
                         // vertical position:
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
 
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                        //[self.view addConstraint:verticalConstraint];
 
                         indexOfLeftmostButtonOnCurrentLine = i
                     }
@@ -172,16 +179,10 @@ override func viewDidLoad() {
                     let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
                     self.addOrder.addConstraint(horizontalConstraint)
                         
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeRight multiplier:1.0f constant:horizontalSpaceBetweenButtons];
-                              // [self.view addConstraint:horizontalConstraint];
-
                                // vertical position same as previous button
                     let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
                     self.addOrder.addConstraint(verticalConstraint)
 
-                        
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-                             //  [self.view addConstraint:verticalConstraint];
                 }
                 buttons.add(addTitle_btn)
 
@@ -564,6 +565,7 @@ override func viewDidLoad() {
         vc.getorderArray = addorderArray
         vc.sortingOrderArray = self.TeamArray
         vc.selectType = "Tags"
+        vc.delegate = self
         vc.getorganizationDetails = self.getRolebyreasonDetailArray
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?
         vc.getTeamId = self.getTeamId as NSString?

@@ -34,7 +34,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     {
         let bottomLine = CALayer()
         bottomLine.frame = CGRect(x: -10.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
-        bottomLine.backgroundColor = UIColor.gray.cgColor
+        bottomLine.backgroundColor = Constant.getUIColor(hex: "#EEEEEE")?.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }
@@ -44,14 +44,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
            textField.text = formattedNumber(number: newString)
            return false
       }
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        // When you start editing check if there is nothing, in that case add the entire mask
-//        if let text = textField.text, text == "" || text == "+1 (XXX) XXX-XXXX" {
-//            textField.text = "DD/MM/YYYY"
-//            textField.textColor = .lightGray
-//            textField.setCursor(position: text.count)
-//        }
-//    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text, text != "" && text != "+1 (XXX) XXX-XXXX" {
             // Do something with your value

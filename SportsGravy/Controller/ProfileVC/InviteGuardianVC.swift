@@ -147,6 +147,37 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
         }
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return false }
+           let newString = (text as NSString).replacingCharacters(in: range, with: string)
+           textField.text = formattedNumber(number: newString)
+           return false
+      }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text != "" && text != "+1 (XXX) XXX-XXXX" {
+            // Do something with your value
+        } else {
+            textField.text = ""
+        }
+    }
+    func formattedNumber(number: String) -> String {
+        let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let mask = "+X (XXX) XXX-XXXX"
+
+        var result = ""
+        var index = cleanPhoneNumber.startIndex
+        for ch in mask where index < cleanPhoneNumber.endIndex {
+            if ch == "X" {
+                result.append(cleanPhoneNumber[index])
+                index = cleanPhoneNumber.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        return result
+    }
+    
     func isValidMobile(testStr:String) -> Bool {
         let range = NSRange(location: 0, length: testStr.count)
         let regex = try! NSRegularExpression(pattern: "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}")
@@ -156,22 +187,6 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }else{
             return false
         }
-        
-        
-//        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
-//        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
-       // return mobileTest.evaluate(with: testStr)
-    }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = textField.text {
-            let str = (text as NSString).replacingCharacters(in: range, with: string).replacingOccurrences(of: "(0)", with: "")
-            if !str.isEmpty {
-                textField.text = "" + str
-            } else {
-                textField.text = nil
-            }
-        }
-        return false
     }
      @IBAction func cancelbtn(_ sender: UIButton)
     {

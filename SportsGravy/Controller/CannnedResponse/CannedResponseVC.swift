@@ -13,7 +13,19 @@ import FirebaseFirestore
 
 
 
-class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate,CreateCanresponseDelegate {
+class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate,CreateCanresponseDelegate, SortorderDelegate {
+    func sortingOrderTagupdateSuccess() {
+        
+    }
+    
+    func sortingOrderUsergroupupdateSuccess() {
+        
+    }
+    
+    func sortingOrderCannedupdateSuccess() {
+        getCannedresponsegroup()
+    }
+    
     func passorderArray(select: NSMutableArray!, selectindex: UIButton) {
         self.addorderArray = select
         addTitle_btn.tag = selectindex.tag
@@ -98,7 +110,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             {
                 addTitle_btn = UIButton(type: .roundedRect)
     
-                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
                 addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                 let title: String = addorderArray?[i] as! String
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -480,7 +492,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         }
         else
         {
-            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(teamDic.value(forKey: "cannedResponseTitle")!)", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete Canned Response? ", message: "Are you sure want to delete \(teamDic.value(forKey: "cannedResponseTitle")!)", preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        //Cancel Action
                    }))
@@ -614,6 +626,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
            let vc = storyboard?.instantiateViewController(withIdentifier: "sorting") as! SortingVC
            vc.getorderArray = addorderArray
            vc.sortingOrderArray = self.TeamArray
+        vc.delegate = self
            vc.selectType = "CannedResponse"
         vc.getorganizationDetails = getRolebyreasonDetailArray
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?

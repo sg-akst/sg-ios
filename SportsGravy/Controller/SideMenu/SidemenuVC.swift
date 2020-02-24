@@ -14,7 +14,7 @@ import FirebaseFirestore
 
 class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var profileimg: UIImageView!
+    @IBOutlet weak var profileimg: UIButton!
     @IBOutlet weak var username_lbl: UILabel!
     @IBOutlet weak var date_lbl: UILabel!
     @IBOutlet weak var role_tbl: UITableView!
@@ -84,15 +84,28 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     print(dateFormatterPrint.string(from: datees as Date))
 
                     self.date_lbl.text = "Joined \(dateFormatterPrint.string(from: datees as Date))"
+                    self.profileimg.layer.cornerRadius = self.profileimg.frame.size.width/2
+                    self.profileimg.layer.backgroundColor = UIColor.lightGray.cgColor
+                    self.profileimg.contentMode = .scaleAspectFill
+
                     let url = URL(string: "\(doc.value(forKey: "profile_image")!)")
                     if(url != nil)
                     {
-                      self.profileimg.kf.setImage(with: url)
-                        self.profileimg.layer.cornerRadius = self.profileimg.frame.size.width/2
-                        self.profileimg.layer.backgroundColor = UIColor.lightGray.cgColor
-                        self.profileimg.contentMode = .scaleAspectFill
-
+                        self.profileimg.kf.setImage(with: url, for: .normal)
+                        
                     }
+                    else
+                    {
+                        let name =  self.username_lbl.text
+                        let nameFormatter = PersonNameComponentsFormatter()
+                        if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
+
+                             let sortName = "\(firstLetter). \(lastName)"  // J. Singh
+                            self.profileimg.setTitle(sortName, for: .normal)
+                           
+                         }
+                    }
+
                     docRef.collection("roles_by_season").getDocuments() { (querySnapshot, err) in
                         if let err = err {
                             print("Error getting documents: \(err)")

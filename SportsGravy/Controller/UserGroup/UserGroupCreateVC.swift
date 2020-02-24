@@ -69,7 +69,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.groubdelete_btn.isHidden = false
             self.groupcreate_btn.isHidden = false
             self.group_tittle_txt.isUserInteractionEnabled = false
-            self.groupcreate_btn.setTitle("Update", for: .normal)
+            self.groupcreate_btn.setTitle("Done", for: .normal)
              navigation_title_lbl.text = "Update User Group"
             self.group_tittle_txt.text = "\(self.updateArray.value(forKey: "display_name")!)"
         }
@@ -95,7 +95,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
            for i in 0..<self.getorderArray.count
            {
              selectOption_btn = UIButton(type: .roundedRect)
-               selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+               selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
                selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
                let title: String = getorderArray?[i] as! String
                selectOption_btn.translatesAutoresizingMaskIntoConstraints = false

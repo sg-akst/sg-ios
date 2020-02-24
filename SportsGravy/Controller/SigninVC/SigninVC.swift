@@ -105,15 +105,14 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                                     UserDefaults.standard.set(idToken, forKey: "idtoken")
                                 }
                 
-                
+                UserDefaults.standard.removeObject(forKey: "UUID")
                 let userUUID = Auth.auth().currentUser?.uid
-            
                 if(userUUID != nil)
                 {
                     print(userUUID!)
 
                 UserDefaults.standard.set(userUUID, forKey: "UUID")
-                                    Constant.showInActivityIndicatory()
+                Constant.showInActivityIndicatory()
                 let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
                 self?.navigationController?.pushViewController(swrvc, animated: true)
                     Constant.showInActivityIndicatory()

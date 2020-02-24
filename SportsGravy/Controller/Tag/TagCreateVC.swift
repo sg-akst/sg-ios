@@ -54,7 +54,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         for i in 0..<self.getorderArray.count
         {            
             let button: UIButton = UIButton(type: .roundedRect)
-            button.titleLabel?.font = UIFont(name: "Arial", size: 20)
+            button.titleLabel?.font = UIFont(name: "Arial", size: 18)
             button.setTitle("\(getorderArray[i] as! String)", for: .normal)
             let title: String = getorderArray?[i] as! String
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -99,8 +99,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                     let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self.addOrderView, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                     self.addOrderView.addConstraint(verticalConstraint)
                         
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                //   [self.view addConstraint:verticalConstraint];
+                      
 
                 }
                 else{
@@ -111,15 +110,12 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                     let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                     self.addOrderView.addConstraint(horizontalConstraint)
 
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                   // [self.view addConstraint:horizontalConstraint];
-
+                     
                     // vertical position:
                     let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                     self.addOrderView.addConstraint(verticalConstraint)
 
-                    //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                    //[self.view addConstraint:verticalConstraint];
+                   
 
                     indexOfLeftmostButtonOnCurrentLine = i
                 }

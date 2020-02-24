@@ -54,8 +54,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet weak var dob_lbl: UILabel!
     @IBOutlet weak var gender_lbl: UILabel!
     @IBOutlet weak var address_lbl: UILabel!
-    @IBOutlet weak var organization_abbv_lbl: UILabel!
-    @IBOutlet weak var organization_lbl: UILabel!
+    //@IBOutlet weak var organization_abbv_lbl: UILabel!
+   // @IBOutlet weak var organization_lbl: UILabel!
 
     @IBOutlet weak var username_lbl: UILabel!
 //    @IBOutlet weak var usernameEdit_btn: UIButton!
@@ -145,6 +145,18 @@ isdelegate = false
                                 self.profile_imag.contentMode = .scaleAspectFill
 
                             }
+                            else
+                            {
+                                let name =  self.username_lbl.text
+                                let nameFormatter = PersonNameComponentsFormatter()
+                                if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
+
+                                     let sortName = "\(firstLetter). \(lastName)"  // J. Singh
+                                    self.porfile_img.setTitle(sortName, for: .normal)
+                                 }
+                            }
+
+                            
                             self.email_lbl.text = self.alldoc.value(forKey: "email_address") as? String
                             self.gender_lbl.text = self.alldoc.value(forKey: "gender") as? String
                             self.mobile_no_lbl.text = self.alldoc.value(forKey: "mobile_phone") as? String
@@ -154,8 +166,11 @@ isdelegate = false
                             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                             let date = dateFormatter.date(from: "\(dobstr)")
                             dateFormatter.dateFormat = "MM-dd-yyyy"
+                            if(date != nil)
+                            {
                             let dobDate = dateFormatter.string(from: date!)
                             self.dob_lbl.text = "\(dobDate)"
+                            }
                             let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
                             self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
                 

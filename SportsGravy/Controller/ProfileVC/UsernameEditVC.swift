@@ -53,7 +53,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     {
         let bottomLine = CALayer()
         bottomLine.frame = CGRect(x: -10.0, y: selecttext.frame.height - 1, width: self.view.frame.width, height: 1.0)
-        bottomLine.backgroundColor = UIColor.gray.cgColor
+        bottomLine.backgroundColor = Constant.getUIColor(hex: "#EEEEEE")?.cgColor //UIColor.lightGray.cgColor
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }

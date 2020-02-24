@@ -11,7 +11,19 @@ import SWRevealViewController
 import Firebase
 import FirebaseFirestore
 
-class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, CreateusergroupDelegate {
+class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, CreateusergroupDelegate, SortorderDelegate {
+    func sortingOrderTagupdateSuccess() {
+        
+    }
+    
+    func sortingOrderUsergroupupdateSuccess() {
+        getmembergroup()
+    }
+    
+    func sortingOrderCannedupdateSuccess() {
+        
+    }
+    
     func passorderArray(select: NSMutableArray!, selectindex: UIButton) {
         self.addorderArray = select
         addTitle_btn.tag = selectindex.tag
@@ -96,7 +108,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             {
                 addTitle_btn = UIButton(type: .roundedRect)
     
-                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
                 addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                 let title: String = addorderArray?[i] as! String
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -151,15 +163,12 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                         let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                         self.addOrder.addConstraint(horizontalConstraint)
 
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                       // [self.view addConstraint:horizontalConstraint];
-
+                         
                         // vertical position:
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
 
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                        //[self.view addConstraint:verticalConstraint];
+                       
 
                         indexOfLeftmostButtonOnCurrentLine = i
                     }
@@ -174,16 +183,12 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                     let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
                     self.addOrder.addConstraint(horizontalConstraint)
                         
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeRight multiplier:1.0f constant:horizontalSpaceBetweenButtons];
-                              // [self.view addConstraint:horizontalConstraint];
-
+                       
                                // vertical position same as previous button
                     let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
                     self.addOrder.addConstraint(verticalConstraint)
 
-                        
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-                             //  [self.view addConstraint:verticalConstraint];
+                     
                 }
                 buttons.add(addTitle_btn)
 
@@ -199,9 +204,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             {
                 commonArray.removeAll { $0 == "" }
                 usergroup_tbl.reloadData()
-//                let indexPath = IndexPath(row: 0, section: 0)
-//                self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
-
             }
 
         }
@@ -653,6 +655,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         vc.getorderArray = addorderArray
         vc.sortingOrderArray = self.TeamArray
         vc.getorganizationDetails = getRolebyreasonDetailArray
+        vc.delegate = self
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?
         vc.getTeamId = self.getTeamId as NSString?
         vc.selectType = "MemberGroup"

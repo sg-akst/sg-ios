@@ -64,7 +64,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
             self.create_btn.isHidden = false
             self.canRespons_tittle_txt.isUserInteractionEnabled = false
             navigation_title_lbl.text = "Update Response"
-            self.create_btn.setTitle("Update", for: .normal)
+            self.create_btn.setTitle("Done", for: .normal)
             self.canRespons_tittle_txt.text = updateArray.value(forKey: "cannedResponseTitle") as? String
             self.canRespons_txv.text = updateArray.value(forKey: "cannedResponseDesc") as? String
             let count : Int = updateArray.value(forKey: "count") as! Int
@@ -89,7 +89,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         for i in 0..<self.getorderArray.count
         {
           selectOption_btn = UIButton(type: .roundedRect)
-            selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+            selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
             selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
             let title: String = getorderArray?[i] as! String
             selectOption_btn.translatesAutoresizingMaskIntoConstraints = false

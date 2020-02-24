@@ -11,6 +11,15 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+protocol SortorderDelegate: AnyObject {
+    func sortingOrderTagupdateSuccess()
+    func sortingOrderUsergroupupdateSuccess()
+    func sortingOrderCannedupdateSuccess()
+
+
+}
+
+
 class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var sorting_tbl: UITableView!
@@ -26,6 +35,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var updateArray = [NSDictionary]()
     var rolebySeasonid: NSString!
     var getTeamId: NSString!
+    weak var delegate:SortorderDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +67,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             {
                 let addTitle_btn: UIButton = UIButton(type: .roundedRect)
     
-                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 20)
+                addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
                 addTitle_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
                 let title: String = getorderArray?[i] as! String
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -103,9 +113,6 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrderView, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrderView.addConstraint(verticalConstraint)
                             
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                    //   [self.view addConstraint:verticalConstraint];
-
                     }
                     else{
                         // put it in new line
@@ -115,15 +122,10 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                         self.addOrderView.addConstraint(horizontalConstraint)
 
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                       // [self.view addConstraint:horizontalConstraint];
 
                         // vertical position:
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrderView.addConstraint(verticalConstraint)
-
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                        //[self.view addConstraint:verticalConstraint];
 
                         indexOfLeftmostButtonOnCurrentLine = i
                     }
@@ -138,16 +140,10 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
                     self.addOrderView.addConstraint(horizontalConstraint)
                         
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeRight multiplier:1.0f constant:horizontalSpaceBetweenButtons];
-                              // [self.view addConstraint:horizontalConstraint];
-
                                // vertical position same as previous button
                     let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
                     self.addOrderView.addConstraint(verticalConstraint)
 
-                        
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-                             //  [self.view addConstraint:verticalConstraint];
                 }
                 buttons.add(addTitle_btn)
 
@@ -157,39 +153,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.SelectorderView.addSubview(addOrderView)
 
         }
-//       {
-//           self.addOrderView = UIView()
-//           self.addOrderView.frame = self.SelectorderView.bounds
-//           for i in 0..<self.getorderArray.count
-//           {
-//               let btn_width = (i==0) ? 30 : 70
-//
-//               let frame1 = (i > 3) ? (getorderArray.firstObject != nil) ? CGRect(x: 10, y: 55, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 ) : (getorderArray.firstObject != nil) ? CGRect(x: 10 + (i * 75), y: 10, width: btn_width, height: 40 ) : CGRect(x: 0 + (i * 75), y: 10, width: btn_width, height: 40 )
-//               let button = UIButton(frame: frame1)
-//               button.setTitle("\(getorderArray[i] as! String)", for: .normal)
-//               let lastIndex: Int = getorderArray.count-1
-//
-//               if(lastIndex == i)
-//              {
-//               button.setTitleColor(UIColor.gray, for: .normal)
-//
-//               }
-//               else
-//              {
-//               button.setTitleColor(UIColor.blue, for: .normal)
-//
-//               }
-//
-//               button.titleLabel?.textAlignment = .center
-//               button.sizeToFit()
-//               button.tag = i
-//               self.addOrderView.addSubview(button)
-//               button.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
-//
-//           }
-//
-//           self.SelectorderView.addSubview(addOrderView)
-//       }
+
        @objc func orderselectmethod(_ sender: UIButton)
          {
              self.navigationController?.popViewController(animated: true)
@@ -202,7 +166,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
          
         if(selectType == "Tags")
         {
-            return 40.0
+            return 55.0
 
         }
         else
@@ -249,8 +213,6 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 
         }
-        //cell.detailTextLabel?.text = (headline as AnyObject).text
-       // cell.imageView?.image = UIImage(named: (sortingOrderArray as AnyObject).image)
 
            return cell
        }
@@ -315,62 +277,60 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                        case .success(let json):
                         let jsonData = json
                            print(jsonData)
-                        let str = ("MemberGroup" == self.selectType) ? "User Group" : self.selectType
-                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: " \(str!) Sorted Successfully ")
+                        let info = jsonData as? NSDictionary
+                        let statusCode = info?["status"] as? Bool
+                        let message = info?["message"] as? String
+                        if(statusCode == true)
+                        {
+                            let str = ("MemberGroup" == self.selectType) ? "User Group" : self.selectType
+                            self.alertermsg(msg: " \(str!) Sorted Successfully ")
+
+                        }
+                        else
+                        {
+                           if(message == "unauthorized user")
+                            {
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.timerAction()
+                                self.updatesorting(sender)
+                               // self.getplayerlist()
+                            }
+                        }
+                       // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: " \(str!) Sorted Successfully ")
+                            
+                            
                         case .failure(let error): break
                            //self.errorFailer(error: error)
                        }
                         Constant.showInActivityIndicatory()
 
                    }
-        
 
-        
-        
-        
-        
-
-//        Alamofire.request(testStatusUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
-//            if(!(response.error != nil)){
-//                switch (response.result)
-//                {
-//                case .success(_):
-//                    if let data = response.result.value{
-//                        let info = data as? NSDictionary
-//                        let statusCode = info?["status"] as? Bool
-//                        //let message = info?["message"] as? String
-//
-//                        if(statusCode == true)
-//                        {
-//                            let result = info?["data"] as! NSArray
-//
-//                           // self.playerListArray = NSMutableArray()
-//                            //self.playerListArray = result.mutableCopy() as? NSMutableArray
-//                           // self.getGuardians()
-//
-//                        }
-//                        else
-//                        {
-//                           // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
-//                        }
-//                       // Constant.showInActivityIndicatory()
-//                    }
-//                    break
-//
-//                case .failure(_):
-//                    Constant.showInActivityIndicatory()
-//
-//                    break
-//                }
-//            }
-//            else
-//            {
-//                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-//                Constant.showInActivityIndicatory()
-//
-//            }
-       // }
     }
+    func alertermsg(msg: String)
+         {
+             let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
+                if(self.selectType == "MemberGroup")
+                {
+                    self.delegate?.sortingOrderUsergroupupdateSuccess()
+                }
+                else if(self.selectType == "CannedResponse")
+                {
+                    self.delegate?.sortingOrderCannedupdateSuccess()
+                }
+                else if(self.selectType == "Tags")
+                {
+                    self.delegate?.sortingOrderTagupdateSuccess()
+                }
+                 self.navigationController?.popViewController(animated: false)
+                    }))
+             
+             self.present(alert, animated: true, completion: nil)
+             
+         }
+     
+    
      @IBAction func Sortingcancelbtn(_ sender: UIButton)
         {
            self.navigationController?.popViewController(animated: true)

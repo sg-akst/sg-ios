@@ -20,6 +20,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var post_tbl: UITableView!
     @IBOutlet weak var emptyfeed_img: UIImageView!
+    @IBOutlet weak var postview_height: NSLayoutConstraint!
     var isInfo: Bool = false
     var selectIndex: Int!
     var getuuid : String!
