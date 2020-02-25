@@ -17,12 +17,22 @@ protocol addressEditDelegate: AnyObject {
 }
 
 
-class AddressEditVC: UIViewController,PopViewDelegate {
+class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     func selectoptionString(selectSuffix: String) {
         if(isSlectState == true)
         {
             self.state_txt.text = selectSuffix
             isSlectState = false
+            if(self.state_txt.text == updateAddress.value(forKey: "state") as? String)
+            {
+                update_address_btn.isUserInteractionEnabled = false
+                update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
+            }
+            else
+            {
+                update_address_btn.isUserInteractionEnabled = true
+                update_address_btn.setTitleColor(UIColor.blue, for: .normal)
+            }
         }
         else
         {
@@ -35,6 +45,16 @@ class AddressEditVC: UIViewController,PopViewDelegate {
 
                 }
             }
+            if(self.country_txt.text == updateAddress.value(forKey: "country_code") as? String)
+            {
+                update_address_btn.isUserInteractionEnabled = false
+                update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
+            }
+            else
+            {
+                update_address_btn.isUserInteractionEnabled = true
+                update_address_btn.setTitleColor(UIColor.blue, for: .normal)
+            }
         }
     }
     
@@ -45,6 +65,8 @@ class AddressEditVC: UIViewController,PopViewDelegate {
     @IBOutlet weak var state_txt: UITextField!
     @IBOutlet weak var potel_txt: UITextField!
     @IBOutlet weak var country_txt: UITextField!
+    @IBOutlet weak var update_address_btn: UIButton!
+
 
     var addressDetailDic: NSDictionary!
     var getCountryArray: NSMutableArray!
@@ -63,6 +85,12 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         bottomlineMethod(selecttext: state_txt)
         bottomlineMethod(selecttext: potel_txt)
         bottomlineMethod(selecttext: country_txt)
+        self.state_txt.delegate = self
+        self.street1_txt.delegate = self
+        self.street2_txt.delegate = self
+        self.city_txt.delegate = self
+        self.country_txt.delegate = self
+        self.potel_txt.delegate = self
         updateAddress = self.addressDetailDic.value(forKey: "address") as? NSDictionary
         self.street1_txt.text = updateAddress.value(forKey: "street1") as? String
         self.street2_txt.text = updateAddress.value(forKey: "street2") as? String
@@ -160,7 +188,42 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         popup.style = .bottomSheet
         popup.present(in: self)
     }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+          print("textFieldShouldBeginEditing")
+          return true
+      }
+     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField.text == updateAddress.value(forKey: "street1") as? String || textField.text == updateAddress.value(forKey: "street2") as? String || textField.text == updateAddress.value(forKey: "city")as? String || textField.text == updateAddress.value(forKey: "postal_code")as? String)
+         {
+            update_address_btn.isUserInteractionEnabled = false
+            update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
+         }
+         else
+         {
+             update_address_btn.isUserInteractionEnabled = true
+             update_address_btn.setTitleColor(UIColor.blue, for: .normal)
+         }
+          print("textField")
+          print("Leaving textField")
+          return true
+      }
+     
     
+     func textFieldDidEndEditing(_ textField: UITextField) {
+          print("textFieldDidEndEditing")
+         print("textField = \(textField.text ?? "")")
+          print("Leaving textFieldDidEndEditing")
+      }
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+         return true
+     }
+     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+     }
+
+     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+         return true
+     }
     @IBAction func updateAddress(_ sender: UIButton)
     {
         if(self.street1_txt.text == nil || self.street1_txt.text?.isEmpty == true)
@@ -168,11 +231,6 @@ class AddressEditVC: UIViewController,PopViewDelegate {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
 
         }
-//        else if(self.street2_txt.text == nil || self.street2_txt.text?.isEmpty == true)
-//        {
-//            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
-//
-//        }
         else if(self.city_txt.text == nil || self.city_txt.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter city")
@@ -235,9 +293,6 @@ class AddressEditVC: UIViewController,PopViewDelegate {
         self.navigationController?.popViewController(animated: true)
 
         }))
-       //        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-       //         }))
-               
                self.present(alert, animated: true, completion: nil)
                
            }

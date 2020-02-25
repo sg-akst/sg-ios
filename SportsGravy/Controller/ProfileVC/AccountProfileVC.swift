@@ -136,14 +136,13 @@ isdelegate = false
 
                             self.date_lbl.text = "Joined \(dateFormatterPrint.string(from: datees as Date))"
                             let url = URL(string: "\(self.alldoc.value(forKey: "profile_image")!)")
+                            self.porfile_img.layer.cornerRadius = self.profile_imag.frame.size.width/2
+                            self.porfile_img.layer.backgroundColor = UIColor.lightGray.cgColor
+                            self.porfile_img.contentMode = .scaleAspectFill
                             if(url != nil)
                             {
-                            
-                                self.profile_imag.kf.setImage(with: url)
-                                self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
-                                self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
-                                self.profile_imag.contentMode = .scaleAspectFill
-
+                                //self.porfile_img.kf.setImage(with: url)
+                                self.porfile_img.kf.setImage(with: url, for: .normal)
                             }
                             else
                             {
@@ -151,7 +150,7 @@ isdelegate = false
                                 let nameFormatter = PersonNameComponentsFormatter()
                                 if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
 
-                                     let sortName = "\(firstLetter). \(lastName)"  // J. Singh
+                                     let sortName = "\(firstLetter)\(lastName)"  // J. Singh
                                     self.porfile_img.setTitle(sortName, for: .normal)
                                  }
                             }

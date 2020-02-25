@@ -56,7 +56,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="Dhy-bF-OKf">
-                                <rect key="frame" x="87.5" y="272.5" width="200" height="122"/>
+                                <rect key="frame" x="-12.5" y="211.5" width="400" height="244"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -85,7 +85,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="DzB-ne-awt">
-                                        <rect key="frame" x="87.5" y="84" width="200" height="122"/>
+                                        <rect key="frame" x="-12.5" y="23" width="400" height="244"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -308,7 +308,7 @@
         <!--SidemenuVC-->
         <scene sceneID="dmw-Db-9ER">
             <objects>
-                <viewController id="ASO-Jv-Fsk" customClass="SidemenuVC" customModule="SportsGravy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="side" id="ASO-Jv-Fsk" customClass="SidemenuVC" customModule="SportsGravy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="04E-nc-mb9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -333,7 +333,11 @@
                                                     <constraint firstAttribute="width" constant="80" id="Vdf-Ak-qTM"/>
                                                     <constraint firstAttribute="height" constant="80" id="nj7-RH-0w4"/>
                                                 </constraints>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aoi-V6-AkU">
                                                 <rect key="frame" x="110.5" y="45" width="204.5" height="15"/>
@@ -677,12 +681,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IkK-Jq-aDU">
-                                        <rect key="frame" x="5" y="15" width="30" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="56" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="6vp-kX-zsm"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="5hG-9P-cU4" eventType="touchUpInside" id="z1M-Yz-069"/>
                                         </connections>
@@ -880,12 +886,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxq-KQ-bf8">
-                                        <rect key="frame" x="5" y="15" width="30" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="57" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="fpL-I8-oxI"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="CtE-Fi-wIw" eventType="touchUpInside" id="XGW-K8-Wid"/>
                                         </connections>
@@ -1086,13 +1095,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tlu-9H-c62">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Vit-k5-Lcc"/>
-                                            <constraint firstAttribute="width" constant="40" id="clB-ze-YaR"/>
+                                            <constraint firstAttribute="width" constant="60" id="clB-ze-YaR"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="TRf-yp-E1X" eventType="touchUpInside" id="5Mf-Pt-ncs"/>
                                         </connections>
@@ -1134,6 +1146,8 @@
                                             <constraint firstAttribute="height" constant="100" id="WsW-OO-lwd"/>
                                             <constraint firstAttribute="width" constant="100" id="sg9-af-MyP"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                                         </userDefinedRuntimeAttributes>
@@ -1722,10 +1736,10 @@
             </objects>
             <point key="canvasLocation" x="1470" y="3472"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Common Tab BarVC-->
         <scene sceneID="sak-fW-kc6">
             <objects>
-                <tabBarController id="cQv-YJ-yyQ" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Tabbar" id="cQv-YJ-yyQ" customClass="CommonTabBarVC" customModule="SportsGravy" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="efO-mj-tkU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2253,12 +2267,12 @@
                     <connections>
                         <outlet property="emptyfeed_img" destination="oqq-DB-Tsn" id="Ela-0i-Adr"/>
                         <outlet property="post_tbl" destination="UAF-le-S9F" id="gm4-lL-n96"/>
-                        <outlet property="postview_height" destination="Rc8-p4-flm" id="RXQ-GD-mey"/>
+                        <outlet property="postview_height" destination="TEl-of-Ytg" id="hox-Mp-WDP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9N9-GH-QQz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1447.2" y="1437.9310344827588"/>
+            <point key="canvasLocation" x="1446" y="1531"/>
         </scene>
         <!--ForgotVC-->
         <scene sceneID="Mfe-le-bpV">
@@ -2272,7 +2286,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="310"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="CQV-dH-MOG">
-                                        <rect key="frame" x="87.5" y="94" width="200" height="122"/>
+                                        <rect key="frame" x="-12.5" y="33" width="400" height="244"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -3125,13 +3139,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qou-Wc-U6c">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="6fc-if-RiC"/>
-                                            <constraint firstAttribute="width" constant="40" id="kmO-TW-Q9q"/>
+                                            <constraint firstAttribute="width" constant="60" id="kmO-TW-Q9q"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="TeW-N5-paP"/>
                                         </connections>
@@ -3313,14 +3330,15 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTo-Av-oDL">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="RWy-pr-sgy"/>
-                                            <constraint firstAttribute="width" constant="40" id="gA1-dE-ptC"/>
+                                            <constraint firstAttribute="width" constant="60" id="gA1-dE-ptC"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="5Mm-Nw-f6R" eventType="touchUpInside" id="3GE-fM-dvf"/>
@@ -3409,6 +3427,7 @@ help with to continue to improve.</string>
                     </view>
                     <connections>
                         <outlet property="SelectorderView" destination="QXE-dg-nE3" id="VYe-Pn-XwB"/>
+                        <outlet property="create_btn" destination="Z66-CZ-HIw" id="8qY-eJ-gDF"/>
                         <outlet property="tag_txt" destination="8Qb-9j-5eN" id="HJt-G8-O1x"/>
                     </connections>
                 </viewController>
@@ -3428,13 +3447,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMo-2e-caf">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Mx9-zq-kU9"/>
-                                            <constraint firstAttribute="width" constant="40" id="rbt-FP-UgK"/>
+                                            <constraint firstAttribute="width" constant="60" id="rbt-FP-UgK"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="vM1-Yx-SNJ" eventType="touchUpInside" id="Op2-qX-OWy"/>
                                         </connections>
@@ -3629,13 +3651,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jrt-la-ALq">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="aAW-er-cCz"/>
-                                            <constraint firstAttribute="width" constant="40" id="g75-ro-44A"/>
+                                            <constraint firstAttribute="width" constant="60" id="g75-ro-44A"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="LLh-lB-shN" eventType="touchUpInside" id="Jj1-MA-mZe"/>
                                         </connections>
@@ -3722,6 +3747,9 @@ help with to continue to improve.</string>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="LLh-lB-shN" id="Mcl-69-n6y"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
@@ -3772,19 +3800,22 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cg-zZ-Ak1">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="acr-Uy-J5y"/>
+                                            <constraint firstAttribute="width" constant="60" id="acr-Uy-J5y"/>
                                             <constraint firstAttribute="height" constant="40" id="eyd-Je-hw2"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="Sortingcancelbtn:" destination="Dga-Bn-LKs" eventType="touchUpInside" id="hVg-xG-NwR"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort Create Response" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VT9-n3-2vh">
-                                        <rect key="frame" x="60" y="15" width="223" height="40.5"/>
+                                        <rect key="frame" x="80" y="15" width="203" height="40.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40.5" id="2Lw-Ew-K2V"/>
                                         </constraints>
@@ -3921,15 +3952,15 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="iML-8w-feP">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Kaz-6f-Mix"/>
-                                            <constraint firstAttribute="width" constant="40" id="hkj-Xj-lfm"/>
+                                            <constraint firstAttribute="width" constant="60" id="hkj-Xj-lfm"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Cancel" image="back_ic">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpostbtn:" destination="z6w-5G-c61" eventType="touchUpInside" id="BUE-Fv-qaw"/>
@@ -4232,13 +4263,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGg-mJ-oOG">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="DVj-5P-frv"/>
-                                            <constraint firstAttribute="width" constant="40" id="Mod-Mr-r39"/>
+                                            <constraint firstAttribute="width" constant="60" id="Mod-Mr-r39"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="backpostReactionbtn:" destination="im0-WM-rQt" eventType="touchUpInside" id="ADz-WN-Cph"/>
                                         </connections>
@@ -4341,13 +4375,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RY1-OA-wg2">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Li9-0J-x5p"/>
-                                            <constraint firstAttribute="width" constant="40" id="szy-kj-Yqp"/>
+                                            <constraint firstAttribute="width" constant="60" id="szy-kj-Yqp"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="backpostTagbtn:" destination="VRi-Pi-k7o" eventType="touchUpInside" id="7mb-6c-Amq"/>
                                         </connections>
@@ -4423,13 +4460,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSB-xT-OGw">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="HAw-2N-NLz"/>
-                                            <constraint firstAttribute="width" constant="40" id="jEd-N9-XbN"/>
+                                            <constraint firstAttribute="width" constant="60" id="jEd-N9-XbN"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="backpostCannedbtn:" destination="KgF-gA-Y8W" eventType="touchUpInside" id="wVi-Zr-aIJ"/>
                                         </connections>
@@ -4537,13 +4577,16 @@ help with to continue to improve.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zy-Ga-YX5">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="8r8-IS-Psk"/>
-                                            <constraint firstAttribute="width" constant="40" id="ehx-Dw-m8v"/>
+                                            <constraint firstAttribute="width" constant="60" id="ehx-Dw-m8v"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="backpostuserbtn:" destination="pCM-kd-fFj" eventType="touchUpInside" id="rig-mk-1Gb"/>
                                         </connections>
@@ -4824,7 +4867,7 @@ virtual foot closer to success</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="congz" translatesAutoresizingMaskIntoConstraints="NO" id="TXJ-X4-w8t">
-                                <rect key="frame" x="42" y="100" width="291" height="253.00000000000006"/>
+                                <rect key="frame" x="42" y="100" width="291" height="253"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="253" id="OaS-5B-zJ5"/>
                                     <constraint firstAttribute="width" constant="291" id="TzA-bb-a8N"/>
@@ -5508,13 +5551,16 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gtp-Ys-oXJ">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="U2I-kS-LCt"/>
-                                            <constraint firstAttribute="width" constant="40" id="zLE-Dk-Ekg"/>
+                                            <constraint firstAttribute="width" constant="60" id="zLE-Dk-Ekg"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="settingcancelbtn:" destination="hpK-N0-Hqq" eventType="touchUpInside" id="Pb9-KA-gEM"/>
                                         </connections>
@@ -5648,22 +5694,22 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="8XK-Zi-IdI">
-                                        <rect key="frame" x="5" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="izh-si-n5O"/>
-                                            <constraint firstAttribute="width" constant="40" id="ygB-l1-tkp"/>
+                                            <constraint firstAttribute="width" constant="60" id="ygB-l1-tkp"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Cancel" image="back_ic">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="zxQ-nA-gd9"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create User Group" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66w-NQ-olB">
-                                        <rect key="frame" x="84" y="15" width="178" height="30"/>
+                                        <rect key="frame" x="104" y="15" width="178" height="30"/>
                                         <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -5731,10 +5777,10 @@ virtual foot closer to success</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="headerCell" focusStyle="custom" id="CnC-RL-CQi" customClass="GroubHeaderCell" customModule="SportsGravy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="30.5"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CnC-RL-CQi" id="50j-F6-zJ2">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="30.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Arg-OV-4Rm">
@@ -5760,7 +5806,7 @@ virtual foot closer to success</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="groupCreate" rowHeight="50" id="a2Q-3b-aqM" customClass="UsergroupCreateCell" customModule="SportsGravy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="86" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="85.5" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a2Q-3b-aqM" id="mq5-ou-003">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -5859,7 +5905,7 @@ virtual foot closer to success</string>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditPasswordcancelbtn:" destination="eaf-KR-aty" eventType="touchUpInside" id="A4l-BP-IQH"/>
@@ -6035,7 +6081,7 @@ virtual foot closer to success</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditMobilecancelbtn:" destination="GhN-Bg-5la" eventType="touchUpInside" id="jbq-s8-F1b"/>
@@ -6070,6 +6116,16 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7r-7a-Sgk">
+                                        <rect key="frame" x="0.0" y="41" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="bUc-1x-fb0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+1" placeholder="(xxx) xxx-xxxx" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="koo-Mn-7tR">
                                         <rect key="frame" x="10" y="50" width="355" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6087,7 +6143,7 @@ virtual foot closer to success</string>
                                         </connections>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="koo-Mn-7tR" secondAttribute="bottom" id="0yJ-Gs-Xdw"/>
                                     <constraint firstItem="eAB-Nx-ILI" firstAttribute="leading" secondItem="Ohb-V2-ogK" secondAttribute="leading" constant="10" id="8lx-PU-nQ1"/>
@@ -6096,7 +6152,10 @@ virtual foot closer to success</string>
                                     <constraint firstAttribute="trailing" secondItem="koo-Mn-7tR" secondAttribute="trailing" constant="10" id="NwT-JX-1w0"/>
                                     <constraint firstAttribute="height" constant="100" id="QeB-rE-dzA"/>
                                     <constraint firstAttribute="trailing" secondItem="eAB-Nx-ILI" secondAttribute="trailing" constant="10" id="acw-H2-KrQ"/>
+                                    <constraint firstItem="Q7r-7a-Sgk" firstAttribute="top" secondItem="eAB-Nx-ILI" secondAttribute="bottom" constant="1" id="oA0-tt-BiH"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q7r-7a-Sgk" secondAttribute="trailing" id="oYz-6y-x5k"/>
                                     <constraint firstItem="eAB-Nx-ILI" firstAttribute="top" secondItem="Ohb-V2-ogK" secondAttribute="top" constant="10" id="vBE-je-Hc9"/>
+                                    <constraint firstItem="Q7r-7a-Sgk" firstAttribute="leading" secondItem="Ohb-V2-ogK" secondAttribute="leading" id="wmY-RS-XZn"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGg-3m-bdm">
@@ -6116,7 +6175,7 @@ virtual foot closer to success</string>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="jfw-sc-9eG" firstAttribute="trailing" secondItem="OGg-3m-bdm" secondAttribute="trailing" constant="10" id="2Zd-Dn-Q8P"/>
                             <constraint firstItem="OGg-3m-bdm" firstAttribute="top" secondItem="jfw-sc-9eG" secondAttribute="top" constant="7" id="4rk-0w-yru"/>
@@ -6135,6 +6194,7 @@ virtual foot closer to success</string>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mobile_txt" destination="koo-Mn-7tR" id="fQM-BZ-YnH"/>
+                        <outlet property="updatemobile_btn" destination="OGg-3m-bdm" id="nF9-mb-dHP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49J-Nu-iaz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -6153,16 +6213,16 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="cCW-So-MVO">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="ObZ-DP-mLr"/>
+                                            <constraint firstAttribute="width" constant="60" id="ObZ-DP-mLr"/>
                                             <constraint firstAttribute="height" constant="40" id="eh7-w7-8TU"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditGendercancelbtn:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="kDK-Js-xY8"/>
@@ -6207,6 +6267,9 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="NYJ-3m-bSq" id="ead-1d-DhK"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbJ-Yy-dgk">
                                         <rect key="frame" x="315" y="60" width="30" height="30"/>
@@ -6217,7 +6280,7 @@ virtual foot closer to success</string>
                                         <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                         <state key="normal" image="droupdown"/>
                                         <connections>
-                                            <action selector="selectGender:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="AWh-t1-ioZ"/>
+                                            <action selector="selectGender:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="7nm-d9-Hlz"/>
                                             <action selector="selectsuffix:" destination="puM-CO-OCg" eventType="touchUpInside" id="h6r-kf-bwh"/>
                                         </connections>
                                     </button>
@@ -6273,6 +6336,7 @@ virtual foot closer to success</string>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="gender_txt" destination="Bq9-L7-c4N" id="HEt-UC-upc"/>
+                        <outlet property="update_gender_btn" destination="jVS-6l-cIX" id="oD7-Qy-YGc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2NG-LB-BAL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -6291,15 +6355,15 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Gwy-EX-kNW">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="KjH-fg-SBG"/>
+                                            <constraint firstAttribute="width" constant="60" id="KjH-fg-SBG"/>
                                             <constraint firstAttribute="height" constant="40" id="lmO-Gr-E9H"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditAddresscancelbtn:" destination="UkH-s6-0Nt" eventType="touchUpInside" id="NA9-0r-aYI"/>
@@ -6342,6 +6406,9 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UkH-s6-0Nt" id="SXW-fo-CGe"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Street2" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JMi-8E-rNX">
                                         <rect key="frame" x="10" y="110" width="355" height="50"/>
@@ -6351,6 +6418,9 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UkH-s6-0Nt" id="6rk-cj-dvH"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="city" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="meM-C3-2Kj">
                                         <rect key="frame" x="10" y="170" width="355" height="50"/>
@@ -6360,8 +6430,11 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UkH-s6-0Nt" id="h7W-ET-ta5"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State/Province" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S0R-12-uGE">
+                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State/Province" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S0R-12-uGE">
                                         <rect key="frame" x="10" y="230" width="355" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="91B-09-avm"/>
@@ -6369,8 +6442,11 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UkH-s6-0Nt" id="7WG-Ep-hLw"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Postal Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3pd-s9-77O">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Postal Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3pd-s9-77O">
                                         <rect key="frame" x="10" y="290" width="355" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="RkA-wp-4UZ"/>
@@ -6378,6 +6454,9 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UkH-s6-0Nt" id="hpW-pe-gtE"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Country" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bOZ-os-88x">
                                         <rect key="frame" x="10" y="350" width="355" height="50"/>
@@ -6387,6 +6466,9 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UkH-s6-0Nt" id="DsF-Ia-owD"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWN-75-cKO">
                                         <rect key="frame" x="315" y="355" width="30" height="30"/>
@@ -6398,7 +6480,6 @@ virtual foot closer to success</string>
                                         <state key="normal" image="droupdown"/>
                                         <connections>
                                             <action selector="selectCountryCode:" destination="UkH-s6-0Nt" eventType="touchUpInside" id="RJG-zD-cIz"/>
-                                            <action selector="selectGender:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="Hlf-Gh-8bH"/>
                                             <action selector="selectsuffix:" destination="puM-CO-OCg" eventType="touchUpInside" id="G7h-MN-iVb"/>
                                         </connections>
                                     </button>
@@ -6411,7 +6492,6 @@ virtual foot closer to success</string>
                                         <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                         <state key="normal" image="droupdown"/>
                                         <connections>
-                                            <action selector="selectGender:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="G85-hZ-MA6"/>
                                             <action selector="selectState:" destination="UkH-s6-0Nt" eventType="touchUpInside" id="3zm-eZ-RgI"/>
                                             <action selector="selectsuffix:" destination="puM-CO-OCg" eventType="touchUpInside" id="9Gw-Yr-0bp"/>
                                         </connections>
@@ -6488,6 +6568,7 @@ virtual foot closer to success</string>
                         <outlet property="state_txt" destination="S0R-12-uGE" id="r1G-Ji-SPT"/>
                         <outlet property="street1_txt" destination="296-3e-gvw" id="G2I-WI-6Hd"/>
                         <outlet property="street2_txt" destination="JMi-8E-rNX" id="9G6-gd-Xva"/>
+                        <outlet property="update_address_btn" destination="sPa-4b-je1" id="V1p-Mm-bDq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MiI-ps-G1H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -6506,13 +6587,16 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-f6-l7i">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Iwv-Kg-TJf"/>
-                                            <constraint firstAttribute="width" constant="40" id="p3L-fy-l6i"/>
+                                            <constraint firstAttribute="width" constant="60" id="p3L-fy-l6i"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="backcommentbtn:" destination="4sj-Mk-a8t" eventType="touchUpInside" id="Ask-xb-GlQ"/>
                                         </connections>
@@ -6747,15 +6831,17 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vPh-F2-K8t">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="hcD-uj-mY0"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="hi0-5q-k3Q"/>
-                                            <constraint firstAttribute="width" constant="40" id="loi-ml-cpu"/>
+                                            <constraint firstAttribute="width" constant="60" id="loi-ml-cpu"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="rU6-9Z-2le"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="61H-XZ-Q5o" eventType="touchUpInside" id="VWz-M4-w6R"/>
                                         </connections>
@@ -6958,14 +7044,16 @@ to improve.  </string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="aZg-VY-ejV">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="082-cV-psO"/>
-                                            <constraint firstAttribute="width" constant="40" id="0LJ-HU-4JT"/>
+                                            <constraint firstAttribute="width" constant="60" id="0LJ-HU-4JT"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Cancel" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="Editusercancelbtn:" destination="puM-CO-OCg" eventType="touchUpInside" id="bqx-xe-5Nc"/>
                                         </connections>
@@ -7150,13 +7238,16 @@ to improve.  </string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIO-bN-yjB">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="WcM-oV-OlM"/>
+                                            <constraint firstAttribute="width" constant="60" id="WcM-oV-OlM"/>
                                             <constraint firstAttribute="height" constant="40" id="wXm-Tq-xEg"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="organizationcancelbtn:" destination="K9w-Dq-WZ4" eventType="touchUpInside" id="9Kx-vR-XO3"/>
                                         </connections>
@@ -7635,7 +7726,7 @@ to improve.  </string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drN-R4-VlQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3661.5999999999999" y="3063.8680659670167"/>
+            <point key="canvasLocation" x="3545" y="2981"/>
         </scene>
         <!--PopVC-->
         <scene sceneID="23h-LQ-icd">
@@ -7659,7 +7750,6 @@ to improve.  </string>
                                     <constraint firstAttribute="width" constant="30" id="ey9-62-AeD"/>
                                 </constraints>
                                 <color key="tintColor" red="0.27843137254901962" green="0.32156862745098036" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" image="cancel"/>
                                 <connections>
                                     <action selector="didclickcancel:" destination="0fX-O9-ovj" eventType="touchUpInside" id="tNC-H7-bIN"/>
@@ -7706,7 +7796,7 @@ to improve.  </string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxw-Y8-FKc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4300" y="2856.0719640179914"/>
+            <point key="canvasLocation" x="4214" y="2727"/>
         </scene>
         <!--Player ProfileVC-->
         <scene sceneID="Mfj-8A-uBp">
@@ -7720,19 +7810,22 @@ to improve.  </string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKa-jQ-grM">
-                                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="10" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="5UR-dH-1y2"/>
-                                            <constraint firstAttribute="width" constant="40" id="Hee-q1-vsY"/>
+                                            <constraint firstAttribute="width" constant="60" id="Hee-q1-vsY"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="sak-gN-6D2" eventType="touchUpInside" id="1fU-uD-s0c"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player Profile" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abb-G2-opb">
-                                        <rect key="frame" x="65" y="10" width="245" height="41"/>
+                                        <rect key="frame" x="85" y="10" width="205" height="41"/>
                                         <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

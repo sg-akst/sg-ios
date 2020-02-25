@@ -15,12 +15,38 @@ import Firebase
 import AVKit
 
 
-class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate {
+    func sidemenuselectRole(role: String, roleArray: NSMutableArray) {
+        if(role == "Guardian" || role == "Player")
+        {
+            self.postview_height.constant = 40
+        }
+        else if(roleArray.count > 1)
+        {
+            self.postview_height.constant = 80
+        }
+        else if(roleArray.count == 1)
+        {
+            print(roleArray)
+            let dic: NSDictionary = roleArray[0] as! NSDictionary
+            let team: String = (dic.value(forKey: "team_id") as? String ?? nil)!
+            if(team == "" || team == nil)
+            {
+                self.postview_height.constant = 40
+
+            }
+            
+        }
+    }
     
-    @IBOutlet weak var menuButton: UIButton!
+   
+    
+    
+    //@IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var post_tbl: UITableView!
     @IBOutlet weak var emptyfeed_img: UIImageView!
     @IBOutlet weak var postview_height: NSLayoutConstraint!
+    
     var isInfo: Bool = false
     var selectIndex: Int!
     var getuuid : String!
@@ -39,7 +65,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 if revealViewController() != nil {
                     revealViewController().rearViewRevealWidth = self.view.frame.size.width - 70
                     view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+                    let  menuVC: SidemenuVC = revealViewController()?.rearViewController as! SidemenuVC;
+                    menuVC.delegate = self;
                     }
+        
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
@@ -57,6 +86,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+//        let objSidemenu: SidemenuVC = (self.storyboard?.instantiateViewController(identifier: "side"))!
+//        objSidemenu.delegate = self
         getFeedMethod()
         
     }

@@ -12,6 +12,13 @@ import SwiftyJSON
 import Kingfisher
 import FirebaseFirestore
 
+protocol sidemenuDelegate: AnyObject {
+    func sidemenuselectRole(role: String, roleArray: NSMutableArray)
+
+}
+
+
+
 class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var profileimg: UIButton!
@@ -29,6 +36,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var userviewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var logoutypositionConstraint: NSLayoutConstraint!
+    weak var delegate:sidemenuDelegate?
 
 
     
@@ -48,6 +56,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         role_tbl.sizeToFit()
        self.settings_view.isHidden = true
         self.user_view.isHidden = true
+    
         getuserDetail()
     }
     
@@ -100,7 +109,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         let nameFormatter = PersonNameComponentsFormatter()
                         if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
 
-                             let sortName = "\(firstLetter). \(lastName)"  // J. Singh
+                             let sortName = "\(firstLetter)\(lastName)"
                             self.profileimg.setTitle(sortName, for: .normal)
                            
                          }
@@ -245,6 +254,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.logoutypositionConstraint.constant = -(self.setting_btn.frame.size.height)
 
                    }
+       
+        self.delegate?.sidemenuselectRole(role: SelectRole, roleArray: getSameRoleArray)
     }
     
     @IBAction func logout_btnaction(_ sender: UIButton)

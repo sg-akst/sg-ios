@@ -21,6 +21,8 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     var getAllDic: NSDictionary!
     weak var delegate:mobileEditDelegate?
     var isUpdatePage: Bool!
+    @IBOutlet weak var updatemobile_btn: UIButton!
+
 
 
     override func viewDidLoad() {
@@ -42,6 +44,16 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
         guard let text = textField.text else { return false }
            let newString = (text as NSString).replacingCharacters(in: range, with: string)
            textField.text = formattedNumber(number: newString)
+             if(self.getAllDic.value(forKey: "mobile_phone") as? String == textField.text)
+            {
+               updatemobile_btn.isUserInteractionEnabled = false
+               updatemobile_btn.setTitleColor(UIColor.darkGray, for: .normal)
+            }
+            else
+            {
+               updatemobile_btn.isUserInteractionEnabled = true
+               updatemobile_btn.setTitleColor(UIColor.blue, for: .normal)
+            }
            return false
       }
 
@@ -113,10 +125,39 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
             return false
         }
         
-//        let mobileRegEx = "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}"
-//        let mobileTest = NSPredicate(format:"SELF MATCHES %@", mobileRegEx)
-//        return mobileTest.evaluate(with: testStr)
     }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+          print("textFieldShouldBeginEditing")
+          return true
+      }
+//     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//         if(string == textField.text)
+//         {
+//            update_btn.isUserInteractionEnabled = false
+//             update_btn.setTitleColor(UIColor.darkGray, for: .normal)
+//         }
+//         else
+//         {
+//             update_btn.isUserInteractionEnabled = true
+//             update_btn.setTitleColor(UIColor.blue, for: .normal)
+//         }
+//          print("textField")
+//          print("Leaving textField")
+//          return true
+//      }
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+         
+         return true
+     }
+     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+     }
+
+     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+         return true
+     }
+     
     func alertermsg(msg: String)
         {
             let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);

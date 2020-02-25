@@ -1,10 +1,3 @@
-//
-//  UserGroupCreateVC.swift
-//  SportsGravy
-//
-//  Created by CSS on 20/01/20.
-//  Copyright © 2020 CSS. All rights reserved.
-//
 
 import UIKit
 import SWRevealViewController
@@ -36,7 +29,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var SelectorderView: UIView!
     @IBOutlet weak var group_tittle_txt: UITextField!
     @IBOutlet weak var groupcreate_btn: UIButton!
-    @IBOutlet weak var groubdelete_btn: UIButton!
     @IBOutlet var group_create_tbl: UITableView!
     @IBOutlet var navigation_title_lbl: UILabel!
 
@@ -48,6 +40,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         group_tittle_txt.delegate = self
         group_create_tbl.delegate = self
         group_create_tbl.dataSource = self
+        
         selectpersonArray = NSMutableArray()
         getuserDetail()
        
@@ -58,7 +51,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         group_tittle_txt.layer.addSublayer(bottomLine)
         if(isCreate == true)
         {
-          self.groubdelete_btn.isHidden = true
+          //self.groubdelete_btn.isHidden = true
           self.groupcreate_btn.isHidden = false
           self.group_tittle_txt.isUserInteractionEnabled = true
             navigation_title_lbl.text = "Create User Group"
@@ -66,7 +59,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         else
         {
-            self.groubdelete_btn.isHidden = false
+            //self.groubdelete_btn.isHidden = false
             self.groupcreate_btn.isHidden = false
             self.group_tittle_txt.isUserInteractionEnabled = false
             self.groupcreate_btn.setTitle("Done", for: .normal)
@@ -140,9 +133,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrderView, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                        self.addOrderView.addConstraint(verticalConstraint)
                            
-                           //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                   //   [self.view addConstraint:verticalConstraint];
-
                    }
                    else{
                        // put it in new line
@@ -152,16 +142,10 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                        let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                        self.addOrderView.addConstraint(horizontalConstraint)
 
-                           //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                      // [self.view addConstraint:horizontalConstraint];
 
                        // vertical position:
                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: selectOption_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                        self.addOrderView.addConstraint(verticalConstraint)
-
-                       //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                       //[self.view addConstraint:verticalConstraint];
-
                        indexOfLeftmostButtonOnCurrentLine = i
                    }
                }
@@ -273,6 +257,42 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .none
     }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+          print("textFieldShouldBeginEditing")
+          return true
+      }
+     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+         if(string == "")
+         {
+            groupcreate_btn.isUserInteractionEnabled = false
+             groupcreate_btn.setTitleColor(UIColor.darkGray, for: .normal)
+         }
+         else
+         {
+             groupcreate_btn.isUserInteractionEnabled = true
+             groupcreate_btn.setTitleColor(UIColor.blue, for: .normal)
+         }
+          print("textField")
+          print("Leaving textField")
+          return true
+      }
+     
+    
+     func textFieldDidEndEditing(_ textField: UITextField) {
+          print("textFieldDidEndEditing")
+         print("textField = \(textField.text ?? "")")
+          print("Leaving textFieldDidEndEditing")
+      }
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+         return true
+     }
+     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+     }
+
+     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+         return true
+     }
     @objc func selectplayer(_ sender: UIButton)
     {
         print(sender.tag)
@@ -282,15 +302,10 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         let dicvalu = groubSection![indexPaths!.section]
         let getuserlist: NSMutableDictionary = dicvalu.userlist[0] as! NSMutableDictionary
         let getvalue: NSDictionary = getuserlist.copy() as! NSDictionary
-        
-
         print(dicvalu)
-       
+        
        if cell?.checkbox.backgroundColor == UIColor.green
         {
-//            if(isCreate == false)
-//            {
-            //let userSelectArray: NSMutableArray = updateArray.value(forKey: "user_list") as! NSMutableArray
 
               cell?.checkbox.backgroundColor = UIColor.clear
 
@@ -307,27 +322,27 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
                 }
             }
-//        }
-//            else
-//            {
-//                cell?.checkbox.backgroundColor = UIColor.clear
-//                for i in 0..<self.selectpersonArray.count
-//                {
-//                    if(self.selectpersonArray.count > 0)
-//                    let dic: NSDictionary = self.selectpersonArray[i] as! NSDictionary
-//                    if(getvalue.value(forKey: "user_id") as! String  == dic.value(forKey: "user_id") as! String)
-//                    {
-//                        self.selectpersonArray.removeObject(at: i)
-//
-//                    }
-//                }
-//            }
+
        }
         else
        {
         cell?.checkbox.backgroundColor = UIColor.green
         self.selectpersonArray.add(getvalue)
         }
+       // if(isCreate == false)
+//        {
+//         let userSelectArray: NSMutableArray = updateArray.value(forKey: "user_list") as! NSMutableArray
+//        if(selectpersonArray.isEqual(userSelectArray))
+//        {
+//            groupcreate_btn.isUserInteractionEnabled = false
+//            groupcreate_btn.setTitleColor(UIColor.darkGray, for: .normal)
+//        }
+//        else
+//        {
+//            groupcreate_btn.isUserInteractionEnabled = true
+//            groupcreate_btn.setTitleColor(UIColor.blue, for: .normal)
+//        }
+//        }
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

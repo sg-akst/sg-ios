@@ -20,10 +20,22 @@ protocol genderEditDelegate: AnyObject {
 class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
     func selectoptionString(selectSuffix: String) {
         self.gender_txt.text = selectSuffix
+        if(self.gender_txt.text == getalldoc.value(forKey: "gender") as? String)
+        {
+            update_gender_btn.isUserInteractionEnabled = false
+            update_gender_btn.setTitleColor(UIColor.darkGray, for: .normal)
+        }
+        else
+        {
+            update_gender_btn.isUserInteractionEnabled = true
+            update_gender_btn.setTitleColor(UIColor.blue, for: .normal)
+        }
     }
     
 
     @IBOutlet weak var gender_txt: UITextField!
+    @IBOutlet weak var update_gender_btn: UIButton!
+
     var getalldoc: NSDictionary!
     weak var delegate:genderEditDelegate?
     var isUpdateGender: Bool!
@@ -44,6 +56,8 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
         selecttext.borderStyle = UITextBorderStyle.none
         selecttext.layer.addSublayer(bottomLine)
     }
+    
+    
     @IBAction func selectGender(_ sender: UIButton)
        {
            let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
@@ -92,16 +106,9 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.genderupdateSuccess()
             self.navigationController?.popViewController(animated: true)
-
                    }))
-    //        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-    //         }))
-            
             self.present(alert, animated: true, completion: nil)
-            
         }
-    
-        
     @IBAction func EditGendercancelbtn(_ sender: UIButton)
     {
        self.navigationController?.popViewController(animated: true)

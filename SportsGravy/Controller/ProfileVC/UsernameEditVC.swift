@@ -21,11 +21,11 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         self.suffix_name_txt.text = selectSuffix
     }
     
-    
     @IBOutlet weak var first_name_txt: UITextField!
     @IBOutlet weak var middle_name_txt: UITextField!
     @IBOutlet weak var last_name_txt: UITextField!
     @IBOutlet weak var suffix_name_txt: UITextField!
+    @IBOutlet weak var update_btn: UIButton!
     weak var delegate:UsernameEditDelegate?
     var userDetailDic: NSDictionary!
     var isUpdateName: Bool!
@@ -111,6 +111,46 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         }
     }
     }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+            print("textFieldShouldBeginEditing")
+            return true
+        }
+       func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+           if(string == textField.text)
+           {
+              update_btn.isUserInteractionEnabled = false
+               update_btn.setTitleColor(UIColor.darkGray, for: .normal)
+           }
+           else
+           {
+               update_btn.isUserInteractionEnabled = true
+               update_btn.setTitleColor(UIColor.blue, for: .normal)
+           }
+            print("textField")
+            print("Leaving textField")
+            return true
+        }
+       
+      
+       func textFieldDidEndEditing(_ textField: UITextField) {
+            print("textFieldDidEndEditing")
+           print("textField = \(textField.text ?? "")")
+            print("Leaving textFieldDidEndEditing")
+        }
+       func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+           
+           return true
+       }
+       func textFieldDidBeginEditing(_ textField: UITextField) {
+          
+       }
+
+       func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+           return true
+       }
+       
+    
     func alertermsg(msg: String)
     {
         let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);

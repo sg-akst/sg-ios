@@ -17,13 +17,12 @@ protocol CreateCanresponseDelegate: AnyObject {
 
 }
 
-class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
+class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var SelectorderView: UIView!
     @IBOutlet weak var canRespons_tittle_txt: UITextField!
     @IBOutlet weak var canRespons_txv: UITextView!
     @IBOutlet weak var create_btn: UIButton!
-    @IBOutlet weak var delete_btn: UIButton!
     @IBOutlet weak var navigation_title_lbl: UILabel!
     
     
@@ -43,6 +42,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         canRespons_tittle_txt.delegate = self
+        canRespons_txv.delegate = self
         let bottomLine = CALayer()
         bottomLine.frame = CGRect(x: -20, y: canRespons_tittle_txt.frame.height - 1, width: self.view.frame.width, height: 1.0)
         bottomLine.backgroundColor = UIColor.lightGray.cgColor
@@ -50,26 +50,20 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
         canRespons_tittle_txt.layer.addSublayer(bottomLine)
         if(isCreate == true)
         {
-            self.delete_btn.isHidden = true
             self.create_btn.isHidden = false
             self.canRespons_tittle_txt.isUserInteractionEnabled = true
             navigation_title_lbl.text = "Create Response"
-
-
-            
+            self.canRespons_txv.text = ""
         }
         else
         {
-           self.delete_btn.isHidden = false
             self.create_btn.isHidden = false
             self.canRespons_tittle_txt.isUserInteractionEnabled = false
             navigation_title_lbl.text = "Update Response"
             self.create_btn.setTitle("Done", for: .normal)
             self.canRespons_tittle_txt.text = updateArray.value(forKey: "cannedResponseTitle") as? String
             self.canRespons_txv.text = updateArray.value(forKey: "cannedResponseDesc") as? String
-            let count : Int = updateArray.value(forKey: "count") as! Int
-            delete_btn.backgroundColor = (count > 0 ) ? UIColor.gray : UIColor.red
-            
+         
         }
         canRespons_txv.layer.borderColor = UIColor.black.cgColor
         canRespons_txv.layer.borderWidth = 1.0
@@ -176,6 +170,77 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate {
        
         self.SelectorderView.addSubview(addOrderView)
     }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        //canRespons_txv.backgroundColor = UIColor.lightGray
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+       // canRespons_txv.backgroundColor = UIColor.white
+    }
+    func textViewDidChange(_ textView: UITextView) { //Handle the text changes here
+        print(textView.text);
+        let canresponsdesc = (isCreate == true) ? "" : updateArray.value(forKey: "cannedResponseDesc") as? String
+        
+        if(textView.text == canresponsdesc)
+               {
+                  create_btn.isUserInteractionEnabled = false
+                   create_btn.setTitleColor(UIColor.darkGray, for: .normal)
+               }
+               else
+               {
+                   create_btn.isUserInteractionEnabled = true
+                   create_btn.setTitleColor(UIColor.blue, for: .normal)
+               }
+    }
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+         print("textFieldShouldBeginEditing")
+         return true
+     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(string == self.canRespons_tittle_txt.text)
+        {
+           create_btn.isUserInteractionEnabled = false
+            create_btn.setTitleColor(UIColor.darkGray, for: .normal)
+        }
+        else
+        {
+            create_btn.isUserInteractionEnabled = true
+            create_btn.setTitleColor(UIColor.blue, for: .normal)
+        }
+         print("textField")
+         print("Leaving textField")
+         return true
+     }
+    
+   
+    func textFieldDidEndEditing(_ textField: UITextField) {
+         print("textFieldDidEndEditing")
+        print("textField = \(textField.text ?? "")")
+         print("Leaving textFieldDidEndEditing")
+     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        if(textField == canRespons_tittle_txt)
+        {
+            create_btn.isUserInteractionEnabled = false
+            create_btn.tintColor = UIColor.darkGray
+        }
+        else
+        {
+           create_btn.isUserInteractionEnabled = true
+            create_btn.tintColor = UIColor.blue
+        }
+        return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+       
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+        return true
+    }
+    
     @objc func orderselectmethod(_ sender: UIButton)
     {
         self.delegate?.passorderArray(select: self.getorderArray,selectindex: sender)

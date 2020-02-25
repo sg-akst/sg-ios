@@ -20,6 +20,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var SelectorderView: UIView!
     @IBOutlet weak var tag_txt: UITextField!
+    @IBOutlet weak var create_btn: UIButton!
     var rolebySeasonid: String!
     var getrolebyorganizationArray: NSMutableArray!
     var getTeamId: String!
@@ -137,7 +138,45 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
        
         self.SelectorderView.addSubview(addOrderView)
     }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+          print("textFieldShouldBeginEditing")
+          return true
+      }
+     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+         if(string == "")
+         {
+            create_btn.isUserInteractionEnabled = false
+             create_btn.setTitleColor(UIColor.darkGray, for: .normal)
+         }
+         else
+         {
+             create_btn.isUserInteractionEnabled = true
+             create_btn.setTitleColor(UIColor.blue, for: .normal)
+         }
+          print("textField")
+          print("Leaving textField")
+          return true
+      }
+     
     
+     func textFieldDidEndEditing(_ textField: UITextField) {
+          print("textFieldDidEndEditing")
+         print("textField = \(textField.text ?? "")")
+          print("Leaving textFieldDidEndEditing")
+      }
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        
+         return true
+     }
+     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+     }
+
+     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+         return true
+     }
+     
     @objc func orderselectmethod(_ sender: UIButton)
     {
 

@@ -68,6 +68,7 @@
 		085E2BA524039BD600E5FB25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085E2BA424039BD600E5FB25 /* GoogleService-Info.plist */; };
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
+		08A436B32404F16E00A67FF2 /* CommonTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A436B22404F16E00A67FF2 /* CommonTabBarVC.swift */; };
 		08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */; };
 		08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B5631223FB368000D90E23 /* PostCanCell.swift */; };
 		08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */; };
@@ -139,6 +140,7 @@
 		089F228C23D85AC2008B110D /* MobileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileEditVC.swift; sourceTree = "<group>"; };
 		089F228E23D85AD8008B110D /* GenderEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderEditVC.swift; sourceTree = "<group>"; };
 		089F229023D85AEE008B110D /* AddressEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditVC.swift; sourceTree = "<group>"; };
+		08A436B22404F16E00A67FF2 /* CommonTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTabBarVC.swift; sourceTree = "<group>"; };
 		08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppaParentFormVC.swift; sourceTree = "<group>"; };
 		08AB404223CDD1C500E8A92E /* UserGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupCell.swift; sourceTree = "<group>"; };
 		08ABF72423CC40180021BA72 /* UsergroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsergroupVC.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				08AC5E8A23C5F52300CFB418 /* CalendarVC.swift */,
 				08AC5E8C23C5F53400CFB418 /* VideoVC.swift */,
 				08AC5E8E23C5F55500CFB418 /* RateVC.swift */,
+				08A436B22404F16E00A67FF2 /* CommonTabBarVC.swift */,
 			);
 			path = Tabbar;
 			sourceTree = "<group>";
@@ -853,6 +856,7 @@
 				088625F223EC334C008E7CCD /* CommentVC.swift in Sources */,
 				080E845B23E3F1AD0092CDB3 /* ChildernCell.swift in Sources */,
 				080E845A23E3F1A80092CDB3 /* Reachability.swift in Sources */,
+				08A436B32404F16E00A67FF2 /* CommonTabBarVC.swift in Sources */,
 				080E845923E3F1A30092CDB3 /* UserRecord.swift in Sources */,
 				080E845823E3F19E0092CDB3 /* AppDelegate.swift in Sources */,
 			);
