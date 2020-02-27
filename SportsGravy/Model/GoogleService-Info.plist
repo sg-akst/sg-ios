@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>999126685452-f0gp4ib23m0iqltn1qb2r5e45gv620ad.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.999126685452-f0gp4ib23m0iqltn1qb2r5e45gv620ad</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCsySV5DlHaR38pEuub3bTlXPVnk8kpBRk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>999126685452</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.iz.sportgravy</string>
+	<key>PROJECT_ID</key>
+	<string>sportsgravy-testing</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sportsgravy-testing.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:999126685452:ios:8bc35693fd793c15325b29</string>
+	<key>DATABASE_URL</key>
+	<string>https://sportsgravy-testing.firebaseio.com</string>
+</dict>
+</plist>

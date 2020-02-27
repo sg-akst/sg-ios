@@ -19,6 +19,16 @@ protocol UsernameEditDelegate: AnyObject {
 class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     func selectoptionString(selectSuffix: String) {
         self.suffix_name_txt.text = selectSuffix
+        if(self.suffix_name_txt.text == userDetailDic.value(forKey: "suffix") as? String)
+               {
+                   update_btn.isUserInteractionEnabled = false
+                   update_btn.setTitleColor(UIColor.darkGray, for: .normal)
+               }
+               else
+               {
+                   update_btn.isUserInteractionEnabled = true
+                   update_btn.setTitleColor(UIColor.blue, for: .normal)
+               }
     }
     
     @IBOutlet weak var first_name_txt: UITextField!
@@ -116,7 +126,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
             return true
         }
        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-           if(string == textField.text)
+        if(userDetailDic.value(forKey: "first_name") as? String == textField.text || userDetailDic.value(forKey: "middle_initial") as? String == textField.text || userDetailDic.value(forKey: "last_name") as? String == textField.text)
            {
               update_btn.isUserInteractionEnabled = false
                update_btn.setTitleColor(UIColor.darkGray, for: .normal)

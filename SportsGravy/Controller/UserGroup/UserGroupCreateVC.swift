@@ -445,7 +445,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             {
                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter user group name")
             }
-            else if(selectpersonArray.count == 0)
+            else if(self.selectpersonArray.count == 0)
             {
                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user to create custom group")
             }

@@ -13,18 +13,16 @@ class RateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+         if revealViewController() != nil {
+            revealViewController().rearViewRevealWidth = self.view.frame.size.width - 70
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            }
     }
     
+    @IBAction func RatemenuBtn(_ sender: UIButton)
+       {
+           self.revealViewController().revealToggle(self)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+       }
 
 }

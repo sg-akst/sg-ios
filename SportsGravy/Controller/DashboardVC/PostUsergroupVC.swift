@@ -466,7 +466,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
 
                                      for document in querySnapshot!.documents {
                                          let data: NSDictionary = document.data() as NSDictionary
-                                        let getseason_end_date: Timestamp =  data.value(forKey: "season_end_date") as! Timestamp
+                                        let getseason_end_date: Timestamp =  (data.value(forKey: "season_end_date") as? Timestamp)!
                                         let getSeason_start_date: Timestamp = (data.value(forKey: "season_start_date") as? Timestamp)!
                                          print("\(document.documentID) => \(getseason_end_date)")
                                         let enddate: Date = getseason_end_date.dateValue()

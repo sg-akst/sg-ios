@@ -62,11 +62,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-                if revealViewController() != nil {
-                    revealViewController().rearViewRevealWidth = self.view.frame.size.width - 70
-                    view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-                    let  menuVC: SidemenuVC = revealViewController()?.rearViewController as! SidemenuVC;
-                    menuVC.delegate = self;
+        if revealViewController() != nil {
+            revealViewController().rearViewRevealWidth = self.view.frame.size.width - 70
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            let  menuVC: SidemenuVC = revealViewController()?.rearViewController as! SidemenuVC;
+            menuVC.delegate = self;
                     }
         
 
@@ -86,8 +86,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        let objSidemenu: SidemenuVC = (self.storyboard?.instantiateViewController(identifier: "side"))!
-//        objSidemenu.delegate = self
         getFeedMethod()
         
     }
@@ -102,7 +100,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                   if let err = err {
                       print("Error getting documents: \(err)")
                   } else {
-                      //self.roleby_reasonArray = NSMutableArray()
+                    self.commonArray = NSMutableArray()
                       for document in querySnapshot!.documents {
                           let data: NSDictionary = document.data() as NSDictionary
                         self.commonArray.add(data)
@@ -129,7 +127,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
 
         // create a cell for each table view row
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell:PostCell = self.post_tbl.dequeueReusableCell(withIdentifier: "post") as! PostCell
             let Dic: NSDictionary = self.commonArray?[indexPath.row] as! NSDictionary
             
@@ -161,9 +159,9 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let CommentDic: NSDictionary = Dic.value(forKey: "comments") as! NSDictionary
             cell.comment_btn.setTitle("\(CommentDic.value(forKey: "count")!)", for: .normal)
             cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
-            cell.infoviewHeight.constant = (isInfo == true) ? 100 : 0
+    cell.infoviewHeight.constant = (isInfo == true && indexPath.row == selectIndex) ? 100 : 0
             
-            cell.infoview.isHidden = (isInfo == true) ? false : true
+    cell.infoview.isHidden = (isInfo == true && indexPath.row == selectIndex) ? false : true
             cell.info_btn.tag = indexPath.row
             cell.like_btn.tag = indexPath.row
             cell.comment_btn.tag = indexPath.row
@@ -244,7 +242,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             }
             cell.postimageScroll.isPagingEnabled = true
             cell.postimageScroll.delegate = self
-            cell.pageControl.addTarget(self, action: #selector(turnPage), for: .valueChanged)
             cell.pageControl.currentPage = 0;
             cell.pageControl.numberOfPages = postimageArray.count;
             cell.selectionStyle = .none
@@ -265,7 +262,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         if(keyExists == true  || videoExists == true)
         {
-            if(isInfo == true && indexPath.row == selectIndex)
+            if(isInfo == true && indexPath.row == self.selectIndex)
             {
                 return 650.0
             }
@@ -277,7 +274,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else
         {
-            if(isInfo == true)
+            if(isInfo == true && indexPath.row == self.selectIndex)
             {
                 return 305.0
             }
@@ -300,11 +297,18 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         else
         {
           isInfo = false
-          selectIndex = nil
+          selectIndex = indexno
         }
-        let indexPosition = IndexPath(row: indexno, section: 0)
+        let indexPosition = IndexPath(row: selectIndex, section: 0)
         self.post_tbl.reloadRows(at: [indexPosition], with: .none)
 
+    }
+    func refresh(sender: UIRefreshControl)
+    {
+        // Updating your data here...
+
+        self.post_tbl.reloadData()
+        sender.endRefreshing()
     }
     
     @objc func likeDetail(sender: UIButton) {
@@ -348,8 +352,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     
                    
                 }
-        //let indexPosition = IndexPath(row: indexno, section: 0)
-        //self.post_tbl.reloadRows(at: [indexPosition], with: .none)
     }
     func likeUpdatemethod(updateDetail: NSDictionary, userFeedid: String, selectIdexdetail: NSDictionary)
     {
@@ -407,18 +409,6 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
                     }
         }
     }
-    
-    @objc func turnPage( aPageControl:UIPageControl)
-    {
-//        let selectedPage: NSInteger  = self.pageControl.currentPage
-//        var frame: CGRect = self.bounds
-//        frame.origin.x = frame.size.width * CGFloat(selectedPage)
-//       frame.origin.y = 0
-//        self.postimageScroll.scrollRectToVisible(frame, animated: true)
-//
-//       pageControl.currentPage = selectedPage;
-    }
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView )
     {
         let button = scrollView

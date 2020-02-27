@@ -15,6 +15,8 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var oldpw_txt: UITextField!
     @IBOutlet weak var newpw_txt: UITextField!
     @IBOutlet weak var confirmpw_txt: UITextField!
+    @IBOutlet weak var pwdupdate_Btn: UIButton!
+
     
     var getAllDic: NSDictionary!
 
@@ -79,6 +81,17 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
                textField.text = nil
            }
        }
+    if(oldpw_txt.text != "" || newpw_txt.text != "" || confirmpw_txt.text != "")
+    {
+        pwdupdate_Btn.isUserInteractionEnabled = false
+        pwdupdate_Btn.setTitleColor(UIColor.blue, for: .normal)
+    }
+    else
+    {
+        pwdupdate_Btn.isUserInteractionEnabled = false
+        pwdupdate_Btn.setTitleColor(UIColor.darkGray, for: .normal)
+    }
+    
        return false
    }
 
