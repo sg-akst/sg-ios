@@ -380,7 +380,7 @@ override func viewDidLoad() {
                 let count : Int = dic.value(forKey: "count") as! Int
                 cell.delete_enable_img.tag = indexPath.row
                 cell.delete_enable_img.addTarget(self, action: #selector(deleteGroup_Method), for: .touchUpInside)
-                cell.username_lbl?.text = dic.value(forKey: "tag_id") as? String
+                cell.username_lbl?.text = dic.value(forKey: "tag_name") as? String
                 cell.delete_enable_img.tintColor = (count > 0) ? UIColor.gray : UIColor.red
                 cell.selectionStyle = .none
                 cell.accessoryType = .none
@@ -444,7 +444,7 @@ override func viewDidLoad() {
             }
             else
             {
-                let alert = UIAlertController(title: " Delete Tag? ", message: "Are you sure want to delete \(teamDic.value(forKey: "tag_id")!)", preferredStyle: UIAlertController.Style.alert);
+                let alert = UIAlertController(title: " Delete Tag? ", message: "Are you sure want to delete \(teamDic.value(forKey: "tag_name")!)", preferredStyle: UIAlertController.Style.alert);
                 alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        }))
                 alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
@@ -477,7 +477,7 @@ override func viewDidLoad() {
                 
                                     }
                                     self.isTeam = true
-                                    self.createGroupView.isHidden = false
+                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                                     self.tag_tbl.reloadData()
                                     Constant.showInActivityIndicatory()
 
@@ -497,7 +497,7 @@ override func viewDidLoad() {
                                          self.TeamArray.add(data)
                                     }
                                     self.isTeam = true
-                                    self.createGroupView.isHidden = false
+                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                                     self.tag_tbl.reloadData()
                                     Constant.showInActivityIndicatory()
 
@@ -519,28 +519,31 @@ override func viewDidLoad() {
                   print("Error removing document: \(err)")
               } else {
                   print("Document successfully removed!")
-                  let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
-                  let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                  docrefs.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
-                  { err in
-                      if let err = err {
-                          print("Error removing document: \(err)")
-                      } else {
-                          print("Document successfully removed!")
-                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                          addDoc.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
-                          { err in
-                              if let err = err {
-                                  print("Error removing document: \(err)")
-                              } else {
-                                  print("Document successfully removed!")
-                                  Constant.showInActivityIndicatory()
-                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_id")!) Removed Successfully")
-                                  self.getTag()
-                              }
-                          }
-                      }
-                  }
+                Constant.showInActivityIndicatory()
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
+                self.getTag()
+//                  let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
+//                  let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+//                  docrefs.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+//                  { err in
+//                      if let err = err {
+//                          print("Error removing document: \(err)")
+//                      } else {
+//                          print("Document successfully removed!")
+//                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+//                          addDoc.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+//                          { err in
+//                              if let err = err {
+//                                  print("Error removing document: \(err)")
+//                              } else {
+//                                  print("Document successfully removed!")
+//                                  Constant.showInActivityIndicatory()
+//                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
+//                                  self.getTag()
+//                              }
+//                          }
+//                      }
+//                  }
                   Constant.showInActivityIndicatory()
               }
           }

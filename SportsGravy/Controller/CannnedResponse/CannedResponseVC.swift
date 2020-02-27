@@ -528,7 +528,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         
                             }
                             self.isTeam = true
-                            self.createGroupView.isHidden = false
+                            self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                             self.canned_response_tbl.reloadData()
                             Constant.showInActivityIndicatory()
 
@@ -550,7 +550,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                    
                                        }
                                        self.isTeam = true
-                                       self.createGroupView.isHidden = false
+                                       self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                                        self.canned_response_tbl.reloadData()
                                        Constant.showInActivityIndicatory()
 
@@ -570,36 +570,15 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
     let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-        docRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle")!)").delete()
+        docRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle_id")!)").delete()
         { err in
             if let err = err {
                 print("Error removing document: \(err)")
             } else {
                 print("Document successfully removed!")
-                let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
-                let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                docrefs.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle")!)").delete()
-                { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
-                    } else {
-                        print("Document successfully removed!")
-                        let addDoc = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle")!)").delete()
-                        { err in
-                            if let err = err {
-                                print("Error removing document: \(err)")
-                            } else {
-                                print("Document successfully removed!")
-                                Constant.showInActivityIndicatory()
-                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
-                                self.getCannedresponsegroup()
-                            }
-                        }
-
-                    }
-
-                }
+                Constant.showInActivityIndicatory()
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
+                self.getCannedresponsegroup()
                 Constant.showInActivityIndicatory()
 
 

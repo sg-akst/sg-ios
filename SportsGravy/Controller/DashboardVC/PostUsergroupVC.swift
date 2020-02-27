@@ -62,11 +62,11 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
        postGroupArray = NSMutableArray()
         addorderArray = NSMutableArray()
         commonArray = NSMutableArray() as? [String]
-
+        //getSameLevelArray = NSMutableArray()
+        
         postusergroup_tbl.tableFooterView = UIView()
         postusergroup_tbl.sizeToFit()
         self.postusergroup_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
         getusergroup()
     }
     
@@ -142,17 +142,9 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                 // horizontal position: same as previous leftmost button (on line above)
                                 let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                                 self.addOrder.addConstraint(horizontalConstraint)
-
-                                    //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                               // [self.view addConstraint:horizontalConstraint];
-
                                 // vertical position:
                                 let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                                 self.addOrder.addConstraint(verticalConstraint)
-
-                                //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                //[self.view addConstraint:verticalConstraint];
-
                                 indexOfLeftmostButtonOnCurrentLine = i
                             }
                         }
@@ -165,17 +157,10 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                        // horizontal position: right from previous button
                             let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
                             self.addOrder.addConstraint(horizontalConstraint)
-                                
-                                //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeRight multiplier:1.0f constant:horizontalSpaceBetweenButtons];
-                                      // [self.view addConstraint:horizontalConstraint];
-
                                        // vertical position same as previous button
                             let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
                             self.addOrder.addConstraint(verticalConstraint)
 
-                                
-                                //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousButton attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-                                     //  [self.view addConstraint:verticalConstraint];
                         }
                         buttons.add(addTitle_btn)
 
@@ -191,8 +176,6 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                     {
                         commonArray.removeAll { $0 == "" }
                         postusergroup_tbl.reloadData()
-        //                let indexPath = IndexPath(row: 0, section: 0)
-        //                self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
 
                     }
 
@@ -224,14 +207,13 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
            
        func getsportsmethod()
        {
+       
         if(self.getdifferentOrganization.count < 1)
                  {
                    self.commonArray = NSMutableArray() as? [String]
-
+                    self.getSameSportsArray = NSMutableArray()
+                    self.getdifferentSportsArray = NSMutableArray()
                      self.addorderArray.add("> \(getOrganization!)")
-                     self.getSameSportsArray = NSMutableArray()
-                     self.getdifferentSportsArray = NSMutableArray()
-                     
                      for i in 0..<getSameOrganization.count
                      {
                          let roleDic: NSDictionary = getSameOrganization?[i] as! NSDictionary
@@ -276,17 +258,21 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                               getdifferentSeasonArray.add(roleDic)
                           }
                       }
+                    let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
+                    self.commonArray.append(contentsOf: filteredEvents)
                   }
        }
     
     func getLevelMethod()
     {
+        self.commonArray = NSMutableArray() as? [String]
+        self.getSameLevelArray = NSMutableArray()
+        self.getdifferentLevelArray = NSMutableArray()
+        self.addorderArray.add("> \(getSeason!)")
+
          if(self.getdifferentSeasonArray.count < 1 )
-                         {
-                             self.commonArray = NSMutableArray() as? [String]
-                             self.addorderArray.add("> \(getSeason!)")
-                             self.getSameLevelArray = NSMutableArray()
-                             self.getdifferentLevelArray = NSMutableArray()
+        {
+                            
                              for i in 0..<getSameSeasonArray.count
                              {
                                  let roleDic: NSDictionary = getSameSeasonArray?[i] as! NSDictionary
@@ -296,7 +282,6 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                      self.getLevel = roleDic.value(forKey: "level_name") as? String
                                      getSameLevelArray.add(roleDic)
                                   getLevelid = roleDic.value(forKey: "level_id") as? String
-                                  //"@distinctUnionOfObjects.role_by_season_id") as! String)
 
                                  }
                                  else
@@ -304,17 +289,39 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                      getdifferentLevelArray.add(roleDic)
                                  }
                              }
-                         }
+                            
+            }
+        else
+         {
+            for i in 0..<getSameSeasonArray.count
+            {
+                let roleDic: NSDictionary = getSameSeasonArray?[i] as! NSDictionary
+                let role: String = roleDic.value(forKey: "role_by_season_id") as! String
+                if(role == getrolebySeasonid)
+                {
+                    self.getLevel = roleDic.value(forKey: "level_name") as? String
+                    getSameLevelArray.add(roleDic)
+                 getLevelid = roleDic.value(forKey: "level_id") as? String
+
+                }
+                else
+                {
+                    getdifferentLevelArray.add(roleDic)
+                }
+            }
+        }
+        let filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
+        self.commonArray.append(contentsOf: filteredEvents)
     }
     
        func getTeammethod()
        {
-            if(getSameLevelArray.count > 0)
+        addorderArray.add(getLevel)
+        if(self.getSameLevelArray.count > 0 || self.getSameLevelArray.count != 0)
                    {
 
                     self.commonArray = NSMutableArray() as? [String]
-                    //self.commonArray = getSameSeasonArray as? [String]
-//                       self.addorderArray.add("> \(getSeason!)")
+                    
                        let filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                      
                        self.commonArray.append(contentsOf: filteredEvents)
@@ -383,7 +390,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                  return 50.0
              }
              
-             func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 
                 if(self.addorderArray.count < 5)
                 {
@@ -411,7 +418,6 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
              }
              func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
               print("You tapped cell number \(indexPath.row).")
-                     
                       if(self.addorderArray.count < 4)
                       {
                       self.addorderArray = NSMutableArray()
@@ -480,9 +486,6 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                     }
                                     if(self.postGroupArray.count>0)
                                     {
-                                       // let getuserinfo: NSDictionary = self.postGroupArray?[0] as! NSDictionary
-                                        //UserDefaults.standard.set(getuserinfo, forKey: "UserInformation")
-                                       // UserDefaults.standard.set(getuserinfo, forKey: "UserInformation")
                                         self.getorganization()
                                         self.getsportsmethod()
                                         self.getSeasonmethod()

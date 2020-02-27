@@ -248,6 +248,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     }
     @IBAction func createtag(_ sender: UIButton)
     {
+        var ref: DocumentReference? = nil
+
         if(isCreate == true)
         {
             if(canRespons_tittle_txt.text == nil || canRespons_tittle_txt.text?.isEmpty == true)
@@ -261,39 +263,54 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-        docRef.collection("CannedResponse").document("\(canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(canRespons_tittle_txt.text!)","cannedResponseDesc":"\(canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
-        { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written!")
-                let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                docrefs.collection("CannedResponse").document("\(self.canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
-                { err in
-                    if let err = err {
-                        print("Error writing document: \(err)")
-                    } else {
-                        print("Document successfully written!")
-                        print(self.getorderArray.lastObject!)
-                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("CannedResponse").document("\(self.canRespons_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
-                        { err in
-                            if let err = err {
-                                print("Error writing document: \(err)")
-                            } else {
-                                print("Document successfully written!")
-                                Constant.showInActivityIndicatory()
-                                self.alertermsg(msg: "Canned Response created successfully ")
-//
-
-                            }
-                        }
-                    }
-                }
                 
+                docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
+                           if let err = err {
+                               print("Error getting documents: \(err)")
+                           } else {
+                                 let getcannedList = NSMutableArray()
+
+                                   for document in querySnapshot!.documents {
+                                   let data: NSDictionary = document.data() as NSDictionary
+                                     if(data.value(forKey: "cannedResponseTitle") as! String == self.canRespons_tittle_txt.text! || (data.value(forKey: "cannedResponseTitle") as! String) . caseInsensitiveCompare(self.canRespons_tittle_txt.text!) == ComparisonResult.orderedSame)
+                                     {
+                                         getcannedList.add(data)
+
+                                     }
+                                  }
+                            if(getcannedList.count == 0)
+                            {
+                                      ref =  docRef.collection("CannedResponse").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""])
+                                        
+                            { err in
+                                if let err = err {
+                                    print("Error writing document: \(err)")
+                                } else {
+                                    print("Document successfully written!")
+                                    
+                                     Constant.showInActivityIndicatory()
+                                    print("Shopping List Item Document added with ID: \(ref!.documentID)")
+                                    docRef.collection("CannedResponse").document(ref!.documentID).updateData(["cannedResponseTitle_id":ref!.documentID])
+                                                            if let err = err {
+                                                                   print("Error writing document: \(err)")
+                                                            } else {
+                                                               Constant.showInActivityIndicatory()
+                                                                self.alertermsg(msg: "Canned Response created successfully ")
+
+                                                            }
+                                    
+                                }
+                                Constant.showInActivityIndicatory()
+                            }
+                            }
+                            else
+                            {
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This CannedResponse Already exit")
+                                Constant.showInActivityIndicatory()
+                            }
             }
-            Constant.showInActivityIndicatory()
+                    
+                    
         }
             }
         }
@@ -304,7 +321,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
                  let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")            
-            docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
+            docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle_id") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -312,37 +329,40 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
 
                 } else {
                     print("Document successfully updated")
-                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                    
-                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
-                    { err in
-                        if let err = err {
-                            print("Error updating document: \(err)")
-                            Constant.showInActivityIndicatory()
-
-                        } else {
-                            print("Document successfully updated")
-                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
-                            { err in
-                                if let err = err {
-                                    print("Error updating document: \(err)")
-                                    Constant.showInActivityIndicatory()
-
-                                } else {
-                                    print("Document successfully updated")
-                                    Constant.showInActivityIndicatory()
-                                    self.alertermsg(msg: "Canned Response updated successfully ")
+                     Constant.showInActivityIndicatory()
+                      self.alertermsg(msg: "Canned Response updated successfully ")
+                    ////
+//                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
+//                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
 //
-
-                                    
-                                }
-                            }
-
-                        }
-
-                    }
+//                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
+//                    { err in
+//                        if let err = err {
+//                            print("Error updating document: \(err)")
+//                            Constant.showInActivityIndicatory()
+//
+//                        } else {
+//                            print("Document successfully updated")
+//                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+//                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
+//                            { err in
+//                                if let err = err {
+//                                    print("Error updating document: \(err)")
+//                                    Constant.showInActivityIndicatory()
+//
+//                                } else {
+//                                    print("Document successfully updated")
+//                                    Constant.showInActivityIndicatory()
+//                                    self.alertermsg(msg: "Canned Response updated successfully ")
+////
+//
+//
+//                                }
+//                            }
+//
+//                        }
+//
+//                    }
                 }
             }
                  
@@ -365,76 +385,76 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         }
     
     
-    func deleteMethod()
-    {
-        Constant.internetconnection(vc: self)
-        Constant.showActivityIndicatory(uiView: self.view)
-        let getuuid = UserDefaults.standard.string(forKey: "UUID")
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-        docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle")!)").delete()
-        { err in
-            if let err = err {
-                print("Error removing document: \(err)")
-            } else {
-                print("Document successfully removed!")
-                let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document()
-                docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle")!)").delete()
-                { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
-                    } else {
-                        print("Document successfully removed!")
-                         let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document().collection("seasons").document().collection("teams").document("\(self.getorderArray.lastObject!)")
-                        addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle")!)").delete()
-                        { err in
-                            if let err = err {
-                                print("Error removing document: \(err)")
-                            } else {
-                                print("Document successfully removed!")
-                                Constant.showInActivityIndicatory()
-                                self.alertermsg(msg: "\(self.updateArray.value(forKey: "cannedResponseTitle")!) deleted successfully")
-//                                self.delegate?.createAfterCallMethod()
-//                                self.navigationController?.popViewController(animated: false)
-                            }
-                        }
-
-                    }
-
-                }
-                Constant.showInActivityIndicatory()
-
-                
-            }
-        }
-    }
-    @IBAction func deleteGroup_Method(_ sender: UIButton)
-       {
-//           let indexno = sender.tag
-//           let teamDic: NSDictionary = self.updateArray?[indexno] as! NSDictionary
-           let count : Int = updateArray.value(forKey: "count") as! Int
-           let isDelete: Bool = (count > 0 ) ? false : true
-           if(isDelete == false)
-           {
-               Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
-           }
-           else
-           {
-            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(canRespons_tittle_txt.text!)", preferredStyle: UIAlertController.Style.alert);
-               alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
-                          //Cancel Action
-                      }))
-               alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-                   self.deleteMethod()
-                }))
-               
-               self.present(alert, animated: true, completion: nil)
-               
-               
-           }
-
-       }
+   // func deleteMethod()
+//    {
+//        Constant.internetconnection(vc: self)
+//        Constant.showActivityIndicatory(uiView: self.view)
+//        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+//        let db = Firestore.firestore()
+//        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
+//        docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle")!)").delete()
+//        { err in
+//            if let err = err {
+//                print("Error removing document: \(err)")
+//            } else {
+//                print("Document successfully removed!")
+//                let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
+//                let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document()
+//                docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle")!)").delete()
+//                { err in
+//                    if let err = err {
+//                        print("Error removing document: \(err)")
+//                    } else {
+//                        print("Document successfully removed!")
+//                         let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document().collection("seasons").document().collection("teams").document("\(self.getorderArray.lastObject!)")
+//                        addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle")!)").delete()
+//                        { err in
+//                            if let err = err {
+//                                print("Error removing document: \(err)")
+//                            } else {
+//                                print("Document successfully removed!")
+//                                Constant.showInActivityIndicatory()
+//                                self.alertermsg(msg: "\(self.updateArray.value(forKey: "cannedResponseTitle")!) deleted successfully")
+////                                self.delegate?.createAfterCallMethod()
+////                                self.navigationController?.popViewController(animated: false)
+//                            }
+//                        }
+//
+//                    }
+//
+//                }
+//                Constant.showInActivityIndicatory()
+//
+//
+//            }
+//        }
+//    }
+   // @IBAction func deleteGroup_Method(_ sender: UIButton)
+//       {
+////           let indexno = sender.tag
+////           let teamDic: NSDictionary = self.updateArray?[indexno] as! NSDictionary
+//           let count : Int = updateArray.value(forKey: "count") as! Int
+//           let isDelete: Bool = (count > 0 ) ? false : true
+//           if(isDelete == false)
+//           {
+//               Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
+//           }
+//           else
+//           {
+//            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(canRespons_tittle_txt.text!)", preferredStyle: UIAlertController.Style.alert);
+//               alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
+//                          //Cancel Action
+//                      }))
+//               alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
+//                   self.deleteMethod()
+//                }))
+//
+//               self.present(alert, animated: true, completion: nil)
+//
+//
+//           }
+//
+//       }
     @IBAction func cancelbtn(_ sender: UIButton)
     {
       self.navigationController?.popViewController(animated: true)

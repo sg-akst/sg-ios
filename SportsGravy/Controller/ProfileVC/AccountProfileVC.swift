@@ -103,7 +103,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         guardiansListArray = NSMutableArray()
         organizationListArray = NSMutableArray()
         self.player_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-isdelegate = false
+        isdelegate = false
         getInformation()
       
        
@@ -411,15 +411,15 @@ isdelegate = false
                             //self.sections = [Category] ()
                             self.organizationListArray = NSMutableArray()
                             self.organizationListArray = result.mutableCopy() as? NSMutableArray
-                            if(self.playerListArray.count > 0)
+                            if(self.playerListArray.count > 0 && self.playerListArray.count != 0)
                             {
                               self.sections.append(Category(name:"Players", items:self.playerListArray as! [[String : Any]]))
                             }
-                             if(self.guardiansListArray.count > 0)
+                             if(self.guardiansListArray.count > 0 && self.guardiansListArray.count != 0)
                             {
                                 self.sections.append(Category(name:"Other Guardians", items:self.guardiansListArray as! [[String : Any]]))
                             }
-                             if(self.organizationListArray.count > 0)
+                             if(self.organizationListArray.count > 0 && self.organizationListArray.count != 0)
                             {
                              self.sections.append(Category(name:"Organizations", items:self.organizationListArray as! [[String : Any]]))
                             }
@@ -469,7 +469,7 @@ isdelegate = false
         headerLabel.sizeToFit()
         
         view.addSubview(headerLabel)
-        if(self.guardiansListArray.count > 0 && section == 1)
+        if(self.guardiansListArray.count > 0 && section == 1 && self.guardiansListArray.count != 0)
        {
         let invite: UIButton = UIButton.init(frame: CGRect(x: tableView.bounds.size.width - 150, y: 10, width: 130, height: 30))
         invite.setTitle("Invite Guardian", for: .normal)

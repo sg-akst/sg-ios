@@ -186,6 +186,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func createtag(_ sender: UIButton)
     {
+        var ref: DocumentReference? = nil
+
         if(tag_txt.text == nil || tag_txt.text == "")
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Tag name")
@@ -196,38 +198,54 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-        docRef.collection("Tags").document("\(tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
-        { err in
+            
+            docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
             if let err = err {
-                print("Error writing document: \(err)")
+                print("Error getting documents: \(err)")
             } else {
-                print("Document successfully written!")
-                let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                docrefs.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
-                { err in
-                    if let err = err {
-                        print("Error writing document: \(err)")
-                    } else {
-                        print("Document successfully written!")
-                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("Tags").document("\(self.tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
-                        { err in
-                            if let err = err {
-                                print("Error writing document: \(err)")
-                            } else {
-                                print("Document successfully written!")
-                                Constant.showInActivityIndicatory()
-                                self.alertermsg(msg: "Tag created successfully")
-                               
-                            }
-                        }
-                    }
-                }
+                  let getTagList = NSMutableArray()
 
+                    for document in querySnapshot!.documents {
+                    let data: NSDictionary = document.data() as NSDictionary
+                      if(data.value(forKey: "tag_name") as! String == self.tag_txt.text! || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(self.tag_txt.text!) == ComparisonResult.orderedSame)
+                      {
+                          getTagList.add(data)
+
+                      }
+                   }
+                if(getTagList.count == 0)
+                {
+                    ref = docRef.collection("Tags").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)","tag_name": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""])
+                     //document("\(tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
+                 { err in
+                     if let err = err {
+                         print("Error writing document: \(err)")
+                     } else {
+                         print("Document successfully written!")
+                     docRef.collection("Tags").document(ref!.documentID).updateData(["tag_id":ref!.documentID])
+                         if let err = err {
+                                print("Error writing document: \(err)")
+                         } else {
+                             Constant.showInActivityIndicatory()
+
+                             self.alertermsg(msg: "User group created successfully ")
+
+                         }
+
+                     }
+                     Constant.showInActivityIndicatory()
+                 }
+                
+                }
+                else
+                {
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This Tag Already exit")
+                    Constant.showInActivityIndicatory()
+                }
+              
+                }
             }
-            Constant.showInActivityIndicatory()
-        }
+            
         }
     }
     func alertermsg(msg: String)

@@ -34,13 +34,12 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     func createAfterCallMethod() {
         getmembergroup()
     }
-    
-    
-    
+
     @IBOutlet var addorderview: UIView!
     @IBOutlet weak var usergroup_tbl: UITableView!
     @IBOutlet weak var createGroupView: UIView!
     @IBOutlet weak var sortingUser: UIButton!
+    @IBOutlet weak var create_btn: UIButton!
 
 
     var getRolebyreasonDetailArray: NSMutableArray!
@@ -65,6 +64,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     var TeamArray: NSMutableArray!
     var isTeam : Bool = false
     var addTitle_btn: UIButton!
+    
 
    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
     
@@ -549,7 +549,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                             }
                             
                             self.isTeam = true
-                            self.createGroupView.isHidden = false
+                            self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true: false
                             self.usergroup_tbl.reloadData()
 //                            let indexPath = IndexPath(row: 0, section: 0)
 //                            self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
@@ -573,10 +573,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                            self.TeamArray.add(data)
                                        }
                                        self.isTeam = true
-                                       self.createGroupView.isHidden = false
+                                        self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                                        self.usergroup_tbl.reloadData()
-//                                        let indexPath = IndexPath(row: 0, section: 0)
-//                                        self.usergroup_tbl.scrollToRow(at: indexPath, at: .top, animated: false)
                                        Constant.showInActivityIndicatory()
 
                                    }

@@ -222,7 +222,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     for i in 0..<userSelectArray.count
     {
         let dics: NSMutableDictionary = userSelectArray[i] as! NSMutableDictionary
-        if(dics.value(forKey: "user_id") as! String == dic.value(forKey: "user_id") as! String)
+        if(dics.value(forKey: "user_id") as! String == dic.value(forKey: "user_id") as! String && dic.value(forKey: "role") as! String == dics.value(forKey: "role") as! String)
         {
             cell.checkbox.backgroundColor =  UIColor.green
             let selectpersonDic: NSDictionary = dics.copy() as! NSDictionary
@@ -315,7 +315,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 {
                 let dic: NSDictionary = self.selectpersonArray[i] as! NSDictionary
                 
-                if(getvalue.value(forKey: "user_id") as! String  == dic.value(forKey: "user_id") as! String)
+                    if(getvalue.value(forKey: "user_id") as! String  == dic.value(forKey: "user_id") as! String  && getvalue.value(forKey: "role")as! String == dic.value(forKey: "role") as! String)
                 {
                     self.selectpersonArray.removeObject(at: i)
 
@@ -365,80 +365,82 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
     }
     
-     @IBAction func deleteGroup_Method(_ sender: UIButton)
-           {
-    //           let indexno = sender.tag
-    //           let teamDic: NSDictionary = self.updateArray?[indexno] as! NSDictionary
-               let count : Int = updateArray.value(forKey: "count") as! Int
-               let isDelete: Bool = (count > 0 ) ? false : true
-               if(isDelete == false)
-               {
-                   Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
-               }
-               else
-               {
-                let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(updateArray.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
-                   alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
-                              //Cancel Action
-                          }))
-                   alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-                    self.deleteMethod()
-                    }))
-                   
-                   self.present(alert, animated: true, completion: nil)
-                   
-                   
-               }
-
-           }
-    func deleteMethod()
-       {
-           Constant.internetconnection(vc: self)
-                Constant.showActivityIndicatory(uiView: self.view)
-                let getuuid = UserDefaults.standard.string(forKey: "UUID")
-                let db = Firestore.firestore()
-                let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-                docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId")!)").delete()
-                { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
-                    } else {
-                        print("Document successfully removed!")
-                       let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                        let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document()
-                        docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId")!)").delete()
-                        { err in
-                            if let err = err {
-                                print("Error removing document: \(err)")
-                            } else {
-                                print("Document successfully removed!")
-                               let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                                addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId")!)").delete()
-                                { err in
-                                    if let err = err {
-                                        print("Error removing document: \(err)")
-                                    } else {
-                                        print("Document successfully removed!")
-                                        Constant.showInActivityIndicatory()
-                                       // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
-                                        //self.getmembergroup()
-                                        self.alertermsg(msg: "\(self.updateArray.value(forKey: "user_groupId")!) deleted successfully")
-                                        
-                                    }
-                                }
-
-                            }
-
-                        }
-                        Constant.showInActivityIndicatory()
-
-
-                    }
-                }
-           }
+    // @IBAction func deleteGroup_Method(_ sender: UIButton)
+//           {
+//    //           let indexno = sender.tag
+//    //           let teamDic: NSDictionary = self.updateArray?[indexno] as! NSDictionary
+//               let count : Int = updateArray.value(forKey: "count") as! Int
+//               let isDelete: Bool = (count > 0 ) ? false : true
+//               if(isDelete == false)
+//               {
+//                   Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
+//               }
+//               else
+//               {
+//                let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(updateArray.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
+//                   alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
+//                              //Cancel Action
+//                          }))
+//                   alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
+//                    self.deleteMethod()
+//                    }))
+//
+//                   self.present(alert, animated: true, completion: nil)
+//
+//
+//               }
+//
+//           }
+ //   func deleteMethod()
+//       {
+//           Constant.internetconnection(vc: self)
+//                Constant.showActivityIndicatory(uiView: self.view)
+//                let getuuid = UserDefaults.standard.string(forKey: "UUID")
+//                let db = Firestore.firestore()
+//                let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
+//                docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId")!)").delete()
+//                { err in
+//                    if let err = err {
+//                        print("Error removing document: \(err)")
+//                    } else {
+//                        print("Document successfully removed!")
+//                       let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
+//                        let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document()
+//                        docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId")!)").delete()
+//                        { err in
+//                            if let err = err {
+//                                print("Error removing document: \(err)")
+//                            } else {
+//                                print("Document successfully removed!")
+//                               let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+//                                addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId")!)").delete()
+//                                { err in
+//                                    if let err = err {
+//                                        print("Error removing document: \(err)")
+//                                    } else {
+//                                        print("Document successfully removed!")
+//                                        Constant.showInActivityIndicatory()
+//                                       // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
+//                                        //self.getmembergroup()
+//                                        self.alertermsg(msg: "\(self.updateArray.value(forKey: "user_groupId")!) deleted successfully")
+//
+//                                    }
+//                                }
+//
+//                            }
+//
+//                        }
+//                        Constant.showInActivityIndicatory()
+//
+//
+//                    }
+//                }
+//           }
     
     @IBAction func Create_BtnAction(_ sender: UIButton)
     {
+        var ref: DocumentReference? = nil
+
         if(isCreate == true)
         {
             if(group_tittle_txt.text == nil || group_tittle_txt.text?.isEmpty == true)
@@ -451,47 +453,68 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             }
             else
             {
+             
+                
             Constant.internetconnection(vc: self)
+
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
             let db = Firestore.firestore()
+
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
                 Constant.showActivityIndicatory(uiView: self.view)
+                
+              docRef.collection("MemberGroup").getDocuments() { (querySnapshot, err) in
+              if let err = err {
+                  print("Error getting documents: \(err)")
+              } else {
+                    let getusergroup = NSMutableArray()
 
-            docRef.collection("MemberGroup").document("\(group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "", "user_groupId": "\(group_tittle_txt.text!)","user_list" : self.selectpersonArray] )
-            { err in
-                    if let err = err {
-                           print("Error writing document: \(err)")
-                    } else {
-                    print("Document successfully written!")
-                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-                        docrefs.collection("MemberGroup").document("\(self.group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)", "updated_datetime" : Date(), "updated_uid" : "", "group_type": "Custom_Group", "user_groupId" : "\(self.group_tittle_txt.text!)", "user_list": self.selectpersonArray] )
+                      for document in querySnapshot!.documents {
+                      let data: NSDictionary = document.data() as NSDictionary
+                        if(data.value(forKey: "display_name") as! String == self.group_tittle_txt.text! || (data.value(forKey: "display_name") as! String) . caseInsensitiveCompare(self.group_tittle_txt.text!) == ComparisonResult.orderedSame)
+                        {
+                            getusergroup.add(data)
+
+                        }
+                     }
+                
+                if(getusergroup.count == 0)
+                {
+
+                    ref = docRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray])
                     { err in
-                    if let err = err {
-                        print("Error writing document: \(err)")
-                        } else {
-                    print("Document successfully written!")
-                    print(self.getorderArray.lastObject!)
-                    let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                        addDoc.collection("MemberGroup").document("\(self.group_tittle_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)", "updated_datetime" : Date(), "updated_uid" : "", "user_groupId": "\(self.group_tittle_txt.text!)", "user_list" : self.selectpersonArray] )
-                        { err in
-                            if let err = err {
-                                           print("Error writing document: \(err)")
-                        } else {
-                        print("Document successfully written!")
-                        Constant.showInActivityIndicatory()
-                                    
-//                        self.delegate?.createAfterCallMethod()
-//                        self.navigationController?.popViewController(animated: false)
-                         self.alertermsg(msg: "User group created successfully ")
+                                        if let err = err {
+                                               print("Error writing document: \(err)")
+                                        } else {
+                                        print("Document successfully written!")
+                                            Constant.showInActivityIndicatory()
+                                            print("Shopping List Item Document added with ID: \(ref!.documentID)")
+                    docRef.collection("MemberGroup").document(ref!.documentID).updateData(["user_groupId":ref!.documentID])
+                                            if let err = err {
+                                                   print("Error writing document: \(err)")
+                                            } else {
+                                                Constant.showInActivityIndicatory()
+
+                                                self.alertermsg(msg: "User group created successfully ")
+
+                                            }
+
+                                           }
+                                           Constant.showInActivityIndicatory()
                                        }
-                                   }
-                               }
-                           }
-                           
-                       }
-                       Constant.showInActivityIndicatory()
-                   }
+                }
+                else
+                {
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This UserGroup Already exit")
+                    Constant.showInActivityIndicatory()
+
+                }
+                     
+                      }
+                  }
+
+                
+
             }
         }
         else
@@ -507,7 +530,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
                  let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-            docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date()])
+            docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -515,36 +538,42 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
                 } else {
                     print("Document successfully updated")
-                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+
+                    Constant.showInActivityIndicatory()
+                    self.alertermsg(msg: "User group updated successfully ")
                     
-                    docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
-                    { err in
-                        if let err = err {
-                            print("Error updating document: \(err)")
-                            Constant.showInActivityIndicatory()
-
-                        } else {
-                            print("Document successfully updated")
-                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-                            addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
-                            { err in
-                                if let err = err {
-                                    print("Error updating document: \(err)")
-                                    Constant.showInActivityIndicatory()
-
-                                } else {
-                                    print("Document successfully updated")
-                                    Constant.showInActivityIndicatory()
-                                   
-                                    self.alertermsg(msg: "User group updated successfully ")
-                                    
-                                }
-                            }
-
-                        }
-
-                    }
+                    
+                    
+//                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
+//                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
+//
+//                    docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
+//                    { err in
+//                        if let err = err {
+//                            print("Error updating document: \(err)")
+//                            Constant.showInActivityIndicatory()
+//
+//                        } else {
+//                            print("Document successfully updated")
+//                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
+//                            addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
+//                            { err in
+//                                if let err = err {
+//                                    print("Error updating document: \(err)")
+//                                    Constant.showInActivityIndicatory()
+//
+//                                } else {
+//                                    print("Document successfully updated")
+//                                    Constant.showInActivityIndicatory()
+//
+//                                    self.alertermsg(msg: "User group updated successfully ")
+//
+//                                }
+//                            }
+//
+//                        }
+//
+//                    }
                 }
             }
         }
