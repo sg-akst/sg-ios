@@ -15,9 +15,6 @@ protocol SelectPostTagDelegate: AnyObject {
 
 }
 
-
-
-
 class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var posttag_tbl: UITableView!
@@ -81,7 +78,7 @@ class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostTagcell", for: indexPath)
            let dic: NSDictionary = self.taglist[indexPath.row] as! NSDictionary
-           cell.textLabel?.text = dic.value(forKey: "tag_id") as? String
+           cell.textLabel?.text = dic.value(forKey: "tag_name") as? String
            return cell
        }
        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

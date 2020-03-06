@@ -30,23 +30,56 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.comment_tbl.dataSource = self
         getuuid = UserDefaults.standard.string(forKey: "UUID")
         self.commentArray = NSMutableArray()
+        getcommentlist()
 
-        let likeDic: NSDictionary = self.selectComment.value(forKey: "likes") as! NSDictionary
-        let userlist: NSMutableArray = likeDic.value(forKey: "user_list") as! NSMutableArray
-        let containeds = userlist.contains("\(getuuid!)")
-        like_btn.setTitle("\(likeDic.value(forKey: "count")!)", for: .normal)
-        like_btn.tintColor = (containeds) ? UIColor.red : UIColor.lightGray
-        let commentDic: NSDictionary = self.selectComment.value(forKey: "comments") as! NSDictionary
-        //commentArray = commentDic.value(forKey: "user_list") as? NSMutableArray
-        comment_btn.setTitle("\(commentDic.value(forKey: "count")!)", for: .normal)
-        let feedId = selectComment.value(forKey: "feed_id")
-        commentListMethod(feedid: feedId as! String)
+//        let likeDic: NSDictionary = self.selectComment.value(forKey: "likes") as! NSDictionary
+//        let userlist: NSMutableArray = likeDic.value(forKey: "user_list") as! NSMutableArray
+//        let containeds = userlist.contains("\(getuuid!)")
+//        like_btn.setTitle("\(likeDic.value(forKey: "count")!)", for: .normal)
+//        like_btn.tintColor = (containeds) ? UIColor.red : UIColor.lightGray
+//        let commentDic: NSDictionary = self.selectComment.value(forKey: "comments") as! NSDictionary
+//        //commentArray = commentDic.value(forKey: "user_list") as? NSMutableArray
+//        comment_btn.setTitle("\(commentDic.value(forKey: "count")!)", for: .normal)
+//        let feedId = selectComment.value(forKey: "feed_id")
+       // commentListMethod(feedid: feedId as! String)
         comment_tbl.sizeToFit()
         comment_tbl.tableFooterView = UIView()
 
         
     }
-    
+    func getcommentlist()
+    {
+       let db = Firestore.firestore()
+       //let docRef = db.collection("feed").document("\(getuuid!)")
+        db.collection("feed").whereField("feed_id", isEqualTo: selectComment.value(forKey: "feed_id")!).getDocuments() { (querySnapshot, err) in
+           if let err = err {
+               print("Error getting documents: \(err)")
+               Constant.showInActivityIndicatory()
+
+           } else {
+               self.commentArray = NSMutableArray()
+
+               for document in querySnapshot!.documents {
+                   let data: NSDictionary = document.data() as NSDictionary
+                   let likeDic: NSDictionary = data.value(forKey: "likes") as! NSDictionary
+                   let userlist: NSMutableArray = likeDic.value(forKey: "user_list") as! NSMutableArray
+                let containeds = userlist.contains("\(self.getuuid!)")
+                self.like_btn.setTitle("\(likeDic.value(forKey: "count")!)", for: .normal)
+                self.like_btn.tintColor = (containeds) ? UIColor.red : UIColor.lightGray
+                let commentDic: NSDictionary = data.value(forKey: "comments") as! NSDictionary
+                //self.commentArray = commentDic.value(forKey: "user_list") as? NSMutableArray
+                self.comment_btn.setTitle("\(commentDic.value(forKey: "count")!)", for: .normal)
+                let feedId = self.selectComment.value(forKey: "feed_id")
+                   //self.commentArray.add(data)
+               }
+
+              self.comment_tbl.reloadData()
+               Constant.showInActivityIndicatory()
+            self.commentListMethod(feedid: self.selectComment.value(forKey: "feed_id") as! String)
+
+           }
+        }
+    }
     @IBAction func likebtnAction(_ sender: UIButton)
     {
         let likeDic: NSDictionary = selectComment.value(forKey: "likes") as! NSDictionary
@@ -173,7 +206,6 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             } else {
                 self.commentArray = NSMutableArray()
-
                 for document in querySnapshot!.documents {
                     let data: NSDictionary = document.data() as NSDictionary
                     self.commentArray.add(data)

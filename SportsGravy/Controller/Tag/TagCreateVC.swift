@@ -56,10 +56,22 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         {            
             let button: UIButton = UIButton(type: .roundedRect)
             button.titleLabel?.font = UIFont(name: "Arial", size: 18)
-            button.setTitle("\(getorderArray[i] as! String)", for: .normal)
             let title: String = getorderArray?[i] as! String
+
+            if(title != "" && title != nil)
+            {
+            if(i == 0)
+            {
+                button.setTitle("\(getorderArray[i] as! String)", for: .normal)
+            }
+            else
+            {
+              button.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+
+            }
+            //button.setTitle("\(getorderArray[i] as! String)", for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
-            let attrStr = NSMutableAttributedString(string: "\(title)")
+            let attrStr = NSMutableAttributedString(string: "\(button.title(for: .normal) ?? "")")
             if(i != 0)
             {
                 attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
@@ -133,7 +145,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                 self.addOrderView.addConstraint(verticalConstraint)
             }
             buttons.add(button)
-
+            }
         }
        
         self.SelectorderView.addSubview(addOrderView)

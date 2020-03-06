@@ -43,7 +43,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var roleArray: [String]!
     var roleby_reasonArray: NSMutableArray!
     var getSameRoleArray: NSMutableArray!
-    var isTeamEnable: String!
+    var isTeamEnable: [String]!
+
     var getRole: String!
 
 
@@ -58,6 +59,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.user_view.isHidden = true
     
         getuserDetail()
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,7 +71,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func getuserDetail()
     {
         Constant.internetconnection(vc: self)
-        Constant.showActivityIndicatory(uiView: self.view)
+       // Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
                
                let db = Firestore.firestore()
@@ -127,8 +129,30 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             var filteredEvents: [String] = self.roleby_reasonArray.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
                             filteredEvents.sort(){$0 < $1}
                             print(filteredEvents)
-                            let firstrole = filteredEvents[0]
                             self.roleArray = filteredEvents;
+                            
+                                var roleIndex:Int!
+                            var firstrole : String!
+                            if(UserDefaults.standard.value(forKey: "Role") != nil)
+                            {
+                            let userRole: String = UserDefaults.standard.value(forKey: "Role") as! String
+                                for i in 0..<self.roleArray.count
+                                {
+                                    let role: String = self.roleArray[i]
+                                    if(role == userRole)
+                                    {
+                                        roleIndex = i
+                                    }
+                                }
+                                let element = self.roleArray.remove(at: roleIndex)
+                                self.roleArray.insert(element, at: 0)
+                             UserDefaults.standard.set(element, forKey: "Role")
+                             firstrole =  filteredEvents[roleIndex]
+                            }
+                            else
+                            {
+                                  firstrole = filteredEvents[0]
+                            }
                             self.role_tbl.reloadData()
                             self.rolebaseddisplayviewMethod(SelectRole: firstrole)
                             self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height
@@ -196,6 +220,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @objc func roleChangeMethod(_ sender: UIButton)
     {
+        
         let buttonRow = sender.tag
         getRole = roleArray[buttonRow] as String
         let element = roleArray.remove(at: buttonRow)
@@ -228,20 +253,36 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func rolebaseddisplayviewMethod(SelectRole: String)
     {
         getSameRoleArray = NSMutableArray()
+        self.isTeamEnable = NSMutableArray() as? [String]
+
          for i in 0..<roleby_reasonArray.count
                    {
                     let roleDic: NSDictionary = roleby_reasonArray?[i] as! NSDictionary
                        let role: String = roleDic.value(forKey: "role") as! String
                        if(role == SelectRole as String)
                        {
-                        self.isTeamEnable = roleDic.value(forKey: "team_id") as? String
+                       // self.isTeamEnable = roleDic.value(forKey: "team_id") as? String
                         getSameRoleArray.add(roleDic)
                        }
                    }
-                   
-                  if(self.isTeamEnable.isEmpty == false)
+      
+
+        
+        if(self.getSameRoleArray.count > 0)
                    {
-                       self.user_view.isHidden = false
+                    
+                    var filteredEvents: [String] = self.getSameRoleArray.value(forKeyPath: "@distinctUnionOfObjects.team_id") as! [String]
+                    filteredEvents.removeAll { $0 == "" }
+                    if(filteredEvents.count > 0)
+                    {
+                        self.isTeamEnable.append(contentsOf: filteredEvents)
+                    }
+                   }
+
+       
+        if(self.isTeamEnable.count > 0)
+                   {
+                    self.user_view.isHidden = false
                        self.setting_btn.isHidden = false
                     self.userviewHeightConstraint.constant = 175
                     self.logoutypositionConstraint.constant = self.setting_btn.frame.size.height-20
@@ -254,7 +295,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     self.logoutypositionConstraint.constant = -(self.setting_btn.frame.size.height)
 
                    }
-       
+        
         self.delegate?.sidemenuselectRole(role: SelectRole, roleArray: getSameRoleArray)
     }
     
@@ -273,7 +314,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func user_group_Action(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "usergroup") as! UsergroupVC
-        vc.getRolebyreasonDetailArray = self.getSameRoleArray
+      // vc.getRolebyreasonDetailArray = self.getSameRoleArray
         vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
         self.navigationController?.pushViewController(vc, animated: true)
        
@@ -281,7 +322,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func tag_Action(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "tag") as! TagVC
-        vc.getRolebyreasonDetailArray = self.getSameRoleArray
+       // vc.getRolebyreasonDetailArray = self.getSameRoleArray
         vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
         self.navigationController?.pushViewController(vc, animated: true)
        
@@ -289,7 +330,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func canned_response_Action(_ sender: UIButton)
        {
            let vc = storyboard?.instantiateViewController(withIdentifier: "Can_response") as! CannedResponseVC
-           vc.getRolebyreasonDetailArray = self.getSameRoleArray
+          // vc.getRolebyreasonDetailArray = self.getSameRoleArray
            vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
            self.navigationController?.pushViewController(vc, animated: true)
           

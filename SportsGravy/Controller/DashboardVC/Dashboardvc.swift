@@ -15,8 +15,27 @@ import Firebase
 import AVKit
 
 
-class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate {
+class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate, FeedSelectorDelegate {
+    func feddSelectDetail(userDetail: NSMutableArray, selectitemname: String) {
+        self.postvielname_lbl.text = selectitemname
+        self.postvielname_lbl.backgroundColor = UIColor.white
+        self.postvielname_lbl.textColor = UIColor.gray
+        self.postvielname_lbl.layer.cornerRadius = 5
+        self.postvielname_lbl.layer.borderWidth = 0.5
+        self.postvielname_lbl.layer.borderColor = UIColor.lightGray.cgColor
+        self.postvielname_lbl.layer.masksToBounds = true
+        cancel_btn = UIButton()
+         //let size = (selectitemname as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
+        cancel_btn.frame = CGRect(x:self.postvielname_lbl.frame.origin.x + self.postvielname_lbl.frame.size.width-30, y: 10, width: 25, height: 25)
+        cancel_btn.addTarget(self, action: #selector(selectitemRemove), for: .touchUpInside)
+        cancel_btn.isHidden  = false
+        cancel_btn.setImage(UIImage(named: "cancel"), for: .normal)
+        cancel_btn.tintColor = UIColor.black
+        self.displayselectitem.addSubview(cancel_btn)
+    }
+    
     func sidemenuselectRole(role: String, roleArray: NSMutableArray) {
+        selectRole = role
         if(role == "Guardian" || role == "Player")
         {
             self.postview_height.constant = 40
@@ -25,18 +44,19 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         {
             self.postview_height.constant = 80
         }
-        else if(roleArray.count == 1)
+        else if(roleArray.count > 0)
         {
             print(roleArray)
             let dic: NSDictionary = roleArray[0] as! NSDictionary
             let team: String = (dic.value(forKey: "team_id") as? String ?? nil)!
-            if(team == "" || team == nil)
+            if(team == "")
             {
                 self.postview_height.constant = 40
 
             }
-            
+        
         }
+        getFeedMethod()
     }
     
    
@@ -46,8 +66,14 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var post_tbl: UITableView!
     @IBOutlet weak var emptyfeed_img: UIImageView!
     @IBOutlet weak var postview_height: NSLayoutConstraint!
-    
-    var isInfo: Bool = false
+    @IBOutlet weak var postvielname_lbl: UILabel!
+    @IBOutlet weak var displayselectitem: UIView!
+     var cancel_btn: UIButton!
+    var addOrder: UIView!
+    var selectindexArray: NSMutableArray!
+
+
+    //var isInfo: Bool = false
     var selectIndex: Int!
     var getuuid : String!
 
@@ -57,6 +83,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
        var avPlayerLayer: AVPlayerLayer?
        var paused: Bool = false
     var postImg: UIImageView!
+    var selectRole: String!
     
 
     override func viewDidLoad() {
@@ -81,13 +108,27 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.post_tbl.delegate = self
         self.post_tbl.dataSource = self
         commonArray = NSMutableArray()
+        selectindexArray = NSMutableArray()
         post_tbl.tableFooterView = UIView()
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        if(UserDefaults.standard.value(forKey: "Role") != nil)
+        {
+            selectRole = (UserDefaults.standard.value(forKey: "Role") != nil) ? UserDefaults.standard.value(forKey: "Role") as! String : ""
+        }
         getFeedMethod()
         
+    }
+    @objc func selectitemRemove(_ sender: UIButton)
+    {
+        self.postvielname_lbl.text = "All Posts"
+        self.postvielname_lbl.backgroundColor = .clear
+        self.postvielname_lbl.textColor = UIColor.white
+        self.postvielname_lbl.layer.cornerRadius = 0
+        self.postvielname_lbl.layer.borderWidth = 0
+        cancel_btn.removeFromSuperview()
     }
     func getFeedMethod()
     {
@@ -102,8 +143,20 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                   } else {
                     self.commonArray = NSMutableArray()
                       for document in querySnapshot!.documents {
-                          let data: NSDictionary = document.data() as NSDictionary
-                        self.commonArray.add(data)
+                      let data: NSDictionary = document.data() as NSDictionary
+                        let getDataDic: NSMutableDictionary = data.mutableCopy() as! NSMutableDictionary
+                        getDataDic.setValue(false, forKey: "isInfo")
+                        if(self.selectRole != "" && self.selectRole != nil)
+                        {
+                            if(self.selectRole == getDataDic.value(forKey: "feedPostedUser_role") as? String)
+                        {
+                            self.commonArray.add(getDataDic.copy())
+                        }
+                        }
+                        else
+                        {
+                            self.commonArray.add(getDataDic.copy())
+                        }
                        print("\(document.documentID) =>\(data)")
 
                       }
@@ -142,7 +195,45 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
              dateFormatterPrint.dateFormat = "MMM dd,yyyy HH:mm:ss a"
              print(dateFormatterPrint.string(from: datees as Date))
 
-             cell.date_lbl.text = "Posted on \(dateFormatterPrint.string(from: datees as Date))"
+    cell.date_lbl.text = "Posted on \(dateFormatterPrint.string(from: datees as Date))"
+    
+    if(Dic.value(forKey: "tag_name") != nil && Dic.value(forKey: "tag_name")as? String != "")
+    {
+        let size = (Dic.value(forKey: "tag_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
+        cell.tag_btn.frame = CGRect(x: cell.date_lbl.frame.origin.x, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width + 20, height: 25)
+
+        cell.tag_btn.isHidden = false
+        cell.tag_btn.setTitle(Dic.value(forKey: "tag_name") as? String, for: .normal)
+        //cell.tag_btn.sizeToFit()
+    }
+    else
+    {
+        cell.tag_btn.isHidden = true
+    }
+    if(Dic.value(forKey: "reaction") != nil && Dic.value(forKey: "reaction")as! String != "")
+    {
+        let size = (Dic.value(forKey: "reaction") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
+        let width: CGFloat = size.width * 1.5
+        cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: width, height: 25)
+
+        cell.reaction_btn.isHidden = false
+
+        cell.reaction_btn.setImage(UIImage(named: "\(Dic.value(forKey: "reaction")!)"), for: .normal)
+        cell.reaction_btn.setTitle(Dic.value(forKey: "reaction") as? String, for: .normal)
+        cell.reaction_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0,3.0, 0.0, 0.0)
+        cell.reaction_btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        cell.reaction_btn.tintColor = UIColor.black
+
+        cell.reaction_btn.contentHorizontalAlignment = .left
+
+        //cell.reaction_btn.setTitle(Dic.value(forKey: "reaction") as? String, for: .normal)
+        //cell.reaction_btn.sizeToFit()
+
+    }
+    else
+    {
+        cell.reaction_btn.isHidden = true
+    }
             let profileImage = Dic.value(forKey: "feedPostedUser_avatar") as? String ?? ""
             let urls = NSURL(string: "\(profileImage)")
             if(urls?.absoluteString != "")
@@ -159,9 +250,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let CommentDic: NSDictionary = Dic.value(forKey: "comments") as! NSDictionary
             cell.comment_btn.setTitle("\(CommentDic.value(forKey: "count")!)", for: .normal)
             cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
-    cell.infoviewHeight.constant = (isInfo == true && indexPath.row == selectIndex) ? 100 : 0
-            
-    cell.infoview.isHidden = (isInfo == true && indexPath.row == selectIndex) ? false : true
+           cell.infoviewHeight.constant = (Dic.value(forKey: "isInfo") as! Bool  == true) ? 140 : 0
+           cell.infoview.isHidden = (Dic.value(forKey: "isInfo") as! Bool == true ) ? false : true
             cell.info_btn.tag = indexPath.row
             cell.like_btn.tag = indexPath.row
             cell.comment_btn.tag = indexPath.row
@@ -171,11 +261,199 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
            let postInfo: NSMutableArray = Dic.value(forKey: "feededLevelObject") as! NSMutableArray
            let postinfoDic: NSDictionary = postInfo[0] as! NSDictionary
-            cell.org_lbl.text = postinfoDic.value(forKey: "organization_name") as? String
-            cell.season_lbl.text = postinfoDic.value(forKey: "season_name") as? String
-            cell.sport_lbl.text = postinfoDic.value(forKey: "sport_name") as? String
+    
+    if(postinfoDic.value(forKey:"organization_name") != nil && postinfoDic.value(forKey: "organization_name")as? String != "")
+    {
+        let size = ("Org:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
+        let width: CGFloat = size.width
+        cell.org_title_lbl.frame = CGRect(x: cell.infoview.frame.origin.x + 10, y: 40, width: width, height: 30)
+        
+        
+        let org_name = (postinfoDic.value(forKey:"organization_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
+               let width_org: CGFloat = org_name.width
+        
+        cell.org_lbl.frame = CGRect(x: cell.org_title_lbl.frame.origin.x + cell.org_title_lbl.frame.size.width , y: cell.org_title_lbl.frame.origin.y, width: width_org, height: 30)
+        cell.org_lbl.text = postinfoDic.value(forKey:"organization_name") as! NSString as String
+        cell.org_lbl.isHidden = false
+        cell.org_title_lbl.isHidden = false
+
+    }
+    else
+    {
+        cell.org_lbl.isHidden = true
+        cell.org_title_lbl.isHidden = true
+    }
+    if(postinfoDic.value(forKey:"sport_name") != nil && postinfoDic.value(forKey:"sport_name")as? String != "")
+      {
+          let size = ("Sport:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
+          let width: CGFloat = size.width
+        cell.sport_title_lbl.frame = CGRect(x: cell.org_lbl.frame.origin.x + cell.org_lbl.frame.size.width, y: cell.org_title_lbl.frame.origin.y, width: width, height: 30)
+          
+          let org_name = (postinfoDic.value(forKey:"sport_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+                 let width_org: CGFloat = org_name.width
+          
+          cell.sport_lbl.frame = CGRect(x: cell.sport_title_lbl.frame.origin.x + cell.sport_title_lbl.frame.size.width , y: cell.org_title_lbl.frame.origin.y, width: width_org, height: 30)
+        cell.sport_lbl.text = postinfoDic.value(forKey:"sport_name") as? String
+
+          cell.sport_lbl.isHidden = false
+          cell.sport_title_lbl.isHidden = false
+
+      }
+      else
+      {
+          cell.sport_lbl.isHidden = true
+          cell.sport_title_lbl.isHidden = true
+      }
+    
+    if(postinfoDic.value(forKey:"season_name") != nil && postinfoDic.value(forKey: "season_name")as? String != "")
+         {
+             let size = ("Season:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+             let width: CGFloat = size.width
+           cell.season_title_lbl.frame = CGRect(x: cell.sport_lbl.frame.origin.x + cell.sport_lbl.frame.size.width, y: cell.sport_lbl.frame.origin.y, width: width, height: 30)
+             
+             let org_name = (postinfoDic.value(forKey:"season_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+                    let width_org: CGFloat = org_name.width
+             
+             cell.season_lbl.frame = CGRect(x: cell.season_title_lbl.frame.origin.x + cell.season_title_lbl.frame.size.width , y: cell.sport_lbl.frame.origin.y, width: width_org, height: 30)
+            
+            cell.season_lbl.text = postinfoDic.value(forKey:"season_name") as? String
+
+             cell.season_title_lbl.isHidden = false
+             cell.season_lbl.isHidden = false
+
+         }
+         else
+         {
+             cell.season_lbl.isHidden = true
+             cell.season_title_lbl.isHidden = true
+         }
+    if(postinfoDic.value(forKey:"level_name") != nil && postinfoDic.value(forKey: "level_name")as? String != "")
+         {
+             let size = ("Leavel:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+             let width: CGFloat = size.width
+            cell.level_title_lbl.frame = CGRect(x: cell.org_title_lbl.frame.origin.x, y: cell.org_title_lbl.frame.origin.y + cell.org_title_lbl.frame.size.height, width: width, height: 30)
+             
+             let org_name = (postinfoDic.value(forKey: "level_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+                    let width_org: CGFloat = org_name.width
+             
+             cell.level_lbl.frame = CGRect(x: cell.level_title_lbl.frame.origin.x + cell.level_title_lbl.frame.size.width , y: cell.level_title_lbl.frame.origin.y, width: width_org, height: 30)
+            cell.level_lbl.text = postinfoDic.value(forKey: "level_name") as? String
+
+             cell.level_title_lbl.isHidden = false
+             cell.level_lbl.isHidden = false
+
+         }
+         else
+         {
+             cell.level_lbl.isHidden = true
+             cell.level_title_lbl.isHidden = true
+         }
+    if(postinfoDic.value(forKey: "team_name") != nil && postinfoDic.value(forKey: "team_name")as? String != "")
+          {
+              let size = ("Team:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+              let width: CGFloat = size.width
+            cell.team_title_lbl.frame = CGRect(x: cell.level_lbl.frame.origin.x + cell.level_lbl.frame.size.width, y: cell.level_title_lbl.frame.origin.y, width: width, height: 30)
+              
+              let org_name = (postinfoDic.value(forKey: "team_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+                     let width_org: CGFloat = org_name.width
+              
+              cell.team_lbl.frame = CGRect(x: cell.team_title_lbl.frame.origin.x + cell.team_title_lbl.frame.size.width , y: cell.team_title_lbl.frame.origin.y, width: width_org, height: 30)
             cell.team_lbl.text = postinfoDic.value(forKey: "team_name") as? String
-          // cell.video_view.isHidden = true
+              cell.team_title_lbl.isHidden = false
+              cell.team_lbl.isHidden = false
+
+          }
+          else
+          {
+              cell.team_lbl.isHidden = true
+              cell.team_title_lbl.isHidden = true
+          }
+    
+    if(postinfoDic.value(forKey:"membergroup_name") != nil && postinfoDic.value(forKey: "membergroup_name")as? String != "")
+    {
+        let size = ("Group:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+        let width: CGFloat = size.width
+      cell.group_title_lbl.frame = CGRect(x: cell.team_lbl.frame.origin.x + cell.team_lbl.frame.size.width, y: cell.team_lbl.frame.origin.y, width: width, height: 30)
+        
+        let org_name = (postinfoDic.value(forKey:"membergroup_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+               let width_org: CGFloat = org_name.width
+        
+        cell.group_lbl.frame = CGRect(x: cell.group_title_lbl.frame.origin.x + cell.group_title_lbl.frame.size.width , y: cell.group_title_lbl.frame.origin.y , width: width_org, height: 30)
+      cell.group_lbl.text = postinfoDic.value(forKey: "membergroup_name") as? String
+        cell.group_title_lbl.isHidden = false
+        cell.group_lbl.isHidden = false
+
+    }
+    else
+    {
+        cell.group_lbl.isHidden = true
+        cell.group_title_lbl.isHidden = true
+    }
+    if(postinfoDic.value(forKey:"user_name") != nil && postinfoDic.value(forKey: "user_name")as? String != "")
+    {
+        let size = ("Player:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+        let width: CGFloat = size.width
+        cell.player_title_lbl.frame = CGRect(x: cell.level_title_lbl.frame.origin.x, y: cell.group_lbl.frame.origin.y + cell.group_lbl.frame.size.height, width: width, height: 30)
+        
+        let org_name = (postinfoDic.value(forKey: "user_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+               let width_org: CGFloat = org_name.width
+        
+        cell.player_lbl.frame = CGRect(x: cell.player_title_lbl.frame.origin.x + cell.player_title_lbl.frame.size.width , y: cell.player_title_lbl.frame.origin.y, width: width_org, height: 30)
+      cell.player_lbl.text = postinfoDic.value(forKey: "user_name") as? String
+        cell.player_title_lbl.isHidden = false
+        cell.player_lbl.isHidden = false
+
+    }
+    else
+    {
+        cell.player_lbl.isHidden = true
+        cell.player_title_lbl.isHidden = true
+    }
+    
+//    let feedlevobj: NSMutableArray = NSMutableArray()
+//     if(postinfoDic.value(forKey: "organization_name") as? String != "" && postinfoDic.value(forKey: "organization_name") != nil)
+//     {
+//        feedlevobj.add("org: \(postinfoDic.value(forKey: "organization_name") as! String )")
+//    }
+//   if(postinfoDic.value(forKey: "sport_name") as? String != "" || postinfoDic.value(forKey: "sport_name") != nil)
+//     {
+//        feedlevobj.add("Sport: \(postinfoDic.value(forKey: "sport_name") as! String )")
+//
+//    }
+//    if(postinfoDic.value(forKey: "season_name") as? String != "" || postinfoDic.value(forKey: "season_name") != nil)
+//     {
+//        feedlevobj.add("Season: \(postinfoDic.value(forKey: "season_name") as! String )")
+//
+//    }
+// if(postinfoDic.value(forKey: "level_name") as? String != "" || postinfoDic.value(forKey: "level_name") != nil)
+//    {
+//       feedlevobj.add("Leavel: \(postinfoDic.value(forKey: "level_name") as! String )")
+//
+//   }
+//   if(postinfoDic.value(forKey: "team_name") as? String != "" || postinfoDic.value(forKey: "team_name") != nil)
+//     {
+//        feedlevobj.add("Team: \(postinfoDic.value(forKey: "team_name") as! String )")
+//
+//    }
+//    if(postinfoDic.value(forKey: "membergroup_name") as? String != "" || postinfoDic.value(forKey: "membergroup_name") != nil)
+//     {
+//        feedlevobj.add("Group: \(postinfoDic.value(forKey: "membergroup_name") as! String )")
+//
+//    }
+//     if(postinfoDic.value(forKey: "user_name") as? String != "" || postinfoDic.value(forKey: "user_name") != nil)
+//     {
+//        feedlevobj.add("Player: \(postinfoDic.value(forKey: "user_name") as! String )")
+//
+//    }
+       //cell.infoviewHeight.constant = (feedlevobj.count < 8) ? 140 : 100
+
+    
+
+//            cell.org_lbl.text = postinfoDic.value(forKey: "organization_name") as? String
+//            cell.season_lbl.text = postinfoDic.value(forKey: "season_name") as? String
+//            cell.sport_lbl.text = postinfoDic.value(forKey: "sport_name") as? String
+//            cell.team_lbl.text = postinfoDic.value(forKey: "team_name") as? String
+//          // cell.video_view.isHidden = true
 
             var postimageArray = NSMutableArray()
             let keyExists = Dic.value(forKey: "feedImageURL") != nil
@@ -262,9 +540,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         if(keyExists == true  || videoExists == true)
         {
-            if(isInfo == true && indexPath.row == self.selectIndex)
+            
+            if(Dic.value(forKey: "isInfo") as! Bool == true)
             {
-                return 650.0
+                return 690.0
             }
             else
             {
@@ -274,9 +553,9 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else
         {
-            if(isInfo == true && indexPath.row == self.selectIndex)
+            if(Dic.value(forKey: "isInfo") as! Bool == true)
             {
-                return 305.0
+                return 345.0
             }
             else
             {
@@ -289,18 +568,60 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @objc func InformationDetail(_ sender: UIButton)
     {
         let indexno = sender.tag
-        if(isInfo == false)
+        let replaceDic: NSDictionary = self.commonArray?[indexno] as! NSDictionary
+        let newDict: NSMutableDictionary  = NSMutableDictionary()
+        let oldDict: NSDictionary = commonArray.object(at: indexno) as! NSDictionary
+        newDict.addEntries(from: oldDict as! [AnyHashable : Any])
+       
+        if(replaceDic.value(forKey: "isInfo") as! Bool == false)
         {
-        isInfo = true
+            newDict.setValue(true, forKey: "isInfo")
+
+
+        }
+        else{
+           // replaceDic.setValue(false, forKey: "isInfo")
+            newDict.setValue(false, forKey: "isInfo")
+
+
+        }
+        commonArray.replaceObject(at: indexno, with: newDict)
+        //[dataArray replaceObjectAtIndex:0 withObject:newDict];
+
         selectIndex = indexno
-        }
-        else
-        {
-          isInfo = false
-          selectIndex = indexno
-        }
         let indexPosition = IndexPath(row: selectIndex, section: 0)
         self.post_tbl.reloadRows(at: [indexPosition], with: .none)
+
+        
+        //selectindexArray.add(sender.tag)
+        
+//        for i in 0..<selectindexArray.count
+//        {
+//            if(selectindexArray[i] as! Int == sender.tag)
+//            {
+//                if(isInfo == true)
+//                {
+//                isInfo = true
+//                selectIndex = indexno
+//                }
+//            }
+//        }
+        
+//        if(selectIndex != 0)
+//        {
+//        if(isInfo == false)
+//        {
+//        isInfo = true
+//        selectIndex = indexno
+//        }
+//        else
+//        {
+//          isInfo = false
+//          selectIndex = indexno
+//
+//        }
+      //  }
+       
 
     }
     func refresh(sender: UIRefreshControl)
@@ -336,6 +657,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     maplike.setValue(userlist, forKey: "user_list")
                     likeUpdatemethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String, selectIdexdetail: Dic)
                     
+                    
                 }
                 else
                 {
@@ -352,17 +674,18 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     
                    
                 }
+        
     }
     func likeUpdatemethod(updateDetail: NSDictionary, userFeedid: String, selectIdexdetail: NSDictionary)
     {
         Constant.internetconnection(vc: self)
-        //Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let db = Firestore.firestore()
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
                        if let err = err {
                            print("Error updating document: \(err)")
-                          // Constant.showInActivityIndicatory()
+                           Constant.showInActivityIndicatory()
 
                        } else {
                     
@@ -370,11 +693,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
-                                //Constant.showInActivityIndicatory()
+                                Constant.showInActivityIndicatory()
 
                             } else {
                                 print("Document successfully updated")
-                               // Constant.showInActivityIndicatory()
+                                Constant.showInActivityIndicatory()
 
                             }
                         }
@@ -385,24 +708,24 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func DislikeMethod(updateDetail: NSDictionary, userFeedid: String)
     {
         Constant.internetconnection(vc: self)
-        //Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let db = Firestore.firestore()
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
                        if let err = err {
                            print("Error updating document: \(err)")
-                          // Constant.showInActivityIndicatory()
+                           Constant.showInActivityIndicatory()
 
                        } else {
 db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").delete()
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
-                                //Constant.showInActivityIndicatory()
+                                Constant.showInActivityIndicatory()
 
                             } else {
                                 print("Document successfully updated")
-                               // Constant.showInActivityIndicatory()
+                                Constant.showInActivityIndicatory()
 
                             }
                         }
@@ -437,6 +760,12 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
        let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
         self.navigationController?.pushViewController(objpostvc, animated: true)
         
+    }
+    @IBAction func feedSelector(_ sender: UIButton)
+    {
+        let objPosttag: FeedSelectorVC = (self.storyboard?.instantiateViewController(identifier: "FeedSelectorVc"))!
+        objPosttag.delegate = self
+        self.navigationController?.pushViewController(objPosttag, animated: true)
     }
     @IBAction func menuBtn(_ sender: UIButton)
     {

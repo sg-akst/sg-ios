@@ -1,19 +1,15 @@
 //
-//  PostImageDetailCell.swift
+//  PeopleCell.swift
 //  SportsGravy
 //
-//  Created by CSS on 07/02/20.
+//  Created by CSS on 03/03/20.
 //  Copyright © 2020 CSS. All rights reserved.
 //
 
 import UIKit
 
-class PostImageDetailCell: UITableViewCell {
-
-    @IBOutlet weak var detail_btn: UIButton!
-    @IBOutlet weak var commonview: UIView!
-    @IBOutlet weak var cancel_btn: UIButton!
-    @IBOutlet weak var reaction_img: UIImageView!
+class PeopleCell: UITableViewCell {
+    @IBOutlet weak var people_group_btn: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()

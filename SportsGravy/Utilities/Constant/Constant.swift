@@ -23,6 +23,7 @@ class Constant: NSObject {
     var signupUrl: String = BaseUrl + "signUpUser"
     var FeedPostUrl: String = BaseUrl + "postFeed"
     var RemovePlayerUrl: String = BaseUrl + "accountRemoveConnection"
+    var FeedCountUrl: String = BaseUrl + "feedCount"
 
     static func internetconnection(vc: UIViewController)
     {

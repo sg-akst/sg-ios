@@ -11,6 +11,10 @@
 		0808875223ED3BEE001A0191 /* PostImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0808875123ED3BEE001A0191 /* PostImageVC.swift */; };
 		0808875423ED46F2001A0191 /* PostimageHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */; };
 		0808875623ED470F001A0191 /* PostImageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0808875523ED470F001A0191 /* PostImageDetailCell.swift */; };
+		080B0CE6240E2DBE000B905E /* PeopleSelectorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B0CE5240E2DBE000B905E /* PeopleSelectorVC.swift */; };
+		080B0CE8240E41DC000B905E /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B0CE7240E41DC000B905E /* PeopleCell.swift */; };
+		080B0CEB240E747F000B905E /* FeedSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B0CEA240E747F000B905E /* FeedSelectorCell.swift */; };
+		080B0CED240E74C3000B905E /* FeedSelectorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B0CEC240E74C3000B905E /* FeedSelectorVC.swift */; };
 		080E845823E3F19E0092CDB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081120CA23BDF77500327FF1 /* AppDelegate.swift */; };
 		080E845923E3F1A30092CDB3 /* UserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */; };
 		080E845A23E3F1A80092CDB3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811210123BE061B00327FF1 /* Reachability.swift */; };
@@ -102,6 +106,10 @@
 		0808875123ED3BEE001A0191 /* PostImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageVC.swift; sourceTree = "<group>"; };
 		0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostimageHeaderCell.swift; sourceTree = "<group>"; };
 		0808875523ED470F001A0191 /* PostImageDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageDetailCell.swift; sourceTree = "<group>"; };
+		080B0CE5240E2DBE000B905E /* PeopleSelectorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSelectorVC.swift; sourceTree = "<group>"; };
+		080B0CE7240E41DC000B905E /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
+		080B0CEA240E747F000B905E /* FeedSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectorCell.swift; sourceTree = "<group>"; };
+		080B0CEC240E74C3000B905E /* FeedSelectorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectorVC.swift; sourceTree = "<group>"; };
 		080BF3B823BF5BDE00084274 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		080E848023E3F3490092CDB3 /* SortingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingVC.swift; sourceTree = "<group>"; };
 		081120C723BDF77500327FF1 /* SportsGravy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsGravy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +219,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		080B0CE9240E7466000B905E /* FeedSlector */ = {
+			isa = PBXGroup;
+			children = (
+				080B0CEA240E747F000B905E /* FeedSelectorCell.swift */,
+			);
+			path = FeedSlector;
+			sourceTree = "<group>";
+		};
 		080BF3B723BF5BC100084274 /* SinginupVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +309,7 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				080B0CE9240E7466000B905E /* FeedSlector */,
 				0872E64723E2F6F5008170A0 /* Signup */,
 				08C17D5F23E0427400D51B62 /* sorting */,
 				0814208423DEF869006E0087 /* Sitting */,
@@ -437,6 +454,7 @@
 				084C618323F6A78C005613B3 /* ReactionCell.swift */,
 				0805FB0823FA58D800AD3426 /* PostUserCell.swift */,
 				08B5631223FB368000D90E23 /* PostCanCell.swift */,
+				080B0CE7240E41DC000B905E /* PeopleCell.swift */,
 			);
 			path = PostCell;
 			sourceTree = "<group>";
@@ -529,6 +547,8 @@
 				084C618523F6AC84005613B3 /* PostTagVC.swift */,
 				084C618723F6AEF8005613B3 /* PostCannedVC.swift */,
 				084C618923F6B59A005613B3 /* PostUsergroupVC.swift */,
+				080B0CE5240E2DBE000B905E /* PeopleSelectorVC.swift */,
+				080B0CEC240E74C3000B905E /* FeedSelectorVC.swift */,
 			);
 			path = DashboardVC;
 			sourceTree = "<group>";
@@ -813,14 +833,17 @@
 				08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */,
 				088625F423EC347E008E7CCD /* CommentCell.swift in Sources */,
 				080E847D23E3F27B0092CDB3 /* ForgotVC.swift in Sources */,
+				080B0CEB240E747F000B905E /* FeedSelectorCell.swift in Sources */,
 				08D5967224067B7100C2ACBD /* CustomVideoAlbum.swift in Sources */,
 				080E847C23E3F2770092CDB3 /* InvitePlayerVC.swift in Sources */,
+				080B0CED240E74C3000B905E /* FeedSelectorVC.swift in Sources */,
 				080E847B23E3F2720092CDB3 /* PersonalInfoVC.swift in Sources */,
 				082D264D23F1769B00E22307 /* InviteCell.swift in Sources */,
 				084C618A23F6B59A005613B3 /* PostUsergroupVC.swift in Sources */,
 				080E847A23E3F26E0092CDB3 /* SignupVC.swift in Sources */,
 				080E847923E3F26B0092CDB3 /* SidemenuVC.swift in Sources */,
 				080E847823E3F2670092CDB3 /* Dashboardvc.swift in Sources */,
+				080B0CE8240E41DC000B905E /* PeopleCell.swift in Sources */,
 				0808875423ED46F2001A0191 /* PostimageHeaderCell.swift in Sources */,
 				084C618823F6AEF8005613B3 /* PostCannedVC.swift in Sources */,
 				080E847723E3F2620092CDB3 /* RateVC.swift in Sources */,
@@ -854,6 +877,7 @@
 				080E846323E3F1D30092CDB3 /* PostCell.swift in Sources */,
 				080E846223E3F1CE0092CDB3 /* GroubHeaderCell.swift in Sources */,
 				082D264B23F15AC100E22307 /* InviteGuardianVC.swift in Sources */,
+				080B0CE6240E2DBE000B905E /* PeopleSelectorVC.swift in Sources */,
 				080E846123E3F1CA0092CDB3 /* UsergroupCreateCell.swift in Sources */,
 				080E846023E3F1C70092CDB3 /* UserGroupCell.swift in Sources */,
 				080E845F23E3F1C20092CDB3 /* TagCell.swift in Sources */,

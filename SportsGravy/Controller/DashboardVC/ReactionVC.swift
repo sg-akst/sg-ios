@@ -18,7 +18,7 @@ class ReactionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     weak var delegate:SelectReactionDelegate?
 
     
-    var mydic: NSArray = [["reation_title": "Thumbs Up", "reaction_image": "like"],["reation_title" : "Neutral", "reaction_image": "emotion"], ["reation_title" : "Thumbs Down", "reaction_image": "dislike"]]
+    var mydic: NSArray = [["reation_title": "Thumbs Up", "reaction_image": "Thumbs_up"],["reation_title" : "Neutral", "reaction_image": "happy"], ["reation_title" : "Thumbs Down", "reaction_image": "Thumbs_down"]]
     override func viewDidLoad() {
         super.viewDidLoad()
         

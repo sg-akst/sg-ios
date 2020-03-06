@@ -181,7 +181,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let headline: NSDictionary = sortingOrderArray?[indexPath.row] as! NSDictionary
         if(selectType == "Tags")
         {
-        cell.username_lbl?.text = headline.value(forKey: "tag_id") as? String
+        cell.username_lbl?.text = headline.value(forKey: "tag_name") as? String
         }
         else if(selectType == "CannedResponse")
         {

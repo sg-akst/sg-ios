@@ -12,6 +12,8 @@ class PostUserCell: UITableViewCell {
     
     @IBOutlet weak var title_name_lbl: UILabel!
     @IBOutlet weak var groub_img: UIButton!
+    @IBOutlet weak var imageBtn: UIButton!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

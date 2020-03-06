@@ -1,19 +1,19 @@
 //
-//  PostImageDetailCell.swift
+//  FeedSelectorCell.swift
 //  SportsGravy
 //
-//  Created by CSS on 07/02/20.
+//  Created by CSS on 03/03/20.
 //  Copyright © 2020 CSS. All rights reserved.
 //
 
 import UIKit
 
-class PostImageDetailCell: UITableViewCell {
+class FeedSelectorCell: UITableViewCell {
+    @IBOutlet weak var feed_name_Btn: UIButton!
+    @IBOutlet weak var feed_img_Btn: UIButton!
+    @IBOutlet weak var feed_count_Btn: UIButton!
 
-    @IBOutlet weak var detail_btn: UIButton!
-    @IBOutlet weak var commonview: UIView!
-    @IBOutlet weak var cancel_btn: UIButton!
-    @IBOutlet weak var reaction_img: UIImageView!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

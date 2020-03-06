@@ -13,7 +13,8 @@ import SWRevealViewController
 
 class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWRevealViewControllerDelegate, PassSelectorderDelegate, SortorderDelegate {
     func sortingOrderTagupdateSuccess() {
-        getTag()
+       // getTag()
+        getTagListMethod()
     }
     
     func sortingOrderUsergroupupdateSuccess() {
@@ -25,13 +26,15 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
     }
     
     func createAfterCallMethod() {
-        getTag()
+        //getTag()
+        getTagListMethod()
+
     }
     
     func selectorderArray(select: NSMutableArray!, selectindex: UIButton) {
         self.addorderArray = select
         addTitle_btn.tag = selectindex.tag
-       // addTitle_btn.sendActions(for:  .touchUpInside)
+        addTitle_btn.sendActions(for:  .touchUpInside)
     }
 
         @IBOutlet var addorderview: UIView!
@@ -45,15 +48,22 @@ class TagVC: UIViewController, UITableViewDelegate,UITableViewDataSource, SWReve
         var getdifferentSportsArray: NSMutableArray!
         var getSameSeasonArray: NSMutableArray!
         var getdifferentSeasonArray: NSMutableArray!
+        var getSameLevelArray: NSMutableArray!
+        var getdifferentLevelArray: NSMutableArray!
+    
         var addorderArray: NSMutableArray!
         var commonArray: [String]!
         var getSelectRole: String!
         var getOrganization: String!
         var getSport: String!
         var getSeason: String!
+       var getLevel: String!
+
         var yPos = CGFloat()
         var addOrder: UIView!
         var getrolebySeasonid: String!
+    var getLevelId: String!
+
         var getTeamId: String!
         var TeamArray: NSMutableArray!
         var isTeam : Bool = false
@@ -75,11 +85,7 @@ override func viewDidLoad() {
             commonArray = NSMutableArray() as? [String]
             tag_tbl.tableFooterView = UIView()
             self.addorderArray = NSMutableArray()
-            getorganization()
-            getsportsmethod()
-            getSeasonmethod()
-            getTeammethod()
-            getuserDetail()
+             getTag()
             createGroupView.isHidden = true
             sorting.isHidden = true
             self.tag_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -87,6 +93,8 @@ override func viewDidLoad() {
         }
         func getuserDetail()
         {
+            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
+
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
             var runningWidth: CGFloat = 10.0
@@ -104,10 +112,21 @@ override func viewDidLoad() {
                 addTitle_btn = UIButton(type: .roundedRect)
     
                 addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
-                addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
-                let title: String = addorderArray?[i] as! String
+                 let title: String = addorderArray?[i] as! String
+                if(title != "" && title != nil)
+                {
+                if(i == 0)
+                {
+                    self.addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
+                }
+                else
+                {
+                  addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
+
+                }
+               
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
-                let attrStr = NSMutableAttributedString(string: "\(title)")
+                let attrStr = NSMutableAttributedString(string: "\(addTitle_btn.title(for: .normal) ?? "")")
                
                 if(i != 0)
                 {
@@ -148,9 +167,6 @@ override func viewDidLoad() {
                         // vertical position:
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrder, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
-                            
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                    //   [self.view addConstraint:verticalConstraint];
 
                     }
                     else{
@@ -185,14 +201,11 @@ override func viewDidLoad() {
 
                 }
                 buttons.add(addTitle_btn)
-
+            }
                 
             }
            
             self.addorderview.addSubview(addOrder)
-            
-             
-            
             
             if(commonArray.count > 0)
             {
@@ -208,98 +221,208 @@ override func viewDidLoad() {
             getSameOrganization = NSMutableArray()
             getdifferentOrganization = NSMutableArray()
             addorderArray.add("All")
-            for i in 0..<self.getRolebyreasonDetailArray.count
+            let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
+            
+            for i  in 0..<getRolebyreasonDetailArray.count
             {
-                 let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
-                 let role: String = roleDic.value(forKey: "role") as! String
-                if(role == self.getSelectRole as String)
-                {
-                    getOrganization = roleDic.value(forKey: "organization_abbrev") as? String
-                    self.getSameOrganization.add(roleDic)
-                    
-                }
-                else
-                 {
-                    getdifferentOrganization.add(roleDic)
-                }
+            let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+//
+            let abb: String = roleDic.value(forKey: "organization_id") as! String
+            if (filteredEvents.contains("\(abb)"))
+            {
+                print("found")
+                getOrganization = abb
+                getSameOrganization.add(roleDic)
+
             }
-            let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
-            self.commonArray.append(contentsOf: filteredEvents)
+            else
+            {
+                print("not found")
+                getOrganization = abb
+
+                getdifferentOrganization.add(roleDic)
+            }
+                
+            }
+                       if(getdifferentOrganization.count > 1)
+                       {
+                           let filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+
+                           self.commonArray.append(contentsOf: filteredEvent)
+
+                       }
+                       else
+                       {
+                          
+                           let filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+                           self.commonArray.append(contentsOf: filteredEvent)
+                           
+                       }
+           // self.commonArray.append(contentsOf: filteredEvents)
         }
         func getsportsmethod()
-        {
-            if(self.getdifferentOrganization.count < 1)
-                  {
-                    self.commonArray = NSMutableArray() as? [String]
-
-                      self.addorderArray.add("> \(getOrganization!)")
-                      self.getSameSportsArray = NSMutableArray()
-                      self.getdifferentSportsArray = NSMutableArray()
-                      
-                      for i in 0..<getSameOrganization.count
-                      {
-                          let roleDic: NSDictionary = getSameOrganization?[i] as! NSDictionary
-                          let role: String = roleDic.value(forKey: "organization_abbrev") as! String
-                          if(role == getOrganization)
-                          {
-                              self.getSport = roleDic.value(forKey: "sport_id") as? String
-                              getSameSportsArray.add(roleDic)
-                              
-                          }
-                          else
-                          {
-                              getdifferentSportsArray.add(roleDic)
-                          }
-                      }
-                    let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
-                           self.commonArray.append(contentsOf: filteredEvents)
-                  }
-        }
-        func getSeasonmethod()
-        {
-            if(self.getdifferentSportsArray.count < 1)
-                   {
+           {
+               self.getSameSportsArray = NSMutableArray()
+               self.getdifferentSportsArray = NSMutableArray()
+               
+               if(self.getdifferentOrganization.count > 1)
+               {
                        self.commonArray = NSMutableArray() as? [String]
-                       self.addorderArray.add("> \(getSport!)")
-                       self.getSameSeasonArray = NSMutableArray()
-                       self.getdifferentSeasonArray = NSMutableArray()
-                       for i in 0..<getSameSportsArray.count
-                       {
-                           let roleDic: NSDictionary = getSameSportsArray?[i] as! NSDictionary
-                           let role: String = roleDic.value(forKey: "sport_id") as! String
-                           if(role == getSport)
-                           {
-                               self.getSeason = roleDic.value(forKey: "season_label") as? String
-                               getSameSeasonArray.add(roleDic)
-                            getrolebySeasonid = roleDic.value(forKey: "role_by_season_id") as? String
+                   self.addorderArray.add(commonArray.last!)
+                   
+                         for i in 0..<getdifferentOrganization.count
+                         {
+                             let roleDic: NSDictionary = getdifferentOrganization?[i] as! NSDictionary
+                             let role: String = roleDic.value(forKey: "organization_id") as! String
+                             if(role == getOrganization)
+                             {
+                                 self.getSport = roleDic.value(forKey: "sport_id") as? String
+                                 getSameSportsArray.add(roleDic)
 
-                           }
-                           else
-                           {
-                               getdifferentSeasonArray.add(roleDic)
-                           }
+                             }
+                             else
+                             {
+                                 getdifferentSportsArray.add(roleDic)
+                             }
+                         }
+                   
+                   if(getdifferentSportsArray.count > 1)
+                   {
+                       let filteredEvent: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                       self.commonArray.append(contentsOf: filteredEvent)
+
+                   }
+                  else
+                 {
+                        let filteredEvent: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                       self.commonArray.append(contentsOf: filteredEvent)
+
+                   }
+                   
+                     }
+               else if(self.getSameOrganization.count > 0)
+               {
+                   self.addorderArray.add(commonArray.last!)
+                   self.commonArray = NSMutableArray() as? [String]
+
+                   for i in 0..<getSameOrganization.count
+                   {
+                       let roleDic: NSDictionary = getSameOrganization?[i] as! NSDictionary
+                       let role: String = roleDic.value(forKey: "organization_id") as! String
+                       if(role == getOrganization)
+                       {
+                           self.getSport = roleDic.value(forKey: "sport_id") as? String
+                           getSameSportsArray.add(roleDic)
+                           
+                       }
+                       else
+                       {
+                           getdifferentSportsArray.add(roleDic)
                        }
                    }
-        }
-        func getTeammethod()
-        {
-             if(getSameSeasonArray.count > 0)
-                    {
-            
-                        self.addorderArray.add("> \(self.getSeason!)")
-                        let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
-                        
-                      
-                        self.commonArray.append(contentsOf: filteredEvents)
-                        
+                   
+                   let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                   self.commonArray.append(contentsOf: filteredEvents)
+               }
+           }
+           func getSeasonmethod()
+           {
+                self.getSameSeasonArray = NSMutableArray()
+                   self.getdifferentSeasonArray = NSMutableArray()
+               if(self.getdifferentSportsArray.count > 1)
+               {
+                   self.addorderArray.add(commonArray.last!)
+                   self.commonArray = NSMutableArray() as? [String]
 
-                    }
-        }
-        
+                       for i in 0..<getdifferentSportsArray.count
+                       {
+                                         let roleDic: NSDictionary = getdifferentSportsArray?[i] as! NSDictionary
+                                         let role: String = roleDic.value(forKey: "sport_id") as! String
+                                         if(role == getSport)
+                                         {
+                                             self.getSeason = roleDic.value(forKey: "season_label") as? String
+                                             getSameSeasonArray.add(roleDic)
+                                          getrolebySeasonid = roleDic.value(forKey: "season_id") as? String
+
+                                         }
+                                         else
+                                         {
+                                             getdifferentSeasonArray.add(roleDic)
+                                         }
+                                    }
+                   
+                   if(getdifferentSeasonArray.count > 1)
+                     {
+                         let filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                         self.commonArray.append(contentsOf: filteredEvent)
+
+                     }
+                    else
+                   {
+                          let filteredEvent: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                         self.commonArray.append(contentsOf: filteredEvent)
+
+                     }
+                                 }
+                          else if (self.getSameSportsArray.count > 0)
+                          {
+                           self.addorderArray.add(commonArray.last!)
+
+                              self.commonArray = NSMutableArray() as? [String]
+                              for i in 0..<getSameSportsArray.count
+                              {
+                                  let roleDic: NSDictionary = getSameSportsArray?[i] as! NSDictionary
+                                  let role: String = roleDic.value(forKey: "sport_id") as! String
+                                  if(role == getSport)
+                                  {
+                                      self.getSeason = roleDic.value(forKey: "season_label") as? String
+                                      getSameSeasonArray.add(roleDic)
+                                      getrolebySeasonid = roleDic.value(forKey: "season_id") as? String
+
+                                      }
+                                      else
+                                      {
+                                          getdifferentSeasonArray.add(roleDic)
+                                          }
+                              
+                              }
+                           let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                           self.commonArray.append(contentsOf: filteredEvents)
+
+                          }
+           }
+         
+           func getTeammethod()
+           {
+                if(self.getdifferentSeasonArray.count > 1)
+                        {
+                           self.addorderArray.add(commonArray.last!)
+
+                          self.commonArray = NSMutableArray() as? [String]
+                            let filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                            self.commonArray.append(contentsOf: filteredEvents)
+                            
+
+                        }
+                else
+                 {
+                    if(self.getSameSeasonArray.count > 0)
+                   {
+                       
+                       self.addorderArray.add(commonArray.last!)
+
+                                      self.commonArray = NSMutableArray() as? [String]
+                                        let filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                                        self.commonArray.append(contentsOf: filteredEvents)
+                                        
+
+                                    }
+                }
+           }
         @objc func orderselectmethod(_ sender: UIButton)
         {
             let selecttag = sender.tag
-            orderviewheight.constant = 50
+            //orderviewheight.constant = 50
             isTeam = false
             createGroupView.isHidden = true
             if(selecttag == 0)
@@ -324,13 +447,27 @@ override func viewDidLoad() {
                 getorganization()
                 getsportsmethod()
                 getSeasonmethod()
-                commonArray.append(self.getSeason)
                 getuserDetail()
             }
             else if(selecttag == 3)
             {
                 print("season")
-                self.addorderArray.removeLastObject()
+                self.addorderArray = NSMutableArray()
+                getorganization()
+                getsportsmethod()
+                getSeasonmethod()
+                getTeammethod()
+               // getLevelmethod()
+                getuserDetail()
+            }
+            else if (selecttag == 4)
+            {
+                self.addorderArray = NSMutableArray()
+                getorganization()
+                getsportsmethod()
+                getSeasonmethod()
+               // getLevelmethod()
+                getTeammethod()
                 getuserDetail()
             }
             else
@@ -398,6 +535,7 @@ override func viewDidLoad() {
             getorganization()
             getsportsmethod()
             getSeasonmethod()
+            //getLevelmethod()
             getTeammethod()
             getuserDetail()
 
@@ -406,7 +544,7 @@ override func viewDidLoad() {
             else
             {
                print(getSeason)
-               self.addorderArray.add(" > \(self.commonArray[indexPath.row])")
+               self.addorderArray.add("\(self.commonArray[indexPath.row])")
                 getuserDetail()
                 for i in 0..<self.getRolebyreasonDetailArray.count
                 {
@@ -428,7 +566,7 @@ override func viewDidLoad() {
                 {
                     sorting.isHidden = true
                 }
-                getTag()
+                getTagListMethod()
             }
             }
         }
@@ -461,51 +599,168 @@ override func viewDidLoad() {
                    Constant.showActivityIndicatory(uiView: self.view)
                    let getuuid = UserDefaults.standard.string(forKey: "UUID")
                     let db = Firestore.firestore()
-            let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-            if (UserDefaults.standard.bool(forKey: "2") == true)
-            {
-                docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
-                                 if let err = err {
-                                     print("Error getting documents: \(err)")
-                                 } else {
-                                    self.TeamArray = NSMutableArray()
+            let docRef = db.collection("users").document("\(getuuid!)")
+            
+            docRef.collection("roles_by_season").whereField("role", isEqualTo:self.getSelectRole).getDocuments() { (querySnapshot, err) in
+                   if let err = err {
+                       print("Error getting documents: \(err)")
+                   } else {
+                    self.getRolebyreasonDetailArray = NSMutableArray()
 
-                                     for document in querySnapshot!.documents {
-                                         let data: NSDictionary = document.data() as NSDictionary
-                                         
-                                        self.TeamArray.add(data)
-                
+                           for document in querySnapshot!.documents {
+                           let data: NSDictionary = document.data() as NSDictionary
+                            let getseason_end_date =  data.value(forKey: "season_end_date") as? Timestamp
+                            let getSeason_start_date = data.value(forKey: "season_start_date") as? Timestamp
+                            print("\(document.documentID) => \(String(describing: getseason_end_date))")
+                            if(data.value(forKey: "team_id") as? String != nil && data.value(forKey: "team_id")as! String != "")
+                            {
+                                if(getSeason_start_date != nil && getseason_end_date != nil)
+                                {
+                                    let enddate = Date(timeIntervalSince1970: TimeInterval(getseason_end_date!.seconds))
+                                    let startDate = Date(timeIntervalSince1970:TimeInterval(getSeason_start_date!.seconds))
+                                    let currentDate = Date()  as Date?
+                                    if(enddate > currentDate! || startDate < currentDate!)
+                                    {
+                                            print("yes")
+                                        self.getRolebyreasonDetailArray.add(data)
                                     }
-                                    self.isTeam = true
-                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
-                                    self.tag_tbl.reloadData()
-                                    Constant.showInActivityIndicatory()
-
                                 }
                             }
-            }
-            else
-            {
-                docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
-                                 if let err = err {
-                                     print("Error getting documents: \(err)")
-                                 } else {
-                                    self.TeamArray = NSMutableArray()
+                            
+                          }
+                    
+                    if(self.getRolebyreasonDetailArray.count > 0)
+                    {
+                        self.getorganization()
+                        self.getsportsmethod()
+                        self.getSeasonmethod()
+                        //self.getLevelmethod()
+                        self.getTeammethod()
+                        self.getuserDetail()
 
-                                     for document in querySnapshot!.documents {
-                                         let data: NSDictionary = document.data() as NSDictionary
-                                         self.TeamArray.add(data)
-                                    }
-                                    self.isTeam = true
-                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
-                                    self.tag_tbl.reloadData()
-                                    Constant.showInActivityIndicatory()
 
-                                }
-                            }
-            }
+                    }
+                       Constant.showInActivityIndicatory()
+
+                           }
+                       }
+            
+         //   if (UserDefaults.standard.bool(forKey: "2") == true)
+//            {
+//                docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+//                                 if let err = err {
+//                                     print("Error getting documents: \(err)")
+//                                 } else {
+//                                    self.TeamArray = NSMutableArray()
+//
+//                                     for document in querySnapshot!.documents {
+//                                         let data: NSDictionary = document.data() as NSDictionary
+//
+//                                        self.TeamArray.add(data)
+//
+//                                    }
+//                                    self.isTeam = true
+//                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
+//                                    self.tag_tbl.reloadData()
+//                                    Constant.showInActivityIndicatory()
+//
+//                                }
+//                            }
+//            }
+        //    else
+//            {
+//                docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+//                                 if let err = err {
+//                                     print("Error getting documents: \(err)")
+//                                 } else {
+//                                    self.TeamArray = NSMutableArray()
+//
+//                                     for document in querySnapshot!.documents {
+//                                         let data: NSDictionary = document.data() as NSDictionary
+//                                         self.TeamArray.add(data)
+//                                    }
+//                                    self.isTeam = true
+//                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
+//                                    self.tag_tbl.reloadData()
+//                                    Constant.showInActivityIndicatory()
+//
+//                                }
+//                            }
+//            }
         }
     
+    func getTagListMethod()
+    {
+        Constant.internetconnection(vc: self)
+               Constant.showActivityIndicatory(uiView: self.view)
+               let getuuid = UserDefaults.standard.string(forKey: "UUID")
+                let db = Firestore.firestore()
+        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
+//       let docrefs = docRef.collection("roles_by_season").whereField("role", isEqualTo:self.getSelectRole).getDocuments() { (querySnapshot, err) in
+//                          if let err = err {
+//                              print("Error getting documents: \(err)")
+//                          } else {
+                            if (UserDefaults.standard.bool(forKey: "2") == true)
+                            {
+                            docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                            if let err = err {
+                            print("Error getting documents: \(err)")
+                            } else {
+                            self.TeamArray = NSMutableArray()
+                            
+                            for document in querySnapshot!.documents {
+                            let data: NSDictionary = document.data() as NSDictionary
+                            
+                            self.TeamArray.add(data)
+                            
+                            }
+                            self.isTeam = true
+                            self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
+                            self.tag_tbl.reloadData()
+                            Constant.showInActivityIndicatory()
+                            
+                                }
+                            }
+                        }
+                        else
+                    {
+                                            docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                                             if let err = err {
+                                                                 print("Error getting documents: \(err)")
+                                                             } else {
+                                                                self.TeamArray = NSMutableArray()
+                            
+                                                                 for document in querySnapshot!.documents {
+                                                                     let data: NSDictionary = document.data() as NSDictionary
+                                                                     self.TeamArray.add(data)
+                                                                }
+                                                                self.isTeam = true
+                                                                self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
+                                                                self.tag_tbl.reloadData()
+                                                                Constant.showInActivityIndicatory()
+                            
+                                                            }
+                                                        }
+                                        }
+                            
+           // }
+       // }
+    }
+    
+    func checkTimeStamp(date: String!) -> Bool {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier:"en_US_POSIX")
+        let datecomponents = dateFormatter.date(from: date)
+
+        let now = Date()
+
+        if (datecomponents! >= now) {
+            return true
+        } else {
+            return false
+        }
+    }
     func deleteMethod(rolebyDic: NSDictionary)
      {
           Constant.internetconnection(vc: self)
@@ -521,29 +776,7 @@ override func viewDidLoad() {
                   print("Document successfully removed!")
                 Constant.showInActivityIndicatory()
                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
-                self.getTag()
-//                  let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
-//                  let docrefs = db.collection("organization").document("\(self.getrolebySeasonid!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-//                  docrefs.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
-//                  { err in
-//                      if let err = err {
-//                          print("Error removing document: \(err)")
-//                      } else {
-//                          print("Document successfully removed!")
-//                        let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-//                          addDoc.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
-//                          { err in
-//                              if let err = err {
-//                                  print("Error removing document: \(err)")
-//                              } else {
-//                                  print("Document successfully removed!")
-//                                  Constant.showInActivityIndicatory()
-//                                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
-//                                  self.getTag()
-//                              }
-//                          }
-//                      }
-//                  }
+                self.getTagListMethod()
                   Constant.showInActivityIndicatory()
               }
           }

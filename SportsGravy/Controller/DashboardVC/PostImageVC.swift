@@ -13,6 +13,7 @@ import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
 import Alamofire
+import Photos
 
 
 struct PostGroupSection {
@@ -21,12 +22,10 @@ struct PostGroupSection {
 }
 
 class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectuserGroubDelegate, SelectPostTagDelegate, SelectpostCanDelegate,SelectReactionDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+
     func selectReactionDetail(userDetail: NSDictionary) {
         let userTeam: NSDictionary = userDetail
-         //teamList = userTeam
         Reaction = userTeam.value(forKey: "reation_title") as? String
-       
-        
         for index in self.postsections.indices {
              if(index == 2)
              {
@@ -57,15 +56,9 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                  
              }// Ok
          }
-//        for i in 0..<postsections.count
-//        {
-//            
-//        }
-        
-        
          let sectionIndex = IndexSet(integer: 3)
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-         postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
+        // postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
 
     }
     
@@ -85,11 +78,12 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
          let sectionIndex = IndexSet(integer: 1)
 
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-        postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
+       // postTbl_height.constant = CGFloat(self.postsections.count * 60) + CGFloat(60)
 
     }
     
-    let imageviewcontroller = UIImagePickerController()    
+    let imageviewcontroller = UIImagePickerController()
+    
     func selectuserGroubDetail(userDetail: NSMutableArray) {
         let userTeam: NSDictionary = userDetail[0] as! NSDictionary
         teamList = userTeam
@@ -100,9 +94,10 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         SelectgetLevelid = userTeam.value(forKey: "level_id") as? String
         SelectgetTeamId = userTeam.value(forKey: "team_id") as? String
         
-        
         selectTeamName = userTeam.value(forKey: "team_name") as? String
-        usergroupid = userTeam.value(forKey: "user_groupId") as? String
+        usergroupid = userTeam.value(forKey: "membergroup_id") as? String
+        playergroupid = userTeam.value(forKey: "user_id") as? String
+        
         for index in postsections.indices {
             if(index == 0)
             {
@@ -112,7 +107,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         let sectionIndex = IndexSet(integer: 0)
         self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-        postTbl_height.constant = CGFloat(self.postsections.count * 60)
+        //postTbl_height.constant = CGFloat(self.postsections.count * 60)
 
         
     }
@@ -145,6 +140,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var getSportid: String!
     var getOrganizationid: String!
     var usergroupid: String!
+    var playergroupid: String!
     var getUserInfo: NSDictionary!
 
 
@@ -188,6 +184,10 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             }
         }
         getuserDetail()
+        postteam_tbl.allowsMultipleSelection = true
+        postteam_tbl.tableFooterView = UIView()
+        self.postteam_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        postteam_tbl.sizeToFit()
        
     }
 
@@ -211,21 +211,40 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PostImageDetailCell  = tableView.dequeueReusableCell(withIdentifier: "postDetail", for: indexPath) as! PostImageDetailCell
-        let section = postsections[indexPath.section]
-        let dic: NSDictionary = section.userlist
+        let sections = postsections[indexPath.section]
+        let dic: NSDictionary = sections.userlist
+      print("dfsdfgdfg\(indexPath.section)")
+        cell.cancel_btn.tag = indexPath.section
         if(indexPath.section == 0)
        {
-        cell.detail_btn.setTitle(dic.value(forKey: "team_name") as? String, for: .normal)
+        if(dic.value(forKey: "user_id") as! String != "")
+        {
+            cell.detail_btn.setTitle(dic.value(forKey: "user_id") as? String, for: .normal)
+
+        }
+        else
+        {
+        let selectname = (dic.value(forKey: "membergroup_id") as! String != "") ? dic.value(forKey: "membergroup_id") as! String : dic.value(forKey: "team_name") as! String
+        cell.detail_btn.setTitle(selectname, for: .normal)
+
+        }
         }
         else if(indexPath.section == 1)
        {
-        cell.detail_btn.setTitle(dic.value(forKey: "tag_id") as? String, for: .normal)
+        cell.detail_btn.setTitle(dic.value(forKey: "tag_name") as? String, for: .normal)
+       // cell.cancel_btn.tag = indexPath.row
 
         }
         else if(indexPath.section  == 2)
        {
-        cell.detail_btn.setTitle(dic.value(forKey: "reation_title") as? String, for: .normal)
+        //cell.detail_btn.setTitle(dic.value(forKey: "reation_title") as? String, for: .normal)
+       // cell.detail_btn.setImage(UIImage(named: "\(dic.value(forKey: "reaction_image")!)"), for: .normal)
         cell.detail_btn.setImage(UIImage(named: "\(dic.value(forKey: "reaction_image")!)"), for: .normal)
+        cell.detail_btn.setTitle(dic.value(forKey: "reation_title") as? String, for: .normal)
+       cell.detail_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0,10.0, 0.0, 0.0)
+        cell.detail_btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+
+        cell.detail_btn.contentHorizontalAlignment = .left
 
         }
         else if(indexPath.section == 3)
@@ -238,15 +257,19 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.commonview.layer.cornerRadius = 20
     
         cell.commonview.layer.masksToBounds = true
+        cell.cancel_btn.addTarget(self, action: #selector(RemovepostItem), for: .touchUpInside)
+
         
        return cell
        }
 
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           return 60.0
+        
+        
+        return  45.0
        }
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 40.0
+            return UITableViewAutomaticDimension
         }
 
         func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -281,22 +304,25 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
             print("You tapped cell number \(indexPath.section).")
-           // let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
-//
-//            let currentCell = tableView.cellForRow(at: indexPath!) as! UsergroupCreateCell
-//
-//            if(currentCell.isSelected)
-//            {
-//                currentCell.checkbox.backgroundColor = UIColor.green
-//
-//            }
-//            else
-//            {
-//                currentCell.checkbox.backgroundColor = UIColor.clear
-//
-//            }
 
         }
+    @objc func RemovepostItem(_ sender: UIButton)
+    {
+       let button = sender.tag
+        print(sender.tag)
+        let userTeam: NSDictionary = NSDictionary()
+
+        for index in postsections.indices {
+            if(index == sender.tag)
+            {
+                postsections[index].userlist = userTeam
+                
+            }// Ok
+        }
+        let sectionIndex = IndexSet(integer: sender.tag)
+        self.postteam_tbl.reloadSections(sectionIndex, with: .none)
+
+    }
         
     @objc func directview(_ sender: UIButton)
     {
@@ -371,6 +397,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
            imageviewcontroller.allowsEditing = true
            imageviewcontroller.delegate = self
            imageviewcontroller.mediaTypes = [kUTTypeImage as String , kUTTypeMovie as String];
+        imageviewcontroller.sourceType = .photoLibrary
            self.present(imageviewcontroller, animated: true, completion: nil)
        }
     func getImage(fromSourceType sourceType: UIImagePickerControllerSourceType) {
@@ -428,8 +455,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                                    let UrlString = URL!.absoluteString
                                    print(UrlString)
-//                                    self.getPostimageUrl = NSMutableArray()
-//                                    self.getPostimageUrl.add(UrlString)
                                     self.getPostVideoUrl = UrlString
                                     Constant.showInActivityIndicatory()
 
@@ -502,8 +527,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     Constant.showInActivityIndicatory()
 
                   }
-                //Constant.showInActivityIndicatory()
-                
               }
     }
     
@@ -524,7 +547,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                        Constant.showActivityIndicatory(uiView: self.view)
                        let testStatusUrl: String = Constant.sharedinstance.FeedPostUrl
                         var param:[String:AnyObject] = [:]
-        
         param["feedPostedUser_id"] = self.getUserInfo.value(forKey: "user_id") as AnyObject?
         param["feedPostedUser_firstName"] = getUserInfo.value(forKey: "first_name") as AnyObject?
         param["feedPostedUser_lastName"] = getUserInfo.value(forKey: "last_name") as AnyObject?
@@ -535,9 +557,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         param["feedText"] = post_content_txt.text as AnyObject
         if(getPostimageUrl.count>0)
         {
-//        let postimgaeArray: NSMutableArray = NSMutableArray()
-//        postimgaeArray.add(getPostimageUrl)
-       
         param["feedImageURL"] = getPostimageUrl.copy() as AnyObject
         
         }
@@ -556,19 +575,24 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         orderArray = ["\(getOrganizationid!)", "\(getSportid!)", "\(getOrganizationid!)","\(SelectgetLevelid!)", "\(SelectgetTeamId!)"]
         param["feededLevel"] = orderArray
         let feedlevelobj : NSMutableDictionary = NSMutableDictionary()
-        feedlevelobj.setValue(getOrganizationid, forKey: "organization_id")
-        feedlevelobj.setValue(getSportid, forKey: "sport_id")
-        feedlevelobj.setValue(SelectgetrolebySeasonid, forKey: "season_id")
-        feedlevelobj.setValue(SelectgetLevelid, forKey: "level_id")
-        feedlevelobj.setValue(SelectgetTeamId, forKey: "team_id")
-        feedlevelobj.setValue(usergroupid, forKey: "user_group")
+        feedlevelobj.setValue(self.teamList.value(forKey: "level_id"), forKey: "level_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "level_name"), forKey: "level_name")
+            feedlevelobj.setValue(self.teamList.value(forKey: "membergroup_id"), forKey: "membergroup_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "membergroup_name"), forKey: "membergroup_name")
+            feedlevelobj.setValue(self.teamList.value(forKey: "organization_id"), forKey: "organization_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "organization_name"), forKey: "organization_name")
+            feedlevelobj.setValue(self.teamList.value(forKey: "season_id"), forKey: "season_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "season_label"), forKey: "season_name")
+            feedlevelobj.setValue(self.teamList.value(forKey: "sport_id"), forKey: "sport_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "sport_name"), forKey: "sport_name")
+            feedlevelobj.setValue(self.teamList.value(forKey: "team_id"), forKey: "team_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "team_name"), forKey: "team_name")
+            feedlevelobj.setValue(self.teamList.value(forKey: "user_id"), forKey: "user_id")
+            feedlevelobj.setValue(self.teamList.value(forKey: "user_name"), forKey: "user_name")
         let feedlevelobjArray: NSMutableArray = NSMutableArray()
         feedlevelobjArray.add(feedlevelobj)
         param["feededLevelObject"] = feedlevelobjArray.copy() as AnyObject
         param["feedPostedOrg_id"] = getOrganizationid as AnyObject?
-        
-            //param["uid"] = useruid as AnyObject?
-                       
             Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:DataResponse<Any>) in
                            if(!(response.error != nil)){
                                switch (response.result)
@@ -582,7 +606,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                            let result = info?["message"] as! String
                                         Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: result)
                                           Constant.showInActivityIndicatory()
-//                                       
                                        }
                                        Constant.showInActivityIndicatory()
                                    }
@@ -600,37 +623,9 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                            }
                        }
-                   
-        
     }
     
     }
-    
-    
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        if let videourl = info[UIImagePickerControllerMediaURL] as? URL {
-//               let filename = "spmeFilename.mov"
-//               print("videourl",videourl)
-//            Storage.storage().reference().child(filename).putfile(videourl,metadata:nil,completion: { (metadata, error) in
-//                   if error != nil {
-//                       return
-//                   }
-//                   if let strorageurl = metadata?.downloadURL()?.absoluteString {
-//                       print(strorageurl)
-//                   }
-//
-//               })
-//           }
-//
-//           var selectedImageFromPicker: UIImage?
-//           if let editedImage = info["UIImagePickerController.InfoKey.editedImage"] as? UIImage {
-//               selectedImageFromPicker = editedImage
-//           } else if let OriginalImage = info["UIImagePickerController.InfoKey.originalImage"] as? UIImage {
-//               selectedImageFromPicker = OriginalImage
-//           }
-//           self.dismiss(animated: true, completion: nil)
-//       }
-
     
     @IBAction func backpostbtn(_ sender: UIButton)
     {

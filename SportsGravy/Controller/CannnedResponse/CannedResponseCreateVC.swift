@@ -84,10 +84,22 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         {
           selectOption_btn = UIButton(type: .roundedRect)
             selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
-            selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
             let title: String = getorderArray?[i] as! String
+
+            if(title != "" && title != nil)
+            {
+            if(i == 0)
+            {
+                selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
+            }
+            else
+            {
+              selectOption_btn.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+
+            }
+           // selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
             selectOption_btn.translatesAutoresizingMaskIntoConstraints = false
-            let attrStr = NSMutableAttributedString(string: "\(title)")
+            let attrStr = NSMutableAttributedString(string: "\(selectOption_btn.title(for: .normal) ?? "")")
             if(i != 0)
             {
                 attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
@@ -165,7 +177,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                 self.addOrderView.addConstraint(verticalConstraint)
             }
             buttons.add(selectOption_btn)
-
+            }
         }
        
         self.SelectorderView.addSubview(addOrderView)
@@ -270,14 +282,14 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                            } else {
                                  let getcannedList = NSMutableArray()
 
-                                   for document in querySnapshot!.documents {
-                                   let data: NSDictionary = document.data() as NSDictionary
-                                     if(data.value(forKey: "cannedResponseTitle") as! String == self.canRespons_tittle_txt.text! || (data.value(forKey: "cannedResponseTitle") as! String) . caseInsensitiveCompare(self.canRespons_tittle_txt.text!) == ComparisonResult.orderedSame)
-                                     {
-                                         getcannedList.add(data)
-
-                                     }
-                                  }
+//                                   for document in querySnapshot!.documents {
+//                                   let data: NSDictionary = document.data() as NSDictionary
+//                                     if(data.value(forKey: "cannedResponseTitle") as! String == self.canRespons_tittle_txt.text! || (data.value(forKey: "cannedResponseTitle") as! String) . caseInsensitiveCompare(self.canRespons_tittle_txt.text!) == ComparisonResult.orderedSame)
+//                                     {
+//                                         getcannedList.add(data)
+//
+//                                     }
+//                                  }
                             if(getcannedList.count == 0)
                             {
                                       ref =  docRef.collection("CannedResponse").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""])

@@ -89,10 +89,22 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
            {
              selectOption_btn = UIButton(type: .roundedRect)
                selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
-               selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
-               let title: String = getorderArray?[i] as! String
+            let title: String = getorderArray?[i] as! String
+
+            if(title != "" && title != nil)
+                       {
+                       if(i == 0)
+                       {
+                           selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
+                       }
+                       else
+                       {
+                         selectOption_btn.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+
+                       }
+               //selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
                selectOption_btn.translatesAutoresizingMaskIntoConstraints = false
-               let attrStr = NSMutableAttributedString(string: "\(title)")
+               let attrStr = NSMutableAttributedString(string: "\(selectOption_btn.title(for: .normal) ?? "")")
                if(i != 0)
                {
                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
@@ -161,7 +173,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                    self.addOrderView.addConstraint(verticalConstraint)
                }
                buttons.add(selectOption_btn)
-
+            }
            }
           
            self.SelectorderView.addSubview(addOrderView)
