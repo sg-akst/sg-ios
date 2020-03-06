@@ -9,7 +9,7 @@
 import UIKit
 import SWRevealViewController
 import FirebaseFirestore
-import Kingfisher
+//import Kingfisher
 import AlamofireImage
 import Firebase
 import AVKit

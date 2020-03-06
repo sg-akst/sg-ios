@@ -439,7 +439,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     @objc func orderselectmethod(_ sender: UIButton)
     {
         let selecttag = sender.tag
-       // orderviewheight.constant = 50
         isTeam = false
         createGroupView.isHidden = true
 
@@ -604,8 +603,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
                 }
             }
-//
-           // orderviewheight.constant = 90
             if (UserDefaults.standard.bool(forKey: "1") == true)
             {
                 sortingUser.isHidden = false

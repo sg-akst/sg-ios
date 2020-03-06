@@ -31,6 +31,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var groupcreate_btn: UIButton!
     @IBOutlet var group_create_tbl: UITableView!
     @IBOutlet var navigation_title_lbl: UILabel!
+    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
+   
 
 
      var groubSection: [GroupSection]!
@@ -77,6 +79,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
    
     func getuserDetail()
        {
+        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+
            let buttons: NSMutableArray = NSMutableArray()
            var indexOfLeftmostButtonOnCurrentLine: Int = 0
            var runningWidth: CGFloat = 10.0
@@ -288,8 +292,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
           print("Leaving textField")
           return true
       }
-     
-    
      func textFieldDidEndEditing(_ textField: UITextField) {
           print("textFieldDidEndEditing")
          print("textField = \(textField.text ?? "")")
@@ -341,21 +343,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         cell?.checkbox.backgroundColor = UIColor.green
         self.selectpersonArray.add(getvalue)
         }
-       // if(isCreate == false)
-//        {
-//         let userSelectArray: NSMutableArray = updateArray.value(forKey: "user_list") as! NSMutableArray
-//        if(selectpersonArray.isEqual(userSelectArray))
-//        {
-//            groupcreate_btn.isUserInteractionEnabled = false
-//            groupcreate_btn.setTitleColor(UIColor.darkGray, for: .normal)
-//        }
-//        else
-//        {
-//            groupcreate_btn.isUserInteractionEnabled = true
-//            groupcreate_btn.setTitleColor(UIColor.blue, for: .normal)
-//        }
-//        }
-        
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -377,78 +364,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
     }
     
-    // @IBAction func deleteGroup_Method(_ sender: UIButton)
-//           {
-//    //           let indexno = sender.tag
-//    //           let teamDic: NSDictionary = self.updateArray?[indexno] as! NSDictionary
-//               let count : Int = updateArray.value(forKey: "count") as! Int
-//               let isDelete: Bool = (count > 0 ) ? false : true
-//               if(isDelete == false)
-//               {
-//                   Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
-//               }
-//               else
-//               {
-//                let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(updateArray.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
-//                   alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
-//                              //Cancel Action
-//                          }))
-//                   alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-//                    self.deleteMethod()
-//                    }))
-//
-//                   self.present(alert, animated: true, completion: nil)
-//
-//
-//               }
-//
-//           }
- //   func deleteMethod()
-//       {
-//           Constant.internetconnection(vc: self)
-//                Constant.showActivityIndicatory(uiView: self.view)
-//                let getuuid = UserDefaults.standard.string(forKey: "UUID")
-//                let db = Firestore.firestore()
-//                let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-//                docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId")!)").delete()
-//                { err in
-//                    if let err = err {
-//                        print("Error removing document: \(err)")
-//                    } else {
-//                        print("Document successfully removed!")
-//                       let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-//                        let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document()
-//                        docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId")!)").delete()
-//                        { err in
-//                            if let err = err {
-//                                print("Error removing document: \(err)")
-//                            } else {
-//                                print("Document successfully removed!")
-//                               let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-//                                addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId")!)").delete()
-//                                { err in
-//                                    if let err = err {
-//                                        print("Error removing document: \(err)")
-//                                    } else {
-//                                        print("Document successfully removed!")
-//                                        Constant.showInActivityIndicatory()
-//                                       // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "MemberGroup Removed Successfully")
-//                                        //self.getmembergroup()
-//                                        self.alertermsg(msg: "\(self.updateArray.value(forKey: "user_groupId")!) deleted successfully")
-//
-//                                    }
-//                                }
-//
-//                            }
-//
-//                        }
-//                        Constant.showInActivityIndicatory()
-//
-//
-//                    }
-//                }
-//           }
-    
+   
     @IBAction func Create_BtnAction(_ sender: UIButton)
     {
         var ref: DocumentReference? = nil

@@ -115,8 +115,8 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
 
             let testStatusUrl: String = Constant.sharedinstance.inviteGuardianUrl
-            let header  = [
-                "idtoken": UserDefaults.standard.string(forKey: "idtoken"),"Content-Type" : "application/json"]
+            let header: HTTPHeaders  = [
+                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
             let parameter: [String: Any] = [
                 "uid" : getuuid!,
                 "email_address" : guardianemail_txt.text!,
@@ -126,7 +126,8 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             let urlString = "\(testStatusUrl)"
             let url = URL.init(string: urlString)
             print("parameter=>\(parameter)")
-            Alamofire.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON { response in
+        
+            AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { response in
                  switch response.result
                 {
                 case .success(let json):

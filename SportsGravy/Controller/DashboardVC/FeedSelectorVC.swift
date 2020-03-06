@@ -86,7 +86,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
+            self.orderviewheight.constant = (self.addorderArray.count > 6) ? 90 : 50
 
                     let buttons: NSMutableArray = NSMutableArray()
                     var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -106,7 +106,6 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             
                         addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
                         let title: String = addorderArray?[i] as! String
-
                             if(title != "" && title != nil)
                                        {
                                        if(i == 0)
@@ -279,13 +278,13 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                getSameOrganization = NSMutableArray()
                getdifferentOrganization = NSMutableArray()
                addorderArray.add("All")
-               let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+               let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
                           
                           for i  in 0..<getRolebyreasonDetailArray.count
                           {
                           let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
               //
-                          let abb: String = roleDic.value(forKey: "organization_abbrev") as! String
+                          let abb: String = roleDic.value(forKey: "organization_id") as! String
                           if (filteredEvents.contains("\(abb)"))
                           {
                               print("found")
@@ -303,16 +302,20 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                               
                           }
                                      
-                    self.commonArray.append(contentsOf: filteredEvents)
-//            if(getdifferentOrganization.count > 1)
-//            {
-//                feedCount(selectArray: getdifferentOrganization)
-//            }
-//            else
-//            {
-//                feedCount(selectArray: getSameOrganization)
-//
-//            }
+                 if(getdifferentOrganization.count > 1)
+                 {
+                     let filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+
+                     self.commonArray.append(contentsOf: filteredEvent)
+
+                 }
+                 else
+                 {
+                    
+                     let filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+                     self.commonArray.append(contentsOf: filteredEvent)
+                     
+                 }
            }
            func getsportsmethod()
            {
@@ -321,15 +324,12 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                
                if(self.getdifferentOrganization.count > 1)
                {
-                       self.commonArray = NSMutableArray() as? [String]
-
-                         //self.addorderArray.add("\(getOrganization!)")
-                         
-                         
+                self.addorderArray.add(commonArray.last!)
+                self.commonArray = NSMutableArray() as? [String]
                          for i in 0..<getdifferentOrganization.count
                          {
                              let roleDic: NSDictionary = getdifferentOrganization?[i] as! NSDictionary
-                             let role: String = roleDic.value(forKey: "organization_abbrev") as! String
+                             let role: String = roleDic.value(forKey: "organization_id") as! String
                              if(role == getOrganization)
                              {
                                  self.getSport = roleDic.value(forKey: "sport_id") as? String
@@ -341,17 +341,18 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                  getdifferentSportsArray.add(roleDic)
                              }
                          }
-                       let filteredEvents: [String] = self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
+                       let filteredEvents: [String] = self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
                               self.commonArray.append(contentsOf: filteredEvents)
                      }
                else if(self.getSameOrganization.count > 0)
                {
+                self.addorderArray.add(commonArray.last!)
                    self.commonArray = NSMutableArray() as? [String]
-                   self.addorderArray.add("\(getOrganization!)")
+//                   self.addorderArray.add("\(getOrganization!)")
                    for i in 0..<getSameOrganization.count
                    {
                        let roleDic: NSDictionary = getSameOrganization?[i] as! NSDictionary
-                       let role: String = roleDic.value(forKey: "organization_abbrev") as! String
+                       let role: String = roleDic.value(forKey: "organization_id") as! String
                        if(role == getOrganization)
                        {
                            self.getSport = roleDic.value(forKey: "sport_id") as? String
@@ -363,7 +364,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                            getdifferentSportsArray.add(roleDic)
                        }
                    }
-                   let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
+                   let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
                    self.commonArray.append(contentsOf: filteredEvents)
                }
 
@@ -374,8 +375,9 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                           self.getdifferentSeasonArray = NSMutableArray()
                           if(self.getdifferentSportsArray.count > 1)
                                  {
+                                    self.addorderArray.add(commonArray.last!)
+
                                      self.commonArray = NSMutableArray() as? [String]
-                                    // self.addorderArray.add("\(getSport!)")
                                      for i in 0..<getdifferentSportsArray.count
                                      {
                                          let roleDic: NSDictionary = getdifferentSportsArray?[i] as! NSDictionary
@@ -398,8 +400,9 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                  }
                           else if (self.getSameSportsArray.count > 0)
                           {
+                            self.addorderArray.add(commonArray.last!)
+
                               self.commonArray = NSMutableArray() as? [String]
-                              self.addorderArray.add("\(getSport!)")
                               for i in 0..<getSameSportsArray.count
                               {
                                   let roleDic: NSDictionary = getSameSportsArray?[i] as! NSDictionary
@@ -428,6 +431,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                self.getdifferentLevelArray = NSMutableArray()
                if(getdifferentSeasonArray.count>1)
                {
+                self.addorderArray.add(commonArray.last!)
+
                    self.commonArray = NSMutableArray() as? [String]
                    for i in 0..<getdifferentSeasonArray.count
                    {
@@ -450,8 +455,10 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                }
                else if(getSameSeasonArray.count>0)
                {
+                self.addorderArray.add(commonArray.last!)
+
                    self.commonArray = NSMutableArray() as? [String]
-                       self.addorderArray.add("\(getSeason!)")
+                      // self.addorderArray.add("\(getSeason!)")
                        for i in 0..<getSameSeasonArray.count
                        {
                            let roleDic: NSDictionary = getSameSeasonArray?[i] as! NSDictionary
@@ -481,6 +488,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             
                 if(self.getdifferentLevelArray.count > 1)
                         {
+                            self.addorderArray.add(commonArray.last!)
+
                             self.commonArray = NSMutableArray() as? [String]
 
                             for i in 0..<getdifferentLevelArray.count
@@ -507,9 +516,10 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                         }
                 else if(getSameLevelArray.count > 0)
                  {
-                    
+                    self.addorderArray.add(commonArray.last!)
+
                     self.commonArray = NSMutableArray() as? [String]
-                    self.addorderArray.add("\(getLevel!)")
+//                    self.addorderArray.add("\(getLevel!)")
                     for i in 0..<getSameLevelArray.count
                     {
                       let roleDic: NSDictionary = getSameLevelArray?[i] as! NSDictionary
@@ -528,14 +538,6 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                     let filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                     self.commonArray.append(contentsOf: filteredEvents)
-                                   
-                    
-                  // self.commonArray = NSMutableArray() as? [String]
-                  // self.addorderArray.add("\(self.getLevel!)")
-                   
-//                   let filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
-//                   self.commonArray.append(contentsOf: filteredEvents)
-
                 }
            }
            
@@ -640,20 +642,22 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         Constant.internetconnection(vc: self)
            // Constant.showActivityIndicatory(uiView: self.view)
                let testStatusUrl: String = Constant.sharedinstance.FeedCountUrl
-               let header = [
-                   "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+        let header: HTTPHeaders = [
+                   "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
                 var param:[String:AnyObject] = [:]
                param["user_id"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         
         param["feededLevelObject"] = feedlevelobj as AnyObject
 
-        Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
                    if(!(response.error != nil)){
                        switch (response.result)
                        {
-                       case .success(_):
-                           if let data = response.result.value{
-                               let info = data as? NSDictionary
+                       case .success(let json):
+                        let jsonData = json
+
+                       // if let data = response.data{
+                               let info = jsonData as? NSDictionary
                                let statusCode = info?["status"] as? Bool
                                let message = info?["message"] as? String
 
@@ -676,7 +680,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                   Constant.showInActivityIndicatory()
 
                                }
-                           }
+                          // }
                            break
 
                        case .failure(_):

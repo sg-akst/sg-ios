@@ -37,6 +37,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     var getrolebyorganizationArray: NSMutableArray!
     var selectOption_btn: UIButton!
     var getTeamId: String!
+    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +74,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     }
     func getuserDetail()
     {
+        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
         var runningWidth: CGFloat = 10.0

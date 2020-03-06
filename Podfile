@@ -6,9 +6,9 @@ target 'SportsGravy' do
   use_frameworks!
   
   pod 'Alamofire'
-  pod 'IQKeyboardManagerSwift'
-  pod 'Firebase/Auth'
+ pod 'Firebase/Auth'
   pod 'FirebaseFirestoreSwift'
+  pod 'IQKeyboardManagerSwift'
   pod 'SwiftyJSON'
   pod 'Kingfisher'
   pod 'SWRevealViewController'
@@ -17,6 +17,7 @@ target 'SportsGravy' do
   pod 'Firebase/Storage'
   pod 'LayoutHelper'
   pod 'AlamofireImage'
+ pod "BSImagePicker"
 
 
   # Pods for SportsGravy

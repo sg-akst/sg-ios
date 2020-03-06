@@ -99,7 +99,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
+        self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0

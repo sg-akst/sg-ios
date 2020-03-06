@@ -38,8 +38,13 @@ class OrganizationVC: UIViewController {
                                                             let dates = dateFormatters.date(from: "\(joinDatestr)")
                                                             dateFormatters.dateFormat = "MMM-dd-yyyy"
                                                             let dobDate = dateFormatters.string(from: dates!)
+//        let datees: Date = timestamp.dateValue()
+//
+//        let dateFormatterPrint = DateFormatter()
+//        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+//        print(dateFormatterPrint.string(from: datees as Date))
                                                            
-                                                                     self.date_lbl.text = "Joined \(dobDate)"
+            self.date_lbl.text = "Joined \(dobDate)"
                                        
         self.porfile_img.setTitle(organizationDetails.value(forKey: "abbrev") as? String, for: .normal)
          //self.porfile_img.layer.cornerRadius = self.porfile_img.frame.size.width/2
@@ -50,8 +55,8 @@ class OrganizationVC: UIViewController {
 
         self.sports_lbl.text = sportsname.value(forKey: "name") as? String
                                                       self.mobile_no_lbl.text = organizationDetails.value(forKey: "phone") as? String
-                                                      let getaddress: NSDictionary = organizationDetails.value(forKey: "address") as! NSDictionary
-                                                      self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
+       // let getaddress: NSDictionary = self.organizationDetails.value(forKey: "address") as! NSDictionary
+                                                      self.address_lbl.text = "\(organizationDetails.value(forKey: "street1")!)" + ", " + "\(organizationDetails.value(forKey: "street2")!)" + "\n" + "\(organizationDetails.value(forKey: "city")!)" + "-" + "\(organizationDetails.value(forKey: "postal_code")!)" + "\n" + "\(organizationDetails.value(forKey: "state")!)" + "," + "\(organizationDetails.value(forKey: "country_code")!)"
         name_lbl.text = organizationDetails.value(forKey: "name") as? String
         fax_lbl.text = organizationDetails.value(forKey: "fax") as? String
         website_lbl.text = organizationDetails.value(forKey: "website") as? String

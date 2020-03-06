@@ -36,6 +36,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var rolebySeasonid: NSString!
     var getTeamId: NSString!
     weak var delegate:SortorderDelegate?
+    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,8 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     func getuserDetail()
     {
+        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
             var runningWidth: CGFloat = 10.0
@@ -68,16 +71,28 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 let addTitle_btn: UIButton = UIButton(type: .roundedRect)
     
                 addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
-                addTitle_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
+                //addTitle_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
                 let title: String = getorderArray?[i] as! String
+                if(title != "" && title != nil)
+                 {
+                 if(i == 0)
+                 {
+                     addTitle_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
+                 }
+                 else
+                 {
+                   addTitle_btn.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+
+                 }
+                }
+                
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
-                let attrStr = NSMutableAttributedString(string: "\(title)")
-               
+                let attrStr = NSMutableAttributedString(string: "\(addTitle_btn.title(for: .normal) ?? "")")
                 if(i != 0)
                 {
-                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
                 }
-               addTitle_btn.setAttributedTitle(attrStr, for: .normal)
+                addTitle_btn.setAttributedTitle(attrStr, for: .normal)
 
                 let lastIndex: Int = getorderArray.count-1
                
@@ -255,9 +270,10 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Constant.showActivityIndicatory(uiView: self.view)
         Constant.internetconnection(vc: self)
         let testStatusUrl: String = Constant.sharedinstance.updateSorting
-        let header  = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken"),"Content-Type" : "application/json"]
+        let header: HTTPHeaders  = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
         let organization: NSDictionary = self.getorganizationDetails?[0] as! NSDictionary
+        //let str = ("MemberGroup" == self.selectType) ? "User Group" : self.selectType
         let parameter: [String: Any] = [
             "organization_id" : organization.value(forKey: "organization_id") as! String,
             "sports_id" : organization.value(forKey: "sport_id") as! String,
@@ -265,13 +281,16 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
              "team_id" : getTeamId as String,
              "auth_id" : UserDefaults.standard.string(forKey: "UUID")!,
               "roleBySeason_id" : rolebySeasonid as String,
-               "title" : selectType as String,
+              "title" : selectType!,
                "updateObj": self.updateArray]
         
         let urlString = "\(testStatusUrl)"
         let url = URL.init(string: urlString)
         print("parameter=>\(parameter)")
-        Alamofire.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON { response in
+        
+        
+        
+AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { response in
                         switch response.result
                        {
                        case .success(let json):
@@ -293,7 +312,6 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                                 appDelegate.timerAction()
                                 self.updatesorting(sender)
-                               // self.getplayerlist()
                             }
                         }
                        // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: " \(str!) Sorted Successfully ")
@@ -302,6 +320,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         case .failure(let error): break
                            //self.errorFailer(error: error)
                        }
+
                         Constant.showInActivityIndicatory()
 
                    }

@@ -24,6 +24,9 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     var rolebySeasonid: String!
     var getrolebyorganizationArray: NSMutableArray!
     var getTeamId: String!
+    
+    @IBOutlet weak var orderviewheight: NSLayoutConstraint!
+
 
     weak var delegate:PassSelectorderDelegate?
 
@@ -44,6 +47,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     
     func getuserDetail()
     {
+         self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
         var runningWidth: CGFloat = 10.0

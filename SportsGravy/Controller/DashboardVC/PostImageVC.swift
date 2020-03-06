@@ -593,13 +593,15 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         feedlevelobjArray.add(feedlevelobj)
         param["feededLevelObject"] = feedlevelobjArray.copy() as AnyObject
         param["feedPostedOrg_id"] = getOrganizationid as AnyObject?
-            Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:DataResponse<Any>) in
+            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
                            if(!(response.error != nil)){
                                switch (response.result)
                                {
-                               case .success(_):
-                                   if let data = response.result.value{
-                                       let info = data as? NSDictionary
+                               case .success(let json):
+                                let jsonData = json
+
+                                  // if let data = response.data{
+                                       let info = jsonData as? NSDictionary
                                        let statusCode = info?["status"] as? Bool
                                        if(statusCode == true)
                                        {
@@ -608,7 +610,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                           Constant.showInActivityIndicatory()
                                        }
                                        Constant.showInActivityIndicatory()
-                                   }
+                                   //}
                                    break
 
                                case .failure(_):

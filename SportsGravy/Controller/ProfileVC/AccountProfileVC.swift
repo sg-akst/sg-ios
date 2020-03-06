@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 import Kingfisher
 import FirebaseStorage
 import Alamofire
+import SwiftyJSON
 
 struct Category {
     let name : String
@@ -206,7 +207,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
 
     //get image from source type
-    func getImage(fromSourceType sourceType: UIImagePickerControllerSourceType) {
+    func getImage(fromSourceType sourceType: UIImagePickerController.SourceType) {
 
         //Check is source type available
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
@@ -279,18 +280,20 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
-        let header = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+        let header: HTTPHeaders = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
          var param:[String:AnyObject] = [:]
         param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         
-        Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
             if(!(response.error != nil)){
                 switch (response.result)
                 {
-                case .success(_):
-                    if let data = response.result.value{
-                        let info = data as? NSDictionary
+                case .success(let json):
+                   // if let data = response.data{
+                        let jsonData = json
+                        print(jsonData)
+                        let info = jsonData as? NSDictionary
                         let statusCode = info?["status"] as? Bool
                         let message = info?["message"] as? String
 
@@ -314,7 +317,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                            
                         }
                         Constant.showInActivityIndicatory()
-                    }
+                  //  }
                     break
 
                 case .failure(_):
@@ -337,18 +340,20 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
-            let header = [
-                "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+        let header: HTTPHeaders = [
+                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
              var param:[String:AnyObject] = [:]
             param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
             
-            Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
-                    case .success(_):
-                        if let data = response.result.value{
-                            let info = data as? NSDictionary
+                    case .success(let json):
+                      //  if let data = response.data{
+                        let jsonData = json
+                            print(jsonData)
+                            let info = jsonData as? NSDictionary
                             let statusCode = info?["status"] as? Bool
                             //let message = info?["message"] as? String
 
@@ -368,7 +373,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                             }
                             Constant.showInActivityIndicatory()
-                        }
+                        //}
                         break
 
                     case .failure(_):
@@ -392,18 +397,20 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
-        let header = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+        let header: HTTPHeaders = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
          var param:[String:AnyObject] = [:]
         param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         
-        Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
             if(!(response.error != nil)){
                 switch (response.result)
                 {
-                case .success(_):
-                    if let data = response.result.value{
-                        let info = data as? NSDictionary
+                case .success(let json):
+                   // if let data = response.data{
+                    let jsonData = json
+                        print(jsonData)
+                        let info = jsonData as? NSDictionary
                         let statusCode = info?["status"] as? Bool
                         if(statusCode == true)
                         {
@@ -436,7 +443,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                            // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                         }
                         Constant.showInActivityIndicatory()
-                    }
+                   // }
                     break
 
                 case .failure(_):

@@ -261,7 +261,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                              getdifferentSportsArray.add(roleDic)
                          }
                      }
-                   let filteredEvents: [String] = self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
+                   let filteredEvents: [String] = self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
                           self.commonArray.append(contentsOf: filteredEvents)
                  }
            else if(self.getSameOrganization.count == 1)

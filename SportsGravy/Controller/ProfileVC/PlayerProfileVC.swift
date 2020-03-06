@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import Alamofire
-import Kingfisher
+//import Kingfisher
 import FirebaseStorage
 
 struct ProfileCategory {
@@ -109,18 +109,20 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 Constant.internetconnection(vc: self)
                // Constant.showActivityIndicatory(uiView: self.view)
                 let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
-                let header = [
-                    "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+            let header: HTTPHeaders = [
+                    "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
                  var param:[String:AnyObject] = [:]
                 param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
                 
-                Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+                AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
                     if(!(response.error != nil)){
                         switch (response.result)
                         {
-                        case .success(_):
-                            if let data = response.result.value{
-                                let info = data as? NSDictionary
+                        case .success( let json):
+                            let jsonData = json
+                                                   print(jsonData)
+                           // if let data = response.data{
+                                let info = jsonData as? NSDictionary
                                 let statusCode = info?["status"] as? Bool
                                 //let message = info?["message"] as? String
 
@@ -138,7 +140,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                    // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                                 }
                                 
-                            }
+                           // }
                             break
 
                         case .failure(_):
@@ -162,18 +164,20 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             Constant.internetconnection(vc: self)
            // Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
-            let header = [
-                "idtoken": UserDefaults.standard.string(forKey: "idtoken")]
+            let header: HTTPHeaders = [
+                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
              var param:[String:AnyObject] = [:]
             param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
             
-            Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header as? HTTPHeaders).responseJSON{ (response:DataResponse<Any>) in
+            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
-                    case .success(_):
-                        if let data = response.result.value{
-                            let info = data as? NSDictionary
+                    case .success(let json):
+                        let jsonData = json
+
+                        //if let data = response.data{
+                            let info = jsonData as? NSDictionary
                             let statusCode = info?["status"] as? Bool
                             //let message = info?["message"] as? String
 
@@ -196,7 +200,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                             }
                             Constant.showInActivityIndicatory()
-                        }
+                        //}
                         break
 
                     case .failure(_):
@@ -319,13 +323,15 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
        // param["uid"] = "zHhMZCuvhtrd87Q0vN65" as AnyObject
          param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         param["player_id"] = player_id as AnyObject?
-            Alamofire.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:DataResponse<Any>) in
+            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
-                    case .success(_):
-                        if let data = response.result.value{
-                            let info = data as? NSDictionary
+                    case .success(let json):
+                        let jsonData = json
+
+                       // if let data = response.data{
+                            let info = jsonData as? NSDictionary
                             let statusCode = info?["status"] as? Bool
                             if(statusCode == true)
                             {
@@ -335,7 +341,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
                             }
                             Constant.showInActivityIndicatory()
-                        }
+                       // }
                         break
 
                     case .failure(_):

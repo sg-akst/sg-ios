@@ -93,7 +93,7 @@ override func viewDidLoad() {
         }
         func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
+            self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -267,9 +267,9 @@ override func viewDidLoad() {
                
                if(self.getdifferentOrganization.count > 1)
                {
-                       self.commonArray = NSMutableArray() as? [String]
                    self.addorderArray.add(commonArray.last!)
-                   
+                   self.commonArray = NSMutableArray() as? [String]
+
                          for i in 0..<getdifferentOrganization.count
                          {
                              let roleDic: NSDictionary = getdifferentOrganization?[i] as! NSDictionary
@@ -422,7 +422,6 @@ override func viewDidLoad() {
         @objc func orderselectmethod(_ sender: UIButton)
         {
             let selecttag = sender.tag
-            //orderviewheight.constant = 50
             isTeam = false
             createGroupView.isHidden = true
             if(selecttag == 0)
@@ -556,7 +555,7 @@ override func viewDidLoad() {
                         getTeamId = roleDic.value(forKey: "team_id") as? String
                     }
                 }
-                orderviewheight.constant = 90
+                //orderviewheight.constant = 90
 
                 if (UserDefaults.standard.bool(forKey: "2") == true)
                 {

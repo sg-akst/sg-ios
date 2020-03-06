@@ -56,7 +56,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="Dhy-bF-OKf">
-                                <rect key="frame" x="-12.5" y="211.5" width="400" height="244"/>
+                                <rect key="frame" x="87.5" y="272.5" width="200" height="122"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -85,7 +85,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="DzB-ne-awt">
-                                        <rect key="frame" x="-12.5" y="23" width="400" height="244"/>
+                                        <rect key="frame" x="87.5" y="84" width="200" height="122"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -3599,6 +3599,7 @@ help with to continue to improve.</string>
                     <connections>
                         <outlet property="SelectorderView" destination="QXE-dg-nE3" id="VYe-Pn-XwB"/>
                         <outlet property="create_btn" destination="Z66-CZ-HIw" id="8qY-eJ-gDF"/>
+                        <outlet property="orderviewheight" destination="6xh-rR-e8b" id="Izg-EC-CLw"/>
                         <outlet property="tag_txt" destination="8Qb-9j-5eN" id="HJt-G8-O1x"/>
                     </connections>
                 </viewController>
@@ -3953,6 +3954,7 @@ help with to continue to improve.</string>
                         <outlet property="canRespons_txv" destination="AcZ-nK-bDR" id="RLR-NY-c7w"/>
                         <outlet property="create_btn" destination="KKQ-8M-uGb" id="3Ii-Ph-7E0"/>
                         <outlet property="navigation_title_lbl" destination="iyT-pg-ekt" id="g2X-3I-Ltb"/>
+                        <outlet property="orderviewheight" destination="WLD-kV-Eph" id="TFE-ea-R3B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1IO-FR-iSc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4104,6 +4106,7 @@ help with to continue to improve.</string>
                     <connections>
                         <outlet property="SelectorderView" destination="AAv-Mt-hWf" id="YAM-iv-ey6"/>
                         <outlet property="Title_lbl" destination="VT9-n3-2vh" id="Q0l-gz-JPx"/>
+                        <outlet property="orderviewheight" destination="EIy-DJ-xCI" id="TMV-tX-JBB"/>
                         <outlet property="sorting_tbl" destination="DaV-nm-dzz" id="P8h-hF-KhC"/>
                     </connections>
                 </viewController>
@@ -6300,6 +6303,7 @@ virtual foot closer to success</string>
                         <outlet property="group_tittle_txt" destination="Aw9-RS-hUc" id="b8l-zL-BZ3"/>
                         <outlet property="groupcreate_btn" destination="gfb-j9-tBL" id="3Y9-OL-gRu"/>
                         <outlet property="navigation_title_lbl" destination="66w-NQ-olB" id="H5U-cd-4Id"/>
+                        <outlet property="orderviewheight" destination="Spe-5c-aXd" id="bMC-fg-0sp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GsB-mn-xho" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -8116,7 +8120,7 @@ to improve.  </string>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="a1j-cI-4se" firstAttribute="trailing" secondItem="ebt-DC-6qq" secondAttribute="trailing" id="499-Kz-3uJ"/>
                             <constraint firstItem="yhD-C7-qPm" firstAttribute="trailing" secondItem="ebt-DC-6qq" secondAttribute="trailing" id="6nd-hP-Ty7"/>
