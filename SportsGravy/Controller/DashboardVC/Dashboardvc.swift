@@ -187,13 +187,13 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.username_lbl?.text = "\(Dic.value(forKey: "feedPostedUser_firstName")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_middleInitial")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_lastName")!)" + " - " + "\(Dic.value(forKey: "feedPostedUser_role")!)" .capitalized
             let timestamp: Timestamp = Dic.value(forKey: "feedPostedDatetime") as! Timestamp
              let datees: Date = timestamp.dateValue()
-             print(datees)
+             //print(datees)
              let dateFormatterGet = DateFormatter()
              dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
              let dateFormatterPrint = DateFormatter()
              dateFormatterPrint.dateFormat = "MMM dd,yyyy HH:mm:ss a"
-             print(dateFormatterPrint.string(from: datees as Date))
+            // print(dateFormatterPrint.string(from: datees as Date))
 
     cell.date_lbl.text = "Posted on \(dateFormatterPrint.string(from: datees as Date))"
     
@@ -217,8 +217,19 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: width, height: 25)
 
         cell.reaction_btn.isHidden = false
-
-        cell.reaction_btn.setImage(UIImage(named: "\(Dic.value(forKey: "reaction")!)"), for: .normal)
+        let getreaction: String = Dic.value(forKey: "reaction") as! String
+        if(getreaction == "neutral")
+        {
+            cell.reaction_btn.setImage(UIImage(named: "happy"), for: .normal)
+        }
+        else if(getreaction == "unhappy")
+        {
+            cell.reaction_btn.setImage(UIImage(named: "Thumbs_down"), for: .normal)
+        }
+        else if(getreaction == "happy")
+        {
+            cell.reaction_btn.setImage(UIImage(named: "Thumbs_up"), for: .normal)
+        }
         cell.reaction_btn.setTitle(Dic.value(forKey: "reaction") as? String, for: .normal)
         cell.reaction_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0,3.0, 0.0, 0.0)
         cell.reaction_btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
@@ -528,7 +539,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         // method to run when table view cell is tapped
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            print("You tapped cell number \(indexPath.row).")
+           // print("You tapped cell number \(indexPath.row).")
         }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -642,10 +653,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         var userlist: NSArray = likeDic.value(forKey: "user_list") as! NSArray
         let contained = userlist.contains("\(getuuid!)")
         let feedId = Dic.value(forKey: "feed_id")
-        
-        //cell?.like_btn.tintColor = (contained) ? UIColor.red : UIColor.lightGray
         if(contained == false)
-                {
+        {
                     cell?.like_btn.tintColor = UIColor.red
                     let likecount: Int = Int("\(likeDic.value(forKey: "count")!)")! + 1
                     cell!.like_btn.setTitle("\(likecount)", for: .normal)
@@ -655,10 +664,15 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     let maplike: NSMutableDictionary = NSMutableDictionary()
                     maplike.setValue(likecount, forKey: "count")
                     maplike.setValue(userlist, forKey: "user_list")
-                    likeUpdatemethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String, selectIdexdetail: Dic)
-                    
-                    
-                }
+            
+            let newDict: NSMutableDictionary  = NSMutableDictionary()
+            let oldDict: NSDictionary = self.commonArray.object(at: indexno) as! NSDictionary
+            newDict.addEntries(from: oldDict as! [AnyHashable : Any])
+            newDict.setValue(maplike.copy(), forKey: "likes")
+            self.commonArray.replaceObject(at: indexno, with: newDict)
+            likeUpdatemethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String, selectIdexdetail: Dic, selectIndex: indexno)
+                
+        }
                 else
                 {
                     cell!.like_btn.tintColor = UIColor.lightGray
@@ -670,16 +684,24 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     let maplike: NSMutableDictionary = NSMutableDictionary()
                     maplike.setValue(likecount, forKey: "count")
                     maplike.setValue(userlist, forKey: "user_list")
-                    DislikeMethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String)
+                    
+                    let newDict: NSMutableDictionary  = NSMutableDictionary()
+                    let oldDict: NSDictionary = self.commonArray.object(at: indexno) as! NSDictionary
+                    newDict.addEntries(from: oldDict as! [AnyHashable : Any])
+                    newDict.setValue(maplike.copy(), forKey: "likes")
+                    self.commonArray.replaceObject(at: indexno, with: newDict)
+                    
+                    
+                    DislikeMethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String, selectlikindex: indexno)
                     
                    
                 }
         
     }
-    func likeUpdatemethod(updateDetail: NSDictionary, userFeedid: String, selectIdexdetail: NSDictionary)
+    func likeUpdatemethod(updateDetail: NSDictionary, userFeedid: String, selectIdexdetail: NSDictionary, selectIndex: Int)
     {
         Constant.internetconnection(vc: self)
-        Constant.showActivityIndicatory(uiView: self.view)
+       //Constant.showActivityIndicatory(uiView: self.view)
         let db = Firestore.firestore()
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
@@ -688,16 +710,25 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                            Constant.showInActivityIndicatory()
 
                        } else {
-                    
-                        db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
+                    db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
-                                Constant.showInActivityIndicatory()
+                               // Constant.showInActivityIndicatory()
 
                             } else {
                                 print("Document successfully updated")
-                                Constant.showInActivityIndicatory()
+                               // Constant.showInActivityIndicatory()
+//                                let replaceDic: NSDictionary = self.commonArray?[selectIndex] as! NSDictionary
+//                                let newDict: NSMutableDictionary  = NSMutableDictionary()
+//                                let oldDict: NSDictionary = self.commonArray.object(at: selectIndex) as! NSDictionary
+//                                newDict.addEntries(from: oldDict as! [AnyHashable : Any])
+//                                newDict.setValue(true, forKey: "isInfo")
+//
+//                                self.commonArray.replaceObject(at: selectIndex, with: newDict)
+
+                             //   let indexPosition = IndexPath(row: selectIndex, section: 0)
+                              //  self.post_tbl.reloadRows(at: [indexPosition], with: .none)
 
                             }
                         }
@@ -705,28 +736,29 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
     }
     
-    func DislikeMethod(updateDetail: NSDictionary, userFeedid: String)
+    func DislikeMethod(updateDetail: NSDictionary, userFeedid: String, selectlikindex: Int)
     {
         Constant.internetconnection(vc: self)
-        Constant.showActivityIndicatory(uiView: self.view)
+        //Constant.showActivityIndicatory(uiView: self.view)
         let db = Firestore.firestore()
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
                        if let err = err {
                            print("Error updating document: \(err)")
-                           Constant.showInActivityIndicatory()
+                         //  Constant.showInActivityIndicatory()
 
                        } else {
 db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").delete()
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
-                                Constant.showInActivityIndicatory()
+                               // Constant.showInActivityIndicatory()
 
                             } else {
                                 print("Document successfully updated")
-                                Constant.showInActivityIndicatory()
-
+                               // Constant.showInActivityIndicatory()
+                                let indexPosition = IndexPath(row: selectlikindex, section: 0)
+                                self.post_tbl.reloadRows(at: [indexPosition], with: .none)
                             }
                         }
                     }

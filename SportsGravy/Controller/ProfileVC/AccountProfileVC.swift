@@ -281,7 +281,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
         let header: HTTPHeaders = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
          var param:[String:AnyObject] = [:]
         param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         

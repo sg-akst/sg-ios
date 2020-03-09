@@ -60,7 +60,7 @@ class CustomVideoAlbum: NSObject {
 
     func fetchAssetCollectionForAlbum() -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "title = %@", CustomPhotoAlbum.albumName)
+        fetchOptions.predicate = NSPredicate(format: "title = %@", CustomVideoAlbum.albumName)
         let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
 
         if let _: AnyObject = collection.firstObject {
@@ -76,12 +76,12 @@ class CustomVideoAlbum: NSObject {
 
         PHPhotoLibrary.shared().performChanges({
             let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: NSURL(string: filePath)! as URL)!
-            assetChangeRequest.placeholderForCreatedAsset
+          //  assetChangeRequest.placeholderForCreatedAsset
 
-//            let assetPlaceHolder = assetChangeRequest.placeholderForCreatedAsset
-//            let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
-//            let enumeration: NSArray = [assetPlaceHolder!]
-//            albumChangeRequest!.addAssets(enumeration)
+            let assetPlaceHolder = assetChangeRequest.placeholderForCreatedAsset
+            let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
+            let enumeration: NSArray = [assetPlaceHolder!]
+            albumChangeRequest!.addAssets(enumeration)
 
         }, completionHandler: nil)
     }

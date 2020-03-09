@@ -292,6 +292,7 @@ PODS:
   - STPopup (1.8.7)
   - SwiftyJSON (5.0.0)
   - SWRevealViewController (2.3.0)
+  - TagListView (1.4.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -307,6 +308,7 @@ DEPENDENCIES:
   - STPopup
   - SwiftyJSON
   - SWRevealViewController
+  - TagListView (~> 1.0)
 
 SPEC REPOS:
   trunk:
@@ -342,6 +344,7 @@ SPEC REPOS:
     - STPopup
     - SwiftyJSON
     - SWRevealViewController
+    - TagListView
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -376,7 +379,8 @@ SPEC CHECKSUMS:
   STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
+  TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
 
-PODFILE CHECKSUM: 88142f48a17ee2508cbbd6b7f4c4635ca887ea5d
+PODFILE CHECKSUM: 7053ac28cee982e1f0daa969c73b20d39dcab7f2
 
 COCOAPODS: 1.8.4

@@ -284,7 +284,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         if(self.getdifferentOrganization.count > 1)
         {
                 self.commonArray = NSMutableArray() as? [String]
-            self.addorderArray.add(commonArray.last!)
+                 self.addorderArray.add(commonArray.last!)
             
                   for i in 0..<getdifferentOrganization.count
                   {

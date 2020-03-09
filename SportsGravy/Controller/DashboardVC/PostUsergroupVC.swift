@@ -80,7 +80,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
+            self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
 
                     let buttons: NSMutableArray = NSMutableArray()
                     var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -208,13 +208,13 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
            getSameOrganization = NSMutableArray()
            getdifferentOrganization = NSMutableArray()
            addorderArray.add("All")
-           let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+           let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
                       
                       for i  in 0..<getRolebyreasonDetailArray.count
                       {
                       let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
           //
-                      let abb: String = roleDic.value(forKey: "organization_abbrev") as! String
+                      let abb: String = roleDic.value(forKey: "organization_id") as! String
                       if (filteredEvents.contains("\(abb)"))
                       {
                           print("found")
@@ -231,59 +231,78 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                       }
                           
                       }
-                                 
-                      self.commonArray.append(contentsOf: filteredEvents)
+        if(getdifferentOrganization.count > 1)
+        {
+                let filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+
+                self.commonArray.append(contentsOf: filteredEvent)
+
+        }
+        else
+        {
+                                           
+            let filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+            self.commonArray.append(contentsOf: filteredEvent)
+                                            
+        }
+                     // self.commonArray.append(contentsOf: filteredEvents)
        }
        func getsportsmethod()
        {
            self.getSameSportsArray = NSMutableArray()
            self.getdifferentSportsArray = NSMutableArray()
-           
            if(self.getdifferentOrganization.count > 1)
            {
                    self.commonArray = NSMutableArray() as? [String]
+               self.addorderArray.add(commonArray.last!)
 
-                     //self.addorderArray.add("\(getOrganization!)")
-                     
-                     
                      for i in 0..<getdifferentOrganization.count
                      {
                          let roleDic: NSDictionary = getdifferentOrganization?[i] as! NSDictionary
-                         let role: String = roleDic.value(forKey: "organization_abbrev") as! String
+                         let role: String = roleDic.value(forKey: "organization_id") as! String
                          if(role == getOrganization)
                          {
                              self.getSport = roleDic.value(forKey: "sport_id") as? String
                              getSameSportsArray.add(roleDic)
-                             
                          }
                          else
                          {
                              getdifferentSportsArray.add(roleDic)
                          }
                      }
-                   let filteredEvents: [String] = self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
-                          self.commonArray.append(contentsOf: filteredEvents)
+    if(getdifferentSportsArray.count > 1)
+               {
+                   let filteredEvent: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                   self.commonArray.append(contentsOf: filteredEvent)
+
+               }
+              else
+             {
+                    let filteredEvent: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                   self.commonArray.append(contentsOf: filteredEvent)
+
+               }
+            
                  }
-           else if(self.getSameOrganization.count == 1)
+           else if(self.getSameOrganization.count > 0)
            {
+            self.addorderArray.add(commonArray.last!)
                self.commonArray = NSMutableArray() as? [String]
-               self.addorderArray.add("\(getOrganization!)")
                for i in 0..<getSameOrganization.count
                {
                    let roleDic: NSDictionary = getSameOrganization?[i] as! NSDictionary
-                   let role: String = roleDic.value(forKey: "organization_abbrev") as! String
+                   let role: String = roleDic.value(forKey: "organization_id") as! String
                    if(role == getOrganization)
                    {
                        self.getSport = roleDic.value(forKey: "sport_id") as? String
                        getSameSportsArray.add(roleDic)
-                       
                    }
                    else
                    {
                        getdifferentSportsArray.add(roleDic)
                    }
                }
-               let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_id") as! [String]
+               let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
                self.commonArray.append(contentsOf: filteredEvents)
            }
        }
@@ -293,8 +312,9 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                       self.getdifferentSeasonArray = NSMutableArray()
                       if(self.getdifferentSportsArray.count > 1)
                              {
+                                self.addorderArray.add(commonArray.last!)
+
                                  self.commonArray = NSMutableArray() as? [String]
-                                // self.addorderArray.add("\(getSport!)")
                                  for i in 0..<getdifferentSportsArray.count
                                  {
                                      let roleDic: NSDictionary = getdifferentSportsArray?[i] as! NSDictionary
@@ -311,14 +331,26 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                      {
                                          getdifferentSeasonArray.add(roleDic)
                                      }
-                                  let filteredEvents: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
-                                  self.commonArray.append(contentsOf: filteredEvents)
+                                
                                  }
-                             }
+                                
+                                if(getdifferentSeasonArray.count > 1)
+                                  {
+                                      let filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                                      self.commonArray.append(contentsOf: filteredEvent)
+
+                                  }
+                                 else
+                                {
+                                       let filteredEvent: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                                      self.commonArray.append(contentsOf: filteredEvent)
+
+                                  }
+            }
                       else if (self.getSameSportsArray.count > 0)
                       {
+                        self.addorderArray.add(commonArray.last!)
                           self.commonArray = NSMutableArray() as? [String]
-                          self.addorderArray.add("\(getSport!)")
                           for i in 0..<getSameSportsArray.count
                           {
                               let roleDic: NSDictionary = getSameSportsArray?[i] as! NSDictionary
@@ -328,15 +360,14 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                   self.getSeason = roleDic.value(forKey: "season_label") as? String
                                   getSameSeasonArray.add(roleDic)
                                   getrolebySeasonid = roleDic.value(forKey: "role_by_season_id") as? String
-                                   getSeasonid = roleDic.value(forKey: "season_id") as? String
-                                  }
-                                  else
-                                  {
-                                      getdifferentSeasonArray.add(roleDic)
-                                      }
+                                  getSeasonid = roleDic.value(forKey: "season_id") as? String
+                              }
+                              else
+                              {
+                                 getdifferentSeasonArray.add(roleDic)
+                               }
                               let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
                               self.commonArray.append(contentsOf: filteredEvents)
-                          
                           }
                       }
        }
@@ -346,8 +377,8 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
            self.getdifferentLevelArray = NSMutableArray()
            if(getdifferentSeasonArray.count>1)
            {
+            self.addorderArray.add(commonArray.last!)
                self.commonArray = NSMutableArray() as? [String]
-                                    // self.addorderArray.add("\(getSport!)")
                for i in 0..<getdifferentSeasonArray.count
                {
                    let roleDic: NSDictionary = getdifferentSeasonArray?[i] as! NSDictionary
@@ -357,20 +388,32 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                        self.getLevel = roleDic.value(forKey: "level_name") as? String
                        getSameLevelArray.add(roleDic)
                        getLevelId = roleDic.value(forKey: "level_id") as? String
-
                    }
                    else
                    {
                        getdifferentLevelArray.add(roleDic)
                    }
-                   let filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
-                   self.commonArray.append(contentsOf: filteredEvents)
+                   //let filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                   //self.commonArray.append(contentsOf: filteredEvents)
                }
+            if(getdifferentLevelArray.count > 1)
+              {
+                  let filteredEvent: [String] = self.getdifferentLevelArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                  self.commonArray.append(contentsOf: filteredEvent)
+
+              }
+             else
+            {
+                   let filteredEvent: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                  self.commonArray.append(contentsOf: filteredEvent)
+
+              }
+            
            }
            else if(getSameSeasonArray.count>0)
            {
+            self.addorderArray.add(commonArray.last!)
                self.commonArray = NSMutableArray() as? [String]
-                   self.addorderArray.add("\(getSeason!)")
                    for i in 0..<getSameSeasonArray.count
                    {
                        let roleDic: NSDictionary = getSameSeasonArray?[i] as! NSDictionary
@@ -381,72 +424,106 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                            getSameLevelArray.add(roleDic)
                            getLevelId = roleDic.value(forKey: "level_id") as? String
 
-                           }
-                           else
-                           {
-                               getdifferentLevelArray.add(roleDic)
-                           }
+                        }
+                       else
+                       {
+                           getdifferentLevelArray.add(roleDic)
+                        }
                        let filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
                        self.commonArray.append(contentsOf: filteredEvents)
-                   
                    }
            }
        }
        func getTeammethod()
        {
-            if(self.getSameLevelArray.count > 0)
-                    {
-                      self.commonArray = NSMutableArray() as? [String]
-                        self.addorderArray.add("\(self.getLevel!)")
-                        let filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
-                       // getTeamId = self.getSameLevelArray.value(forKey: "team_id") as? String
-                        self.commonArray.append(contentsOf: filteredEvents)
-                        
+        self.getSameTeamArray = NSMutableArray()
+                   self.getdifferentTeamArray = NSMutableArray()
+                   
+                       if(self.getdifferentLevelArray.count > 1)
+                               {
+                                   self.addorderArray.add(commonArray.last!)
 
-                    }
-            else
-             {
-                print("differseason")
-            }
-       }
-       
+                                   self.commonArray = NSMutableArray() as? [String]
+
+                                   for i in 0..<getdifferentLevelArray.count
+                                   {
+                                       let roleDic: NSDictionary = getSameSeasonArray?[i] as! NSDictionary
+                                       let role: String = roleDic.value(forKey: "level_id") as! String
+                                       if(role == getLevelid)
+                                       {
+                                        self.getTeamName = roleDic.value(forKey: "team_name") as? String
+                                         getSameTeamArray.add(roleDic)
+                                         getTeamId = roleDic.value(forKey: "team_id") as? String
+
+                                           }
+                                           else
+                                           {
+                                              getdifferentTeamArray.add(roleDic)
+                                           }
+                                   }
+
+                                   let filteredEvents: [String] = self.getdifferentLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                                   self.commonArray.append(contentsOf: filteredEvents)
+
+
+                               }
+                       else if(getSameLevelArray.count > 0)
+                        {
+                           self.addorderArray.add(commonArray.last!)
+
+                           self.commonArray = NSMutableArray() as? [String]
+       //                    self.addorderArray.add("\(getLevel!)")
+                           for i in 0..<getSameLevelArray.count
+                           {
+                             let roleDic: NSDictionary = getSameLevelArray?[i] as! NSDictionary
+                             let role: String = roleDic.value(forKey: "level_id") as! String
+                             if(role == getSeasonid)
+                               {
+                                   self.getTeamName = roleDic.value(forKey: "team_name") as? String
+                                   getSameTeamArray.add(roleDic)
+                                   getTeamId = roleDic.value(forKey: "team_id") as? String
+
+                               }
+                               else
+                               {
+                                   getdifferentTeamArray.add(roleDic)
+                               }
+                           }
+                           let filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                           self.commonArray.append(contentsOf: filteredEvents)
+                       }
+    }
     func usergroup()
     {
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.getrolebySeasonid!)")
-        
         docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
-                                           if let err = err {
-                                               print("Error getting documents: \(err)")
-                                           } else {
-                                            self.GroupList = NSMutableArray()
-                                        for document in querySnapshot!.documents {
-                                        let data: NSDictionary = document.data() as NSDictionary
-                                            self.GroupList.add(data)
-                                                                   }
-                                    self.commonArray = NSMutableArray() as? [String]
-                                    let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
-                                    self.commonArray.append(contentsOf: filteredEvents)
-                                    self.getuserDetail()
-                                                                               
-                                                
-                                            }
-                                        Constant.showInActivityIndicatory()
-
-                                          }
-                                      }
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    } else {
+                        self.GroupList = NSMutableArray()
+                        for document in querySnapshot!.documents {
+                        let data: NSDictionary = document.data() as NSDictionary
+                        self.GroupList.add(data)
+                        }
+                        self.commonArray = NSMutableArray() as? [String]
+                        let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+                        self.commonArray.append(contentsOf: filteredEvents)
+                        self.getuserDetail()
+                }
+                Constant.showInActivityIndicatory()
+           }
+        }
        
     @objc func orderselectmethod(_ sender: UIButton)
        {
            let selecttag = sender.tag
           // orderviewheight.constant = 50
-
            if(selecttag == 0)
            {
                print("All")
                self.addorderArray = NSMutableArray()
-
                getorganization()
                getuserDetail()
            }
@@ -454,26 +531,22 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
            {
                print("organization")
                self.addorderArray = NSMutableArray()
-
                getorganization()
                getsportsmethod()
                getuserDetail()
-
            }
            else if(selecttag == 2)
            {
                print("Sport")
                self.addorderArray = NSMutableArray()
-
                getorganization()
                getsportsmethod()
                getSeasonmethod()
                getuserDetail()
-
            }
            else if(selecttag == 3)
            {
-               print("season")
+            print("season")
             self.addorderArray = NSMutableArray()
             getorganization()
             getsportsmethod()
@@ -488,7 +561,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
              getsportsmethod()
              getSeasonmethod()
              getLevelmethod()
-            getTeammethod()
+             getTeammethod()
              getuserDetail()
            }
         else if(selecttag == 5)
@@ -498,7 +571,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                 getsportsmethod()
                 getSeasonmethod()
                 getLevelmethod()
-               getTeammethod()
+                getTeammethod()
             self.addorderArray.add("\(getTeamId!)")
                 usergroup()
                 getuserDetail()
@@ -512,8 +585,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     func numberOfSections(in tableView: UITableView) -> Int {
                  return 1
              }
-             
-             public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
                  return self.commonArray.count
              }
              public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -523,11 +595,8 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 
         let cell: PostUserCell = tableView.dequeueReusableCell(withIdentifier: "custompostusercell", for: indexPath) as! PostUserCell
-
-           
         cell.groub_img.setTitleColor(UIColor.black, for: .normal)
         cell.groub_img.setTitle(self.commonArray[indexPath.row], for: .normal)
-      
        let name = self.commonArray[indexPath.row]
         let size = (name as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
         print("size\(size)")
@@ -539,27 +608,21 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                         cell.imageBtn.addTarget(self, action: #selector(PersonIcon), for: .touchUpInside)
                         cell.imageBtn.isHidden  = false
                         cell.imageBtn.setImage(UIImage(named: "user"), for: .normal)
-
                     }
                     else
                     {
                         cell.imageBtn.setImage(nil, for: .normal)
                         cell.imageBtn.isHidden  = true
-
                    }
                    }
                   else
                   {
                     cell.imageBtn.setImage(UIImage(named: "user"), for: .normal)
                     cell.imageBtn.isHidden  = false
-
                    }
-        
                     cell.groub_img.tag = indexPath.row
                     cell.groub_img.setTitleColor(UIColor.blue, for: .normal)
-                   cell.groub_img.addTarget(self, action: #selector(SelectTeamName), for: .touchUpInside)
-
-
+                    cell.groub_img.addTarget(self, action: #selector(SelectTeamName), for: .touchUpInside)
                     cell.selectionStyle = .none
                     cell.accessoryType = (addorderArray.count == 7) ? .none : .disclosureIndicator
                 return cell
@@ -621,6 +684,13 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.addorderArray.add("\(self.commonArray[0])")
          vc.orderArray = addorderArray
          vc.peoplegrouplist = peopleArray
+        vc.auth_UID  = UserDefaults.standard.string(forKey: "UUID")
+        vc.role = UserDefaults.standard.string(forKey: "Role")
+        vc.organization_id = getOrganization
+        vc.sport_id = getSport
+        vc.season_id = getSeasonid
+        vc.level_id = getLevelId
+        vc.team_id = getTeamId
         self.navigationController?.pushViewController(vc, animated: true)
 
     }

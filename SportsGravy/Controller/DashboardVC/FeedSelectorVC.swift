@@ -643,7 +643,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
            // Constant.showActivityIndicatory(uiView: self.view)
                let testStatusUrl: String = Constant.sharedinstance.FeedCountUrl
         let header: HTTPHeaders = [
-                   "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
                 var param:[String:AnyObject] = [:]
                param["user_id"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         
@@ -911,18 +911,16 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
              vc.orderArray = addorderArray
              vc.peoplegrouplist = peopleArray
             self.navigationController?.pushViewController(vc, animated: true)
-
         }
                          
         func getusergroup()
         {
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
-                   let getuuid = UserDefaults.standard.string(forKey: "UUID")
-                    let db = Firestore.firestore()
+            let getuuid = UserDefaults.standard.string(forKey: "UUID")
+            let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)")
-            
-            docRef.collection("roles_by_season").whereField("role", isEqualTo: getRole!).getDocuments() { (querySnapshot, err) in
+            docRef.collection("roles_by_season").whereField("role", isEqualTo: self.getRole!).getDocuments() { (querySnapshot, err) in
                    if let err = err {
                        print("Error getting documents: \(err)")
                    } else {

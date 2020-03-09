@@ -94,8 +94,6 @@ class SigninVC: UIViewController, UITextFieldDelegate {
             Auth.auth().signIn(withEmail: email_txt.text!, password: password_txt.text!) {
                 [weak self] user, error in
                 guard self != nil else { return }
-                               // let user = Auth.auth().currentUser
-                
                 Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                     if error != nil {
                                     // Handle error

@@ -71,7 +71,6 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func getuserDetail()
     {
         Constant.internetconnection(vc: self)
-       // Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
                
                let db = Firestore.firestore()
@@ -205,6 +204,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.roletype_lbl?.setTitle(roleArray?[indexPath.row].capitalized, for: .normal)
 
         cell.roletype_lbl.tag = indexPath.row
+        UserDefaults.standard.set(roleArray[0], forKey: "Role")
         cell.roletype_lbl.addTarget(self, action: #selector(roleChangeMethod), for: .touchUpInside)
         cell.roletype_lbl.sizeToFit()
         cell.roletype_lbl.layoutIfNeeded()
@@ -220,8 +220,12 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @objc func roleChangeMethod(_ sender: UIButton)
     {
-        
+         if(UserDefaults.standard.value(forKey: "Role") != nil)
+        {
+            UserDefaults.standard.removeObject(forKey: "Role")
+        }
         let buttonRow = sender.tag
+        
         getRole = roleArray[buttonRow] as String
         let element = roleArray.remove(at: buttonRow)
         roleArray.insert(element, at: 0)
@@ -261,7 +265,6 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                        let role: String = roleDic.value(forKey: "role") as! String
                        if(role == SelectRole as String)
                        {
-                       // self.isTeamEnable = roleDic.value(forKey: "team_id") as? String
                         getSameRoleArray.add(roleDic)
                        }
                    }

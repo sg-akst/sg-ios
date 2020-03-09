@@ -14,6 +14,7 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 import Alamofire
 import Photos
+import BSImagePicker
 
 
 struct PostGroupSection {
@@ -143,6 +144,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var playergroupid: String!
     var getUserInfo: NSDictionary!
 
+    var isImage: Bool!
 
     
     override func viewDidLoad() {
@@ -393,12 +395,49 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     @IBAction func postVideoandImage(_ sender: UIButton)
        {
-           let imageviewcontroller = UIImagePickerController()
-           imageviewcontroller.allowsEditing = true
-           imageviewcontroller.delegate = self
-           imageviewcontroller.mediaTypes = [kUTTypeImage as String , kUTTypeMovie as String];
-        imageviewcontroller.sourceType = .photoLibrary
-           self.present(imageviewcontroller, animated: true, completion: nil)
+        let imagePicker = ImagePickerController()
+       
+        //imagePicker.settings.theme.selectionStyle = .numbered
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image, .video]
+        //imagePicker.settings.selection.unselectOnReachingMax = true
+
+        let start = Date()
+        self.presentImagePicker(imagePicker, select: { (asset) in
+            print("Selected: \(asset)")
+            if(asset.mediaType.rawValue == 2)
+            {
+                self.isImage = false
+               // imagePicker.dese
+            }
+            else
+            {
+                 imagePicker.settings.selection.max = 8
+                imagePicker.settings.selection.unselectOnReachingMax = true
+
+                self.isImage = true
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var thumbnail = UIImage()
+                option.isSynchronous = true
+                manager.requestImage(for: asset, targetSize: CGSize(width: 100.0, height: 100.0), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+                thumbnail = result!
+                })
+            }
+            
+            
+        }, deselect: { (asset) in
+            print("Deselected: \(asset)")
+           
+
+        }, cancel: { (assets) in
+            print("Canceled with selections: \(assets)")
+        }, finish: { (assets) in
+            print("Finished with selections: \(assets)")
+        }, completion: {
+            let finish = Date()
+            print(finish.timeIntervalSince(start))
+        })
+
        }
     func getImage(fromSourceType sourceType: UIImagePickerControllerSourceType) {
 
@@ -407,7 +446,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self
-            imagePickerController.sourceType = sourceType
+            imagePickerController.sourceType = .camera
+            imagePickerController.cameraCaptureMode = .photo
             self.present(imagePickerController, animated: true, completion: nil)
         }
     }
@@ -476,7 +516,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                let store = Storage.storage()
                let user = Auth.auth().currentUser
                if let user = user{
-                   let storeRef = store.reference().child("feedpostImages/\(user.uid).jpg")
+                   let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg")
                    let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
                        guard let _ = metadata else {
                            print("error occurred: \(error.debugDescription)")
@@ -543,10 +583,12 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         else
         {
         let getUserorgInfo: NSDictionary = teamList
-            Constant.internetconnection(vc: self)
-                       Constant.showActivityIndicatory(uiView: self.view)
-                       let testStatusUrl: String = Constant.sharedinstance.FeedPostUrl
-                        var param:[String:AnyObject] = [:]
+        Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
+        let testStatusUrl: String = Constant.sharedinstance.FeedPostUrl
+        let header: HTTPHeaders = [
+                       "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
+        var param:[String:AnyObject] = [:]
         param["feedPostedUser_id"] = self.getUserInfo.value(forKey: "user_id") as AnyObject?
         param["feedPostedUser_firstName"] = getUserInfo.value(forKey: "first_name") as AnyObject?
         param["feedPostedUser_lastName"] = getUserInfo.value(forKey: "last_name") as AnyObject?
@@ -593,7 +635,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         feedlevelobjArray.add(feedlevelobj)
         param["feededLevelObject"] = feedlevelobjArray.copy() as AnyObject
         param["feedPostedOrg_id"] = getOrganizationid as AnyObject?
-            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
+            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                            if(!(response.error != nil)){
                                switch (response.result)
                                {

@@ -24,6 +24,11 @@ class Constant: NSObject {
     var FeedPostUrl: String = BaseUrl + "postFeed"
     var RemovePlayerUrl: String = BaseUrl + "accountRemoveConnection"
     var FeedCountUrl: String = BaseUrl + "feedCount"
+    var getUserGroupForQuickPostBYUID: String = BaseUrl + "getUserGroupsForQuickpostbyUID?"
+    var getTagListUrl: String = BaseUrl + "getTagList?"
+    var getTeamByUID: String = BaseUrl + "getTeamByUID?"
+    var getUserByUId: String = BaseUrl + "getuserByUid?"
+    var getpeopleFetchSelector = BaseUrl + "fetchPeopleSelector"
 
     static func internetconnection(vc: UIViewController)
     {

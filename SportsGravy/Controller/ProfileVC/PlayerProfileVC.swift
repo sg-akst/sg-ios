@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import Alamofire
-//import Kingfisher
+import Kingfisher
 import FirebaseStorage
 
 struct ProfileCategory {
@@ -64,8 +64,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                             print("Player=>\(playerInfo)")
                             self.username_lbl.text = "\(playerInfo.value(forKey: "first_name")!)" + " " + "\(playerInfo.value(forKey: "middle_initial")!)" + " " + "\( playerInfo.value(forKey: "last_name")!)"
                             self.player_id = playerInfo.value(forKey: "user_id") as! String
-                                   let timestamp: Timestamp = playerInfo.value(forKey: "created_datetime") as! Timestamp
-                                                              let datees: Date = timestamp.dateValue()
+                            let timestamp: Timestamp = playerInfo.value(forKey: "created_datetime") as! Timestamp
+                            let datees: Date = timestamp.dateValue()
                                                              
                                                               let dateFormatterGet = DateFormatter()
                                                               dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -75,15 +75,26 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                               
 
                                                               self.date_lbl.text = "Joined \(dateFormatterPrint.string(from: datees as Date))"
-                                   
+                                   self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
+                                   self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
                                    let url = URL(string: "\(playerInfo.value(forKey: "profile_image")!)")
                                                if(url != nil)
                                                {
                                                
                                                    self.profile_imag.kf.setImage(with: url)
-                                                   self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
-                                                   self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
+//                                                   self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
+//                                                   self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
                                                }
+                            else
+                                {
+                                            let name =  self.username_lbl.text
+                                                           let nameFormatter = PersonNameComponentsFormatter()
+                                                           if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
+
+                                                                let sortName = "\(firstLetter)\(lastName)"  // J. Singh
+                                                               self.porfile_img.setTitle(sortName, for: .normal)
+                                                            }
+                                                       }
                                                self.email_lbl.text = playerInfo.value(forKey: "email_address") as? String
                                                self.gender_lbl.text = playerInfo.value(forKey: "gender") as? String
                                                self.mobile_no_lbl.text = playerInfo.value(forKey: "mobile_phone") as? String
@@ -95,8 +106,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                dateFormatter.dateFormat = "MM-dd-yyyy"
                                                let dobDate = dateFormatter.string(from: date!)
                                                self.dob_lbl.text = "\(dobDate)"
-                                               let getaddress: NSDictionary = playerInfo.value(forKey: "address") as! NSDictionary
-                                               self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
+                                               //let getaddress: NSDictionary = playerInfo.value(forKey: "address") as! NSDictionary
+                                               self.address_lbl.text = "\(playerInfo.value(forKey: "street1")!)" + ", " + "\(playerInfo.value(forKey: "street2")!)" + "\n" + "\(playerInfo.value(forKey: "city")!)" + "-" + "\(playerInfo.value(forKey: "postal_code")!)" + "\n" + "\(playerInfo.value(forKey: "state_name")!)" + "," + "\(playerInfo.value(forKey: "country_name")!)"
                             self.getGuardians()
                         }
                         else {
@@ -184,16 +195,42 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                             if(statusCode == true)
                             {
                                 let result = info?["data"] as! NSArray
+                                
                                 self.organizationListArray = NSMutableArray()
-                                self.organizationListArray = result.mutableCopy() as? NSMutableArray
-                                self.sections = [ProfileCategory(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]])
-                                ]
-                                let height: Int = self.guardiansListArray.count + self.organizationListArray.count + 1
-                                self.playerprofile_tbl_height.constant = CGFloat(height * 75)
-                                self.playerprofile_tbl.reloadData()
+                                 self.organizationListArray = result.mutableCopy() as? NSMutableArray
+//                                 if(self.playerListArray.count > 0 && self.playerListArray.count != 0)
+//                                 {
+//                                   self.sections.append(Category(name:"Players", items:self.playerListArray as! [[String : Any]]))
+//                                 }
+                                  if(self.guardiansListArray.count > 0 && self.guardiansListArray.count != 0)
+                                 {
+                                     self.sections.append(ProfileCategory(name:"Other Guardians", items:self.guardiansListArray as! [[String : Any]]))
+                                 }
+                                  if(self.organizationListArray.count > 0 && self.organizationListArray.count != 0)
+                                 {
+                                  self.sections.append(ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]]))
+                                 }
+                                 let height: Int =  self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
+                                 self.playerprofile_tbl_height.constant = (height>2) ? CGFloat(height * 60) :CGFloat(height * 60)
+                                 self.playerprofile_tbl.reloadData()
 
-                                self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant + 60)
-                               
+                                 self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant)
+                                Constant.showInActivityIndicatory()
+                                
+                                
+                                
+                                
+//                                self.organizationListArray = NSMutableArray()
+//                                self.organizationListArray = result.mutableCopy() as? NSMutableArray
+//                                self.sections = [ProfileCategory(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]])
+//                                ]
+//                                let height: Int = self.guardiansListArray.count + self.organizationListArray.count
+//                                self.playerprofile_tbl_height.constant = CGFloat(height * 75)
+//                                self.playerprofile_tbl.reloadData()
+//
+//                                self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant)
+//                               Constant.showInActivityIndicatory()
+
                             }
                             else
                             {

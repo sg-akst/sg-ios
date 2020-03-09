@@ -74,11 +74,19 @@
 		08A436B32404F16E00A67FF2 /* CommonTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A436B22404F16E00A67FF2 /* CommonTabBarVC.swift */; };
 		08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */; };
 		08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B5631223FB368000D90E23 /* PostCanCell.swift */; };
-		08C2A4F824078B870039BF68 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08C2A4F724078B870039BF68 /* GoogleService-Info.plist */; };
+		08BAAF4124156FC3006B86D7 /* NextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BAAF3F24156FC2006B86D7 /* NextViewController.swift */; };
+		08BAAF4624157030006B86D7 /* ReactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BAAF4424157030006B86D7 /* ReactionTableViewCell.swift */; };
+		08BAAF4724157030006B86D7 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BAAF4524157030006B86D7 /* PostTableViewCell.swift */; };
 		08D5967024065ED100C2ACBD /* CustomPhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D5966F24065ED100C2ACBD /* CustomPhotoAlbum.swift */; };
 		08D5967224067B7100C2ACBD /* CustomVideoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D5967124067B7100C2ACBD /* CustomVideoAlbum.swift */; };
 		08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */; };
 		08FD6B0C23F2AAE100AA4096 /* ConguralutionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */; };
+		08FDB5872415761600B59752 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB5862415761600B59752 /* BottomBar.swift */; };
+		08FDB58D2415BCBA00B59752 /* QuickimageandvideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB58C2415BCBA00B59752 /* QuickimageandvideoViewController.swift */; };
+		08FDB5972415BD2200B59752 /* MiniToLargeViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB5942415BD2200B59752 /* MiniToLargeViewAnimator.swift */; };
+		08FDB5982415BD2200B59752 /* MiniToLargeViewInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB5952415BD2200B59752 /* MiniToLargeViewInteractive.swift */; };
+		08FDB5992415BD2200B59752 /* BaseAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB5962415BD2200B59752 /* BaseAnimator.swift */; };
+		08FDB5A124163BB500B59752 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08FDB5A024163BB500B59752 /* GoogleService-Info.plist */; };
 		1562D57D0BFD1F86B2718FFB /* Pods_SportsGravy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0A089D0501340DD767FA39 /* Pods_SportsGravy.framework */; };
 		263E1EB00D02D4873EAD1387 /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 296F34D8C9C69736E383532B /* Pods_SportsGravy_SportsGravyUITests.framework */; };
 		DEED0752A27680738C7E69CB /* Pods_SportsGravyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C146519EEEC55A736BC1D239 /* Pods_SportsGravyTests.framework */; };
@@ -166,10 +174,12 @@
 		08B610DE23D053B000CD8A61 /* CannedResponseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseVC.swift; sourceTree = "<group>"; };
 		08B610E023D069AA00CD8A61 /* TagCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreateVC.swift; sourceTree = "<group>"; };
 		08B610E223D069D500CD8A61 /* CannedResponseCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannedResponseCreateVC.swift; sourceTree = "<group>"; };
+		08BAAF3F24156FC2006B86D7 /* NextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextViewController.swift; sourceTree = "<group>"; };
+		08BAAF4424157030006B86D7 /* ReactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionTableViewCell.swift; sourceTree = "<group>"; };
+		08BAAF4524157030006B86D7 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		08BC6C3D23DAEF090046A7F7 /* Playercell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playercell.swift; sourceTree = "<group>"; };
 		08BC6C3F23DB04790046A7F7 /* PlayerProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerProfileVC.swift; sourceTree = "<group>"; };
 		08C17D6023E0428C00D51B62 /* SortingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingCell.swift; sourceTree = "<group>"; };
-		08C2A4F724078B870039BF68 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08CC2AE123E2E1D600F5DCB2 /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
 		08D5966F24065ED100C2ACBD /* CustomPhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPhotoAlbum.swift; sourceTree = "<group>"; };
 		08D5967124067B7100C2ACBD /* CustomVideoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoAlbum.swift; sourceTree = "<group>"; };
@@ -179,6 +189,12 @@
 		08E5721A23BF3A13000C8852 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		08FD6B0923F2AA9A00AA4096 /* TermAndConditionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermAndConditionVC.swift; sourceTree = "<group>"; };
 		08FD6B0B23F2AAE100AA4096 /* ConguralutionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConguralutionVC.swift; sourceTree = "<group>"; };
+		08FDB5862415761600B59752 /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
+		08FDB58C2415BCBA00B59752 /* QuickimageandvideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickimageandvideoViewController.swift; sourceTree = "<group>"; };
+		08FDB5942415BD2200B59752 /* MiniToLargeViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToLargeViewAnimator.swift; sourceTree = "<group>"; };
+		08FDB5952415BD2200B59752 /* MiniToLargeViewInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToLargeViewInteractive.swift; sourceTree = "<group>"; };
+		08FDB5962415BD2200B59752 /* BaseAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAnimator.swift; sourceTree = "<group>"; };
+		08FDB5A024163BB500B59752 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08FDF32623E2F34800400919 /* InvitePlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayerVC.swift; sourceTree = "<group>"; };
 		18D94D8B1933E46F988BB47B /* Pods-SportsGravy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy.release.xcconfig"; path = "Target Support Files/Pods-SportsGravy/Pods-SportsGravy.release.xcconfig"; sourceTree = "<group>"; };
 		1EA9E88D5CCB08C07C421A47 /* Pods-SportsGravyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravyTests.release.xcconfig"; path = "Target Support Files/Pods-SportsGravyTests/Pods-SportsGravyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -299,7 +315,7 @@
 		081120FA23BDFCAD00327FF1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				08C2A4F724078B870039BF68 /* GoogleService-Info.plist */,
+				08FDB5A024163BB500B59752 /* GoogleService-Info.plist */,
 				087E8B3A23C6F6E800D1F0FF /* Records */,
 				081120FE23BDFEAC00327FF1 /* Reachability */,
 			);
@@ -309,6 +325,7 @@
 		081120FC23BDFCBE00327FF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				08BAAF4324156FF4006B86D7 /* QuickpostCell */,
 				080B0CE9240E7466000B905E /* FeedSlector */,
 				0872E64723E2F6F5008170A0 /* Signup */,
 				08C17D5F23E0427400D51B62 /* sorting */,
@@ -325,6 +342,7 @@
 		081120FD23BDFCC800327FF1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				08BAAF3E24156F69006B86D7 /* QuickPost */,
 				08C17D5C23E02B0400D51B62 /* SortingOrder */,
 				08D60E4D23D9785A000D411D /* PopVC */,
 				089C0C6323D7065B008A33DA /* ProfileVC */,
@@ -496,6 +514,28 @@
 			path = CannnedResponse;
 			sourceTree = "<group>";
 		};
+		08BAAF3E24156F69006B86D7 /* QuickPost */ = {
+			isa = PBXGroup;
+			children = (
+				08FDB5962415BD2200B59752 /* BaseAnimator.swift */,
+				08FDB5942415BD2200B59752 /* MiniToLargeViewAnimator.swift */,
+				08FDB5952415BD2200B59752 /* MiniToLargeViewInteractive.swift */,
+				08FDB58C2415BCBA00B59752 /* QuickimageandvideoViewController.swift */,
+				08FDB5862415761600B59752 /* BottomBar.swift */,
+				08BAAF3F24156FC2006B86D7 /* NextViewController.swift */,
+			);
+			path = QuickPost;
+			sourceTree = "<group>";
+		};
+		08BAAF4324156FF4006B86D7 /* QuickpostCell */ = {
+			isa = PBXGroup;
+			children = (
+				08BAAF4524157030006B86D7 /* PostTableViewCell.swift */,
+				08BAAF4424157030006B86D7 /* ReactionTableViewCell.swift */,
+			);
+			path = QuickpostCell;
+			sourceTree = "<group>";
+		};
 		08BC6C3C23DAEEDD0046A7F7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,7 +635,7 @@
 				081120C323BDF77500327FF1 /* Sources */,
 				081120C423BDF77500327FF1 /* Frameworks */,
 				081120C523BDF77500327FF1 /* Resources */,
-				5EAC4FEF58B83847B64EC446 /* [CP] Embed Pods Frameworks */,
+				EF50B8B8EA785F932A1EAD8F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -633,7 +673,7 @@
 				081120E423BDF77900327FF1 /* Sources */,
 				081120E523BDF77900327FF1 /* Frameworks */,
 				081120E623BDF77900327FF1 /* Resources */,
-				53FAED45E7C3D61408B3D9C3 /* [CP] Embed Pods Frameworks */,
+				462B9A257B0AD8C2D12C3336 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -695,7 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */,
-				08C2A4F824078B870039BF68 /* GoogleService-Info.plist in Resources */,
+				08FDB5A124163BB500B59752 /* GoogleService-Info.plist in Resources */,
 				081120D423BDF77800327FF1 /* Assets.xcassets in Resources */,
 				081120D223BDF77500327FF1 /* Main.storyboard in Resources */,
 			);
@@ -740,7 +780,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		53FAED45E7C3D61408B3D9C3 /* [CP] Embed Pods Frameworks */ = {
+		462B9A257B0AD8C2D12C3336 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -755,23 +795,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5EAC4FEF58B83847B64EC446 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A8DCB111466AD039432134AC /* [CP] Check Pods Manifest.lock */ = {
@@ -818,6 +841,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EF50B8B8EA785F932A1EAD8F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -826,11 +866,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				08FD6B0A23F2AA9A00AA4096 /* TermAndConditionVC.swift in Sources */,
+				08BAAF4624157030006B86D7 /* ReactionTableViewCell.swift in Sources */,
 				08D5967024065ED100C2ACBD /* CustomPhotoAlbum.swift in Sources */,
 				08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */,
 				080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */,
 				080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */,
 				08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */,
+				08BAAF4724157030006B86D7 /* PostTableViewCell.swift in Sources */,
 				088625F423EC347E008E7CCD /* CommentCell.swift in Sources */,
 				080E847D23E3F27B0092CDB3 /* ForgotVC.swift in Sources */,
 				080B0CEB240E747F000B905E /* FeedSelectorCell.swift in Sources */,
@@ -845,6 +887,7 @@
 				080E847823E3F2670092CDB3 /* Dashboardvc.swift in Sources */,
 				080B0CE8240E41DC000B905E /* PeopleCell.swift in Sources */,
 				0808875423ED46F2001A0191 /* PostimageHeaderCell.swift in Sources */,
+				08FDB5872415761600B59752 /* BottomBar.swift in Sources */,
 				084C618823F6AEF8005613B3 /* PostCannedVC.swift in Sources */,
 				080E847723E3F2620092CDB3 /* RateVC.swift in Sources */,
 				080E847623E3F25D0092CDB3 /* VideoVC.swift in Sources */,
@@ -857,16 +900,19 @@
 				08FD6B0C23F2AAE100AA4096 /* ConguralutionVC.swift in Sources */,
 				080E847023E3F2450092CDB3 /* CannedResponseCreateVC.swift in Sources */,
 				080E846F23E3F2410092CDB3 /* CannedResponseVC.swift in Sources */,
+				08FDB5992415BD2200B59752 /* BaseAnimator.swift in Sources */,
 				080E846E23E3F23C0092CDB3 /* SittingsVC.swift in Sources */,
 				080E846D23E3F2370092CDB3 /* PlayerProfileVC.swift in Sources */,
 				080E846C23E3F2330092CDB3 /* AddressEditVC.swift in Sources */,
 				080E846B23E3F22F0092CDB3 /* GenderEditVC.swift in Sources */,
 				080E846A23E3F22B0092CDB3 /* MobileEditVC.swift in Sources */,
 				080E846923E3F2280092CDB3 /* PasswordEditVC.swift in Sources */,
+				08FDB5972415BD2200B59752 /* MiniToLargeViewAnimator.swift in Sources */,
 				080E846823E3F21E0092CDB3 /* UsernameEditVC.swift in Sources */,
 				080E846723E3F2180092CDB3 /* OrganizationVC.swift in Sources */,
 				080E848123E3F3490092CDB3 /* SortingVC.swift in Sources */,
 				08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */,
+				08FDB58D2415BCBA00B59752 /* QuickimageandvideoViewController.swift in Sources */,
 				0805FB0923FA58D800AD3426 /* PostUserCell.swift in Sources */,
 				0808875623ED470F001A0191 /* PostImageDetailCell.swift in Sources */,
 				0808875223ED3BEE001A0191 /* PostImageVC.swift in Sources */,
@@ -875,6 +921,7 @@
 				080E846523E3F1FD0092CDB3 /* PopVC.swift in Sources */,
 				080E846423E3F1D80092CDB3 /* SideMenuCell.swift in Sources */,
 				080E846323E3F1D30092CDB3 /* PostCell.swift in Sources */,
+				08FDB5982415BD2200B59752 /* MiniToLargeViewInteractive.swift in Sources */,
 				080E846223E3F1CE0092CDB3 /* GroubHeaderCell.swift in Sources */,
 				082D264B23F15AC100E22307 /* InviteGuardianVC.swift in Sources */,
 				080B0CE6240E2DBE000B905E /* PeopleSelectorVC.swift in Sources */,
@@ -883,6 +930,7 @@
 				080E845F23E3F1C20092CDB3 /* TagCell.swift in Sources */,
 				080E845E23E3F1BE0092CDB3 /* Playercell.swift in Sources */,
 				084C618223F6A551005613B3 /* ReactionVC.swift in Sources */,
+				08BAAF4124156FC3006B86D7 /* NextViewController.swift in Sources */,
 				080E845D23E3F1B70092CDB3 /* SittingCell.swift in Sources */,
 				080E845C23E3F1B10092CDB3 /* SortingCell.swift in Sources */,
 				088625F223EC334C008E7CCD /* CommentVC.swift in Sources */,

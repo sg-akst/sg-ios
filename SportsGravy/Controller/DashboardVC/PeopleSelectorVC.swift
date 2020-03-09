@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol PeopleSelectorDelegate: AnyObject {
     func passorderArray(select:NSMutableArray!, selectindex: UIButton)
@@ -22,6 +23,18 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var orderArray: NSMutableArray!
     var order_btn: UIButton!
     var peoplegrouplist: NSMutableArray!
+    
+    var auth_UID: String!
+    var role: String!
+    var organization_id: String!
+    var sport_id: String!
+    var season_id: String!
+    var level_id: String!
+    var team_id: String!
+   // var tag_group: String!
+    
+    
+    
     @IBOutlet weak var orderviewheight: NSLayoutConstraint!
     weak var delegate:PeopleSelectorDelegate?
 
@@ -38,7 +51,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.orderArray.count > 4) ? 90 : 50
+        self.orderviewheight.constant = (self.orderArray.count > 5) ? 90 : 50
 
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -55,16 +68,15 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
          let title: String = orderArray?[i] as! String
 
          if(title != "" && title != nil)
-                    {
-                    if(i == 0)
-                    {
-                        order_btn.setTitle("\(orderArray[i] as! String)", for: .normal)
-                    }
-                    else
-                    {
-                      order_btn.setTitle("> \(orderArray[i] as! String)", for: .normal)
-
-                    }
+        {
+          if(i == 0)
+          {
+            order_btn.setTitle("\(orderArray[i] as! String)", for: .normal)
+          }
+          else
+          {
+            order_btn.setTitle("> \(orderArray[i] as! String)", for: .normal)
+          }
             //selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
             order_btn.translatesAutoresizingMaskIntoConstraints = false
             let attrStr = NSMutableAttributedString(string: "\(order_btn.title(for: .normal) ?? "")")
@@ -163,15 +175,14 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         cell.people_group_btn.addTarget(self, action: #selector(selectPeople), for: .touchUpInside)
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
-
         return cell
                 
-               
            }
-           func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                print("You tapped cell number \(indexPath.row).")
+        fetchpeopleselector(selectGroup: peoplegrouplist?[indexPath.row] as! String)
                
-               }
+    }
     @objc func selectPeople(_ sender: UIButton)
     {
         let button = sender.tag
@@ -192,6 +203,73 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.navigationController?.popViewController(animated: true)
 
     }
+    
+    func fetchpeopleselector(selectGroup: String)
+    {
+        Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
+        let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
+        let header: HTTPHeaders = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
+         var param:[String:AnyObject] = [:]
+        param["auth_UID"] = auth_UID as AnyObject?
+        param["role"] = role as AnyObject?
+        param["organization_id"] = organization_id as AnyObject?
+        param["sport_id"] = sport_id as AnyObject?
+        param["season_id"] = season_id as AnyObject?
+        param["level_id"] = level_id as AnyObject?
+        param["team_id"] = team_id as AnyObject?
+        param["tag_group"] = selectGroup as AnyObject?
+        
+        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            if(!(response.error != nil)){
+                switch (response.result)
+                {
+                case .success(let json):
+                   // if let data = response.data{
+                        let jsonData = json
+                        print(jsonData)
+                        let info = jsonData as? NSDictionary
+                        let statusCode = info?["status"] as? Bool
+                        let message = info?["message"] as? String
+
+                        if(statusCode == true)
+                        {
+                            let result = info?["data"] as! NSArray
+                           // self.playerListArray = NSMutableArray()
+                            //self.playerListArray = result.mutableCopy() as? NSMutableArray
+                             Constant.showInActivityIndicatory()
+                            
+                        }
+                        else
+                        {
+                            if(message == "unauthorized user")
+                            {
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.timerAction()
+                               // self.getplayerlist()
+                            }
+                           
+                        }
+                        Constant.showInActivityIndicatory()
+                  //  }
+                    break
+
+                case .failure(_):
+                    Constant.showInActivityIndicatory()
+
+                    break
+                }
+            }
+            else
+            {
+                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+                Constant.showInActivityIndicatory()
+
+            }
+        }
+    }
+    
     @IBAction func backpeopleselectorbtn(_ sender: UIButton)
     {
        self.navigationController?.popViewController(animated: true)

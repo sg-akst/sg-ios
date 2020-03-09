@@ -97,6 +97,13 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let maplike: NSMutableDictionary = NSMutableDictionary()
             maplike.setValue(likecount, forKey: "count")
             maplike.setValue(userlist, forKey: "user_list")
+            
+            var newDict: NSMutableDictionary  = NSMutableDictionary()
+            let oldDict: NSDictionary = selectComment
+            newDict = oldDict.mutableCopy() as! NSMutableDictionary
+            newDict.setValue(maplike.copy(), forKey: "likes")
+            self.selectComment = newDict.copy() as? NSDictionary
+            
             likeUpdatemethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String, selectIdexdetail: selectComment)
             
         }
@@ -111,6 +118,14 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let maplike: NSMutableDictionary = NSMutableDictionary()
             maplike.setValue(likecount, forKey: "count")
             maplike.setValue(userlist, forKey: "user_list")
+            
+            var newDict: NSMutableDictionary  = NSMutableDictionary()
+            let oldDict: NSDictionary = selectComment
+            newDict = oldDict.mutableCopy() as! NSMutableDictionary
+            newDict.setValue(maplike.copy(), forKey: "likes")
+            self.selectComment = newDict.copy() as? NSDictionary
+            
+            
             DislikeMethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId as! String)
             
            
@@ -276,7 +291,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         let cell: CommentCell = self.comment_tbl.dequeueReusableCell(withIdentifier: "commentcell") as! CommentCell
         let dic: NSDictionary = self.commentArray?[indexPath.row] as! NSDictionary
-        cell.username_lbl?.text = "\(dic.value(forKey: "first_name")!)" + "" + "\(dic.value(forKey: "middle_initial")!)" + "" + "\(dic.value(forKey: "last_name")!)"
+        cell.username_lbl?.text = "\(dic.value(forKey: "first_name")!)" + " " + "\(dic.value(forKey: "middle_initial")!)" + " " + "\(dic.value(forKey: "last_name")!)"
         //cell.postdate_lbl.text = dic.value(forKey: "created_dateTime") as? String
         cell.comment_lbl.text = dic.value(forKey: "comment_desc") as? String
         let timestamp: Timestamp = dic.value(forKey: "created_dateTime") as! Timestamp
@@ -289,7 +304,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dateFormatterPrint.dateFormat = "MMM dd,yyyy"
         print(dateFormatterPrint.string(from: datees as Date))
 
-        cell.postdate_lbl.text = "\(dateFormatterPrint.string(from: datees as Date))"
+        cell.postdate_lbl.text = "Post on \(dateFormatterPrint.string(from: datees as Date))"
         let url = URL(string: "\(dic.value(forKey: "avatar")!)")
         if(url != nil)
         {

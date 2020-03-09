@@ -91,13 +91,13 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         self.city_txt.delegate = self
         self.country_txt.delegate = self
         self.potel_txt.delegate = self
-        updateAddress = self.addressDetailDic.value(forKey: "address") as? NSDictionary
-        self.street1_txt.text = updateAddress.value(forKey: "street1") as? String
-        self.street2_txt.text = updateAddress.value(forKey: "street2") as? String
-        self.city_txt.text    = updateAddress.value(forKey: "city") as? String
-        self.state_txt.text = updateAddress.value(forKey: "state") as? String
-        self.potel_txt.text = updateAddress.value(forKey: "postal_code") as? String
-        self.country_txt.text = updateAddress.value(forKey: "country_code") as? String
+       // updateAddress = self.addressDetailDic.value(forKey: "address") as? NSDictionary
+        self.street1_txt.text = self.addressDetailDic.value(forKey: "street1") as? String
+        self.street2_txt.text = self.addressDetailDic.value(forKey: "street2") as? String
+        self.city_txt.text    = self.addressDetailDic.value(forKey: "city") as? String
+        self.state_txt.text = self.addressDetailDic.value(forKey: "state_name") as? String
+        self.potel_txt.text = self.addressDetailDic.value(forKey: "postal_code") as? String
+        self.country_txt.text = self.addressDetailDic.value(forKey: "country_name") as? String
         getstateDetails()
        
     }
