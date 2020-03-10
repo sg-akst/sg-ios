@@ -117,7 +117,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var postteam_tbl: UITableView!
     @IBOutlet weak var post_content_txt: UITextField!
     @IBOutlet weak var postimage: UIImageView!
-    @IBOutlet weak var postvideo: UIImageView!
+   // @IBOutlet weak var postvideo: UIImageView!
     @IBOutlet weak var postTbl_height: NSLayoutConstraint!
     var postsections = [PostGroupSection]()
     var sectionCount: Int!

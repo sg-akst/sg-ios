@@ -208,7 +208,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     {
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
-        let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
+        let testStatusUrl: String = Constant.sharedinstance.getpeopleFetchSelector
         let header: HTTPHeaders = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
          var param:[String:AnyObject] = [:]

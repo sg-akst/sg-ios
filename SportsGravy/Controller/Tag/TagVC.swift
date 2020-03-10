@@ -93,7 +93,7 @@ override func viewDidLoad() {
         }
         func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
+            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -222,6 +222,7 @@ override func viewDidLoad() {
             getdifferentOrganization = NSMutableArray()
             addorderArray.add("All")
             let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
+          
             
             for i  in 0..<getRolebyreasonDetailArray.count
             {
@@ -321,7 +322,8 @@ override func viewDidLoad() {
                        }
                    }
                    
-                   let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                   var filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                filteredEvents.sort()
                    self.commonArray.append(contentsOf: filteredEvents)
                }
            }
@@ -386,7 +388,8 @@ override func viewDidLoad() {
                                           }
                               
                               }
-                           let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                           var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                            filteredEvents.sort()
                            self.commonArray.append(contentsOf: filteredEvents)
 
                           }
@@ -399,7 +402,8 @@ override func viewDidLoad() {
                            self.addorderArray.add(commonArray.last!)
 
                           self.commonArray = NSMutableArray() as? [String]
-                            let filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                            var filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                            filteredEvents.sort()
                             self.commonArray.append(contentsOf: filteredEvents)
                             
 
@@ -412,7 +416,8 @@ override func viewDidLoad() {
                        self.addorderArray.add(commonArray.last!)
 
                                       self.commonArray = NSMutableArray() as? [String]
-                                        let filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                        var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                    filteredEvents.sort()
                                         self.commonArray.append(contentsOf: filteredEvents)
                                         
 
@@ -643,49 +648,6 @@ override func viewDidLoad() {
 
                            }
                        }
-            
-         //   if (UserDefaults.standard.bool(forKey: "2") == true)
-//            {
-//                docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
-//                                 if let err = err {
-//                                     print("Error getting documents: \(err)")
-//                                 } else {
-//                                    self.TeamArray = NSMutableArray()
-//
-//                                     for document in querySnapshot!.documents {
-//                                         let data: NSDictionary = document.data() as NSDictionary
-//
-//                                        self.TeamArray.add(data)
-//
-//                                    }
-//                                    self.isTeam = true
-//                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
-//                                    self.tag_tbl.reloadData()
-//                                    Constant.showInActivityIndicatory()
-//
-//                                }
-//                            }
-//            }
-        //    else
-//            {
-//                docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
-//                                 if let err = err {
-//                                     print("Error getting documents: \(err)")
-//                                 } else {
-//                                    self.TeamArray = NSMutableArray()
-//
-//                                     for document in querySnapshot!.documents {
-//                                         let data: NSDictionary = document.data() as NSDictionary
-//                                         self.TeamArray.add(data)
-//                                    }
-//                                    self.isTeam = true
-//                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
-//                                    self.tag_tbl.reloadData()
-//                                    Constant.showInActivityIndicatory()
-//
-//                                }
-//                            }
-//            }
         }
     
     func getTagListMethod()
@@ -695,10 +657,6 @@ override func viewDidLoad() {
                let getuuid = UserDefaults.standard.string(forKey: "UUID")
                 let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-//       let docrefs = docRef.collection("roles_by_season").whereField("role", isEqualTo:self.getSelectRole).getDocuments() { (querySnapshot, err) in
-//                          if let err = err {
-//                              print("Error getting documents: \(err)")
-//                          } else {
                             if (UserDefaults.standard.bool(forKey: "2") == true)
                             {
                             docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
@@ -723,7 +681,7 @@ override func viewDidLoad() {
                         }
                         else
                     {
-                                            docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                        docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
                                                              if let err = err {
                                                                  print("Error getting documents: \(err)")
                                                              } else {
@@ -741,9 +699,6 @@ override func viewDidLoad() {
                                                             }
                                                         }
                                         }
-                            
-           // }
-       // }
     }
     
     func checkTimeStamp(date: String!) -> Bool {
@@ -762,24 +717,74 @@ override func viewDidLoad() {
     }
     func deleteMethod(rolebyDic: NSDictionary)
      {
+        let tagtitle: String = rolebyDic.value(forKey: "tag_name") as! String
           Constant.internetconnection(vc: self)
           Constant.showActivityIndicatory(uiView: self.view)
           let getuuid = UserDefaults.standard.string(forKey: "UUID")
           let db = Firestore.firestore()
           let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-          docRef.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
-          { err in
-              if let err = err {
-                  print("Error removing document: \(err)")
-              } else {
-                  print("Document successfully removed!")
-                Constant.showInActivityIndicatory()
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
-                self.getTagListMethod()
-                  Constant.showInActivityIndicatory()
+                docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                      let getTagDelete = NSMutableArray()
+                        for document in querySnapshot!.documents {
+                        let data: NSDictionary = document.data() as NSDictionary
+                          if(data.value(forKey: "tag_name") as! String == tagtitle || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(tagtitle) == ComparisonResult.orderedSame)
+                          {
+                              getTagDelete.add(data)
+
+                          }
+                            
+                       }
+                    if(getTagDelete.count > 0)
+                    {
+                        docRef.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+                        { err in
+                            if let err = err {
+                                print("Error removing document: \(err)")
+                            } else {
+                                print("Document roleby season successfully removed!")
+                                
+                                let teamRef = db.collection("teams").document("\(self.getTeamId!)")
+                                teamRef.collection("Tags").getDocuments{ (querySnapshot, err) in
+                                if let err = err {
+                                print("Error getting documents: \(err)")
+                                                           } else {
+                                                               
+                                let getteamsTagList = NSMutableArray()
+
+                                for document in querySnapshot!.documents {
+                                let data: NSDictionary = document.data() as NSDictionary
+                                if(data.value(forKey: "tag_name") as! String == tagtitle || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(tagtitle) == ComparisonResult.orderedSame)
+                                {
+                                    getteamsTagList.add(data)
+
+                                }
+                            }
+                            if(getteamsTagList.count > 0)
+                            {
+                                teamRef.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+                                { err in
+                                if let err = err {
+                                    print("Error removing document: \(err)")
+                                } else {
+                                    print("Document roleby season successfully removed!")
+                                    Constant.showInActivityIndicatory()
+                                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
+                                    self.getTagListMethod()
+                                    Constant.showInActivityIndicatory()
+                                    }
+                                }
+                            }
+                            }
+                                }
+                            }
+                        }
+                    }
+                    }
+                }
               }
-          }
-     }
     @IBAction func cancelbtn(_ sender: UIButton)
     {
         self.navigationController?.popViewController(animated: true)

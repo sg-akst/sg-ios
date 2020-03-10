@@ -12,6 +12,7 @@ import Alamofire
 
 protocol FeedSelectorDelegate: AnyObject {
     func feddSelectDetail(userDetail: NSMutableArray, selectitemname: String)
+    func feedselectDashboard(selectitem: NSDictionary, selectName: String)
 
 }
 
@@ -304,9 +305,10 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                      
                  if(getdifferentOrganization.count > 1)
                  {
-                     let filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+                    var filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+                    filteredEvent.sort()
 
-                     self.commonArray.append(contentsOf: filteredEvent)
+                    self.commonArray.append(contentsOf: filteredEvent)
 
                  }
                  else
@@ -341,8 +343,20 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                  getdifferentSportsArray.add(roleDic)
                              }
                          }
-                       let filteredEvents: [String] = self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
-                              self.commonArray.append(contentsOf: filteredEvents)
+                
+                if(getdifferentSportsArray.count > 1)
+                {
+                     var filteredEvents: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                    filteredEvents.sort()
+                                  self.commonArray.append(contentsOf: filteredEvents)
+                }
+                else
+                {
+                     var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                    filteredEvents.sort()
+                                  self.commonArray.append(contentsOf: filteredEvents)
+                }
+               
                      }
                else if(self.getSameOrganization.count > 0)
                {
@@ -364,7 +378,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                            getdifferentSportsArray.add(roleDic)
                        }
                    }
-                   let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                var filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                filteredEvents.sort()
                    self.commonArray.append(contentsOf: filteredEvents)
                }
 
@@ -394,9 +409,21 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                          {
                                              getdifferentSeasonArray.add(roleDic)
                                          }
-                                      let filteredEvents: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
-                                      self.commonArray.append(contentsOf: filteredEvents)
+//
                                      }
+                                    if(getdifferentSeasonArray.count > 1)
+                                    {
+                                                   var filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                                            filteredEvents.sort()
+                                            self.commonArray.append(contentsOf: filteredEvents)
+                                    }
+                                    else
+                                    {
+                                    var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                                                                            filteredEvents.sort()
+                                            self.commonArray.append(contentsOf: filteredEvents)
+                                    }
+                                    
                                  }
                           else if (self.getSameSportsArray.count > 0)
                           {
@@ -419,7 +446,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                           getdifferentSeasonArray.add(roleDic)
                                           }
                               }
-                            let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                            var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                            filteredEvents.sort()
                             self.commonArray.append(contentsOf: filteredEvents)
                           }
 
@@ -449,9 +477,20 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                        {
                            getdifferentLevelArray.add(roleDic)
                        }
-                       let filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
-                       self.commonArray.append(contentsOf: filteredEvents)
+
                    }
+                if(getdifferentLevelArray.count > 1)
+                {
+                      var filteredEvents: [String] = self.getdifferentLevelArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                                    filteredEvents.sort()
+                                        self.commonArray.append(contentsOf: filteredEvents)
+                }
+                else
+                {
+                      var filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                                       filteredEvents.sort()
+                                          self.commonArray.append(contentsOf: filteredEvents)
+                }
                }
                else if(getSameSeasonArray.count>0)
                {
@@ -475,7 +514,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                    getdifferentLevelArray.add(roleDic)
                                }
                        }
-                let filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.level_name") as! [String]
+                filteredEvents.sort()
                     self.commonArray.append(contentsOf: filteredEvents)
                 
                }
@@ -508,9 +548,23 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                        getdifferentTeamArray.add(roleDic)
                                     }
                             }
+                            if(getdifferentTeamArray.count > 1)
+                            {
+                                 var filteredEvents: [String] = self.getdifferentTeamArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                                                        filteredEvents.sort()
+                            
+                                                self.commonArray.append(contentsOf: filteredEvents)
+                            }
+                            else
+                            {
+                                 var filteredEvents: [String] = self.getSameTeamArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                                                        filteredEvents.sort()
+                                
+                                self.commonArray.append(contentsOf: filteredEvents)
+                            }
+                            
 
-                            let filteredEvents: [String] = self.getdifferentLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
-                            self.commonArray.append(contentsOf: filteredEvents)
+//
 
 
                         }
@@ -536,7 +590,9 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                             getdifferentTeamArray.add(roleDic)
                         }
                     }
-                    let filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                    var filteredEvents: [String] = self.getSameLevelArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                    filteredEvents.sort()
+
                     self.commonArray.append(contentsOf: filteredEvents)
                 }
            }
@@ -557,7 +613,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                                 self.GroupList.add(data)
                                                                     }
                                         self.commonArray = NSMutableArray() as? [String]
-                                        let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+                                                var filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+                                                filteredEvents.sort()
                                         self.commonArray.append(contentsOf: filteredEvents)
                                         self.getuserDetail()
                                                 }
@@ -978,11 +1035,15 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                   print("1")
                 if(getdifferentOrganization.count > 1)
                 {
-                    selectTeamDetail = getdifferentOrganization
+                    let dic: NSDictionary = self.getdifferentOrganization?[button] as! NSDictionary
+
+                    selectTeamDetail.add(dic)
                 }
                 else
                 {
-                    selectTeamDetail = getSameOrganization
+                    let dic: NSDictionary = self.getSameOrganization?[button] as! NSDictionary
+
+                    selectTeamDetail.add(dic)
                     
                  }
                 }
@@ -991,12 +1052,16 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     print("2")
                    if(getdifferentSportsArray.count > 1)
                     {
-                      selectTeamDetail = getdifferentSportsArray
+                        let dic: NSDictionary = self.getdifferentSportsArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
 
                     }
                     else
                     {
-                        selectTeamDetail = getSameSportsArray
+                        let dic: NSDictionary = self.getSameSportsArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
                     
                     }
 
@@ -1005,11 +1070,15 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 {
                     if(getdifferentSeasonArray.count > 1)
                     {
-                        selectTeamDetail = getdifferentSeasonArray
+                        let dic: NSDictionary = self.getdifferentSeasonArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
                     }
                     else
                     {
-                       selectTeamDetail = getSameSeasonArray
+                        let dic: NSDictionary = self.getSameSeasonArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
                     
                     }
 
@@ -1019,11 +1088,15 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     print("4")
                     if(getdifferentLevelArray.count > 1)
                     {
-                        selectTeamDetail = getdifferentLevelArray
+                        let dic: NSDictionary = self.getdifferentLevelArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
                     }
                     else
                     {
-                       selectTeamDetail = getSameLevelArray
+                        let dic: NSDictionary = self.getSameLevelArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
                     
                     }
                 }
@@ -1031,11 +1104,14 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 {
                     if(getdifferentTeamArray.count > 1)
                     {
-                        selectTeamDetail = getdifferentTeamArray
+                        let dic: NSDictionary = self.getdifferentTeamArray?[button] as! NSDictionary
+                        selectTeamDetail.add(dic)
                     }
                     else
                     {
-                       selectTeamDetail = getSameTeamArray
+                        let dic: NSDictionary = self.getSameTeamArray?[button] as! NSDictionary
+
+                        selectTeamDetail.add(dic)
                                        
                     }
                 }
@@ -1242,7 +1318,16 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
               
         if(feedlevelobjsArray.count > 0)
         {
-           self.delegate?.feddSelectDetail(userDetail: feedlevelobjsArray, selectitemname: selectitemname)
+//            for i in 0..<selectitem.count
+//            {
+//                let dic: NSDictionary = selectitem[i] as! NSDictionary
+//                if(dic.value(forKey: "team_name") as! String == selectitemname)
+//                {
+//                    feedlevelobjsArray.add(dic.value(forKey: "team_id")!)
+                self.delegate?.feddSelectDetail(userDetail: feedlevelobjsArray, selectitemname: selectitemname)
+
+               // }
+            //}
         }
         else
         {

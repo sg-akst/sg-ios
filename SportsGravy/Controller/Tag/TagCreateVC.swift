@@ -24,6 +24,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     var rolebySeasonid: String!
     var getrolebyorganizationArray: NSMutableArray!
     var getTeamId: String!
+    var getorg_id: String!
+    var getSport_id: String!
     
     @IBOutlet weak var orderviewheight: NSLayoutConstraint!
 
@@ -42,6 +44,19 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         bottomLine.backgroundColor = UIColor.lightGray.cgColor
         tag_txt.borderStyle = UITextBorderStyle.none
         tag_txt.layer.addSublayer(bottomLine)
+       // let dic: NSDictionary = getrolebyorganizationArray?[0] as! NSDictionary
+       // print(dic)
+        for i in 0..<self.getrolebyorganizationArray.count
+        {
+             let roleDic: NSDictionary = getrolebyorganizationArray?[i] as! NSDictionary
+             let role: String = roleDic.value(forKey: "team_id") as! String
+            if(getTeamId == role)
+            {
+                getorg_id = roleDic.value(forKey: "organization_id") as? String
+                getSport_id = roleDic.value(forKey: "sport_id") as? String
+            }
+        }
+        
         getuserDetail()
     }
     
@@ -203,6 +218,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     @IBAction func createtag(_ sender: UIButton)
     {
         var ref: DocumentReference? = nil
+        var teamref: DocumentReference? = nil
 
         if(tag_txt.text == nil || tag_txt.text == "")
         {
@@ -231,8 +247,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                    }
                 if(getTagList.count == 0)
                 {
-                    ref = docRef.collection("Tags").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)","tag_name": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""])
-                     //document("\(tag_txt.text!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "tag_id": "\(tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : ""] )
+                    ref = docRef.collection("Tags").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)","tag_name": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : "","organization_id": "\(self.getorg_id!)","sport_id": "\(self.getSport_id!)","is_used": false])
                  { err in
                      if let err = err {
                          print("Error writing document: \(err)")
@@ -242,9 +257,50 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                          if let err = err {
                                 print("Error writing document: \(err)")
                          } else {
+                            
+                            let teamRef = db.collection("teams").document("\(self.getTeamId!)")
+                            teamRef.collection("Tags").getDocuments{ (querySnapshot, err) in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                            } else {
+                                
+                                let getteamsTagList = NSMutableArray()
+
+                                 for document in querySnapshot!.documents {
+                                 let data: NSDictionary = document.data() as NSDictionary
+                                   if(data.value(forKey: "tag_name") as! String == self.tag_txt.text! || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(self.tag_txt.text!) == ComparisonResult.orderedSame)
+                                   {
+                                       getteamsTagList.add(data)
+
+                                   }
+                                }
+                                if(getteamsTagList.count == 0)
+                                {
+                                    teamref = teamRef.collection("Tags").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)","tag_name": "\(self.tag_txt.text!)", "updated_datetime" : Date(), "updated_uid" : "","organization_id": "\(self.getorg_id!)","sport_id": "\(self.getSport_id!)","is_used": false])
+                                    { err in
+                                    if let err = err {
+                                        print("Error writing document: \(err)")
+                                    } else {
+                                        print("Team Document successfully written!")
+                                        teamRef.collection("Tags").document(teamref!.documentID).updateData(["tag_id":teamref!.documentID])
+                                        if let err = err {
+                                               print("Error writing document: \(err)")
+                                        } else {
+                                            
+                                        self.alertermsg(msg: "User group created successfully ")
+                                        }
+                                        }
+                                    }
+                                }
+                                
+                                
+                                }
+                            }
+                            
+                            
+                            
                              Constant.showInActivityIndicatory()
 
-                             self.alertermsg(msg: "User group created successfully ")
 
                          }
 

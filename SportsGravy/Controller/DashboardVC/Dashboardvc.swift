@@ -9,29 +9,41 @@
 import UIKit
 import SWRevealViewController
 import FirebaseFirestore
-//import Kingfisher
+import Alamofire
 import AlamofireImage
 import Firebase
 import AVKit
 
 
 class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate, FeedSelectorDelegate {
+    func feedselectDashboard(selectitem: NSDictionary, selectName: String) {
+        
+        
+    }
+    
+    
+    
     func feddSelectDetail(userDetail: NSMutableArray, selectitemname: String) {
+        
         self.postvielname_lbl.text = selectitemname
-        self.postvielname_lbl.backgroundColor = UIColor.white
-        self.postvielname_lbl.textColor = UIColor.gray
-        self.postvielname_lbl.layer.cornerRadius = 5
-        self.postvielname_lbl.layer.borderWidth = 0.5
-        self.postvielname_lbl.layer.borderColor = UIColor.lightGray.cgColor
-        self.postvielname_lbl.layer.masksToBounds = true
-        cancel_btn = UIButton()
-         //let size = (selectitemname as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
-        cancel_btn.frame = CGRect(x:self.postvielname_lbl.frame.origin.x + self.postvielname_lbl.frame.size.width-30, y: 10, width: 25, height: 25)
-        cancel_btn.addTarget(self, action: #selector(selectitemRemove), for: .touchUpInside)
-        cancel_btn.isHidden  = false
-        cancel_btn.setImage(UIImage(named: "cancel"), for: .normal)
-        cancel_btn.tintColor = UIColor.black
-        self.displayselectitem.addSubview(cancel_btn)
+         self.postvielname_lbl.backgroundColor = UIColor.white
+         self.postvielname_lbl.textColor = UIColor.gray
+         self.postvielname_lbl.layer.cornerRadius = 5
+         self.postvielname_lbl.layer.borderWidth = 0.5
+         self.postvielname_lbl.layer.borderColor = UIColor.lightGray.cgColor
+         self.postvielname_lbl.layer.masksToBounds = true
+         cancel_btn = UIButton()
+          //let size = (selectitemname as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
+         cancel_btn.frame = CGRect(x:self.postvielname_lbl.frame.origin.x + self.postvielname_lbl.frame.size.width-30, y: 10, width: 25, height: 25)
+         cancel_btn.addTarget(self, action: #selector(selectitemRemove), for: .touchUpInside)
+         cancel_btn.isHidden  = false
+         cancel_btn.setImage(UIImage(named: "cancel"), for: .normal)
+         cancel_btn.tintColor = UIColor.black
+         self.displayselectitem.addSubview(cancel_btn)
+         
+        
+         self.feedfilter(feeddetail: userDetail[0] as! NSDictionary)
+         
     }
     
     func sidemenuselectRole(role: String, roleArray: NSMutableArray) {
@@ -185,8 +197,15 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let Dic: NSDictionary = self.commonArray?[indexPath.row] as! NSDictionary
             
             cell.username_lbl?.text = "\(Dic.value(forKey: "feedPostedUser_firstName")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_middleInitial")!)" + " " + "\(Dic.value(forKey: "feedPostedUser_lastName")!)" + " - " + "\(Dic.value(forKey: "feedPostedUser_role")!)" .capitalized
-            let timestamp: Timestamp = Dic.value(forKey: "feedPostedDatetime") as! Timestamp
-             let datees: Date = timestamp.dateValue()
+    
+    var datees = Date()
+    if(Dic.value(forKey: "feedPostedDatetime") as? Timestamp != nil)
+    {
+        let timestamp: Timestamp = Dic.value(forKey: "feedPostedDatetime") as! Timestamp
+        datees = timestamp.dateValue()
+    }
+
+           
              //print(datees)
              let dateFormatterGet = DateFormatter()
              dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -270,7 +289,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.like_btn.addTarget(self, action: #selector(likeDetail), for: .touchUpInside)
             cell.comment_btn.addTarget(self, action: #selector(commentDetail), for: .touchUpInside)
 
-           let postInfo: NSMutableArray = Dic.value(forKey: "feededLevelObject") as! NSMutableArray
+           let postInfo: NSMutableArray = (Dic["feededLevelObject"]! as! NSArray).mutableCopy() as! NSMutableArray
            let postinfoDic: NSDictionary = postInfo[0] as! NSDictionary
     
     if(postinfoDic.value(forKey:"organization_name") != nil && postinfoDic.value(forKey: "organization_name")as? String != "")
@@ -488,7 +507,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     
                     let playerLayer = AVPlayerLayer(player: player)
                     playerLayer.frame = cell.bounds
-                    player.play()
+                    //player.play()
                     let visdeoview = UIView()
                                        
                 visdeoview.frame =  CGRect(x: 0, y: 0, width: imagewidth, height: imageheight)
@@ -501,7 +520,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 else
                 {
                     
-                postimageArray = (Dic.value(forKey: "feedImageURL") as? NSMutableArray ?? nil)!
+                postimageArray = (Dic["feedImageURL"]! as! NSArray).mutableCopy() as! NSMutableArray
+                    //(Dic.value(forKey: "feedImageURL") as? NSMutableArray ?? nil)!
                     
 
                 for i in 0..<postimageArray.count
@@ -799,6 +819,82 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
         objPosttag.delegate = self
         self.navigationController?.pushViewController(objPosttag, animated: true)
     }
+    
+    func feedfilter(feeddetail: NSDictionary)
+    {
+        Constant.internetconnection(vc: self)
+        //Constant.showActivityIndicatory(uiView: self.view)
+        let testStatusUrl: String = Constant.sharedinstance.getFeedFilter
+        let header: HTTPHeaders = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
+         var param:[String:AnyObject] = [:]
+        param["user_id"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?  //feeddetail.value(forKey: "") as AnyObject?
+        param["feededLevel"] = feeddetail.value(forKey: "feedLevel") as AnyObject?
+        param["pageNo"] = 1 as AnyObject?
+        param["itemPerPage"] = 10 as AnyObject?
+        
+        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            if(!(response.error != nil)){
+                switch (response.result)
+                {
+                case .success(let json):
+                   // if let data = response.data{
+
+                        let jsonData = json
+                        print(jsonData)
+                        let info = jsonData as? NSDictionary
+                        let statusCode = info?["status"] as? Bool
+                        let message = info?["message"] as? String
+
+                        if(statusCode == true)
+                        {
+                            let resut = info?["data"] as! NSDictionary
+
+                            let getData = resut["data"] as! NSArray
+                            self.commonArray = NSMutableArray()
+                            for i in 0..<getData.count
+                            {
+                                let olddic: NSDictionary = getData[i] as! NSDictionary
+                                let getDataDic: NSMutableDictionary = olddic.mutableCopy() as! NSMutableDictionary
+                                getDataDic.setValue(false, forKey: "isInfo")
+                                self.commonArray.add(getDataDic.copy())
+
+                            }
+                            Constant.showInActivityIndicatory()
+                            self.post_tbl.reloadData()
+
+                            
+                        }
+                        else
+                        {
+                            if(message == "unauthorized user")
+                            {
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.timerAction()
+                               // self.getplayerlist()
+                            }
+                           
+                        }
+                        Constant.showInActivityIndicatory()
+
+                  //  }
+                    break
+
+                case .failure(_):
+                    Constant.showInActivityIndicatory()
+
+                    break
+                }
+            }
+            else
+            {
+                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+                Constant.showInActivityIndicatory()
+
+            }
+        }
+    }
+    
     @IBAction func menuBtn(_ sender: UIButton)
     {
         self.revealViewController().revealToggle(self)

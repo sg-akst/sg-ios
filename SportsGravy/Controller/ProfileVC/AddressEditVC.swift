@@ -161,6 +161,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
         vc.Title = "Select State"
         let filteredEvents: [String] = self.getStateArray.value(forKeyPath: "@distinctUnionOfObjects.name") as! [String]
+        
         let popviewheight : Float = Float(self.getStateArray.count * 45) + 60
         vc.suffixArray = filteredEvents
         vc.delegate = self

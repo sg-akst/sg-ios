@@ -25,6 +25,13 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     var selectOption_btn: UIButton!
     var getTeamId: String!
     var getGroupDetails: NSMutableArray!
+    
+    var getorg_id: String!
+    var getSport_id: String!
+    var season_id: String!
+    var people_id: String!
+    var user_groupId: String!
+    
     weak var delegate:CreateusergroupDelegate?
     @IBOutlet weak var SelectorderView: UIView!
     @IBOutlet weak var group_tittle_txt: UITextField!
@@ -68,6 +75,19 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
              navigation_title_lbl.text = "Update User Group"
             self.group_tittle_txt.text = "\(self.updateArray.value(forKey: "display_name")!)"
         }
+        
+        for i in 0..<self.getrolebyorganizationArray.count
+        {
+             let roleDic: NSDictionary = getrolebyorganizationArray?[i] as! NSDictionary
+             let role: String = roleDic.value(forKey: "team_id") as! String
+            if(getTeamId == role)
+            {
+                getorg_id = roleDic.value(forKey: "organization_id") as? String
+                getSport_id = roleDic.value(forKey: "sport_id") as? String
+                season_id = roleDic.value(forKey: "season_id") as? String
+            }
+        }
+        
         getGroupDetailMethod()
        group_create_tbl.allowsMultipleSelection = true
         group_create_tbl.tableFooterView = UIView()
@@ -368,6 +388,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBAction func Create_BtnAction(_ sender: UIButton)
     {
         var ref: DocumentReference? = nil
+        var teamref : DocumentReference? = nil
 
         if(isCreate == true)
         {
@@ -409,7 +430,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 if(getusergroup.count == 0)
                 {
 
-                    ref = docRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray])
+                    ref = docRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray, "organization_id": "\(self.getorg_id!)","season_id": "\(self.season_id!)", "sport_id": "\(self.getSport_id!)", "is_used": false])
                     { err in
                                         if let err = err {
                                                print("Error writing document: \(err)")
@@ -421,9 +442,50 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                             if let err = err {
                                                    print("Error writing document: \(err)")
                                             } else {
+                                                
+                                let teamRef = db.collection("teams").document("\(self.getTeamId!)")
+                                teamRef.collection("MemberGroup").getDocuments{ (querySnapshot, err) in
+                                if let err = err {
+                                print("Error getting documents: \(err)")
+                                                                   } else {
+                                                                       
+                                let getteamsTagList = NSMutableArray()
+
+                                for document in querySnapshot!.documents {
+                                    let data: NSDictionary = document.data() as NSDictionary
+                                if(data.value(forKey: "display_name") as! String == self.group_tittle_txt.text! || (data.value(forKey: "display_name") as! String) . caseInsensitiveCompare(self.group_tittle_txt.text!) == ComparisonResult.orderedSame)
+                                        {
+                                                getteamsTagList.add(data)
+
+                                        }
+                                        }
+                                if(getteamsTagList.count == 0)
+                            {
+                                teamref = teamRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray, "organization_id": "\(self.getorg_id!)","season_id": "\(self.season_id!)", "sport_id": "\(self.getSport_id!)","is_used": false])
+                                    { err in
+                                        if let err = err {
+                                        print("Error writing document: \(err)")
+                                                                           } else {
+                                        print("Team Document successfully written!")
+                                    teamRef.collection("MemberGroup").document(teamref!.documentID).updateData(["user_groupId":teamref!.documentID])
+                                            if let err = err {
+                                        print("Error writing document: \(err)")
+                                        } else {
+                                                                                   
+                                        self.alertermsg(msg: "User group created successfully ")
+                                                            }
+                                                                               }
+                                                                           }
+                                                                       }
+                                                                       
+                                                                       
+                                                                       }
+                                                                   }
+                                                
+                                                
                                                 Constant.showInActivityIndicatory()
 
-                                                self.alertermsg(msg: "User group created successfully ")
+                                               // self.alertermsg(msg: "User group created successfully ")
 
                                             }
 

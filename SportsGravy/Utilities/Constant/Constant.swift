@@ -29,6 +29,7 @@ class Constant: NSObject {
     var getTeamByUID: String = BaseUrl + "getTeamByUID?"
     var getUserByUId: String = BaseUrl + "getuserByUid?"
     var getpeopleFetchSelector = BaseUrl + "fetchPeopleSelector"
+    var getFeedFilter: String = BaseUrl + "feedFilterDisplay"
 
     static func internetconnection(vc: UIViewController)
     {

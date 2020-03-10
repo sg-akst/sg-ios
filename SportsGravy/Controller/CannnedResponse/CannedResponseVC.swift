@@ -246,8 +246,9 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                     getSameOrganization = NSMutableArray()
                     getdifferentOrganization = NSMutableArray()
                     addorderArray.add("All")
-                    let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
-                    
+                    let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath:
+                        "@distinctUnionOfObjects.organization_id") as! [String]
+        
                     for i  in 0..<getRolebyreasonDetailArray.count
                     {
                     let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
@@ -344,7 +345,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                    }
                }
                
-               let filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+            var filteredEvents: [String] = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+            filteredEvents.sort()
                self.commonArray.append(contentsOf: filteredEvents)
            }
        }
@@ -409,7 +411,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                                       }
                           
                           }
-                       let filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                        var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                        filteredEvents.sort()
                        self.commonArray.append(contentsOf: filteredEvents)
 
                       }
@@ -422,7 +425,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                        self.addorderArray.add(commonArray.last!)
 
                       self.commonArray = NSMutableArray() as? [String]
-                        let filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                        var filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                        filteredEvents.sort()
                         self.commonArray.append(contentsOf: filteredEvents)
                         
 
@@ -435,7 +439,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                    self.addorderArray.add(commonArray.last!)
 
                                   self.commonArray = NSMutableArray() as? [String]
-                                    let filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
+                filteredEvents.sort()
                                     self.commonArray.append(contentsOf: filteredEvents)
                                     
 

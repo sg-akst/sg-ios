@@ -126,7 +126,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                    self.roleby_reasonArray.add(data)
                             }
                             var filteredEvents: [String] = self.roleby_reasonArray.value(forKeyPath: "@distinctUnionOfObjects.role") as! [String]
-                            filteredEvents.sort(){$0 < $1}
+                            filteredEvents.sort()
                             print(filteredEvents)
                             self.roleArray = filteredEvents;
                             
@@ -152,8 +152,9 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             {
                                   firstrole = filteredEvents[0]
                             }
-                            self.role_tbl.reloadData()
                             self.rolebaseddisplayviewMethod(SelectRole: firstrole)
+                            self.role_tbl.reloadData()
+
                             self.tableViewHeightConstraint.constant = self.role_tbl.contentSize.height
                             Constant.showInActivityIndicatory()
                             self.settings_view.isHidden = false
@@ -260,14 +261,14 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.isTeamEnable = NSMutableArray() as? [String]
 
          for i in 0..<roleby_reasonArray.count
-                   {
-                    let roleDic: NSDictionary = roleby_reasonArray?[i] as! NSDictionary
-                       let role: String = roleDic.value(forKey: "role") as! String
-                       if(role == SelectRole as String)
-                       {
-                        getSameRoleArray.add(roleDic)
-                       }
-                   }
+        {
+           let roleDic: NSDictionary = roleby_reasonArray?[i] as! NSDictionary
+            let role: String = roleDic.value(forKey: "role") as? String ?? ""
+           if(role == SelectRole as String)
+            {
+                getSameRoleArray.add(roleDic)
+            }
+        }
       
 
         
