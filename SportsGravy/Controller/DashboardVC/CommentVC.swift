@@ -143,7 +143,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                               // Constant.showInActivityIndicatory()
 
                            } else {
-                    db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
+                            db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar") ?? "")","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
                             { err in
                                 if let err = err {
                                     print("Error updating document: \(err)")
@@ -188,14 +188,22 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     @IBAction func commentSend(_ sender: UIButton)
     {
-        let commentDic: NSDictionary = selectComment.value(forKey: "comments") as! NSDictionary
+        comment_txt.resignFirstResponder()
+        if(comment_txt.text == "" || comment_txt.text == nil)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter the comment")
+        }
+        else
+        {
+            
+            let commentDic: NSDictionary = self.selectComment.value(forKey: "comments") as! NSDictionary
         var userlist: NSArray = commentDic.value(forKey: "user_list") as! NSArray
        // let contained = userlist.contains("\(getuuid!)")
         let feedId = selectComment.value(forKey: "feed_id")
 //        if(contained == false)
 //        {
             //self.comment_btn.tintColor = UIColor.red
-            let Commentcount: Int = Int("\(commentDic.value(forKey: "count")!)")! + 1
+            let Commentcount: Int = Int("\(comment_btn.titleLabel?.text! ?? "")")! + 1
             self.comment_btn.setTitle("\(Commentcount)", for: .normal)
             let addUserlist: NSMutableArray = NSMutableArray()
             addUserlist.add(getuuid)
@@ -203,9 +211,10 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let maplike: NSMutableDictionary = NSMutableDictionary()
             maplike.setValue(Commentcount, forKey: "count")
             maplike.setValue(userlist, forKey: "user_list")
+            
         CommentUpdatemethod(updateDetail: maplike.copy() as! NSDictionary, userFeedid: feedId! as! String, selectIdexdetail: selectComment)
             
-
+        }
     }
     
     func commentListMethod(feedid: String)
@@ -255,7 +264,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                            Constant.showInActivityIndicatory()
 
                        } else {
-                        db.collection("feed").document("\(userFeedid)").collection("feedComments").document().setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)", "comment_desc": "\(self.comment_txt.text!)"])
+                        db.collection("feed").document("\(userFeedid)").collection("feedComments").document().setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar") ?? "")","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)", "comment_desc": "\(self.comment_txt.text!)"])
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
@@ -301,10 +310,10 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy hh:mm:ss a"
         print(dateFormatterPrint.string(from: datees as Date))
 
-        cell.postdate_lbl.text = "Post on \(dateFormatterPrint.string(from: datees as Date))"
+        cell.postdate_lbl.text = "Posted at \(dateFormatterPrint.string(from: datees as Date))"
         let url = URL(string: "\(dic.value(forKey: "avatar")!)")
         if(url != nil)
         {

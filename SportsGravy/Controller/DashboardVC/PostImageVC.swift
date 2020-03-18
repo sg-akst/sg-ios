@@ -15,6 +15,8 @@ import FirebaseStorage
 import Alamofire
 import Photos
 import BSImagePicker
+import AlamofireImage
+import Kingfisher
 
 
 struct PostGroupSection {
@@ -22,7 +24,7 @@ struct PostGroupSection {
     var userlist: NSDictionary
 }
 
-class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectuserGroubDelegate, SelectPostTagDelegate, SelectpostCanDelegate,SelectReactionDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectuserGroubDelegate, SelectPostTagDelegate, SelectpostCanDelegate,SelectReactionDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func selectReactionDetail(userDetail: NSDictionary) {
         let userTeam: NSDictionary = userDetail
@@ -119,6 +121,12 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var postimage: UIImageView!
    // @IBOutlet weak var postvideo: UIImageView!
     @IBOutlet weak var postTbl_height: NSLayoutConstraint!
+    @IBOutlet weak var post_collection_view: UICollectionView!
+    @IBOutlet weak var post_view: UIView!
+    @IBOutlet weak var close_Btn: UIButton!
+    @IBOutlet weak var video_btn: UIButton!
+    @IBOutlet weak var camera_btn: UIButton!
+    @IBOutlet weak var gallery_btn: UIButton!
     var postsections = [PostGroupSection]()
     var sectionCount: Int!
 
@@ -128,6 +136,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var canresponseList = [String: String]()
     var getUserdetails: NSDictionary!
     var getPostimageUrl: NSMutableArray!
+    var getMutiImageUrl: NSMutableArray!
     var getPostVideoUrl: String!
     var selectTeamName: String!
     var selectTag: String!
@@ -145,6 +154,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var getUserInfo: NSDictionary!
 
     var isImage: Bool!
+   
 
     
     override func viewDidLoad() {
@@ -152,12 +162,21 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         postteam_tbl.delegate = self
         postteam_tbl.dataSource = self
+        post_collection_view.delegate = self
+        post_collection_view.dataSource = self
+        post_view.isHidden = true
         getPostimageUrl = NSMutableArray()
         let bottomLine = CALayer()
         bottomLine.frame = CGRect(x: 0, y: post_content_txt.frame.height - 1, width: self.view.frame.width, height: 0.5)
         bottomLine.backgroundColor = UIColor.lightGray.cgColor
         post_content_txt.borderStyle = UITextBorderStyle.none
         post_content_txt.layer.addSublayer(bottomLine)
+        
+        close_Btn.backgroundColor = .black
+        close_Btn.layer.cornerRadius = close_Btn.frame.size.width/2
+        close_Btn.layer.borderWidth = 1
+        close_Btn.layer.borderColor = UIColor.white.cgColor
+        close_Btn.isHidden = true
         
         
         let addHeader: [String] = ["Who would you like to share this post with?", "How would you like to tag this post?","What was your reaction?","Select a canned response"]
@@ -395,25 +414,71 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     @IBAction func postVideoandImage(_ sender: UIButton)
        {
-        let imagePicker = ImagePickerController()
-       
-        //imagePicker.settings.theme.selectionStyle = .numbered
-        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image, .video]
-        //imagePicker.settings.selection.unselectOnReachingMax = true
+        self.getPostimageUrl = NSMutableArray()
 
+        let imagePicker = ImagePickerController()
+        
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image, .video]
         let start = Date()
         self.presentImagePicker(imagePicker, select: { (asset) in
             print("Selected: \(asset)")
             if(asset.mediaType.rawValue == 2)
             {
+                imagePicker.settings.selection.max = 1
                 self.isImage = false
-               // imagePicker.dese
+//                let manager = PHImageManager.default()
+//                let option = PHImageRequestOptions()
+//                var thumbnail = UIImage()
+//                option.isSynchronous = true
+//                manager.requestImage(for: asset, targetSize: CGSize(width: 100.0, height: 100.0), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+//                thumbnail = result!
+//                let profileImageFromPicker = result!
+//                let metadata = StorageMetadata()
+//                metadata.contentType = "mp4"
+//                    print("videourl",thumbnail)
+//                let user = Auth.auth().currentUser
+//                if let user = user{
+//                    let storeref = Storage.storage().reference().child("feedpostvideo/\(user.uid).mp4")
+//                    let videoRef = storeref.putFile(from: thumbnail as URL, metadata: metadata) { (metadata, error) in
+//                                   guard let _ = metadata else {
+//                                       print("error occurred: \(error.debugDescription)")
+//                                       return
+//                                   }
+//                        let player = AVPlayer(url: tempMedia! as URL)
+//
+//                            let playerLayer = AVPlayerLayer(player: player)
+//                        playerLayer.frame = self.postimage.bounds
+//                            player.play()
+//                            let videoview = UIView()
+//
+//                        videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
+//                        videoview.layer.addSublayer(playerLayer)
+//                            videoview.layer.display()
+//                        videoview.contentMode = .scaleAspectFill
+//                        self.postimage.addSubview(videoview)
+//                                   storeref.downloadURL { (URL, error) -> Void in
+//                                     if (error != nil) {
+//                                       // Handle any errors
+//                                     } else {
+//
+//                                       let UrlString = URL!.absoluteString
+//                                       print(UrlString)
+//                                        self.getPostVideoUrl = UrlString
+//                                        Constant.showInActivityIndicatory()
+//
+//                                     }
+//                                   }
+//                               }
+//                }
+//                })
             }
             else
             {
                  imagePicker.settings.selection.max = 8
-                imagePicker.settings.selection.unselectOnReachingMax = true
-
+                if(8<imagePicker.settings.selection.max)
+                {
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Cann't select more than 8 items")
+                }
                 self.isImage = true
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
@@ -421,17 +486,61 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 option.isSynchronous = true
                 manager.requestImage(for: asset, targetSize: CGSize(width: 100.0, height: 100.0), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
                 thumbnail = result!
+                let profileImageFromPicker = result!
+                                   
+              let metadata = StorageMetadata()
+                    metadata.contentType = "image/jpeg"
+                    let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
+                   // Constant.showActivityIndicatory(uiView: self.view)
+                    let store = Storage.storage()
+                    let user = Auth.auth().currentUser
+                    if let user = user {
+                               let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg")
+                               let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
+                                   guard let _ = metadata else {
+                                       print("error occurred: \(error.debugDescription)")
+                                       return
+                                   }
+                    
+                                   self.postimage.image = profileImageFromPicker
+
+                                   storeRef.downloadURL { (URL, error) -> Void in
+                                     if (error != nil) {
+                                       // Handle any errors
+                                     } else {
+                                       // Get the download URL for 'images/stars.jpg'
+
+                                       let UrlString = URL!.absoluteString
+                                       print(UrlString)
+                                        //self.getPostimageUrl = NSMutableArray()
+                                        self.getPostimageUrl.add(UrlString)
+                                        
+                                        Constant.showInActivityIndicatory()
+                                        
+                                     }
+                                   }
+                               }
+                            }
                 })
             }
-            
-            
         }, deselect: { (asset) in
             print("Deselected: \(asset)")
-           
-
         }, cancel: { (assets) in
             print("Canceled with selections: \(assets)")
         }, finish: { (assets) in
+            self.close_Btn.isHidden = false
+            if(self.getPostimageUrl.count > 1)
+            {
+                self.post_view.isHidden = false
+                self.post_collection_view.reloadData()
+            }
+            else
+            {
+                self.post_view.isHidden = true
+            }
+            self.video_btn.isUserInteractionEnabled = false
+            self.camera_btn.isUserInteractionEnabled = false
+            self.gallery_btn.isUserInteractionEnabled = false
             print("Finished with selections: \(assets)")
         }, completion: {
             let finish = Date()
@@ -458,7 +567,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
                self.dismiss(animated: true, completion: nil)
         
-             let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         if mediaType.isEqual(to: kUTTypeMovie as NSString as String){
             print("movie")
             let tempMedia = info[UIImagePickerControllerMediaURL] as! NSURL!
@@ -479,19 +588,17 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                         let playerLayer = AVPlayerLayer(player: player)
                     playerLayer.frame = self.postimage.bounds
                         player.play()
-                        let visdeoview = UIView()
+                        let videoview = UIView()
                                            
-                    visdeoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
-                    visdeoview.layer.addSublayer(playerLayer)
-                        visdeoview.layer.display()
-                    self.postimage.addSubview(visdeoview)
-                              // self.postimage.image = profileImageFromPicker
-
+                    videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
+                    videoview.layer.addSublayer(playerLayer)
+                        videoview.layer.display()
+                    videoview.contentMode = .scaleAspectFill
+                    self.postimage.addSubview(videoview)
                                storeref.downloadURL { (URL, error) -> Void in
                                  if (error != nil) {
                                    // Handle any errors
                                  } else {
-                                   // Get the download URL for 'images/stars.jpg'
 
                                    let UrlString = URL!.absoluteString
                                    print(UrlString)
@@ -676,5 +783,53 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.navigationController?.popViewController(animated: true)
     }
     
+    // Collectionview
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.getPostimageUrl.count
+    }
+
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        // get a reference to our storyboard cell
+        let cell: MutiplephotoCell = self.post_collection_view.dequeueReusableCell(withReuseIdentifier: "Muti", for: indexPath as IndexPath) as! MutiplephotoCell
+        let urls = NSURL(string: "\(self.getPostimageUrl[indexPath.row])")
+        cell.collectionImage.af.setImage(withURL: urls! as URL)  //setImage(with: urls! as URL)
+       // cell.collectionImage.image = self.getPostimageUrl[indexPath.item] as? UIImage
+        //cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
+
+        return cell
+    }
+
+    // MARK: - UICollectionViewDelegate protocol
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // handle tap events
+        print("You selected cell #\(indexPath.item)!")
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           let flowayout = collectionViewLayout as? UICollectionViewFlowLayout
+           let space: CGFloat = (flowayout?.minimumInteritemSpacing ?? 0.0) + (flowayout?.sectionInset.left ?? 0.0) + (flowayout?.sectionInset.right ?? 0.0)
+        let size:CGFloat = (self.post_collection_view.frame.size.width - space) / 2.0
+           return CGSize(width: size, height: size)
+       }
+    
+    @IBAction func didClickCloseBtn(_ sender: UIButton)
+    {
+        video_btn.isUserInteractionEnabled = true
+        camera_btn.isUserInteractionEnabled = true
+        gallery_btn.isUserInteractionEnabled = true
+        close_Btn.isHidden = true
+        if(self.getPostimageUrl.count>1)
+        {
+        self.getPostimageUrl = NSMutableArray()
+            self.post_collection_view.reloadData()
+        }
+        else
+        {
+            postimage.image = UIImage(named: "")
+        }
+    }
     
 }

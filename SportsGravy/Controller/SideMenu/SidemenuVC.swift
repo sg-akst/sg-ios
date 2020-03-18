@@ -143,10 +143,16 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                         roleIndex = i
                                     }
                                 }
+                                if(roleIndex != nil)
+                                {
                                 let element = self.roleArray.remove(at: roleIndex)
                                 self.roleArray.insert(element, at: 0)
                              UserDefaults.standard.set(element, forKey: "Role")
                              firstrole =  filteredEvents[roleIndex]
+                                }
+                                else{
+                                    firstrole = self.roleArray[0]
+                                }
                             }
                             else
                             {

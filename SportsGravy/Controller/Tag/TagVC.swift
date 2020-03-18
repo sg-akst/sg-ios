@@ -268,7 +268,7 @@ override func viewDidLoad() {
                
                if(self.getdifferentOrganization.count > 1)
                {
-                   self.addorderArray.add(commonArray.last!)
+                   //self.addorderArray.add(commonArray.last!)
                    self.commonArray = NSMutableArray() as? [String]
 
                          for i in 0..<getdifferentOrganization.count
@@ -303,7 +303,7 @@ override func viewDidLoad() {
                      }
                else if(self.getSameOrganization.count > 0)
                {
-                   self.addorderArray.add(commonArray.last!)
+                  // self.addorderArray.add(commonArray.last!)
                    self.commonArray = NSMutableArray() as? [String]
 
                    for i in 0..<getSameOrganization.count
@@ -333,7 +333,7 @@ override func viewDidLoad() {
                    self.getdifferentSeasonArray = NSMutableArray()
                if(self.getdifferentSportsArray.count > 1)
                {
-                   self.addorderArray.add(commonArray.last!)
+                   //self.addorderArray.add(commonArray.last!)
                    self.commonArray = NSMutableArray() as? [String]
 
                        for i in 0..<getdifferentSportsArray.count
@@ -368,7 +368,7 @@ override func viewDidLoad() {
                                  }
                           else if (self.getSameSportsArray.count > 0)
                           {
-                           self.addorderArray.add(commonArray.last!)
+                          // self.addorderArray.add(commonArray.last!)
 
                               self.commonArray = NSMutableArray() as? [String]
                               for i in 0..<getSameSportsArray.count
@@ -399,7 +399,7 @@ override func viewDidLoad() {
            {
                 if(self.getdifferentSeasonArray.count > 1)
                         {
-                           self.addorderArray.add(commonArray.last!)
+                           //self.addorderArray.add(commonArray.last!)
 
                           self.commonArray = NSMutableArray() as? [String]
                             var filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
@@ -413,7 +413,7 @@ override func viewDidLoad() {
                     if(self.getSameSeasonArray.count > 0)
                    {
                        
-                       self.addorderArray.add(commonArray.last!)
+                       //self.addorderArray.add(commonArray.last!)
 
                                       self.commonArray = NSMutableArray() as? [String]
                         var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
@@ -432,41 +432,63 @@ override func viewDidLoad() {
             if(selecttag == 0)
             {
                 print("All")
-                self.addorderArray = NSMutableArray()
+               // self.addorderArray = NSMutableArray()
                 getorganization()
                 getuserDetail()
             }
             else if(selecttag == 1)
             {
                 print("organization")
-                self.addorderArray = NSMutableArray()
+                //self.addorderArray = NSMutableArray()
                 getorganization()
                 getsportsmethod()
+                for i in 0..<addorderArray.count
+                           {
+                               if(i>1)
+                               {
+                                 self.addorderArray.removeLastObject()
+                               }
+                           }
+                
                 getuserDetail()
             }
             else if(selecttag == 2)
             {
                 print("Sport")
-                self.addorderArray = NSMutableArray()
+               // self.addorderArray = NSMutableArray()
                 getorganization()
                 getsportsmethod()
                 getSeasonmethod()
+                for i in 0..<addorderArray.count
+                           {
+                               if(i>2)
+                               {
+                                 self.addorderArray.removeLastObject()
+                               }
+                           }
                 getuserDetail()
             }
             else if(selecttag == 3)
             {
                 print("season")
-                self.addorderArray = NSMutableArray()
+              //  self.addorderArray = NSMutableArray()
                 getorganization()
                 getsportsmethod()
                 getSeasonmethod()
                 getTeammethod()
                // getLevelmethod()
+                for i in 0..<addorderArray.count
+                           {
+                               if(i>3)
+                               {
+                                 self.addorderArray.removeLastObject()
+                               }
+                           }
                 getuserDetail()
             }
             else if (selecttag == 4)
             {
-                self.addorderArray = NSMutableArray()
+               // self.addorderArray = NSMutableArray()
                 getorganization()
                 getsportsmethod()
                 getSeasonmethod()
@@ -535,12 +557,61 @@ override func viewDidLoad() {
             {
             if(self.addorderArray.count < 4)
             {
-            self.addorderArray = NSMutableArray()
-            getorganization()
-            getsportsmethod()
-            getSeasonmethod()
-            //getLevelmethod()
-            getTeammethod()
+//            self.addorderArray = NSMutableArray()
+//            getorganization()
+//            getsportsmethod()
+//            getSeasonmethod()
+//            //getLevelmethod()
+//            getTeammethod()
+                if(addorderArray.count == 1)
+                {
+                    
+                    for i in 0..<self.getRolebyreasonDetailArray.count
+                    {
+                         let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                         let role: String = roleDic.value(forKey: "organization_abbrev") as! String
+                        if(self.commonArray[indexPath.row] == role)
+                        {
+                            getOrganization = roleDic.value(forKey: "organization_id") as? String
+
+                        }
+                    }
+                    self.addorderArray.add(commonArray[indexPath.row])
+                   
+                    getsportsmethod()
+                }
+                else if(addorderArray.count == 2)
+                {
+                    for i in 0..<self.getRolebyreasonDetailArray.count
+                    {
+                         let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                         let role: String = roleDic.value(forKey: "sport_name") as! String
+                        if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "organization_id") as? String == getOrganization)
+                        {
+                            getSport = roleDic.value(forKey: "sport_id") as? String
+
+                        }
+                    }
+                    self.addorderArray.add(commonArray[indexPath.row])
+                    getSeasonmethod()
+
+                }
+                else if(addorderArray.count == 3)
+                           {
+                               for i in 0..<self.getRolebyreasonDetailArray.count
+                               {
+                                    let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                                    let role: String = roleDic.value(forKey: "sport_name") as! String
+                                   if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "sport_id") as? String == getSport)
+                                   {
+                                       getTeamId = roleDic.value(forKey: "team_id") as? String
+
+                                   }
+                               }
+                               self.addorderArray.add(commonArray[indexPath.row])
+                                getTeammethod()
+
+                           }
             getuserDetail()
 
             }
@@ -636,10 +707,10 @@ override func viewDidLoad() {
                     if(self.getRolebyreasonDetailArray.count > 0)
                     {
                         self.getorganization()
-                        self.getsportsmethod()
-                        self.getSeasonmethod()
+                        //self.getsportsmethod()
+                       // self.getSeasonmethod()
                         //self.getLevelmethod()
-                        self.getTeammethod()
+                       // self.getTeammethod()
                         self.getuserDetail()
 
 

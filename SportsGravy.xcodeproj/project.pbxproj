@@ -69,6 +69,7 @@
 		084C618623F6AC84005613B3 /* PostTagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618523F6AC84005613B3 /* PostTagVC.swift */; };
 		084C618823F6AEF8005613B3 /* PostCannedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618723F6AEF8005613B3 /* PostCannedVC.swift */; };
 		084C618A23F6B59A005613B3 /* PostUsergroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C618923F6B59A005613B3 /* PostUsergroupVC.swift */; };
+		085CF0122421FCE5009DF1BE /* MutiplephotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CF0112421FCE5009DF1BE /* MutiplephotoCell.swift */; };
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
 		08A436B32404F16E00A67FF2 /* CommonTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A436B22404F16E00A67FF2 /* CommonTabBarVC.swift */; };
@@ -145,6 +146,7 @@
 		084C618923F6B59A005613B3 /* PostUsergroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUsergroupVC.swift; sourceTree = "<group>"; };
 		08507F5723BF423800CC968F /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
 		08507F5A23BF519C00CC968F /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
+		085CF0112421FCE5009DF1BE /* MutiplephotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutiplephotoCell.swift; sourceTree = "<group>"; };
 		0872E64823E2F725008170A0 /* ChildernCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildernCell.swift; sourceTree = "<group>"; };
 		087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecord.swift; sourceTree = "<group>"; };
 		087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				0805FB0823FA58D800AD3426 /* PostUserCell.swift */,
 				08B5631223FB368000D90E23 /* PostCanCell.swift */,
 				080B0CE7240E41DC000B905E /* PeopleCell.swift */,
+				085CF0112421FCE5009DF1BE /* MutiplephotoCell.swift */,
 			);
 			path = PostCell;
 			sourceTree = "<group>";
@@ -871,6 +874,7 @@
 				08245F2923E3FF2A00E63D2C /* Constant.swift in Sources */,
 				080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */,
 				080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */,
+				085CF0122421FCE5009DF1BE /* MutiplephotoCell.swift in Sources */,
 				08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */,
 				08BAAF4724157030006B86D7 /* PostTableViewCell.swift in Sources */,
 				088625F423EC347E008E7CCD /* CommentCell.swift in Sources */,

@@ -37,6 +37,11 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     var getrolebyorganizationArray: NSMutableArray!
     var selectOption_btn: UIButton!
     var getTeamId: String!
+    
+    var getorg_id: String!
+    var getSport_id: String!
+    var season_id: String!
+    
     @IBOutlet weak var orderviewheight: NSLayoutConstraint!
 
     
@@ -67,6 +72,18 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
             self.canRespons_txv.text = updateArray.value(forKey: "cannedResponseDesc") as? String
          
         }
+        for i in 0..<self.getrolebyorganizationArray.count
+        {
+             let roleDic: NSDictionary = getrolebyorganizationArray?[i] as! NSDictionary
+             let role: String = roleDic.value(forKey: "team_id") as! String
+            if(getTeamId == role)
+            {
+                getorg_id = roleDic.value(forKey: "organization_id") as? String
+                getSport_id = roleDic.value(forKey: "sport_id") as? String
+                season_id = roleDic.value(forKey: "season_id") as? String
+            }
+        }
+        
         canRespons_txv.layer.borderColor = UIColor.black.cgColor
         canRespons_txv.layer.borderWidth = 1.0
         canRespons_txv.layer.masksToBounds = true
@@ -262,10 +279,10 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         self.delegate?.passorderArray(select: self.getorderArray,selectindex: sender)
         self.navigationController?.popViewController(animated: true)
     }
-    @IBAction func createtag(_ sender: UIButton)
+    @IBAction func createCanResponse(_ sender: UIButton)
     {
         var ref: DocumentReference? = nil
-
+         var refuserid: String!
         if(isCreate == true)
         {
             if(canRespons_tittle_txt.text == nil || canRespons_tittle_txt.text?.isEmpty == true)
@@ -278,25 +295,16 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
-        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-                
+         
+               let docRef = db.collection("teams").document("\(getTeamId!)")
                 docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
                            if let err = err {
                                print("Error getting documents: \(err)")
                            } else {
                                  let getcannedList = NSMutableArray()
-
-//                                   for document in querySnapshot!.documents {
-//                                   let data: NSDictionary = document.data() as NSDictionary
-//                                     if(data.value(forKey: "cannedResponseTitle") as! String == self.canRespons_tittle_txt.text! || (data.value(forKey: "cannedResponseTitle") as! String) . caseInsensitiveCompare(self.canRespons_tittle_txt.text!) == ComparisonResult.orderedSame)
-//                                     {
-//                                         getcannedList.add(data)
-//
-//                                     }
-//                                  }
                             if(getcannedList.count == 0)
                             {
-                                      ref =  docRef.collection("CannedResponse").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date(), "updated_uid" : ""])
+                                ref =  docRef.collection("CannedResponse").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)","canned_response_description": "\(self.canRespons_txv.text!)", "updated_datetime" : Date(),"organization_id": "\(self.getorg_id!)","sport_id": "\(self.getSport_id!)","team_id":"\(self.getTeamId!)","is_used": false,"updated_uid":""])
                                         
                             { err in
                                 if let err = err {
@@ -305,13 +313,29 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                                     print("Document successfully written!")
                                     
                                      Constant.showInActivityIndicatory()
-                                    print("Shopping List Item Document added with ID: \(ref!.documentID)")
+                                    //print("Shopping List Item Document added with ID: \(ref!.documentID)")
                                     docRef.collection("CannedResponse").document(ref!.documentID).updateData(["cannedResponseTitle_id":ref!.documentID])
                                                             if let err = err {
                                                                    print("Error writing document: \(err)")
                                                             } else {
-                                                               Constant.showInActivityIndicatory()
-                                                                self.alertermsg(msg: "Canned Response created successfully ")
+                                                                
+                                                                refuserid = ref?.documentID
+                                                                let useRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.rolebySeasonid!)")
+                                                                useRef.collection("CannedResponse").document("\(refuserid!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "cannedResponseTitle": "\(self.canRespons_tittle_txt.text!)","cannedResponseDesc":"\(self.canRespons_txv.text!)","canned_response_description": "\(self.canRespons_txv.text!)", "updated_datetime" : Date(),"organization_id": "\(self.getorg_id!)","sport_id": "\(self.getSport_id!)","team_id":"\(self.getTeamId!)","is_used": false,"cannedResponseTitle_id":"\(refuserid!)"])
+                                                                { err in
+                                                                    if let err = err {
+                                                                    print("Error writing document: \(err)")
+                                                                                                       } else {
+                                                                    print("Team Document successfully written!")
+                                                                
+                                                                                                               
+                                                Constant.showInActivityIndicatory()
+                                            self.alertermsg(msg: "Canned Response created successfully ")
+                                                            
+                                                                                                           }
+                                                                                                   
+                                                                                                   }
+ 
 
                                                             }
                                     
@@ -336,8 +360,9 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                  Constant.showActivityIndicatory(uiView: self.view)
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
                  let db = Firestore.firestore()
-            let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")            
-            docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle_id") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
+            let teamRef = db.collection("teams").document("\(getTeamId!)")
+                      
+            teamRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle_id") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -346,39 +371,21 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                 } else {
                     print("Document successfully updated")
                      Constant.showInActivityIndicatory()
-                      self.alertermsg(msg: "Canned Response updated successfully ")
-                    ////
-//                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-//                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-//
-//                    docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
-//                    { err in
-//                        if let err = err {
-//                            print("Error updating document: \(err)")
-//                            Constant.showInActivityIndicatory()
-//
-//                        } else {
-//                            print("Document successfully updated")
-//                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-//                            addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
-//                            { err in
-//                                if let err = err {
-//                                    print("Error updating document: \(err)")
-//                                    Constant.showInActivityIndicatory()
-//
-//                                } else {
-//                                    print("Document successfully updated")
-//                                    Constant.showInActivityIndicatory()
-//                                    self.alertermsg(msg: "Canned Response updated successfully ")
-////
-//
-//
-//                                }
-//                            }
-//
-//                        }
-//
-//                    }
+                    let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.rolebySeasonid!)")
+                    docRef.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle_id") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
+                    { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                        Constant.showInActivityIndicatory()
+
+                    } else {
+                        Constant.showInActivityIndicatory()
+
+                        self.alertermsg(msg: "Canned Response updated successfully ")
+
+                        }
+                    }
+                    
                 }
             }
                  

@@ -387,7 +387,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
    
     @IBAction func Create_BtnAction(_ sender: UIButton)
     {
-        var ref: DocumentReference? = nil
+        var ref: String!
         var teamref : DocumentReference? = nil
 
         if(isCreate == true)
@@ -408,11 +408,10 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
             let db = Firestore.firestore()
-
-            let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
                 Constant.showActivityIndicatory(uiView: self.view)
-                
-              docRef.collection("MemberGroup").getDocuments() { (querySnapshot, err) in
+                let teamRef = db.collection("teams").document("\(self.getTeamId!)")
+
+              teamRef.collection("MemberGroup").getDocuments() { (querySnapshot, err) in
               if let err = err {
                   print("Error getting documents: \(err)")
               } else {
@@ -430,69 +429,44 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 if(getusergroup.count == 0)
                 {
 
-                    ref = docRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray, "organization_id": "\(self.getorg_id!)","season_id": "\(self.season_id!)", "sport_id": "\(self.getSport_id!)", "is_used": false])
+                    teamref = teamRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray, "organization_id": "\(self.getorg_id!)","season_id": "\(self.season_id!)", "sport_id": "\(self.getSport_id!)", "is_used": false])
                     { err in
                                         if let err = err {
                                                print("Error writing document: \(err)")
                                         } else {
                                         print("Document successfully written!")
                                             Constant.showInActivityIndicatory()
-                                            print("Shopping List Item Document added with ID: \(ref!.documentID)")
-                    docRef.collection("MemberGroup").document(ref!.documentID).updateData(["user_groupId":ref!.documentID])
+                    teamRef.collection("MemberGroup").document(teamref!.documentID).updateData(["user_groupId":teamref!.documentID])
                                             if let err = err {
                                                    print("Error writing document: \(err)")
                                             } else {
-                                                
-                                let teamRef = db.collection("teams").document("\(self.getTeamId!)")
-                                teamRef.collection("MemberGroup").getDocuments{ (querySnapshot, err) in
-                                if let err = err {
-                                print("Error getting documents: \(err)")
-                                                                   } else {
-                                                                       
-                                let getteamsTagList = NSMutableArray()
-
-                                for document in querySnapshot!.documents {
-                                    let data: NSDictionary = document.data() as NSDictionary
-                                if(data.value(forKey: "display_name") as! String == self.group_tittle_txt.text! || (data.value(forKey: "display_name") as! String) . caseInsensitiveCompare(self.group_tittle_txt.text!) == ComparisonResult.orderedSame)
-                                        {
-                                                getteamsTagList.add(data)
-
-                                        }
-                                        }
-                                if(getteamsTagList.count == 0)
-                            {
-                                teamref = teamRef.collection("MemberGroup").addDocument(data: ["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray, "organization_id": "\(self.getorg_id!)","season_id": "\(self.season_id!)", "sport_id": "\(self.getSport_id!)","is_used": false])
+                                                ref = teamref?.documentID
+                                                let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.rolebySeasonid!)")
+                                                docRef.collection("MemberGroup").document("\(ref!)").setData(["count" : 0, "created_datetime": Date(),"created_uid" : "\(getuuid!)", "display_name": "\(self.group_tittle_txt.text!)","group_type" : "Custom_Group", "updated_datetime" : Date(), "updated_uid" : "","user_list" : self.selectpersonArray, "organization_id": "\(self.getorg_id!)","season_id": "\(self.season_id!)", "sport_id": "\(self.getSport_id!)","is_used": false,"user_groupId":"\(ref!)"])
                                     { err in
                                         if let err = err {
                                         print("Error writing document: \(err)")
                                                                            } else {
                                         print("Team Document successfully written!")
-                                    teamRef.collection("MemberGroup").document(teamref!.documentID).updateData(["user_groupId":teamref!.documentID])
-                                            if let err = err {
-                                        print("Error writing document: \(err)")
-                                        } else {
+                                    self.alertermsg(msg: "User group created successfully ")
+//docRef.collection("MemberGroup").document(ref).updateData(["user_groupId":ref])
+//                                            if let err = err {
+//                                        print("Error writing document: \(err)")
+//                                        } else {
                                                                                    
-                                        self.alertermsg(msg: "User group created successfully ")
-                                                            }
+                                                          //  }
                                                                                }
-                                                                           }
-                                                                       }
-                                                                       
                                                                        
                                                                        }
                                                                    }
                                                 
                                                 
                                                 Constant.showInActivityIndicatory()
-
-                                               // self.alertermsg(msg: "User group created successfully ")
-
                                             }
 
                                            }
                                            Constant.showInActivityIndicatory()
                                        }
-                }
                 else
                 {
                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This UserGroup Already exit")
@@ -502,9 +476,6 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                      
                       }
                   }
-
-                
-
             }
         }
         else
@@ -519,8 +490,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                  Constant.showActivityIndicatory(uiView: self.view)
                  let getuuid = UserDefaults.standard.string(forKey: "UUID")
                  let db = Firestore.firestore()
-            let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-            docRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date()])
+            let teamRef = db.collection("teams").document("\(self.getTeamId!)")
+            teamRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -528,42 +499,22 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
                 } else {
                     print("Document successfully updated")
+                    let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.rolebySeasonid!)")
+            docRef.collection("MemberGroup").document("\(self.updateArray.value(forKey: "user_groupId") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
+                    { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                        Constant.showInActivityIndicatory()
 
-                    Constant.showInActivityIndicatory()
-                    self.alertermsg(msg: "User group updated successfully ")
+                    } else {
+                        
+                        Constant.showInActivityIndicatory()
+                        self.alertermsg(msg: "User group updated successfully ")
+                                           
+                        }
+                    }
+                   
                     
-                    
-                    
-//                    let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-//                    let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)")
-//
-//                    docrefs.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
-//                    { err in
-//                        if let err = err {
-//                            print("Error updating document: \(err)")
-//                            Constant.showInActivityIndicatory()
-//
-//                        } else {
-//                            print("Document successfully updated")
-//                            let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document("\(organizationId.value(forKey: "sport_id")!)").collection("seasons").document("\(organizationId.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-//                            addDoc.collection("MemberGroup").document("\(self.updateArray.value(forKey: "display_name") as! String)").updateData(["user_list": self.selectpersonArray, "updated_datetime" : Date()])
-//                            { err in
-//                                if let err = err {
-//                                    print("Error updating document: \(err)")
-//                                    Constant.showInActivityIndicatory()
-//
-//                                } else {
-//                                    print("Document successfully updated")
-//                                    Constant.showInActivityIndicatory()
-//
-//                                    self.alertermsg(msg: "User group updated successfully ")
-//
-//                                }
-//                            }
-//
-//                        }
-//
-//                    }
                 }
             }
         }

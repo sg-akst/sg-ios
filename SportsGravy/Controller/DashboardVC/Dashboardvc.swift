@@ -10,9 +10,10 @@ import UIKit
 import SWRevealViewController
 import FirebaseFirestore
 import Alamofire
-import AlamofireImage
+//import AlamofireImage
 import Firebase
 import AVKit
+import Kingfisher
 
 
 class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate, FeedSelectorDelegate {
@@ -32,6 +33,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
          self.postvielname_lbl.layer.borderWidth = 0.5
          self.postvielname_lbl.layer.borderColor = UIColor.lightGray.cgColor
          self.postvielname_lbl.layer.masksToBounds = true
+        if(cancel_btn != nil)
+        {
+            cancel_btn.removeFromSuperview()
+        }
          cancel_btn = UIButton()
           //let size = (selectitemname as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
          cancel_btn.frame = CGRect(x:self.postvielname_lbl.frame.origin.x + self.postvielname_lbl.frame.size.width-30, y: 10, width: 25, height: 25)
@@ -39,6 +44,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
          cancel_btn.isHidden  = false
          cancel_btn.setImage(UIImage(named: "cancel"), for: .normal)
          cancel_btn.tintColor = UIColor.black
+        cancel_btn.addTarget(self, action: #selector(CancelFeedFilter), for: .touchUpInside)
          self.displayselectitem.addSubview(cancel_btn)
          
         
@@ -95,6 +101,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
        var avPlayerLayer: AVPlayerLayer?
        var paused: Bool = false
     var postImg: UIImageView!
+    var videoview: UIView!
     var selectRole: String!
     
 
@@ -211,7 +218,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
              dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
              let dateFormatterPrint = DateFormatter()
-             dateFormatterPrint.dateFormat = "MMM dd,yyyy HH:mm:ss a"
+             dateFormatterPrint.dateFormat = "MMM dd,yyyy hh:mm:ss a"
             // print(dateFormatterPrint.string(from: datees as Date))
 
     cell.date_lbl.text = "Posted on \(dateFormatterPrint.string(from: datees as Date))"
@@ -223,7 +230,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         cell.tag_btn.isHidden = false
         cell.tag_btn.setTitle(Dic.value(forKey: "tag_name") as? String, for: .normal)
-        //cell.tag_btn.sizeToFit()
+        cell.tag_btn.sizeToFit()
     }
     else
     {
@@ -232,32 +239,38 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     if(Dic.value(forKey: "reaction") != nil && Dic.value(forKey: "reaction")as! String != "")
     {
         let size = (Dic.value(forKey: "reaction") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
-        let width: CGFloat = size.width * 1.5
-        cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: width, height: 25)
+       // let width: CGFloat = size.width * 1.7
+       // cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: width, height: 25)
 
         cell.reaction_btn.isHidden = false
         let getreaction: String = Dic.value(forKey: "reaction") as! String
         if(getreaction == "neutral")
         {
+             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width * 1.5, height: 25)
             cell.reaction_btn.setImage(UIImage(named: "happy"), for: .normal)
+            cell.reaction_btn.setTitle("neutral", for: .normal)
+
         }
         else if(getreaction == "unhappy")
         {
+             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width * 1.5, height: 25)
             cell.reaction_btn.setImage(UIImage(named: "Thumbs_down"), for: .normal)
+            cell.reaction_btn.setTitle("Thumbs-down", for: .normal)
+
         }
         else if(getreaction == "happy")
         {
+             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width * 1.7, height: 25)
             cell.reaction_btn.setImage(UIImage(named: "Thumbs_up"), for: .normal)
+            cell.reaction_btn.setTitle("Thumbs-up", for: .normal)
+
         }
-        cell.reaction_btn.setTitle(Dic.value(forKey: "reaction") as? String, for: .normal)
         cell.reaction_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0,3.0, 0.0, 0.0)
-        cell.reaction_btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        cell.reaction_btn.imageEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0)
         cell.reaction_btn.tintColor = UIColor.black
 
         cell.reaction_btn.contentHorizontalAlignment = .left
 
-        //cell.reaction_btn.setTitle(Dic.value(forKey: "reaction") as? String, for: .normal)
-        //cell.reaction_btn.sizeToFit()
 
     }
     else
@@ -268,7 +281,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let urls = NSURL(string: "\(profileImage)")
             if(urls?.absoluteString != "")
              {
-                cell.profileImg.af_setImage(withURL: urls! as URL)
+                
+                cell.profileImg.kf.setImage(with: urls! as URL)
+
+            
                  cell.profileImg.layer.cornerRadius = cell.profileImg.frame.size.width/2
                  cell.profileImg.layer.backgroundColor = UIColor.lightGray.cgColor
              }
@@ -306,6 +322,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.org_lbl.text = postinfoDic.value(forKey:"organization_name") as! NSString as String
         cell.org_lbl.isHidden = false
         cell.org_title_lbl.isHidden = false
+        cell.org_lbl.sizeToFit()
+        cell.org_title_lbl.sizeToFit()
 
     }
     else
@@ -327,6 +345,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
           cell.sport_lbl.isHidden = false
           cell.sport_title_lbl.isHidden = false
+        cell.sport_lbl.sizeToFit()
+        cell.sport_title_lbl.sizeToFit()
 
       }
       else
@@ -350,6 +370,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
              cell.season_title_lbl.isHidden = false
              cell.season_lbl.isHidden = false
+            cell.season_title_lbl.sizeToFit()
+            cell.season_lbl.sizeToFit()
 
          }
          else
@@ -503,17 +525,23 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     }
                     let postvideo : String = Dic.value(forKey: "feedVideoURL") as! String
                     let videoURL = NSURL(string: "\(postvideo)")
-                    let player = AVPlayer(url: videoURL! as URL)
+                    avPlayer = AVPlayer(url: videoURL! as URL)
                     
-                    let playerLayer = AVPlayerLayer(player: player)
-                    playerLayer.frame = cell.bounds
-                    //player.play()
-                    let visdeoview = UIView()
+                     avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                    avPlayerLayer?.frame = cell.bounds
+                    videoview = UIView()
                                        
-                visdeoview.frame =  CGRect(x: 0, y: 0, width: imagewidth, height: imageheight)
-                visdeoview.layer.addSublayer(playerLayer)
-                    visdeoview.layer.display()
-                cell.postimageScroll.addSubview(visdeoview)
+                    videoview.frame =  CGRect(x: 0, y: 0, width: imagewidth, height: imageheight)
+                    videoview.layer.addSublayer(avPlayerLayer!)
+                    videoview.layer.display()
+                    let videoplay_btn: UIButton = UIButton()
+                    videoplay_btn.frame = CGRect(x: videoview.frame.size.width/2, y: videoview.frame.size.height/2, width: 30, height: 30)
+                    videoplay_btn.setImage(UIImage(named: "video"), for: .normal)
+                    videoplay_btn.tag = indexPath.row
+                    videoplay_btn.addTarget(self, action: #selector(videoplay), for: .touchUpInside)
+                    videoview.addSubview(videoplay_btn)
+                    avPlayer?.pause()
+                cell.postimageScroll.addSubview(videoview)
                 
                     
                 }
@@ -526,12 +554,12 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                 for i in 0..<postimageArray.count
                 {
-                     postImg = UIImageView()
+                    self.postImg = UIImageView()
                     
                     postImg.frame = (i==0) ? CGRect(x: 0, y: 0, width: imagewidth, height: imageheight) : CGRect(x: CGFloat(i) * imagewidth, y: 0, width : imagewidth, height: imageheight)
                    // postImg.backgroundColor = UIColor.red
-                    let posturl = NSURL(string: "\(postimageArray[i])")
-                    postImg.af_setImage(withURL: posturl! as URL)
+                    let posturl = URL(string: "\(postimageArray[i])")
+                    postImg.kf.setImage(with: posturl! as URL)
                     cell.postimageScroll.addSubview(postImg)
                     cell.pageControl.numberOfPages = postimageArray.count
                     cell.pageControl.tag = i
@@ -560,6 +588,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         // method to run when table view cell is tapped
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
            // print("You tapped cell number \(indexPath.row).")
+            
         }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -595,7 +624,34 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         }
     }
+   
+    @objc func videoplay(_ sender: UIButton)
+    {
+        let button = sender
+        let cell = button.superview?.superview as? PostCell
 
+        let dic: NSDictionary = commonArray?[sender.tag] as! NSDictionary
+        let postvideo : String = dic.value(forKey: "feedVideoURL") as! String
+        let videoURL = NSURL(string: "\(postvideo)")
+       // avPlayer = AVPlayer(url: videoURL! as URL)
+
+        //let playerLayer = AVPlayerLayer(player: avPlayer)
+        //playerLayer.frame = videoview.bounds
+//        cell?.postimageScroll.insertSubview(postImg, at: button.tag)
+        if(avPlayer?.rate == 0)
+        {
+        avPlayer!.play()
+        
+        }
+        else
+        {
+            avPlayer?.pause()
+        }
+        //let indexPosition = IndexPath(row: button.tag, section: 0)
+        //self.post_tbl.reloadRows(at: [indexPosition], with: .none)
+
+       
+    }
     @objc func InformationDetail(_ sender: UIButton)
     {
         let indexno = sender.tag
@@ -623,35 +679,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let indexPosition = IndexPath(row: selectIndex, section: 0)
         self.post_tbl.reloadRows(at: [indexPosition], with: .none)
 
-        
-        //selectindexArray.add(sender.tag)
-        
-//        for i in 0..<selectindexArray.count
-//        {
-//            if(selectindexArray[i] as! Int == sender.tag)
-//            {
-//                if(isInfo == true)
-//                {
-//                isInfo = true
-//                selectIndex = indexno
-//                }
-//            }
-//        }
-        
-//        if(selectIndex != 0)
-//        {
-//        if(isInfo == false)
-//        {
-//        isInfo = true
-//        selectIndex = indexno
-//        }
-//        else
-//        {
-//          isInfo = false
-//          selectIndex = indexno
-//
-//        }
-      //  }
+
        
 
     }
@@ -730,7 +758,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                            Constant.showInActivityIndicatory()
 
                        } else {
-                    db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar")!)","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
+                        db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar") ?? "")","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
                         { err in
                             if let err = err {
                                 print("Error updating document: \(err)")
@@ -893,6 +921,10 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
 
             }
         }
+    }
+    @objc func CancelFeedFilter(_ sender: UIButton)
+    {
+         getFeedMethod()
     }
     
     @IBAction func menuBtn(_ sender: UIButton)

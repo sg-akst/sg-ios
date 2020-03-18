@@ -291,9 +291,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
            
            if(self.getdifferentOrganization.count > 1)
            {
-                   self.commonArray = NSMutableArray() as? [String]
-               self.addorderArray.add(commonArray.last!)
-               
+                   self.commonArray = NSMutableArray() as? [String]               
                      for i in 0..<getdifferentOrganization.count
                      {
                          let roleDic: NSDictionary = getdifferentOrganization?[i] as! NSDictionary
@@ -323,12 +321,10 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
                }
                
-                 }
+            }
            else if(self.getSameOrganization.count > 0)
            {
-               self.addorderArray.add(commonArray.last!)
                self.commonArray = NSMutableArray() as? [String]
-
                for i in 0..<getSameOrganization.count
                {
                    let roleDic: NSDictionary = getSameOrganization?[i] as! NSDictionary
@@ -353,34 +349,32 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
        func getSeasonmethod()
        {
             self.getSameSeasonArray = NSMutableArray()
-               self.getdifferentSeasonArray = NSMutableArray()
+            self.getdifferentSeasonArray = NSMutableArray()
            if(self.getdifferentSportsArray.count > 1)
            {
-               self.addorderArray.add(commonArray.last!)
                self.commonArray = NSMutableArray() as? [String]
 
                    for i in 0..<getdifferentSportsArray.count
                    {
-                                     let roleDic: NSDictionary = getdifferentSportsArray?[i] as! NSDictionary
-                                     let role: String = roleDic.value(forKey: "sport_id") as! String
-                                     if(role == getSport)
-                                     {
-                                         self.getSeason = roleDic.value(forKey: "season_label") as? String
-                                         getSameSeasonArray.add(roleDic)
-                                      getrolebySeasonid = roleDic.value(forKey: "season_id") as? String
+                        let roleDic: NSDictionary = getdifferentSportsArray?[i] as! NSDictionary
+                        let role: String = roleDic.value(forKey: "sport_id") as! String
+                        if(role == getSport)
+                        {
+                            self.getSeason = roleDic.value(forKey: "season_label") as? String
+                            getSameSeasonArray.add(roleDic)
+                            getrolebySeasonid = roleDic.value(forKey: "season_id") as? String
 
-                                     }
-                                     else
-                                     {
-                                         getdifferentSeasonArray.add(roleDic)
-                                     }
-                                }
+                        }
+                        else
+                        {
+                            getdifferentSeasonArray.add(roleDic)
+                        }
+                    }
                
                if(getdifferentSeasonArray.count > 1)
                  {
                      let filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
                      self.commonArray.append(contentsOf: filteredEvent)
-
                  }
                 else
                {
@@ -388,11 +382,9 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                      self.commonArray.append(contentsOf: filteredEvent)
 
                  }
-                             }
+                }
                       else if (self.getSameSportsArray.count > 0)
                       {
-                       self.addorderArray.add(commonArray.last!)
-
                           self.commonArray = NSMutableArray() as? [String]
                           for i in 0..<getSameSportsArray.count
                           {
@@ -404,12 +396,11 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                                   getSameSeasonArray.add(roleDic)
                                   getrolebySeasonid = roleDic.value(forKey: "season_id") as? String
 
-                                  }
-                                  else
-                                  {
-                                      getdifferentSeasonArray.add(roleDic)
-                                      }
-                          
+                              }
+                              else
+                            {
+                               getdifferentSeasonArray.add(roleDic)
+                            }
                           }
                         var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
                         filteredEvents.sort()
@@ -422,29 +413,20 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
        {
             if(self.getdifferentSeasonArray.count > 1)
                     {
-                       self.addorderArray.add(commonArray.last!)
-
                       self.commonArray = NSMutableArray() as? [String]
                         var filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                         filteredEvents.sort()
                         self.commonArray.append(contentsOf: filteredEvents)
-                        
-
                     }
             else
              {
                 if(self.getSameSeasonArray.count > 0)
                {
-                   
-                   self.addorderArray.add(commonArray.last!)
-
-                                  self.commonArray = NSMutableArray() as? [String]
+                self.commonArray = NSMutableArray() as? [String]
                 var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                 filteredEvents.sort()
-                                    self.commonArray.append(contentsOf: filteredEvents)
-                                    
-
-                                }
+                self.commonArray.append(contentsOf: filteredEvents)
+                }
             }
        }
     
@@ -458,7 +440,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         if(selecttag == 0)
         {
             print("All")
-            self.addorderArray = NSMutableArray()
+            //self.addorderArray = NSMutableArray()
 
            getorganization()
             getuserDetail()
@@ -466,34 +448,50 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         else if(selecttag == 1)
         {
             print("organization")
-            self.addorderArray = NSMutableArray()
+           // self.addorderArray = NSMutableArray()
 
            getorganization()
             getsportsmethod()
+            for i in 0..<addorderArray.count
+            {
+                if(i>1)
+                {
+                  self.addorderArray.removeLastObject()
+                }
+            }
             getuserDetail()
 
         }
         else if(selecttag == 2)
         {
             print("Sport")
-            self.addorderArray = NSMutableArray()
-
-             self.addorderArray = NSMutableArray()
-
                        getorganization()
                        getsportsmethod()
                        getSeasonmethod()
-                       getuserDetail()
+            for i in 0..<addorderArray.count
+            {
+                if(i>2)
+                {
+                  self.addorderArray.removeLastObject()
+                }
+            }
+            getuserDetail()
 
         }
         else if(selecttag == 3)
         {
             self.addorderArray = NSMutableArray()
-                       getorganization()
-                       getsportsmethod()
-                       getSeasonmethod()
-                      // getLevelmethod()
-                       getuserDetail()
+            getorganization()
+            getsportsmethod()
+            getSeasonmethod()
+            for i in 0..<addorderArray.count
+            {
+                if(i>3)
+                {
+                  self.addorderArray.removeLastObject()
+                }
+            }
+            getuserDetail()
 
         }
         else if(selecttag == 4)
@@ -574,12 +572,61 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         {
         if(self.addorderArray.count < 4)
         {
-        self.addorderArray = NSMutableArray()
-        getorganization()
-        getsportsmethod()
-        getSeasonmethod()
-       // getLevelmethod()
-        getTeammethod()
+            if(addorderArray.count == 1)
+            {
+                
+                for i in 0..<self.getRolebyreasonDetailArray.count
+                {
+                     let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                     let role: String = roleDic.value(forKey: "organization_abbrev") as! String
+                    if(self.commonArray[indexPath.row] == role)
+                    {
+                        getOrganization = roleDic.value(forKey: "organization_id") as? String
+
+                    }
+                }
+                self.addorderArray.add(commonArray[indexPath.row])
+               
+                getsportsmethod()
+            }
+            else if(addorderArray.count == 2)
+            {
+                for i in 0..<self.getRolebyreasonDetailArray.count
+                {
+                     let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                     let role: String = roleDic.value(forKey: "sport_name") as! String
+                    if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "organization_id") as? String == getOrganization)
+                    {
+                        getSport = roleDic.value(forKey: "sport_id") as? String
+
+                    }
+                }
+                self.addorderArray.add(commonArray[indexPath.row])
+                getSeasonmethod()
+
+            }
+            else if(addorderArray.count == 3)
+                       {
+                           for i in 0..<self.getRolebyreasonDetailArray.count
+                           {
+                                let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                                let role: String = roleDic.value(forKey: "sport_name") as! String
+                               if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "sport_id") as? String == getSport)
+                               {
+                                   getTeamId = roleDic.value(forKey: "team_id") as? String
+
+                               }
+                           }
+                           self.addorderArray.add(commonArray[indexPath.row])
+                            getTeammethod()
+
+                       }
+//        self.addorderArray = NSMutableArray()
+//        getorganization()
+//        getsportsmethod()
+//        getSeasonmethod()
+//       // getLevelmethod()
+//        getTeammethod()
         getuserDetail()
 
         }
@@ -667,7 +714,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                               print("Error getting documents: \(err)")
                           } else {
                            self.getRolebyreasonDetailArray = NSMutableArray()
-
                                   for document in querySnapshot!.documents {
                                   let data: NSDictionary = document.data() as NSDictionary
                                    let getseason_end_date =  data.value(forKey: "season_end_date") as? Timestamp
@@ -693,18 +739,15 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                            if(self.getRolebyreasonDetailArray.count > 0)
                            {
                                self.getorganization()
-                               self.getsportsmethod()
-                               self.getSeasonmethod()
+                              // self.getsportsmethod()
+                               //self.getSeasonmethod()
                              //  self.getLevelmethod()
-                               self.getTeammethod()
+                              // self.getTeammethod()
                                self.getuserDetail()
-
-
                            }
                               Constant.showInActivityIndicatory()
-
-                                  }
-                              }
+                        }
+                    }
                    
   //      if (UserDefaults.standard.bool(forKey: "3") == true)
 //                   {
@@ -816,17 +859,36 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
-    let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-        docRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle_id")!)").delete()
+    let teamRef = db.collection("teams").document("\(getTeamId!)")
+        teamRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle_id")!)").delete()
         { err in
             if let err = err {
                 print("Error removing document: \(err)")
+                Constant.showInActivityIndicatory()
+
             } else {
                 print("Document successfully removed!")
-                Constant.showInActivityIndicatory()
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
-                self.getCannedresponsegroupDetail()
-                Constant.showInActivityIndicatory()
+                
+                let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.getrolebySeasonid!)")
+                  docRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle_id")!)").delete()
+                { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                    Constant.showInActivityIndicatory()
+
+                } else {
+                    Constant.showInActivityIndicatory()
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
+                                 
+                    self.getCannedresponsegroupDetail()
+                        Constant.showInActivityIndicatory()
+                    print("Document successfully removed!")
+                    }
+                    Constant.showInActivityIndicatory()
+
+                }
+                
+               
 
 
             }

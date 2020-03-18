@@ -260,6 +260,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
             {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
             vc.tempMedia = tempMedia as URL?
+            vc.finalDataDictionary=tempUserinfoDic
             vc.isImage = false
             self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -283,7 +284,6 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
             vc.backgroundImage = selectedImageFromPicker
             vc.finalDataDictionary=tempUserinfoDic
             vc.isImage = true
-            //self.present(self.imageviewcontroller, animated: false, completion: nil)
             self.navigationController?.pushViewController(vc, animated: true)
             }
         }

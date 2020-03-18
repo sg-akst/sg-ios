@@ -87,9 +87,9 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 6) ? 90 : 50
+            self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
 
-                    let buttons: NSMutableArray = NSMutableArray()
+            let buttons: NSMutableArray = NSMutableArray()
                     var indexOfLeftmostButtonOnCurrentLine: Int = 0
                     var runningWidth: CGFloat = 10.0
                     let maxWidth: CGFloat = 375.0
@@ -279,7 +279,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                getSameOrganization = NSMutableArray()
                getdifferentOrganization = NSMutableArray()
                addorderArray.add("All")
-               let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
+            var filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
                           
                           for i  in 0..<getRolebyreasonDetailArray.count
                           {
@@ -314,7 +314,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                  else
                  {
                     
-                     let filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+                     var filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+                     filteredEvent.sort()
                      self.commonArray.append(contentsOf: filteredEvent)
                      
                  }
@@ -939,7 +940,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             {
                 let roleDic: NSDictionary = slectplayer[i] as! NSDictionary
                 let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + "\(roleDic.value(forKey: "last_name")!)"
-                let filteredEvents: [String] = [role]
+                var filteredEvents: [String] = [role]
+                 filteredEvents.sort()
                 self.commonArray.append(contentsOf: filteredEvents)
 
             }
