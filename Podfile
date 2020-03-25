@@ -17,8 +17,12 @@ target 'SportsGravy' do
   pod 'Firebase/Storage'
   pod 'LayoutHelper'
   pod 'AlamofireImage'
- pod  'BSImagePicker'
+# pod  'BSImagePicker'
   pod 'TagListView', '~> 1.0'
+  pod 'ResizingTokenField'
+  pod 'ImagePicker'
+  pod 'Lightbox'
+  pod 'Hue'
 
 
   # Pods for SportsGravy

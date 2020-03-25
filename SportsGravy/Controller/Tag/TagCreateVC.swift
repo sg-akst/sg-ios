@@ -62,7 +62,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     
     func getuserDetail()
     {
-         self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+         //self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
         var runningWidth: CGFloat = 10.0
@@ -168,6 +168,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         }
        
         self.SelectorderView.addSubview(addOrderView)
+        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
           print("textFieldShouldBeginEditing")
@@ -287,7 +289,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                                                print("Error writing document: \(err)")
                                         } else {
                                             
-                                        self.alertermsg(msg: "User group created successfully ")
+                                        self.alertermsg(msg: "Tag created successfully ")
                                         }
                                         }
                                     }

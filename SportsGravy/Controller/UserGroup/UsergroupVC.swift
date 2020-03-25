@@ -10,8 +10,24 @@ import UIKit
 import SWRevealViewController
 import Firebase
 import FirebaseFirestore
+import ResizingTokenField
 
 class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, CreateusergroupDelegate, SortorderDelegate {
+    
+    class Token: ResizingTokenFieldToken, Equatable {
+           
+           static func == (lhs: Token, rhs: Token) -> Bool {
+               return lhs === rhs
+           }
+           
+           var title: String
+           
+           init(title: String) {
+               self.title = title
+           }
+       }
+    
+    
     func sortingOrderTagupdateSuccess() {
         
     }
@@ -102,7 +118,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     }
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -115,7 +130,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                self.addOrder.removeFromSuperview()
             }
             self.addOrder = UIView()
-            self.addOrder.frame = self.addorderview.bounds
+           self.addOrder.frame =  self.addorderview.bounds
+
             for i in 0..<self.addorderArray.count
             {
                 addTitle_btn = UIButton(type: .roundedRect)
@@ -134,9 +150,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                   addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
 
                 }
-
-                
-                //addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
                 let attrStr = NSMutableAttributedString(string: "\(addTitle_btn.title(for: .normal) ?? "")")
                
@@ -193,10 +206,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                         // vertical position:
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
-
-                       
-
                         indexOfLeftmostButtonOnCurrentLine = i
+                        
                     }
                 }
                 else
@@ -213,15 +224,20 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                // vertical position same as previous button
                     let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
                     self.addOrder.addConstraint(verticalConstraint)
+                }
+                    buttons.add(self.addTitle_btn)
+                    
+                    
+                }
 
-                     
-                }
-                buttons.add(addTitle_btn)
-                }
-                
             }
-           
-            self.addorderview.addSubview(addOrder)
+        self.addorderview.addSubview(self.addOrder)
+
+       // let globalPoint = addOrder.superview?.convert(addTitle_btn.frame.origin, to: nil)
+        print("heightcustom:\(indexOfLeftmostButtonOnCurrentLine)")
+
+        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+
             
             if(commonArray.count > 0)
             {
@@ -238,7 +254,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         addorderArray.add("All")
         let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
         
-                   
                    for i  in 0..<getRolebyreasonDetailArray.count
                    {
                    let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
@@ -285,8 +300,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         if(self.getdifferentOrganization.count > 1)
         {
                 self.commonArray = NSMutableArray() as? [String]
-                 //self.addorderArray.add(commonArray.last!)
-            
                   for i in 0..<getdifferentOrganization.count
                   {
                       let roleDic: NSDictionary = getdifferentOrganization?[i] as! NSDictionary
@@ -357,7 +370,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             self.getdifferentSeasonArray = NSMutableArray()
         if(self.getdifferentSportsArray.count > 1)
         {
-           // self.addorderArray.add(commonArray.last!)
             self.commonArray = NSMutableArray() as? [String]
 
                 for i in 0..<getdifferentSportsArray.count
@@ -392,7 +404,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                           }
                    else if (self.getSameSportsArray.count > 0)
                    {
-                    //self.addorderArray.add(commonArray.last!)
 
                        self.commonArray = NSMutableArray() as? [String]
                        for i in 0..<getSameSportsArray.count
@@ -409,7 +420,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                else
                                {
                                    getdifferentSeasonArray.add(roleDic)
-                                   }
+                                }
                        
                        }
                     var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
@@ -423,7 +434,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     {
          if(self.getdifferentSeasonArray.count > 1)
                  {
-                    //self.addorderArray.add(commonArray.last!)
 
                    self.commonArray = NSMutableArray() as? [String]
                      var filteredEvents: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
@@ -436,9 +446,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
           {
              if(self.getSameSeasonArray.count > 0)
             {
-                
-               // self.addorderArray.add(commonArray.last!)
-
                 self.commonArray = NSMutableArray() as? [String]
                 var filteredEvents: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.team_name") as! [String]
                 filteredEvents.sort()
@@ -457,6 +464,13 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         {
             print("All")
             getorganization()
+            for i in 0..<addorderArray.count
+            {
+                if(i>0)
+                {
+                  self.addorderArray.removeLastObject()
+                }
+            }
             getuserDetail()
         }
         else if(selecttag == 1)
@@ -538,7 +552,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         }
         else
         {
-           return 90.0
+           return 75.0
         }
      }
 
@@ -585,13 +599,14 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
                 if(count == true)
                 {
-                   cell.delete_enable_img.tintColor =  UIColor.red
-                    cell.accessoryType = .disclosureIndicator
+                   cell.delete_enable_img.tintColor =  UIColor.gray
+                    cell.accessoryType = .none
 
                 }
                 else
                 {
                     cell.delete_enable_img.tintColor =  UIColor.red
+                    cell.accessoryType = .disclosureIndicator
 
                 }
             }
@@ -689,7 +704,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
                 }
             }
-            if (UserDefaults.standard.bool(forKey: "1") == true)
+            if (UserDefaults.standard.bool(forKey: "user_group_custom") == true)
             {
                 sortingUser.isHidden = false
 
@@ -708,7 +723,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             //let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
             let count : Bool = dic.value(forKey: "is_used") as! Bool
             let groupType : String = dic.value(forKey: "group_type") as! String
-            if(count == false || groupType == "System_Group")
+            if(count == true || groupType == "System_Group")
             {
                 
             }
@@ -737,7 +752,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         let isDelete: Bool = (count > 0 || groupType == "System_Group") ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Tag is tied with feed,so cant able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Usergroup is tied with feed,so cant able to delete")
         }
         else
         {
@@ -814,13 +829,13 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     func getmembergroupDetail()
     {
         Constant.internetconnection(vc: self)
-               Constant.showActivityIndicatory(uiView: self.view)
-               let getuuid = UserDefaults.standard.string(forKey: "UUID")
-                let db = Firestore.firestore()
+        Constant.showActivityIndicatory(uiView: self.view)
+        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+        let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-               if (UserDefaults.standard.bool(forKey: "1") == true)
-{
-docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+    if (UserDefaults.standard.bool(forKey: "user_group_user") == true)
+    {
+docRef.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
                                  if let err = err {
                                      print("Error getting documents: \(err)")
                                  } else {
@@ -843,9 +858,37 @@ docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false
                                 }
                             }
                 }
+      
+        else if(UserDefaults.standard.bool(forKey: "user_group_team") == true)
+    {
+         let docRefteam = db.collection("teams").document("\(getTeamId!)")
+        docRefteam.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                 if let err = err {
+                                     print("Error getting documents: \(err)")
+                                 } else {
+                                    self.TeamArray = NSMutableArray()
+        
+                                     for document in querySnapshot!.documents {
+                                         let data: NSDictionary = document.data() as NSDictionary
+                                         print("\(document.documentID) => \(data)")
+                                        self.TeamArray.add(data)
+        
+        
+                                    }
+        
+                                    self.isTeam = true
+                                    self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true: false
+                                    self.usergroup_tbl.reloadData()
+                                    Constant.showInActivityIndicatory()
+        
+        
+                                }
+                            }
+    }
+        
                 else
                 {
-                    docRef.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                    docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
                                             if let err = err {
                                                 print("Error getting documents: \(err)")
                                             } else {

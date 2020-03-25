@@ -22,6 +22,7 @@ protocol sidemenuDelegate: AnyObject {
 class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var profileimg: UIButton!
+    @IBOutlet weak var profile_image_view: UIImageView!
     @IBOutlet weak var username_lbl: UILabel!
     @IBOutlet weak var date_lbl: UILabel!
     @IBOutlet weak var role_tbl: UITableView!
@@ -57,14 +58,12 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         role_tbl.sizeToFit()
        self.settings_view.isHidden = true
         self.user_view.isHidden = true
-    
-        getuserDetail()
        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-      
+      getuserDetail()
          
 
     }
@@ -94,23 +93,31 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     print(dateFormatterPrint.string(from: datees as Date))
 
                     self.date_lbl.text = "Joined \(dateFormatterPrint.string(from: datees as Date))"
-                    self.profileimg.layer.cornerRadius = self.profileimg.frame.size.width/2
-                    self.profileimg.layer.backgroundColor = UIColor.lightGray.cgColor
-                    self.profileimg.contentMode = .scaleAspectFill
+                    
 
                     let url = URL(string: "\(doc.value(forKey: "profile_image")!)")
                     if(url != nil)
                     {
-                        self.profileimg.kf.setImage(with: url, for: .normal)
+                       // self.profileimg.isHidden = true
+                        self.profileimg.isHidden = true
+                        self.profile_image_view.isHidden = false
+                        self.profile_image_view.layer.cornerRadius = self.profile_image_view.frame.size.width/2
+                        self.profile_image_view.layer.masksToBounds = true
+                        self.profile_image_view.kf.setImage(with: url)
                         
                     }
                     else
                     {
+                        self.profileimg.layer.cornerRadius = self.profileimg.frame.size.width/2
+                        self.profileimg.layer.backgroundColor = UIColor.lightGray.cgColor
+                        //self.profileimg.contentMode = .scaleAspectFill
                         let name =  self.username_lbl.text
                         let nameFormatter = PersonNameComponentsFormatter()
-                        if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
+                        if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.last {
 
                              let sortName = "\(firstLetter)\(lastName)"
+                             self.profileimg.isHidden = false
+                            self.profile_image_view.isHidden = true
                             self.profileimg.setTitle(sortName, for: .normal)
                            
                          }

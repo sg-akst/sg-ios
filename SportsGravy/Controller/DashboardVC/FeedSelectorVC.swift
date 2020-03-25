@@ -25,7 +25,100 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func selectPeopleSelectorDetail(userDetail: NSMutableArray) {
+        let membergroup: NSDictionary = userDetail[0] as! NSDictionary
+        if(membergroup.value(forKey: "membergroup_id")as! String != "")
+        {
+            let feedlevelobjsArray: NSMutableArray = NSMutableArray()
+
+            if(userDetail.count > 0)
+            {
+
+                for i in 0..<userDetail.count
+                {
+                    let feedlevelobj : NSMutableDictionary = NSMutableDictionary()
+                    let teamDic = userDetail[i]
+                    if(addorderArray.count == 1)
+                    {
+                    feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                    feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)", forKey: "feedLevel")
+                    feedlevelobjsArray.add(feedlevelobj)
+
+                    }
+                    else if(addorderArray.count == 2)
+                    {
+                      feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                      feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
+                        
+                     feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)", forKey: "feedLevel")
+                    }
+                    else if(addorderArray.count == 3)
+                    {
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                         feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "season_id"), forKey: "season_id")
+
+                        
+                        feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)", forKey: "feedLevel")
+                    }
+                    else if(addorderArray.count == 4)
+                    {
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                         feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "season_id"), forKey: "season_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "level_id"), forKey: "level_id")
+
+                        
+                        feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "level_id")!)", forKey: "feedLevel")
+                    }
+                    else if(self.addorderArray.count == 5)
+                    {
+                       feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                         feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "season_id"), forKey: "season_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "level_id"), forKey: "level_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "team_id"), forKey: "team_id")
+
+                        
+                        feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "level_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "team_id")!)" , forKey: "feedLevel")
+                    }
+                    else if(self.addorderArray.count == 6)
+                    {
+                       feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                         feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "season_id"), forKey: "season_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "level_id"), forKey: "level_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "team_id"), forKey: "team_id")
+                        
+                        feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "membergroup_id"), forKey: "membergroup_id")
+                        feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "level_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "team_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "membergroup_id")!)", forKey: "feedLevel")
+                    }
+                    
+                    feedlevelobjsArray.add(feedlevelobj)
+
+                }
+                if(feedlevelobjsArray.count>0)
+                {
+                    self.delegate?.feddSelectDetail(userDetail: feedlevelobjsArray, selectitemname: membergroup.value(forKey: "membergroup_id") as! String)
+                }
+            }
+            
+            
+
+        }
+        else
+        {
         self.delegate?.feddSelectDetail(userDetail: userDetail, selectitemname: addorderArray?.lastObject as! String)
+        }
+      //  self.navigationController?.popViewController(animated: false)
 
     }
     
@@ -118,7 +211,6 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                          addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
 
                                        }
-                        //addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
                         addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
                         let attrStr = NSMutableAttributedString(string: "\(addTitle_btn.title(for: .normal) ?? "")")
                        
@@ -905,6 +997,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
                        }
                         cell.feed_name_Btn.tag = indexPath.row
+            cell.feed_img_Btn.tag = indexPath.row
                         cell.feed_name_Btn.setTitleColor(UIColor.blue, for: .normal)
                        cell.feed_name_Btn.addTarget(self, action: #selector(SelectTeamName), for: .touchUpInside)
                         cell.selectionStyle = .none
@@ -955,6 +1048,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
         @objc func PersonIcon(_ sender: UIButton)
         {
+            let selectpeople = sender.tag
             var peopleArray: NSMutableArray = NSMutableArray()
             if((getRole == "coach" || getRole == "manager"))
             {
@@ -969,6 +1063,18 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.addorderArray.add("\(self.commonArray[0])")
              vc.orderArray = addorderArray
              vc.peoplegrouplist = peopleArray
+            if(self.getdifferentLevelArray.count > 1)
+            {
+                let selectDic: NSDictionary = self.getdifferentLevelArray?[selectpeople] as! NSDictionary
+                vc.team_id = selectDic.value(forKey: "team_id") as? String
+                vc.getpeopleselectorArray = self.getdifferentLevelArray
+            }
+            else
+            {
+                let selectDic: NSDictionary = self.getSameLevelArray?[selectpeople] as! NSDictionary
+                vc.team_id = selectDic.value(forKey: "team_id") as? String
+                vc.getpeopleselectorArray = self.getSameLevelArray
+            }
             self.navigationController?.pushViewController(vc, animated: true)
         }
                          
@@ -1297,7 +1403,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                            
                            feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "level_id")!)", forKey: "feedLevel")
                        }
-                       else if(addorderArray.count == 5)
+                       else if(self.addorderArray.count == 5)
                        {
                           feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
                             feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
@@ -1320,30 +1426,22 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
               
         if(feedlevelobjsArray.count > 0)
         {
-//            for i in 0..<selectitem.count
-//            {
-//                let dic: NSDictionary = selectitem[i] as! NSDictionary
-//                if(dic.value(forKey: "team_name") as! String == selectitemname)
-//                {
-//                    feedlevelobjsArray.add(dic.value(forKey: "team_id")!)
                 self.delegate?.feddSelectDetail(userDetail: feedlevelobjsArray, selectitemname: selectitemname)
 
-               // }
-            //}
         }
         else
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Coach can select Team or above as Tag")
         }
 
-                   self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
 
 
     }
         
-           @IBAction func backfeedselectorbtn(_ sender: UIButton)
-              {
-                  self.navigationController?.popViewController(animated: true)
-              }
+    @IBAction func backfeedselectorbtn(_ sender: UIButton)
+    {
+       self.navigationController?.popViewController(animated: true)
+    }
     }
 

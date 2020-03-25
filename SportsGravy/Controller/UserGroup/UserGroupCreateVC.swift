@@ -99,7 +99,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
    
     func getuserDetail()
        {
-        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+       // self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
 
            let buttons: NSMutableArray = NSMutableArray()
            var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -201,6 +201,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
            }
           
            self.SelectorderView.addSubview(addOrderView)
+        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+
        }
        @objc func orderselectmethod(_ sender: UIButton)
        {
@@ -241,7 +243,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: UsergroupCreateCell  = tableView.dequeueReusableCell(withIdentifier: "groupCreate", for: indexPath) as! UsergroupCreateCell
-      let section = groubSection[indexPath.section]
+    let section = groubSection[indexPath.section]
     let dic: NSDictionary = section.userlist[indexPath.row] as! NSDictionary
     cell.member_name_lbl.text = "\(dic.value(forKey: "first_name")!)" + "" + "\(dic.value(forKey: "last_name")!)"
     cell.checkbox.layer.cornerRadius = cell.checkbox.frame.size.width/2
@@ -249,7 +251,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     cell.checkbox.layer.borderWidth = 3
     cell.checkbox.layer.borderColor = Constant.getUIColor(hex: "#C0CCDA")?.cgColor
     cell.checkbox.backgroundColor =  UIColor.clear
-    cell.checkbox.tag = indexPath.section
+    cell.checkbox.tag = indexPath.row
     cell.checkbox.addTarget(self, action: #selector(selectplayer), for: .touchUpInside)
     if(isCreate == false)
     {
@@ -334,7 +336,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         let cell = button.superview?.superview as? UsergroupCreateCell
         let indexPaths = group_create_tbl.indexPath(for: cell!)
         let dicvalu = groubSection![indexPaths!.section]
-        let getuserlist: NSMutableDictionary = dicvalu.userlist[0] as! NSMutableDictionary
+        let getuserlist: NSMutableDictionary = dicvalu.userlist[sender.tag] as! NSMutableDictionary
         let getvalue: NSDictionary = getuserlist.copy() as! NSDictionary
         print(dicvalu)
         

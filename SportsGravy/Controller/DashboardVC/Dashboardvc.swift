@@ -64,7 +64,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else if(roleArray.count > 0)
         {
-            print(roleArray)
             let dic: NSDictionary = roleArray[0] as! NSDictionary
             let team: String = (dic.value(forKey: "team_id") as? String ?? nil)!
             if(team == "")
@@ -158,7 +157,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let db = Firestore.firestore()
         db.collection("feed").whereField("feedToUserId", arrayContains: getuuid!).order(by: "feedPostedDatetime", descending: true).getDocuments() { (querySnapshot, err) in
                   if let err = err {
-                      print("Error getting documents: \(err)")
                   } else {
                     self.commonArray = NSMutableArray()
                       for document in querySnapshot!.documents {
@@ -176,7 +174,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                         {
                             self.commonArray.add(getDataDic.copy())
                         }
-                       print("\(document.documentID) =>\(data)")
 
                       }
                     
@@ -195,7 +192,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         refreshControl.endRefreshing()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return commonArray.count
+        return self.commonArray.count
         }
 
         // create a cell for each table view row
@@ -211,26 +208,22 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let timestamp: Timestamp = Dic.value(forKey: "feedPostedDatetime") as! Timestamp
         datees = timestamp.dateValue()
     }
-
-           
-             //print(datees)
-             let dateFormatterGet = DateFormatter()
+     let dateFormatterGet = DateFormatter()
              dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
              let dateFormatterPrint = DateFormatter()
              dateFormatterPrint.dateFormat = "MMM dd,yyyy hh:mm:ss a"
-            // print(dateFormatterPrint.string(from: datees as Date))
 
     cell.date_lbl.text = "Posted on \(dateFormatterPrint.string(from: datees as Date))"
     
     if(Dic.value(forKey: "tag_name") != nil && Dic.value(forKey: "tag_name")as? String != "")
     {
         let size = (Dic.value(forKey: "tag_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
-        cell.tag_btn.frame = CGRect(x: cell.date_lbl.frame.origin.x, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width + 20, height: 25)
-
+        cell.tag_btn.frame = CGRect(x: cell.date_lbl.frame.origin.x, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height+4, width: size.width, height: 25)
         cell.tag_btn.isHidden = false
         cell.tag_btn.setTitle(Dic.value(forKey: "tag_name") as? String, for: .normal)
-        cell.tag_btn.sizeToFit()
+        //cell.tag_btn.sizeToFit()
+        cell.tag_btn.titleLabel?.textAlignment = .left
     }
     else
     {
@@ -239,34 +232,31 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     if(Dic.value(forKey: "reaction") != nil && Dic.value(forKey: "reaction")as! String != "")
     {
         let size = (Dic.value(forKey: "reaction") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
-       // let width: CGFloat = size.width * 1.7
-       // cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: width, height: 25)
-
         cell.reaction_btn.isHidden = false
         let getreaction: String = Dic.value(forKey: "reaction") as! String
         if(getreaction == "neutral")
         {
-             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width * 1.5, height: 25)
+             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height + 4, width: size.width * 1.5, height: 25)
             cell.reaction_btn.setImage(UIImage(named: "happy"), for: .normal)
             cell.reaction_btn.setTitle("neutral", for: .normal)
 
         }
         else if(getreaction == "unhappy")
         {
-             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width * 1.5, height: 25)
+             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height + 4, width: size.width * 1.7, height: 25)
             cell.reaction_btn.setImage(UIImage(named: "Thumbs_down"), for: .normal)
             cell.reaction_btn.setTitle("Thumbs-down", for: .normal)
 
         }
         else if(getreaction == "happy")
         {
-             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height, width: size.width * 1.7, height: 25)
+             cell.reaction_btn.frame = CGRect(x: cell.tag_btn.frame.origin.x + cell.tag_btn.frame.size.width + 10, y: cell.date_lbl.frame.origin.y+cell.date_lbl.frame.size.height+4, width: size.width * 1.9, height: 25)
             cell.reaction_btn.setImage(UIImage(named: "Thumbs_up"), for: .normal)
             cell.reaction_btn.setTitle("Thumbs-up", for: .normal)
 
         }
-        cell.reaction_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0,3.0, 0.0, 0.0)
-        cell.reaction_btn.imageEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0)
+        cell.reaction_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 5.0)
+        cell.reaction_btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0)
         cell.reaction_btn.tintColor = UIColor.black
 
         cell.reaction_btn.contentHorizontalAlignment = .left
@@ -295,7 +285,9 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.like_btn.setTitle("\(likeDic.value(forKey: "count")!)", for: .normal)
             let CommentDic: NSDictionary = Dic.value(forKey: "comments") as! NSDictionary
             cell.comment_btn.setTitle("\(CommentDic.value(forKey: "count")!)", for: .normal)
-            cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
+            
+    cell.comment_lbl_height.constant = (Dic.value(forKey: "feedText") as? String != "" && Dic.value(forKey: "feedText") != nil) ? 50 : 0
+    cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
            cell.infoviewHeight.constant = (Dic.value(forKey: "isInfo") as! Bool  == true) ? 140 : 0
            cell.infoview.isHidden = (Dic.value(forKey: "isInfo") as! Bool == true ) ? false : true
             cell.info_btn.tag = indexPath.row
@@ -322,8 +314,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.org_lbl.text = postinfoDic.value(forKey:"organization_name") as! NSString as String
         cell.org_lbl.isHidden = false
         cell.org_title_lbl.isHidden = false
-        cell.org_lbl.sizeToFit()
-        cell.org_title_lbl.sizeToFit()
+       // cell.org_lbl.sizeToFit()
+       // cell.org_title_lbl.sizeToFit()
 
     }
     else
@@ -345,8 +337,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
           cell.sport_lbl.isHidden = false
           cell.sport_title_lbl.isHidden = false
-        cell.sport_lbl.sizeToFit()
-        cell.sport_title_lbl.sizeToFit()
+        //cell.sport_lbl.sizeToFit()
+        //cell.sport_title_lbl.sizeToFit()
 
       }
       else
@@ -370,8 +362,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
              cell.season_title_lbl.isHidden = false
              cell.season_lbl.isHidden = false
-            cell.season_title_lbl.sizeToFit()
-            cell.season_lbl.sizeToFit()
+           // cell.season_title_lbl.sizeToFit()
+            //cell.season_lbl.sizeToFit()
 
          }
          else
@@ -587,7 +579,6 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         // method to run when table view cell is tapped
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-           // print("You tapped cell number \(indexPath.row).")
             
         }
     
@@ -597,17 +588,36 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         let keyExists = Dic.value(forKey: "feedImageURL") != nil
         let videoExists = Dic.value(forKey: "feedVideoURL") != nil
-
+      print("fdfghsghfsfs:\(Dic.value(forKey: "feedText") as? String)")
         if(keyExists == true  || videoExists == true)
         {
             
             if(Dic.value(forKey: "isInfo") as! Bool == true)
             {
-                return 690.0
+                if(Dic.value(forKey: "feedText") as? String != "" && Dic.value(forKey: "feedText") != nil)
+                {
+                
+                   return 705.0
+                }
+                else
+                {
+                    return 655.0
+                }
+                
             }
             else
             {
-            return 550.0
+               
+                if(Dic.value(forKey: "feedText") as? String != "" && Dic.value(forKey: "feedText") != nil)
+                {
+                                   
+                    return 565.0
+                }
+                else
+                {
+                    return 515.0
+                }
+                
             }
 
         }
@@ -615,11 +625,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         {
             if(Dic.value(forKey: "isInfo") as! Bool == true)
             {
-                return 345.0
+                return 360.0
             }
             else
             {
-            return 205.0
+            return 220.0
             }
 
         }
@@ -754,18 +764,15 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
                        if let err = err {
-                           print("Error updating document: \(err)")
                            Constant.showInActivityIndicatory()
 
                        } else {
                         db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar") ?? "")","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
                         { err in
                             if let err = err {
-                                print("Error updating document: \(err)")
                                // Constant.showInActivityIndicatory()
 
                             } else {
-                                print("Document successfully updated")
                                // Constant.showInActivityIndicatory()
 //                                let replaceDic: NSDictionary = self.commonArray?[selectIndex] as! NSDictionary
 //                                let newDict: NSMutableDictionary  = NSMutableDictionary()
@@ -792,18 +799,15 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
                        if let err = err {
-                           print("Error updating document: \(err)")
                          //  Constant.showInActivityIndicatory()
 
                        } else {
 db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").delete()
                         { err in
                             if let err = err {
-                                print("Error updating document: \(err)")
                                // Constant.showInActivityIndicatory()
 
                             } else {
-                                print("Document successfully updated")
                                // Constant.showInActivityIndicatory()
                                 let indexPosition = IndexPath(row: selectlikindex, section: 0)
                                 self.post_tbl.reloadRows(at: [indexPosition], with: .none)
@@ -832,20 +836,20 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
         let Dic: NSDictionary = self.commonArray?[indexno] as! NSDictionary
         let objCommentvc: CommentVC = (self.storyboard?.instantiateViewController(identifier: "comment"))!
         objCommentvc.selectComment = Dic
-        self.navigationController?.pushViewController(objCommentvc, animated: true)
+        self.navigationController?.pushViewController(objCommentvc, animated: false)
         
     }
     @IBAction func postVideoandImage(_ sender: UIButton)
     {
        let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
-        self.navigationController?.pushViewController(objpostvc, animated: true)
+        self.navigationController?.pushViewController(objpostvc, animated: false)
         
     }
     @IBAction func feedSelector(_ sender: UIButton)
     {
         let objPosttag: FeedSelectorVC = (self.storyboard?.instantiateViewController(identifier: "FeedSelectorVc"))!
         objPosttag.delegate = self
-        self.navigationController?.pushViewController(objPosttag, animated: true)
+        self.navigationController?.pushViewController(objPosttag, animated: false)
     }
     
     func feedfilter(feeddetail: NSDictionary)
@@ -869,7 +873,6 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
                    // if let data = response.data{
 
                         let jsonData = json
-                        print(jsonData)
                         let info = jsonData as? NSDictionary
                         let statusCode = info?["status"] as? Bool
                         let message = info?["message"] as? String
@@ -900,6 +903,13 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
                                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                                 appDelegate.timerAction()
                                // self.getplayerlist()
+                            }
+                            else
+                            {
+                                self.commonArray = NSMutableArray()
+                                self.post_tbl.reloadData()
+                                self.emptyfeed_img.isHidden = (self.commonArray.count == 0) ? false : true
+
                             }
                            
                         }

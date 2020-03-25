@@ -137,13 +137,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
 
                             self.date_lbl.text = "Joined \(dateFormatterPrint.string(from: datees as Date))"
                             let url = URL(string: "\(self.alldoc.value(forKey: "profile_image")!)")
-                            self.porfile_img.layer.cornerRadius = self.profile_imag.frame.size.width/2
-                            self.porfile_img.layer.backgroundColor = UIColor.lightGray.cgColor
-                            self.porfile_img.contentMode = .scaleAspectFill
+                           
                             if(url != nil)
                             {
-                                //self.porfile_img.kf.setImage(with: url)
-                                self.porfile_img.kf.setImage(with: url, for: .normal)
+                                //self.profile_imag.isHidden = false
+                                self.porfile_img.backgroundColor = UIColor.clear
+                                self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
+                                self.profile_imag.layer.masksToBounds = true
+                                self.profile_imag.kf.setImage(with: url)
                             }
                             else
                             {
@@ -151,7 +152,12 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                 let nameFormatter = PersonNameComponentsFormatter()
                                 if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
 
-                                     let sortName = "\(firstLetter)\(lastName)"  // J. Singh
+                                     let sortName = "\(firstLetter)\(lastName)"
+                                   // self.profile_imag.isHidden = true
+                                   // self.porfile_img.isHidden = false
+                                   self.porfile_img.layer.cornerRadius = self.porfile_img.frame.size.width/2
+                                   self.porfile_img.layer.backgroundColor = UIColor.lightGray.cgColor
+                                   self.porfile_img.contentMode = .scaleAspectFill
                                     self.porfile_img.setTitle(sortName, for: .normal)
                                  }
                             }
@@ -171,8 +177,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             let dobDate = dateFormatter.string(from: date!)
                             self.dob_lbl.text = "\(dobDate)"
                             }
-                            let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
-                            self.address_lbl.text = "\(getaddress.value(forKey: "street1")!)" + ", " + "\(getaddress.value(forKey: "street2")!)" + "\n" + "\(getaddress.value(forKey: "city")!)" + "-" + "\(getaddress.value(forKey: "postal_code")!)" + "\n" + "\(getaddress.value(forKey: "state")!)" + "," + "\(getaddress.value(forKey: "country_code")!)"
+                           // let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
+                            self.address_lbl.text = "\(self.alldoc.value(forKey: "street1")!)" + ", " + "\(self.alldoc.value(forKey: "street2")!)" + "\n" + "\(self.alldoc.value(forKey: "city")!)" + "-" + "\(self.alldoc.value(forKey: "postal_code")!)" + "\n" + "\(self.alldoc.value(forKey: "state")!)" + "," + "\(self.alldoc.value(forKey: "country_code")!)"
                 
                            Constant.showInActivityIndicatory()
                             if(self.isdelegate == false)
@@ -242,7 +248,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         return
                     }
      
-                    self.profile_imag.image = profileImageFromPicker
+                    self.porfile_img.setImage(UIImage(named: "\(profileImageFromPicker)"), for: .normal)
                     storeRef.downloadURL { (URL, error) -> Void in
                       if (error != nil) {
                         // Handle any errors
@@ -263,7 +269,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                   } else {
                                       print("Document successfully updated")
                                       Constant.showInActivityIndicatory()
-                                      //self.alertermsg(msg: "Mobile number successfully updated")
+                                    self.getInformation()
 
                                   }
                               }

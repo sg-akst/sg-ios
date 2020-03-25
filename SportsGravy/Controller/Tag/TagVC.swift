@@ -93,7 +93,7 @@ override func viewDidLoad() {
         }
         func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
+           // self.orderviewheight.constant = (self.addorderArray.count > 4) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -206,7 +206,8 @@ override func viewDidLoad() {
             }
            
             self.addorderview.addSubview(addOrder)
-            
+            orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+
             if(commonArray.count > 0)
             {
                 commonArray.removeAll { $0 == "" }
@@ -432,8 +433,14 @@ override func viewDidLoad() {
             if(selecttag == 0)
             {
                 print("All")
-               // self.addorderArray = NSMutableArray()
                 getorganization()
+                for i in 0..<addorderArray.count
+                {
+                    if(i>0)
+                    {
+                        self.addorderArray.removeLastObject()
+                    }
+                }
                 getuserDetail()
             }
             else if(selecttag == 1)
@@ -541,10 +548,27 @@ override func viewDidLoad() {
                 let cell: TagCell = self.tag_tbl.dequeueReusableCell(withIdentifier: "tagcell") as! TagCell
                 let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
                 let count : Int = dic.value(forKey: "count") as! Int
+                
                 cell.delete_enable_img.tag = indexPath.row
                 cell.delete_enable_img.addTarget(self, action: #selector(deleteGroup_Method), for: .touchUpInside)
                 cell.username_lbl?.text = dic.value(forKey: "tag_name") as? String
                 cell.delete_enable_img.tintColor = (count > 0) ? UIColor.gray : UIColor.red
+                
+                let used : Bool = dic.value(forKey: "is_used") as! Bool
+
+                if(used == true)
+                {
+                   cell.delete_enable_img.tintColor =  UIColor.gray
+                    //cell.accessoryType = .disclosureIndicator
+
+                }
+                else
+                {
+                    cell.delete_enable_img.tintColor =  UIColor.red
+                   // cell.accessoryType = .disclosureIndicator
+
+                }
+                
                 cell.selectionStyle = .none
                 cell.accessoryType = .none
 
@@ -633,7 +657,7 @@ override func viewDidLoad() {
                 }
                 //orderviewheight.constant = 90
 
-                if (UserDefaults.standard.bool(forKey: "2") == true)
+                if (UserDefaults.standard.bool(forKey: "tag_custom") == true)
                 {
                     sorting.isHidden = false
                 }
@@ -728,9 +752,10 @@ override func viewDidLoad() {
                let getuuid = UserDefaults.standard.string(forKey: "UUID")
                 let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-                            if (UserDefaults.standard.bool(forKey: "2") == true)
+                            if (UserDefaults.standard.bool(forKey: "tag_user") == true)
                             {
-                            docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                                
+                            docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
                             if let err = err {
                             print("Error getting documents: \(err)")
                             } else {
@@ -750,11 +775,34 @@ override func viewDidLoad() {
                                 }
                             }
                         }
+                      else if(UserDefaults.standard.bool(forKey: "tag_team") == true)
+                    {
+                         let docRefteam = db.collection("teams").document("\(getTeamId!)")
+                        docRefteam.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                        print("Error getting documents: \(err)")
+                        } else {
+                        self.TeamArray = NSMutableArray()
+                        
+                        for document in querySnapshot!.documents {
+                        let data: NSDictionary = document.data() as NSDictionary
+                        
+                        self.TeamArray.add(data)
+                        
+                        }
+                        self.isTeam = true
+                        self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
+                        self.tag_tbl.reloadData()
+                        Constant.showInActivityIndicatory()
+                        
+                            }
+                        }
+                    }
                         else
                     {
-                        docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
-                                                             if let err = err {
-                                                                 print("Error getting documents: \(err)")
+                        docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                            if let err = err {
+                            print("Error getting documents: \(err)")
                                                              } else {
                                                                 self.TeamArray = NSMutableArray()
                             
@@ -814,6 +862,8 @@ override func viewDidLoad() {
                         { err in
                             if let err = err {
                                 print("Error removing document: \(err)")
+                                Constant.showInActivityIndicatory()
+
                             } else {
                                 print("Document roleby season successfully removed!")
                                 
@@ -821,6 +871,8 @@ override func viewDidLoad() {
                                 teamRef.collection("Tags").getDocuments{ (querySnapshot, err) in
                                 if let err = err {
                                 print("Error getting documents: \(err)")
+                                    Constant.showInActivityIndicatory()
+
                                                            } else {
                                                                
                                 let getteamsTagList = NSMutableArray()
@@ -853,6 +905,13 @@ override func viewDidLoad() {
                             }
                         }
                     }
+                    else{
+                        Constant.showInActivityIndicatory()
+                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Deleted Successfully")
+                        self.getTagListMethod()
+                        Constant.showInActivityIndicatory()
+                    }
+
                     }
                 }
               }

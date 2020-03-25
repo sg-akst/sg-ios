@@ -23,7 +23,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         {
             self.state_txt.text = selectSuffix
             isSlectState = false
-            if(self.state_txt.text == updateAddress.value(forKey: "state") as? String)
+            if(self.state_txt.text == self.addressDetailDic.value(forKey: "state") as? String)
             {
                 update_address_btn.isUserInteractionEnabled = false
                 update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
@@ -45,7 +45,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
 
                 }
             }
-            if(self.country_txt.text == updateAddress.value(forKey: "country_code") as? String)
+            if(self.country_txt.text == addressDetailDic.value(forKey: "country_code") as? String)
             {
                 update_address_btn.isUserInteractionEnabled = false
                 update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
@@ -72,7 +72,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     var getCountryArray: NSMutableArray!
     var getStateArray: NSMutableArray!
     var isSlectState: Bool!
-    var updateAddress: NSDictionary!
+    //var updateAddress: NSDictionary!
     weak var delegate:addressEditDelegate?
     var isUpdate: Bool!
 
@@ -95,9 +95,9 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         self.street1_txt.text = self.addressDetailDic.value(forKey: "street1") as? String
         self.street2_txt.text = self.addressDetailDic.value(forKey: "street2") as? String
         self.city_txt.text    = self.addressDetailDic.value(forKey: "city") as? String
-        self.state_txt.text = self.addressDetailDic.value(forKey: "state_name") as? String
+        self.state_txt.text = self.addressDetailDic.value(forKey: "state") as? String
         self.potel_txt.text = self.addressDetailDic.value(forKey: "postal_code") as? String
-        self.country_txt.text = self.addressDetailDic.value(forKey: "country_name") as? String
+        self.country_txt.text = self.addressDetailDic.value(forKey: "country_code") as? String
         getstateDetails()
        
     }
@@ -194,7 +194,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
           return true
       }
      func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(textField.text == updateAddress.value(forKey: "street1") as? String || textField.text == updateAddress.value(forKey: "street2") as? String || textField.text == updateAddress.value(forKey: "city")as? String || textField.text == updateAddress.value(forKey: "postal_code")as? String)
+        if(textField.text == addressDetailDic.value(forKey: "street1") as? String || textField.text == addressDetailDic.value(forKey: "street2") as? String || textField.text == addressDetailDic.value(forKey: "city")as? String || textField.text == addressDetailDic.value(forKey: "postal_code")as? String)
          {
             update_address_btn.isUserInteractionEnabled = false
             update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
@@ -262,15 +262,17 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
             
             let db = Firestore.firestore()
-            self.updateAddress.setValue(self.street1_txt.text!, forKey: "street1")
-            self.updateAddress.setValue(self.street2_txt.text!, forKey: "street2")
-            updateAddress.setValue(self.city_txt.text!, forKey: "city")
-            updateAddress.setValue(self.potel_txt.text!, forKey: "postal_code")
-            updateAddress.setValue(self.state_txt.text!, forKey: "state")
-            updateAddress.setValue(self.country_txt.text!, forKey: "country_code")
+            let updateAdd: NSMutableDictionary = NSMutableDictionary()
+            
+            updateAdd.setValue(self.street1_txt.text!, forKey: "street1")
+            updateAdd.setValue(self.street2_txt.text!, forKey: "street2")
+            updateAdd.setValue(self.city_txt.text!, forKey: "city")
+            updateAdd.setValue(self.potel_txt.text!, forKey: "postal_code")
+            updateAdd.setValue(self.state_txt.text!, forKey: "state")
+            updateAdd.setValue(self.country_txt.text!, forKey: "country_code")
            
             let updatePage = (isUpdate == true) ? getuuid : self.addressDetailDic.value(forKey: "user_id") as? String
-            db.collection("users").document("\(updatePage!)").updateData(["street1":"\(self.street1_txt.text!)","street2": "\(self.street2_txt.text!)","city": "\(self.city_txt.text!)","postal_code": "\(self.potel_txt.text!)","state": "\(self.state_txt.text!)","country_code": "\(self.country_txt.text!)","address": self.updateAddress, "updated_datetime" : Date()])
+            db.collection("users").document("\(updatePage!)").updateData(["street1":"\(self.street1_txt.text!)","street2": "\(self.street2_txt.text!)","city": "\(self.city_txt.text!)","postal_code": "\(self.potel_txt.text!)","state": "\(self.state_txt.text!)","country_code": "\(self.country_txt.text!)","address": updateAdd.copy(), "updated_datetime" : Date()])
             { err in
                 if let err = err {
                     print("Error updating document: \(err)")

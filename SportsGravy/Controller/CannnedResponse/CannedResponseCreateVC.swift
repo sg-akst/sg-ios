@@ -202,6 +202,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         }
        
         self.SelectorderView.addSubview(addOrderView)
+        orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
         //canRespons_txv.backgroundColor = UIColor.lightGray

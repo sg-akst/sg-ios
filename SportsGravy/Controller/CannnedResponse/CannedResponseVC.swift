@@ -99,7 +99,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
+//        self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -228,10 +228,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             }
            
             self.addorderview.addSubview(addOrder)
-            
-             
-            
-            
+            orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
             if(commonArray.count > 0)
             {
                 commonArray.removeAll { $0 == "" }
@@ -440,9 +437,14 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         if(selecttag == 0)
         {
             print("All")
-            //self.addorderArray = NSMutableArray()
-
            getorganization()
+            for i in 0..<addorderArray.count
+            {
+                if(i>0)
+                {
+                    self.addorderArray.removeLastObject()
+                }
+            }
             getuserDetail()
         }
         else if(selecttag == 1)
@@ -529,7 +531,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         }
         else
         {
-           return 90.0
+           return 75.0
         }
      }
 
@@ -559,6 +561,21 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             cell.selectionStyle = .none
             cell.accessoryType =  .disclosureIndicator //(count > 0) ? .none : 
 
+            let used : Bool = dic.value(forKey: "is_used") as! Bool
+
+            if(used == true)
+            {
+               cell.delete_enable_img.tintColor =  UIColor.gray
+                cell.accessoryType = .none
+
+            }
+            else
+            {
+                cell.delete_enable_img.tintColor =  UIColor.red
+                cell.accessoryType = .disclosureIndicator
+
+            }
+            
                 return cell
         }
     }
@@ -649,7 +666,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             }
 //
            // orderviewheight.constant = 90
-            if (UserDefaults.standard.bool(forKey: "3") == true)
+            if (UserDefaults.standard.bool(forKey: "canned_custom") == true)
                 {
                     self.sortingCanned.isHidden = false
 
@@ -664,6 +681,12 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         }
         else
         {
+            let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
+            //let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
+            let count : Bool = dic.value(forKey: "is_used") as! Bool
+           // let groupType : String = dic.value(forKey: "group_type") as! String
+            if(count != true)
+            {
             let vc = storyboard?.instantiateViewController(withIdentifier: "can_response_create") as! CannedResponseCreateVC
             vc.getorderArray = addorderArray
             vc.isCreate = false
@@ -673,6 +696,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             vc.getrolebyorganizationArray = getSameOrganization
             vc.getTeamId = getTeamId
             self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     @objc func deleteGroup_Method(_ sender: UIButton)
@@ -683,7 +707,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         let isDelete: Bool = (count > 0 ) ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "system generated user group cant able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "system generated Canned Responses cant able to delete")
         }
         else
         {
@@ -802,9 +826,10 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                       let getuuid = UserDefaults.standard.string(forKey: "UUID")
                        let db = Firestore.firestore()
                let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
-             if (UserDefaults.standard.bool(forKey: "3") == true)
+             if (UserDefaults.standard.bool(forKey: "canned_user") == true)
                            {
-                            docRef.collection("CannedResponse").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                            
+                            docRef.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
                                  if let err = err {
                                      print("Error getting documents: \(err)")
                                  } else {
@@ -824,9 +849,32 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                                 }
                             }
                 }
+             else if (UserDefaults.standard.bool(forKey: "canned_team") == true)  {
+                let docRefteam = db.collection("teams").document("\(getTeamId!)")
+
+                                    docRefteam.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                         if let err = err {
+                                             print("Error getting documents: \(err)")
+                                         } else {
+                                            self.TeamArray = NSMutableArray()
+                
+                                             for document in querySnapshot!.documents {
+                                                 let data: NSDictionary = document.data() as NSDictionary
+                                                self.TeamArray.add(data)
+                
+                
+                                            }
+                                            self.isTeam = true
+                                            self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
+                                            self.canned_response_tbl.reloadData()
+                                            Constant.showInActivityIndicatory()
+                
+                                        }
+                                    }
+                        }
                 else
                 {
-                    docRef.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                    docRef.collection("CannedResponse").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
                                             if let err = err {
                                                 print("Error getting documents: \(err)")
                                             } else {

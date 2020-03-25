@@ -20,6 +20,8 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var pageControl : UIPageControl!
    // @IBOutlet weak var postImageview: UIView!
     @IBOutlet weak var postimageviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var comment_lbl_height: NSLayoutConstraint!
+
     @IBOutlet weak var postVideoviewHeight: NSLayoutConstraint!
 
     @IBOutlet weak var infoview: UIView!

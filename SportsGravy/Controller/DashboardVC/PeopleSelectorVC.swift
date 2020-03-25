@@ -19,10 +19,12 @@ protocol PeopleSelectorDelegate: AnyObject {
 class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var peopleSelectorderView: UIView!
     @IBOutlet var people_selector_tbl: UITableView!
+    @IBOutlet weak var empty_img: UIImageView!
     var addOrderView: UIView!
     var orderArray: NSMutableArray!
     var order_btn: UIButton!
     var peoplegrouplist: NSMutableArray!
+    var getpeopleselectorArray: NSMutableArray!
     
     var auth_UID: String!
     var role: String!
@@ -43,10 +45,11 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         super.viewDidLoad()
         people_selector_tbl.delegate = self
         people_selector_tbl.dataSource = self
-        getuserDetail()
         people_selector_tbl.tableFooterView = UIView()
         people_selector_tbl.sizeToFit()
+        empty_img.isHidden = true
         self.people_selector_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+         getuserDetail()
     }
     
     func getuserDetail()
@@ -179,47 +182,79 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 
            }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-               print("You tapped cell number \(indexPath.row).")
+        print("You tapped cell number \(indexPath.row).")
+        //self.orderArray.add(self.peoplegrouplist[indexPath.row])
+        
+        getuserDetail()
         fetchpeopleselector(selectGroup: peoplegrouplist?[indexPath.row] as! String)
                
     }
     @objc func selectPeople(_ sender: UIButton)
     {
         let button = sender.tag
-        let getTeam: String = self.peoplegrouplist?[button] as! String
-        print(getTeam)
+        let getgroup: String = self.peoplegrouplist?[button] as! String
+        print(getgroup)
         let selectTeamDetail: NSMutableArray = NSMutableArray()
-        for i in 0..<peoplegrouplist.count
+        if(self.orderArray.count == 6)
         {
-            let dic: NSDictionary = peoplegrouplist?[i] as! NSDictionary
-            if(getTeam == dic.value(forKey: "team_name") as? String)
+        for i in 0..<self.getpeopleselectorArray.count
+        {
+            let dic: NSDictionary = getpeopleselectorArray?[i] as! NSDictionary
+            if( team_id == dic.value(forKey: "team_id") as? String)
             {
                 print(dic)
-                selectTeamDetail.add(dic)
+                let addgroup: NSMutableDictionary = getpeopleselectorArray?[i] as! NSMutableDictionary; addgroup.setValue(getgroup, forKey: "membergroup_id")
+                addgroup.setValue(getgroup, forKey: "membergroup_name")
+                addgroup.setValue("", forKey: "user_id")
+                addgroup.setValue("", forKey: "user_name")
+                selectTeamDetail.add(addgroup)
+                //selectTeamDetail.add(dic)
+            }
+        }
+        }
+        else if(self.orderArray.count > 6)
+        {
+            for i in 0..<self.getpeopleselectorArray.count
+            {
+                let dic: NSDictionary = getpeopleselectorArray?[i] as! NSDictionary
+                if(team_id == dic.value(forKey: "team_id") as? String)
+                {
+                    print(dic)
+                    let addgroup: NSMutableDictionary = getpeopleselectorArray?[i] as! NSMutableDictionary
+                    addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_id")
+                    addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_name")
+                    addgroup.setValue("", forKey: "user_id")
+                    addgroup.setValue("", forKey: "user_name")
+                    selectTeamDetail.add(addgroup)
+                   // selectTeamDetail.add(dic)
+                }
             }
         }
 
-        self.delegate?.selectPeopleSelectorDetail(userDetail: self.peoplegrouplist?[button] as! NSMutableArray)
+        self.delegate?.selectPeopleSelectorDetail(userDetail: selectTeamDetail)
         self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
+
 
     }
     
     func fetchpeopleselector(selectGroup: String)
     {
+        
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getpeopleFetchSelector
         let header: HTTPHeaders = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
          var param:[String:AnyObject] = [:]
-        param["auth_UID"] = auth_UID as AnyObject?
+        param["auth_id"] = auth_UID as AnyObject?
         param["role"] = role as AnyObject?
         param["organization_id"] = organization_id as AnyObject?
         param["sport_id"] = sport_id as AnyObject?
         param["season_id"] = season_id as AnyObject?
         param["level_id"] = level_id as AnyObject?
         param["team_id"] = team_id as AnyObject?
-        param["tag_group"] = selectGroup as AnyObject?
+        param["user_group_id"] = selectGroup as AnyObject?
         
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
             if(!(response.error != nil)){
@@ -236,6 +271,12 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                         if(statusCode == true)
                         {
                             let result = info?["data"] as! NSArray
+                            self.peoplegrouplist = NSMutableArray()
+                            self.peoplegrouplist = result.mutableCopy() as? NSMutableArray
+                            self.empty_img.isHidden = (self.peoplegrouplist.count == 0) ? false : true
+
+                            self.people_selector_tbl.reloadData()
+
                            // self.playerListArray = NSMutableArray()
                             //self.playerListArray = result.mutableCopy() as? NSMutableArray
                              Constant.showInActivityIndicatory()
