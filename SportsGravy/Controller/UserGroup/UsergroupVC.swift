@@ -113,6 +113,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         createGroupView.isHidden = true
         sortingUser.isHidden = true
         self.usergroup_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.usergroup_tbl.contentInset = UIEdgeInsetsMake(0,-3, 0, 0);
+
         self.usergroup_tbl.sizeToFit()
 
     }
@@ -121,10 +123,10 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
-            var runningWidth: CGFloat = 10.0
-            let maxWidth: CGFloat = 375.0
-            let horizontalSpaceBetweenButtons: CGFloat = 5.0
-            let verticalSpaceBetweenButtons: CGFloat = 5.0
+            var runningWidth: CGFloat = 0.0
+        let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+            let horizontalSpaceBetweenButtons: CGFloat = 8.0
+            let verticalSpaceBetweenButtons: CGFloat = 0.0
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -137,6 +139,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 addTitle_btn = UIButton(type: .roundedRect)
     
                 addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+                addTitle_btn.titleLabel?.textAlignment = .left
                 let title: String = addorderArray?[i] as! String
 
                 if(title != "" && title != nil)
@@ -147,7 +150,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 }
                 else
                 {
-                  addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
+                  addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
 
                 }
                 addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -158,6 +161,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                     attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
                 }
                addTitle_btn.setAttributedTitle(attrStr, for: .normal)
+            
 
                 let lastIndex: Int = addorderArray.count-1
                
@@ -236,7 +240,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
        // let globalPoint = addOrder.superview?.convert(addTitle_btn.frame.origin, to: nil)
         print("heightcustom:\(indexOfLeftmostButtonOnCurrentLine)")
 
-        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
 
             
             if(commonArray.count > 0)
@@ -600,7 +604,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 if(count == true)
                 {
                    cell.delete_enable_img.tintColor =  UIColor.gray
-                    cell.accessoryType = .none
+                    cell.accessoryType = .disclosureIndicator
 
                 }
                 else
@@ -723,7 +727,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             //let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
             let count : Bool = dic.value(forKey: "is_used") as! Bool
             let groupType : String = dic.value(forKey: "group_type") as! String
-            if(count == true || groupType == "System_Group")
+            if(count == true && groupType == "System_Group")
             {
                 
             }
@@ -747,12 +751,12 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     {
         let indexno = sender.tag
         let teamDic: NSDictionary = self.TeamArray?[indexno] as! NSDictionary
-        let count : Int = teamDic.value(forKey: "count") as! Int
+        let count : Bool = teamDic.value(forKey: "is_used") as! Bool
         let groupType : String = teamDic.value(forKey: "group_type") as! String
-        let isDelete: Bool = (count > 0 || groupType == "System_Group") ? false : true
+        let isDelete: Bool = (count != false || groupType == "System_Group") ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Usergroup is tied with feed,so cant able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Usergroup is tied with feed, So can't able to delete")
         }
         else
         {
@@ -771,15 +775,19 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     func getmembergroup()
     {
         Constant.internetconnection(vc: self)
-               Constant.showActivityIndicatory(uiView: self.view)
-               let getuuid = UserDefaults.standard.string(forKey: "UUID")
-                let db = Firestore.firestore()
+        Constant.showActivityIndicatory(uiView: self.view)
+        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+        let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)")
         
         docRef.collection("roles_by_season").whereField("role", isEqualTo:self.getSelectRole).getDocuments() { (querySnapshot, err) in
+            Constant.showInActivityIndicatory()
+
                if let err = err {
                    print("Error getting documents: \(err)")
+                 Constant.showInActivityIndicatory()
                } else {
+                 Constant.showInActivityIndicatory()
                 self.getRolebyreasonDetailArray = NSMutableArray()
 
                        for document in querySnapshot!.documents {
@@ -820,7 +828,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
 
                 }
-                   Constant.showInActivityIndicatory()
+                  
 
                        }
                    }
@@ -836,6 +844,8 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
     if (UserDefaults.standard.bool(forKey: "user_group_user") == true)
     {
 docRef.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+    Constant.showInActivityIndicatory()
+
                                  if let err = err {
                                      print("Error getting documents: \(err)")
                                  } else {
@@ -852,7 +862,7 @@ docRef.collection("MemberGroup").order(by: "count", descending: true).getDocumen
                                     self.isTeam = true
                                     self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true: false
                                     self.usergroup_tbl.reloadData()
-                                    Constant.showInActivityIndicatory()
+                                  //  Constant.showInActivityIndicatory()
         
         
                                 }
@@ -865,23 +875,19 @@ docRef.collection("MemberGroup").order(by: "count", descending: true).getDocumen
         docRefteam.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
                                  if let err = err {
                                      print("Error getting documents: \(err)")
+                                    Constant.showInActivityIndicatory()
+
                                  } else {
                                     self.TeamArray = NSMutableArray()
-        
                                      for document in querySnapshot!.documents {
                                          let data: NSDictionary = document.data() as NSDictionary
                                          print("\(document.documentID) => \(data)")
                                         self.TeamArray.add(data)
-        
-        
                                     }
-        
                                     self.isTeam = true
                                     self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true: false
                                     self.usergroup_tbl.reloadData()
                                     Constant.showInActivityIndicatory()
-        
-        
                                 }
                             }
     }
@@ -891,6 +897,8 @@ docRef.collection("MemberGroup").order(by: "count", descending: true).getDocumen
                     docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
                                             if let err = err {
                                                 print("Error getting documents: \(err)")
+                                                Constant.showInActivityIndicatory()
+
                                             } else {
                                                self.TeamArray = NSMutableArray()
         
@@ -922,38 +930,31 @@ docRef.collection("MemberGroup").order(by: "count", descending: true).getDocumen
              let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
              docRef.collection("MemberGroup").document("\(rolebyDic.value(forKey: "user_groupId")!)").delete()
              { err in
+                Constant.showInActivityIndicatory()
+
                  if let err = err {
                      print("Error removing document: \(err)")
+                   // Constant.showInActivityIndicatory()
+
                  } else {
                      print("Document successfully removed!")
-                    // let organizationId: NSDictionary = self.getRolebyreasonDetailArray?[0] as! NSDictionary
                     let docrefs = db.collection("teams").document("\(self.getTeamId!)")
                      docrefs.collection("MemberGroup").document("\(rolebyDic.value(forKey: "user_groupId")!)").delete()
                      { err in
                          if let err = err {
                              print("Error removing document: \(err)")
+                            //Constant.showInActivityIndicatory()
+
                          } else {
                              print("Document successfully removed!")
-//                            let addDoc = db.collection("organization").document("\(rolebyDic.value(forKey: "organization_id")!)").collection("sports").document("\(rolebyDic.value(forKey: "sport_id")!)").collection("seasons").document("\(rolebyDic.value(forKey: "season_id")!)").collection("teams").document("\(self.getTeamId!)")
-//                             addDoc.collection("MemberGroup").document("\(rolebyDic.value(forKey: "user_groupId")!)").delete()
-//                             { err in
-//                                 if let err = err {
-//                                     print("Error removing document: \(err)")
-//                                 } else {
                                      print("Document successfully removed!")
                                      Constant.showInActivityIndicatory()
                                      Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "User Group Removed Successfully")
                                    
                                      self.getmembergroupDetail()
-                                 //}
                              }
-
-                         //}
-
                      }
-                     Constant.showInActivityIndicatory()
-
-
+                     //Constant.showInActivityIndicatory()
                  }
              }
         }

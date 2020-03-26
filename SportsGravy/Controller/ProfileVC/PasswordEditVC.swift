@@ -127,11 +127,12 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
             Constant.showActivityIndicatory(uiView: self.view)
             let credential = EmailAuthProvider.credential(withEmail: self.getAllDic.value(forKey: "email_address") as! String, password: self.oldpw_txt.text!)
             Auth.auth().currentUser?.reauthenticate(with: credential, completion: { (result, error) in
+                Constant.showInActivityIndicatory()
+
                 if error != nil {
                     //completion(error)
                     print(error!)
                      Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "please enter vaild oldpassword")
-                   Constant.showInActivityIndicatory()
 
                 }
                 else {

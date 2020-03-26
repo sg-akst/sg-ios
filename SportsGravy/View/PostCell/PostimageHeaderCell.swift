@@ -12,6 +12,7 @@ class PostimageHeaderCell: UITableViewCell {
 
     @IBOutlet weak var add_btn: UIButton!
     @IBOutlet weak var name_lbl: UILabel!
+    @IBOutlet weak var seprated_lbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

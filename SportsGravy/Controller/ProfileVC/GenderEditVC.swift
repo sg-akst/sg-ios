@@ -88,13 +88,15 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
         let updatePage = (isUpdateGender == true) ? getuuid : self.getalldoc.value(forKey: "user_id") as? String
         db.collection("users").document("\(updatePage!)").updateData(["gender": "\(gender_txt.text!)"])
         { err in
+            Constant.showInActivityIndicatory()
+
             if let err = err {
                 print("Error updating document: \(err)")
-                Constant.showInActivityIndicatory()
+               // Constant.showInActivityIndicatory()
 
             } else {
                 print("Document successfully updated")
-                Constant.showInActivityIndicatory()
+               // Constant.showInActivityIndicatory()
                 self.alertermsg(msg: "Gender updated successfully")
             }
         }

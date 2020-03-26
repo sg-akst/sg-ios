@@ -128,6 +128,8 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             print("parameter=>\(parameter)")
         
             AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { response in
+                Constant.showInActivityIndicatory()
+
                  switch response.result
                 {
                 case .success(let json):
@@ -135,16 +137,16 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     print(jsonData)
                  let dic: NSDictionary = jsonData as! NSDictionary
                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(dic.value(forKey: "message")!)")
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                     
                  case .failure(let error): break
                  print(error)
                    // self.errorFailer(error: error)
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                 }
-                Constant.showInActivityIndicatory()
+               // Constant.showInActivityIndicatory()
             }
         }
     }

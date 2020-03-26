@@ -65,16 +65,17 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
          //self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
-        var runningWidth: CGFloat = 10.0
-        let maxWidth: CGFloat = 375.0
+        var runningWidth: CGFloat = 0.0
+        let maxWidth: CGFloat = UIScreen.main.bounds.size.width
         let horizontalSpaceBetweenButtons: CGFloat = 5.0
-        let verticalSpaceBetweenButtons: CGFloat = 5.0
+        let verticalSpaceBetweenButtons: CGFloat = 0.0
         self.addOrderView = UIView()
         self.addOrderView.frame = self.SelectorderView.bounds
         for i in 0..<self.getorderArray.count
         {            
             let button: UIButton = UIButton(type: .roundedRect)
             button.titleLabel?.font = UIFont(name: "Arial", size: 18)
+            button.titleLabel?.textAlignment = .left
             let title: String = getorderArray?[i] as! String
 
             if(title != "" && title != nil)
@@ -168,7 +169,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         }
        
         self.SelectorderView.addSubview(addOrderView)
-        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
 
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -219,6 +220,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func createtag(_ sender: UIButton)
     {
+        self.tag_txt.resignFirstResponder()
+
         var ref: DocumentReference? = nil
         var teamref: DocumentReference? = nil
 
@@ -234,6 +237,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
             
             docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
+                Constant.showInActivityIndicatory()
+
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -270,7 +275,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
 
                                  for document in querySnapshot!.documents {
                                  let data: NSDictionary = document.data() as NSDictionary
-                                   if(data.value(forKey: "tag_name") as! String == self.tag_txt.text! || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(self.tag_txt.text!) == ComparisonResult.orderedSame)
+                                    if(data.value(forKey: "tag_name") as? String == self.tag_txt.text! || (data.value(forKey: "tag_name") as? String)? . caseInsensitiveCompare(self.tag_txt.text!) == ComparisonResult.orderedSame)
                                    {
                                        getteamsTagList.add(data)
 
@@ -301,13 +306,13 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                             
                             
                             
-                             Constant.showInActivityIndicatory()
+                           //  Constant.showInActivityIndicatory()
 
 
                          }
 
                      }
-                     Constant.showInActivityIndicatory()
+                    //  Constant.showInActivityIndicatory()
                  }
                 
                 }

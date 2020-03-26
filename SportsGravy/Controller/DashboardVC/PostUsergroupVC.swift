@@ -77,6 +77,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         postusergroup_tbl.tableFooterView = UIView()
         postusergroup_tbl.sizeToFit()
         self.postusergroup_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.postusergroup_tbl.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         getusergroup()
     }
     
@@ -85,10 +86,10 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
 
                     let buttons: NSMutableArray = NSMutableArray()
                     var indexOfLeftmostButtonOnCurrentLine: Int = 0
-                    var runningWidth: CGFloat = 10.0
-                    let maxWidth: CGFloat = 375.0
-                    let horizontalSpaceBetweenButtons: CGFloat = 5.0
-                    let verticalSpaceBetweenButtons: CGFloat = 5.0
+                    var runningWidth: CGFloat = 0.0
+            let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+                    let horizontalSpaceBetweenButtons: CGFloat = 8.0
+                    let verticalSpaceBetweenButtons: CGFloat = 0.0
                     if(self.addOrder != nil)
                     {
                        self.addOrder.removeFromSuperview()
@@ -100,6 +101,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                         addTitle_btn = UIButton(type: .roundedRect)
             
                         addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+                        addTitle_btn.titleLabel?.textAlignment = .left
                         let title: String = addorderArray?[i] as! String
 
                             if(title != "" && title != nil)
@@ -110,7 +112,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                        }
                                        else
                                        {
-                                         addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
+                                         addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
 
                                        }
                         //addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
@@ -166,7 +168,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                 let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                                 self.addOrder.addConstraint(horizontalConstraint)
                                 // vertical position:
-                                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
                                 self.addOrder.addConstraint(verticalConstraint)
                                 indexOfLeftmostButtonOnCurrentLine = i
                             }
@@ -192,7 +194,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                    
                     self.addorderview.addSubview(addOrder)
                   
-                self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+                self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
 
                     
                     if(commonArray.count > 0)
@@ -641,6 +643,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                         cell.imageBtn.addTarget(self, action: #selector(PersonIcon), for: .touchUpInside)
                         cell.imageBtn.isHidden  = false
                         cell.imageBtn.setImage(UIImage(named: "user"), for: .normal)
+                        cell.imageBtn.tintColor = UIColor.black
                     }
                     else
                     {
@@ -651,6 +654,8 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                   else
                   {
                     cell.imageBtn.setImage(UIImage(named: "user"), for: .normal)
+                    cell.imageBtn.tintColor = UIColor.black
+
                     cell.imageBtn.isHidden  = false
                    }
                    cell.imageBtn.tag = indexPath.row
@@ -818,6 +823,8 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let docRef = db.collection("users").document("\(getuuid!)")
         
         docRef.collection("roles_by_season").whereField("role", isEqualTo: getRole!).getDocuments() { (querySnapshot, err) in
+            Constant.showInActivityIndicatory()
+
                if let err = err {
                    print("Error getting documents: \(err)")
                } else {
@@ -890,6 +897,8 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         }
         else if(self.addorderArray.count == 6)
         {
+            if(self.GroupList.count>0)
+            {
             for i in 0..<self.GroupList.count
             {
                 let dic: NSDictionary = GroupList?[i] as! NSDictionary
@@ -904,6 +913,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                     addgroup.setValue("", forKey: "user_name")
                     selectTeamDetail.add(addgroup)
                 }
+            }
             }
         }
         else if(self.addorderArray.count > 6)

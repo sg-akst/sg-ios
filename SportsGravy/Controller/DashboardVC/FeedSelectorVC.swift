@@ -176,18 +176,20 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         feed_selector_tbl.tableFooterView = UIView()
         feed_selector_tbl.sizeToFit()
         self.feed_selector_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.feed_selector_tbl.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
        
     }
     func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
+            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 70 : 40
 
             let buttons: NSMutableArray = NSMutableArray()
                     var indexOfLeftmostButtonOnCurrentLine: Int = 0
-                    var runningWidth: CGFloat = 10.0
-                    let maxWidth: CGFloat = 375.0
-                    let horizontalSpaceBetweenButtons: CGFloat = 5.0
-                    let verticalSpaceBetweenButtons: CGFloat = 5.0
+                    var runningWidth: CGFloat = 0.0
+            let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+                    let horizontalSpaceBetweenButtons: CGFloat = 8.0
+                    let verticalSpaceBetweenButtons: CGFloat = 0.0
                     if(self.addOrder != nil)
                     {
                        self.addOrder.removeFromSuperview()
@@ -199,6 +201,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                         addTitle_btn = UIButton(type: .roundedRect)
             
                         addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+                        addTitle_btn.titleLabel?.textAlignment = .left
                         let title: String = addorderArray?[i] as! String
                             if(title != "" && title != nil)
                                        {
@@ -208,7 +211,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                        }
                                        else
                                        {
-                                         addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
+                                         addTitle_btn.setTitle(" > \(addorderArray[i] as! String)", for: .normal)
 
                                        }
                         addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -263,7 +266,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                                 self.addOrder.addConstraint(horizontalConstraint)
                                 // vertical position:
-                                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
                                 self.addOrder.addConstraint(verticalConstraint)
                                 indexOfLeftmostButtonOnCurrentLine = i
                             }
@@ -790,7 +793,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getcount(feedlevelobj: NSArray)
     {
         Constant.internetconnection(vc: self)
-           // Constant.showActivityIndicatory(uiView: self.view)
+           Constant.showActivityIndicatory(uiView: self.view)
                let testStatusUrl: String = Constant.sharedinstance.FeedCountUrl
         let header: HTTPHeaders = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
@@ -800,6 +803,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         param["feededLevelObject"] = feedlevelobj as AnyObject
 
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+            Constant.showInActivityIndicatory()
+
                    if(!(response.error != nil)){
                        switch (response.result)
                        {
@@ -827,6 +832,11 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                        appDelegate.timerAction()
                                        //self.getplayerlist()
                                    }
+                                else
+                                {
+                                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message as! String)")
+
+                                }
                                   Constant.showInActivityIndicatory()
 
                                }
@@ -1086,6 +1096,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)")
             docRef.collection("roles_by_season").whereField("role", isEqualTo: self.getRole!).getDocuments() { (querySnapshot, err) in
+                Constant.showInActivityIndicatory()
+
                    if let err = err {
                        print("Error getting documents: \(err)")
                    } else {

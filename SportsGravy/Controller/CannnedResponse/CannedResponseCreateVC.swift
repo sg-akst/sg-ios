@@ -95,16 +95,17 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
 
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
-        var runningWidth: CGFloat = 10.0
-        let maxWidth: CGFloat = 375.0
+        var runningWidth: CGFloat = 0.0
+        let maxWidth: CGFloat = UIScreen.main.bounds.size.width
         let horizontalSpaceBetweenButtons: CGFloat = 5.0
-        let verticalSpaceBetweenButtons: CGFloat = 5.0
+        let verticalSpaceBetweenButtons: CGFloat = 0.0
         self.addOrderView = UIView()
         self.addOrderView.frame = self.SelectorderView.bounds
         for i in 0..<self.getorderArray.count
         {
           selectOption_btn = UIButton(type: .roundedRect)
             selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+            selectOption_btn.titleLabel?.textAlignment = .left
             let title: String = getorderArray?[i] as! String
 
             if(title != "" && title != nil)
@@ -202,7 +203,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         }
        
         self.SelectorderView.addSubview(addOrderView)
-        orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+        orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
 
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -283,6 +284,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     }
     @IBAction func createCanResponse(_ sender: UIButton)
     {
+        self.canRespons_tittle_txt.resignFirstResponder()
+
         var ref: DocumentReference? = nil
          var refuserid: String!
         if(isCreate == true)
@@ -300,6 +303,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
          
                let docRef = db.collection("teams").document("\(getTeamId!)")
                 docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
+                    Constant.showInActivityIndicatory()
+
                            if let err = err {
                                print("Error getting documents: \(err)")
                            } else {
@@ -331,7 +336,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                                                                     print("Team Document successfully written!")
                                                                 
                                                                                                                
-                                                Constant.showInActivityIndicatory()
+                                    //            Constant.showInActivityIndicatory()
                                             self.alertermsg(msg: "Canned Response created successfully ")
                                                             
                                                                                                            }
@@ -342,13 +347,13 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                                                             }
                                     
                                 }
-                                Constant.showInActivityIndicatory()
+                               // Constant.showInActivityIndicatory()
                             }
                             }
                             else
                             {
                                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This CannedResponse Already exit")
-                                Constant.showInActivityIndicatory()
+                               // Constant.showInActivityIndicatory()
                             }
             }
                     
@@ -366,22 +371,24 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                       
             teamRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle_id") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
             { err in
+                Constant.showInActivityIndicatory()
+
                 if let err = err {
                     print("Error updating document: \(err)")
-                    Constant.showInActivityIndicatory()
+                    //Constant.showInActivityIndicatory()
 
                 } else {
                     print("Document successfully updated")
-                     Constant.showInActivityIndicatory()
+                    // Constant.showInActivityIndicatory()
                     let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.rolebySeasonid!)")
                     docRef.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle_id") as! String)").updateData(["cannedResponseDesc":"\(self.canRespons_txv.text!)", "updated_datetime" : Date()])
                     { err in
                     if let err = err {
                         print("Error updating document: \(err)")
-                        Constant.showInActivityIndicatory()
+                       // Constant.showInActivityIndicatory()
 
                     } else {
-                        Constant.showInActivityIndicatory()
+                       // Constant.showInActivityIndicatory()
 
                         self.alertermsg(msg: "Canned Response updated successfully ")
 
@@ -408,78 +415,6 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
             self.present(alert, animated: true, completion: nil)
             
         }
-    
-    
-   // func deleteMethod()
-//    {
-//        Constant.internetconnection(vc: self)
-//        Constant.showActivityIndicatory(uiView: self.view)
-//        let getuuid = UserDefaults.standard.string(forKey: "UUID")
-//        let db = Firestore.firestore()
-//        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
-//        docRef.collection("CannedResponse").document("\(updateArray.value(forKey: "cannedResponseTitle")!)").delete()
-//        { err in
-//            if let err = err {
-//                print("Error removing document: \(err)")
-//            } else {
-//                print("Document successfully removed!")
-//                let organizationId: NSDictionary = self.getrolebyorganizationArray?[0] as! NSDictionary
-//                let docrefs = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document()
-//                docrefs.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle")!)").delete()
-//                { err in
-//                    if let err = err {
-//                        print("Error removing document: \(err)")
-//                    } else {
-//                        print("Document successfully removed!")
-//                         let addDoc = db.collection("organization").document("\(organizationId.value(forKey: "organization_id")!)").collection("sports").document().collection("seasons").document().collection("teams").document("\(self.getorderArray.lastObject!)")
-//                        addDoc.collection("CannedResponse").document("\(self.updateArray.value(forKey: "cannedResponseTitle")!)").delete()
-//                        { err in
-//                            if let err = err {
-//                                print("Error removing document: \(err)")
-//                            } else {
-//                                print("Document successfully removed!")
-//                                Constant.showInActivityIndicatory()
-//                                self.alertermsg(msg: "\(self.updateArray.value(forKey: "cannedResponseTitle")!) deleted successfully")
-////                                self.delegate?.createAfterCallMethod()
-////                                self.navigationController?.popViewController(animated: false)
-//                            }
-//                        }
-//
-//                    }
-//
-//                }
-//                Constant.showInActivityIndicatory()
-//
-//
-//            }
-//        }
-//    }
-   // @IBAction func deleteGroup_Method(_ sender: UIButton)
-//       {
-////           let indexno = sender.tag
-////           let teamDic: NSDictionary = self.updateArray?[indexno] as! NSDictionary
-//           let count : Int = updateArray.value(forKey: "count") as! Int
-//           let isDelete: Bool = (count > 0 ) ? false : true
-//           if(isDelete == false)
-//           {
-//               Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System user group can't able to delete")
-//           }
-//           else
-//           {
-//            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(canRespons_tittle_txt.text!)", preferredStyle: UIAlertController.Style.alert);
-//               alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
-//                          //Cancel Action
-//                      }))
-//               alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-//                   self.deleteMethod()
-//                }))
-//
-//               self.present(alert, animated: true, completion: nil)
-//
-//
-//           }
-//
-//       }
     @IBAction func cancelbtn(_ sender: UIButton)
     {
       self.navigationController?.popViewController(animated: true)

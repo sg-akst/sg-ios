@@ -95,6 +95,8 @@ class SigninVC: UIViewController, UITextFieldDelegate {
                 [weak self] user, error in
                 guard self != nil else { return }
                 Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                    Constant.showInActivityIndicatory()
+
                     if error != nil {
                                     // Handle error
                                     return;

@@ -57,6 +57,8 @@ class TermAndConditionVC: UIViewController {
         param["uid"] = useruid as AnyObject?
                    
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
+            Constant.showInActivityIndicatory()
+
                        if(!(response.error != nil)){
                            switch (response.result)
                            {

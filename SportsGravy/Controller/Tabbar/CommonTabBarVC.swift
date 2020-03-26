@@ -46,6 +46,8 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
                        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
 
                        AF.request(getuserByUid, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
+                        Constant.showInActivityIndicatory()
+
                            if(!(response.error != nil)){
                                switch (response.result)
                                {

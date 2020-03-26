@@ -27,7 +27,7 @@ struct PostGroupSection {
     var userlist: NSDictionary
 }
 
-class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectuserGroubDelegate, SelectPostTagDelegate, SelectpostCanDelegate,SelectReactionDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ImagePickerDelegate {
+class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectuserGroubDelegate, SelectPostTagDelegate, SelectpostCanDelegate,SelectReactionDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ImagePickerDelegate, UITextViewDelegate {
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         self.getPostimageUrl = NSMutableArray()
         Constant.showActivityIndicatory(uiView: self.view)
@@ -44,6 +44,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 if let user = user{
                     let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg").child(fileName)
                     storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
+                        Constant.showInActivityIndicatory()
+
                                guard let _ = metadata else {
                                    print("error occurred: \(error.debugDescription)")
                                    return
@@ -76,7 +78,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                         self.camera_btn.isUserInteractionEnabled = false
                                         self.gallery_btn.isUserInteractionEnabled = false
                                         
-                                        Constant.showInActivityIndicatory()
+                                        //Constant.showInActivityIndicatory()
 
                                     }
 
@@ -195,7 +197,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     
     @IBOutlet weak var postteam_tbl: UITableView!
-    @IBOutlet weak var post_content_txt: UITextField!
+    @IBOutlet weak var post_content_txt: UITextView!
     @IBOutlet weak var postimage: UIImageView!
    // @IBOutlet weak var postvideo: UIImageView!
     @IBOutlet weak var postTbl_height: NSLayoutConstraint!
@@ -206,6 +208,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var camera_btn: UIButton!
     @IBOutlet weak var gallery_btn: UIButton!
     @IBOutlet weak var scroll_view: UIScrollView!
+    @IBOutlet weak var content_count_lbl: UILabel!
     
     
     var postsections = [PostGroupSection]()
@@ -245,13 +248,15 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         postteam_tbl.dataSource = self
         post_collection_view.delegate = self
         post_collection_view.dataSource = self
+        post_content_txt.delegate = self
     //    post_view.isHidden = true
         getPostimageUrl = NSMutableArray()
         let bottomLine = CALayer()
         bottomLine.frame = CGRect(x: 0, y: post_content_txt.frame.height - 1, width: self.view.frame.width, height: 0.5)
         bottomLine.backgroundColor = UIColor.lightGray.cgColor
-        post_content_txt.borderStyle = UITextBorderStyle.none
+        //post_content_txt. = UITextBorderStyle.none
         post_content_txt.layer.addSublayer(bottomLine)
+        content_count_lbl.text = "\(post_content_txt.text?.count ?? 0)/250"
         
         close_Btn.backgroundColor = .black
         close_Btn.layer.cornerRadius = close_Btn.frame.size.width/2
@@ -293,7 +298,30 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
        
     }
 
-    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(post_content_txt.text!.count < 250)
+        {
+            post_content_txt.isUserInteractionEnabled = true
+       if let _ = textField.text{
+           let text = textField.text! as NSString
+           let fullText = text.replacingCharacters(in: range, with: string)
+          let  wordCount = fullText.count
+           print(wordCount)
+        content_count_lbl.text =  "\(wordCount)/250" // Set value of the label
+       }
+        else
+       {
+        textField.resignFirstResponder()
+        }
+        }
+        else
+        {
+            post_content_txt.isUserInteractionEnabled = false
+        }
+        // myCounter = newLength // Optional: Save this value
+        // return newLength <= 25 // Optional: Set limits on input.
+        return true
+    }
     
      // MARK: - UITableViewDataSource
 
@@ -357,7 +385,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         cell.cancel_btn.tag = indexPath.section
         print("row\(indexPath.row)")
-        cell.commonview.layer.cornerRadius = 20
+        cell.commonview.layer.cornerRadius = 15
     
         cell.commonview.layer.masksToBounds = true
         cell.cancel_btn.addTarget(self, action: #selector(RemovepostItem), for: .touchUpInside)
@@ -390,10 +418,11 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             header?.add_btn.tag = section
             
             header?.add_btn.addTarget(self, action: #selector(directview), for: .touchUpInside)
-        let sepFrame: CGRect = CGRect(x: 0, y: (header?.frame.size.height)!-1, width: self.view.frame.size.width, height: 1);
-            let seperatorView = UIView.init(frame: sepFrame)
-            seperatorView.backgroundColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
-        header?.addSubview(seperatorView)
+//        let sepFrame: CGRect = CGRect(x: 0, y: (header?.frame.size.height)!-1, width: self.view.frame.size.width, height: 1);
+//            let seperatorView = UIView.init(frame: sepFrame)
+//        seperatorView.backgroundColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
+       // header?.addSubview(seperatorView)
+        header?.seprated_lbl.isHidden = (postsections[section].userlist.count > 0) ? true : false
             return header?.contentView
         }
    
@@ -595,6 +624,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                if let user = user{
                    let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg")
                    let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
+                    Constant.showInActivityIndicatory()
+
                        guard let _ = metadata else {
                            print("error occurred: \(error.debugDescription)")
                            return
@@ -612,7 +643,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                            print(UrlString)
                             self.getPostimageUrl = NSMutableArray()
                             self.getPostimageUrl.add(UrlString)
-                            Constant.showInActivityIndicatory()
+                          //  Constant.showInActivityIndicatory()
 
                          }
                        }
@@ -631,16 +662,18 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
               let docRef = db.collection("users").document("\(getuuid!)")
 
               docRef.getDocument { (document, error) in
+                Constant.showInActivityIndicatory()
+
                   
                   if let document = document, document.exists {
                    let doc: NSDictionary = document.data()! as NSDictionary
                     self.getUserInfo = doc
-                    Constant.showInActivityIndicatory()
+                  //  Constant.showInActivityIndicatory()
 
                    
                   } else {
                       print("Document does not exist")
-                    Constant.showInActivityIndicatory()
+                    //Constant.showInActivityIndicatory()
 
                   }
               }
@@ -712,6 +745,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         param["feededLevelObject"] = feedlevelobjArray.copy() as AnyObject
         param["feedPostedOrg_id"] = getOrganizationid as AnyObject?
             AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
+                Constant.showInActivityIndicatory()
+
                            if(!(response.error != nil)){
                                switch (response.result)
                                {

@@ -76,7 +76,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
               let docRef = db.collection("users").document("\(getuuid!)")
 
               docRef.getDocument { (document, error) in
-                  
+                Constant.showInActivityIndicatory()
                   if let document = document, document.exists {
                    let doc: NSDictionary = document.data()! as NSDictionary
                     
@@ -124,6 +124,8 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
 
                     docRef.collection("roles_by_season").getDocuments() { (querySnapshot, err) in
+                        Constant.showInActivityIndicatory()
+
                         if let err = err {
                             print("Error getting documents: \(err)")
                         } else {

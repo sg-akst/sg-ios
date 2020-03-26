@@ -108,6 +108,8 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         let db = Firestore.firestore()
         db.collection("users").document("\(updatePage!)").updateData(["first_name": "\(first_name_txt.text!)", "middle_initial" : "\(middle_name_txt.text!)", "last_name" : "\(last_name_txt.text!)", "suffix" : "\(suffix_name_txt.text!)"])
         { err in
+            Constant.showInActivityIndicatory()
+
             if let err = err {
                 print("Error updating document: \(err)")
                 Constant.showInActivityIndicatory()

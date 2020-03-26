@@ -49,25 +49,27 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         people_selector_tbl.sizeToFit()
         empty_img.isHidden = true
         self.people_selector_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.people_selector_tbl.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
          getuserDetail()
     }
     
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.orderArray.count > 5) ? 90 : 50
+        self.orderviewheight.constant = (self.orderArray.count > 4) ? 70 : 40
 
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
-        var runningWidth: CGFloat = 10.0
-        let maxWidth: CGFloat = 375.0
-        let horizontalSpaceBetweenButtons: CGFloat = 5.0
-        let verticalSpaceBetweenButtons: CGFloat = 5.0
+        var runningWidth: CGFloat = 0.0
+        let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+        let horizontalSpaceBetweenButtons: CGFloat = 8.0
+        let verticalSpaceBetweenButtons: CGFloat = 0.0
         self.addOrderView = UIView()
         self.addOrderView.frame = self.peopleSelectorderView.bounds
         for i in 0..<self.orderArray.count
         {
           order_btn = UIButton(type: .roundedRect)
             order_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+            order_btn.titleLabel?.textAlignment = .left
          let title: String = orderArray?[i] as! String
 
          if(title != "" && title != nil)
@@ -78,7 +80,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
           }
           else
           {
-            order_btn.setTitle("> \(orderArray[i] as! String)", for: .normal)
+            order_btn.setTitle(" >  \(orderArray[i] as! String)", for: .normal)
           }
             //selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
             order_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -134,7 +136,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
 
                     // vertical position:
-                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: order_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: order_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
                     self.addOrderView.addConstraint(verticalConstraint)
                     indexOfLeftmostButtonOnCurrentLine = i
                 }
@@ -257,6 +259,8 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         param["user_group_id"] = selectGroup as AnyObject?
         
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            Constant.showInActivityIndicatory()
+
             if(!(response.error != nil)){
                 switch (response.result)
                 {
@@ -289,6 +293,10 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                                 appDelegate.timerAction()
                                // self.getplayerlist()
+                            }
+                            else
+                            {
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
                             }
                            
                         }

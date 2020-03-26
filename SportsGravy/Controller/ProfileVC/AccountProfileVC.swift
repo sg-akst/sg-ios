@@ -121,6 +121,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
 
                       docRef.getDocument { (document, error) in
                           
+                        Constant.showInActivityIndicatory()
+
                           if let document = document, document.exists {
                             self.alldoc = document.data()! as NSDictionary
                             self.username_lbl.text = "\(self.alldoc.value(forKey: "first_name")!)" + " " + "\(self.alldoc.value(forKey: "middle_initial")!)" + " " + "\(self.alldoc.value(forKey: "last_name")!)"
@@ -189,9 +191,6 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                           } else {
                               print("Document does not exist")
                           }
-                        Constant.showInActivityIndicatory()
-                        
-
                       }
     }
     @IBAction func updateprofileImage(_ sender: UIButton)
@@ -245,6 +244,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                 let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
                     guard let _ = metadata else {
                         print("error occurred: \(error.debugDescription)")
+                        Constant.showInActivityIndicatory()
+
                         return
                     }
      
@@ -252,6 +253,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                     storeRef.downloadURL { (URL, error) -> Void in
                       if (error != nil) {
                         // Handle any errors
+                        Constant.showInActivityIndicatory()
+
                       } else {
                         // Get the download URL for 'images/stars.jpg'
 
@@ -292,6 +295,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+            Constant.showInActivityIndicatory()
+
             if(!(response.error != nil)){
                 switch (response.result)
                 {
@@ -320,9 +325,12 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                 appDelegate.timerAction()
                                 self.getplayerlist()
                             }
+                            else
+                            {
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message as! String)")
+                            }
                            
                         }
-                        Constant.showInActivityIndicatory()
                   //  }
                     break
 
@@ -352,6 +360,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
             
             AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+                Constant.showInActivityIndicatory()
+
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
@@ -378,7 +388,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             {
                                // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                             }
-                            Constant.showInActivityIndicatory()
+                            //Constant.showInActivityIndicatory()
                         //}
                         break
 
@@ -409,6 +419,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+            Constant.showInActivityIndicatory()
+
             if(!(response.error != nil)){
                 switch (response.result)
                 {
@@ -448,7 +460,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         {
                            // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                         }
-                        Constant.showInActivityIndicatory()
+                       // Constant.showInActivityIndicatory()
                    // }
                     break
 
@@ -673,12 +685,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         let signup: Bool = getvalue.value(forKey: "is_signup_completed")! as! Bool
         if(invite == true && signup == false)
         {
-//          Constant.internetconnection(vc: self)
-//                 Constant.showActivityIndicatory(uiView: self.view)
+         Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
 //                 let getuuid = UserDefaults.standard.string(forKey: "UUID")
                   let db = Firestore.firestore()
             db.collection("users").document(getvalue["user_id"] as! String).updateData(["is_invited": false])
             { err in
+                Constant.showInActivityIndicatory()
+
                 if let err = err {
                     print("Error updating document: \(err)")
                     Constant.showInActivityIndicatory()

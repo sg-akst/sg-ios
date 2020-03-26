@@ -14,8 +14,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "PostImageVC"
             landmarkType = "3">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "PostImageVC"
             landmarkType = "3">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "590"
-            endingLineNumber = "590"
+            startingLineNumber = "619"
+            endingLineNumber = "619"
             landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PeopleSelectorVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "selectPeople(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PeopleSelectorVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "fetchpeopleselector(selectGroup:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostUsergroupVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "796"
-            endingLineNumber = "796"
+            startingLineNumber = "801"
+            endingLineNumber = "801"
             landmarkName = "PersonIcon(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/FeedSelectorVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1077"
-            endingLineNumber = "1077"
+            startingLineNumber = "1087"
+            endingLineNumber = "1087"
             landmarkName = "PersonIcon(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/Dashboardvc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "884"
-            endingLineNumber = "884"
+            startingLineNumber = "886"
+            endingLineNumber = "886"
             landmarkName = "feedfilter(feeddetail:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "599"
-            endingLineNumber = "599"
+            startingLineNumber = "630"
+            endingLineNumber = "630"
             landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,121 +174,9 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "603"
-            endingLineNumber = "603"
+            startingLineNumber = "634"
+            endingLineNumber = "634"
             landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3262090C-7710-4D85-97B1-17B2D6BCAE28"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "updatesorting(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1C1AFB74-1E09-4DFF-82F6-F2DA41139D29"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
-            landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C49DFC7D-63CB-42F0-AA59-6D8AE9DDFF3A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C49DFC7D-63CB-42F0-AA59-6D8AE9DDFF3A - 8388366b899b3d10"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsGravy.SortingVC.alertermsg(msg: Swift.String) -&gt; ()"
-                  moduleName = "SportsGravy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/SortingOrder/SortingVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "332"
-                  endingLineNumber = "332"
-                  offsetFromSymbolStart = "244">
-               </Location>
-               <Location
-                  uuid = "C49DFC7D-63CB-42F0-AA59-6D8AE9DDFF3A - f46ff2bde1045365"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in SportsGravy.SortingVC.alertermsg(msg: Swift.String) -&gt; ()"
-                  moduleName = "SportsGravy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/SortingOrder/SortingVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "333"
-                  endingLineNumber = "333"
-                  offsetFromSymbolStart = "72">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "67E9429F-C338-49E0-9DA2-5D301E6592F0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AAB3F126-2E52-4264-9B8C-51027017DAD4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
-            landmarkName = "updatesorting(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -302,89 +190,9 @@
             filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "87F8EA50-D5A4-40DB-8AB8-032BD3D11DC2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
-            landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "995F22A4-DBAD-4352-AEC5-2EF5C7541987"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "68FD4144-2CB0-493C-83BB-9BADF85CAADC"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
-            landmarkName = "alertermsg(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EA862C31-E7EB-47A8-82C1-8CA1237C8806"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "840"
-            endingLineNumber = "840"
-            landmarkName = "getmembergroupDetail()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A17E12C7-1B13-4204-BF34-5DCE238A2F67"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "842"
-            endingLineNumber = "842"
-            landmarkName = "getmembergroupDetail()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -398,8 +206,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "718"
-            endingLineNumber = "718"
+            startingLineNumber = "753"
+            endingLineNumber = "753"
             landmarkName = "FeedPost(_:)"
             landmarkType = "7">
             <Locations>
@@ -414,9 +222,9 @@
                   urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/DashboardVC/PostImageVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "718"
-                  endingLineNumber = "718"
-                  offsetFromSymbolStart = "516">
+                  startingLineNumber = "753"
+                  endingLineNumber = "753"
+                  offsetFromSymbolStart = "544">
                </Location>
                <Location
                   uuid = "33CC0CD0-383A-489C-A4AF-89E724A0817E - 2e5c985f89a39196"
@@ -429,9 +237,9 @@
                   urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/DashboardVC/PostImageVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "718"
-                  endingLineNumber = "718"
-                  offsetFromSymbolStart = "540">
+                  startingLineNumber = "753"
+                  endingLineNumber = "753"
+                  offsetFromSymbolStart = "568">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -446,8 +254,8 @@
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "708"
-            endingLineNumber = "708"
+            startingLineNumber = "741"
+            endingLineNumber = "741"
             landmarkName = "FeedPost(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -455,192 +263,128 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A15F8B9E-00AD-414D-8D0F-1C54D3851571"
+            uuid = "10ADB844-CE5F-46BD-B274-BCA717A0E084"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsGravy/Controller/UserGroup/UserGroupCreateVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
+            landmarkName = "Create_BtnAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EFB24174-CD68-4A1C-BBE7-86E024D37829"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsGravy/Controller/CannnedResponse/CannedResponseVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "792"
+            endingLineNumber = "792"
+            landmarkName = "getCannedresponsegroupDetail()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9CB05B10-7256-4811-B51C-DB010614BBD5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsGravy/Controller/CannnedResponse/CannedResponseVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "816"
+            endingLineNumber = "816"
+            landmarkName = "getCannedresponsegroupDetail()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47C7F8F4-CDA4-4C9D-93B6-400F4996FAE9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsGravy/Controller/CannnedResponse/CannedResponseVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "811"
+            endingLineNumber = "811"
+            landmarkName = "getCannedresponsegroupDetail()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "47C7F8F4-CDA4-4C9D-93B6-400F4996FAE9 - 51a43895ec011e3c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SportsGravy.CannedResponseVC.getCannedresponsegroupDetail() -&gt; ()"
+                  moduleName = "SportsGravy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/CannnedResponse/CannedResponseVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "817"
+                  endingLineNumber = "817"
+                  offsetFromSymbolStart = "3560">
+               </Location>
+               <Location
+                  uuid = "47C7F8F4-CDA4-4C9D-93B6-400F4996FAE9 - 1788468102d71359"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SportsGravy.CannedResponseVC.getCannedresponsegroupDetail() -&gt; ()"
+                  moduleName = "SportsGravy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/CannnedResponse/CannedResponseVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "818"
+                  endingLineNumber = "818"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "256E9B3C-2C53-4982-8DCC-0DD0F746E5EA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsGravy/Controller/CannnedResponse/CannedResponseVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "812"
+            endingLineNumber = "812"
+            landmarkName = "getCannedresponsegroupDetail()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D77912D0-613A-4B5E-A110-FCE591BD94ED"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SportsGravy/Controller/DashboardVC/PostImageVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7C061B07-247E-442C-81E5-4F5F0BAAFEA8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "722"
-            endingLineNumber = "722"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "7C061B07-247E-442C-81E5-4F5F0BAAFEA8 - b344870a213aa4b5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsGravy.UsergroupVC.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "SportsGravy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "722"
-                  endingLineNumber = "722"
-                  offsetFromSymbolStart = "16612">
-               </Location>
-               <Location
-                  uuid = "7C061B07-247E-442C-81E5-4F5F0BAAFEA8 - b344870a213aa4b5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsGravy.UsergroupVC.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "SportsGravy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "722"
-                  endingLineNumber = "722"
-                  offsetFromSymbolStart = "20024">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E16BCC60-FB01-4AF0-899F-D1B38CFC9E35"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "726"
-            endingLineNumber = "726"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B35FF55A-F06C-41A4-B2CC-5ACB5713739B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
-            landmarkName = "updatesorting(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B35FF55A-F06C-41A4-B2CC-5ACB5713739B - f36946332be2f3c2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in SportsGravy.SortingVC.updatesorting(__C.UIButton) -&gt; ()"
-                  moduleName = "SportsGravy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/SortingOrder/SortingVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "296"
-                  endingLineNumber = "296"
-                  offsetFromSymbolStart = "288">
-               </Location>
-               <Location
-                  uuid = "B35FF55A-F06C-41A4-B2CC-5ACB5713739B - f36946332be2f3c2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in SportsGravy.SortingVC.updatesorting(__C.UIButton) -&gt; ()"
-                  moduleName = "SportsGravy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/css/Documents/IOSMobileApp/SportsGravy/Controller/SortingOrder/SortingVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "296"
-                  endingLineNumber = "296"
-                  offsetFromSymbolStart = "312">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C72180ED-37F5-4FEE-B56A-557F55D3AC03"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
-            landmarkName = "updatesorting(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AAE137F9-5F3C-4A67-9905-7A250C6258EB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
-            landmarkName = "updatesorting(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F2B0F4E9-A4B7-4050-80E4-C5A0E49E37C3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/SortingOrder/SortingVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "updatesorting(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DC42BBB7-2A0A-482A-9537-2E861E4563A7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsGravy/Controller/UserGroup/UsergroupVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "getuserDetail()"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
+            landmarkName = "textField(_:shouldChangeCharactersIn:replacementString:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

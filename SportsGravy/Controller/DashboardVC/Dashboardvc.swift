@@ -156,6 +156,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                
         let db = Firestore.firestore()
         db.collection("feed").whereField("feedToUserId", arrayContains: getuuid!).order(by: "feedPostedDatetime", descending: true).getDocuments() { (querySnapshot, err) in
+            Constant.showInActivityIndicatory()
+
                   if let err = err {
                   } else {
                     self.commonArray = NSMutableArray()
@@ -179,7 +181,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     
                     self.post_tbl.reloadData()
                     self.emptyfeed_img.isHidden = (self.commonArray.count == 0) ? false : true
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                   }
               }
@@ -763,11 +765,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let db = Firestore.firestore()
         db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                    { err in
+                    
                        if let err = err {
                            Constant.showInActivityIndicatory()
-
                        } else {
-                        db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar") ?? "")","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
+                db.collection("feed").document("\(userFeedid)").collection("feedLikes").document("\(self.getuuid!)").setData(["avatar": "\(selectIdexdetail.value(forKey: "feedPostedUser_avatar") ?? "")","created_dateTime" : Date(),"created_userid": "\(self.getuuid!)","first_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_firstName")!)","last_name": "\(selectIdexdetail.value(forKey: "feedPostedUser_lastName")!)","middle_initial": "\(selectIdexdetail.value(forKey: "feedPostedUser_middleInitial")!)","suffix": "\(selectIdexdetail.value(forKey: "feedPostedUser_suffix")!)","update_userid": "","updated_dateTime": "","user_id":"\(self.getuuid!)"])
                         { err in
                             if let err = err {
                                // Constant.showInActivityIndicatory()

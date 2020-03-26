@@ -89,6 +89,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         createGroupView.isHidden = true
         sortingCanned.isHidden = true
         self.canned_response_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.canned_response_tbl.contentInset = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+
         self.canned_response_tbl.sizeToFit()
 
     }
@@ -103,10 +105,10 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
-            var runningWidth: CGFloat = 10.0
-            let maxWidth: CGFloat = 375.0
-            let horizontalSpaceBetweenButtons: CGFloat = 5.0
-            let verticalSpaceBetweenButtons: CGFloat = 5.0
+            var runningWidth: CGFloat = 0.0
+            let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+            let horizontalSpaceBetweenButtons: CGFloat = 8.0
+            let verticalSpaceBetweenButtons: CGFloat = 0.0
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -118,6 +120,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                 addTitle_btn = UIButton(type: .roundedRect)
     
                 addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+                addTitle_btn.titleLabel?.textAlignment = .left
                 let title: String = addorderArray?[i] as! String
 
                 if(title != "" && title != nil)
@@ -128,7 +131,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                 }
                 else
                 {
-                    addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
+                    addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
 
                 }
                // addTitle_btn.setTitle("\(addorderArray[i] as! String)", for: .normal)
@@ -176,9 +179,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                         let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: self.addOrder, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
                             
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop              multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                                    //   [self.view addConstraint:verticalConstraint];
-
                     }
                     else{
                         // put it in new line
@@ -188,15 +188,9 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                         let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                         self.addOrder.addConstraint(horizontalConstraint)
 
-                            //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-                       // [self.view addConstraint:horizontalConstraint];
-
                         // vertical position:
-                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
                         self.addOrder.addConstraint(verticalConstraint)
-
-                        //[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:previousLeftmostButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:verticalSpaceBetweenButtons];
-                        //[self.view addConstraint:verticalConstraint];
 
                         indexOfLeftmostButtonOnCurrentLine = i
                     }
@@ -228,7 +222,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             }
            
             self.addorderview.addSubview(addOrder)
-            orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+            orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
             if(commonArray.count > 0)
             {
                 commonArray.removeAll { $0 == "" }
@@ -552,29 +546,29 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         {
             let cell: UserGroupCell = self.canned_response_tbl.dequeueReusableCell(withIdentifier: "can_response_cell") as! UserGroupCell
             let dic: NSDictionary = TeamArray?[indexPath.row] as! NSDictionary
-            let count : Int = dic.value(forKey: "count") as! Int
+            let count : Bool = dic.value(forKey: "is_used") as! Bool
             cell.delete_enable_img.tag = indexPath.row
             cell.delete_enable_img.addTarget(self, action: #selector(deleteGroup_Method), for: .touchUpInside)
             cell.displayName_lbl?.text = dic.value(forKey: "cannedResponseDesc") as? String
-            cell.delete_enable_img.tintColor = (count > 0 ) ? UIColor.gray : UIColor.red
+            cell.delete_enable_img.tintColor = (count != false ) ? UIColor.gray : UIColor.red
             cell.username_lbl?.text = dic.value(forKey: "cannedResponseTitle") as? String
             cell.selectionStyle = .none
-            cell.accessoryType =  .disclosureIndicator //(count > 0) ? .none : 
+            cell.accessoryType = .disclosureIndicator //(count == false) ? .none : .disclosureIndicator
 
-            let used : Bool = dic.value(forKey: "is_used") as! Bool
-
-            if(used == true)
-            {
-               cell.delete_enable_img.tintColor =  UIColor.gray
-                cell.accessoryType = .none
-
-            }
-            else
-            {
-                cell.delete_enable_img.tintColor =  UIColor.red
-                cell.accessoryType = .disclosureIndicator
-
-            }
+//            let used : Bool = dic.value(forKey: "is_used") as! Bool
+//
+//            if(used == true)
+//            {
+//               cell.delete_enable_img.tintColor =  UIColor.gray
+//                cell.accessoryType = .disclosureIndicator
+//
+//            }
+//            else
+//            {
+//                cell.delete_enable_img.tintColor =  UIColor.red
+//                cell.accessoryType = .disclosureIndicator
+//
+//            }
             
                 return cell
         }
@@ -703,8 +697,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     {
         let indexno = sender.tag
         let teamDic: NSDictionary = self.TeamArray?[indexno] as! NSDictionary
-        let count : Int = teamDic.value(forKey: "count") as! Int
-        let isDelete: Bool = (count > 0 ) ? false : true
+        let count : Bool = teamDic.value(forKey: "is_used") as! Bool
+        let isDelete: Bool = (count != false ) ? false : true
         if(isDelete == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "system generated Canned Responses cant able to delete")
@@ -734,9 +728,15 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
        let docRef = db.collection("users").document("\(getuuid!)")
                    
                    docRef.collection("roles_by_season").whereField("role", isEqualTo:self.getSelectRole).getDocuments() { (querySnapshot, err) in
+                    Constant.showInActivityIndicatory()
+
                           if let err = err {
                               print("Error getting documents: \(err)")
+                           // Constant.showInActivityIndicatory()
+
                           } else {
+                            //Constant.showInActivityIndicatory()
+
                            self.getRolebyreasonDetailArray = NSMutableArray()
                                   for document in querySnapshot!.documents {
                                   let data: NSDictionary = document.data() as NSDictionary
@@ -757,7 +757,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                                            }
                                        }
                                    }
-                                   
                                  }
                            
                            if(self.getRolebyreasonDetailArray.count > 0)
@@ -769,54 +768,9 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                               // self.getTeammethod()
                                self.getuserDetail()
                            }
-                              Constant.showInActivityIndicatory()
+                            //  Constant.showInActivityIndicatory()
                         }
                     }
-                   
-  //      if (UserDefaults.standard.bool(forKey: "3") == true)
-//                   {
-//                    docRef.collection("CannedResponse").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
-//                         if let err = err {
-//                             print("Error getting documents: \(err)")
-//                         } else {
-//                            self.TeamArray = NSMutableArray()
-//
-//                             for document in querySnapshot!.documents {
-//                                 let data: NSDictionary = document.data() as NSDictionary
-//                                self.TeamArray.add(data)
-//
-//
-//                            }
-//                            self.isTeam = true
-//                            self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
-//                            self.canned_response_tbl.reloadData()
-//                            Constant.showInActivityIndicatory()
-//
-//                        }
-//                    }
-//        }
-     //   else
-//        {
-//            docRef.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
-//                                    if let err = err {
-//                                        print("Error getting documents: \(err)")
-//                                    } else {
-//                                       self.TeamArray = NSMutableArray()
-//
-//                                        for document in querySnapshot!.documents {
-//                                            let data: NSDictionary = document.data() as NSDictionary
-//                                           self.TeamArray.add(data)
-//
-//
-//                                       }
-//                                       self.isTeam = true
-//                                       self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
-//                                       self.canned_response_tbl.reloadData()
-//                                       Constant.showInActivityIndicatory()
-//
-//                                   }
-//                               }
-//        }
     }
     
     func getCannedresponsegroupDetail()
@@ -830,6 +784,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                            {
                             
                             docRef.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                Constant.showInActivityIndicatory()
+
                                  if let err = err {
                                      print("Error getting documents: \(err)")
                                  } else {
@@ -844,7 +800,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                                     self.isTeam = true
                                     self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                                     self.canned_response_tbl.reloadData()
-                                    Constant.showInActivityIndicatory()
+                                    //Constant.showInActivityIndicatory()
         
                                 }
                             }
@@ -910,6 +866,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     let teamRef = db.collection("teams").document("\(getTeamId!)")
         teamRef.collection("CannedResponse").document("\(rolebyDic.value(forKey: "cannedResponseTitle_id")!)").delete()
         { err in
+            Constant.showInActivityIndicatory()
+
             if let err = err {
                 print("Error removing document: \(err)")
                 Constant.showInActivityIndicatory()
@@ -922,17 +880,17 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                 { err in
                 if let err = err {
                     print("Error removing document: \(err)")
-                    Constant.showInActivityIndicatory()
+                    //Constant.showInActivityIndicatory()
 
                 } else {
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "cannedResponseTitle")!) Removed Successfully")
                                  
                     self.getCannedresponsegroupDetail()
-                        Constant.showInActivityIndicatory()
+                        //Constant.showInActivityIndicatory()
                     print("Document successfully removed!")
                     }
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                 }
                 

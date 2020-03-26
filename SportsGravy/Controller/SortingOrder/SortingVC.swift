@@ -291,6 +291,8 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         
 AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { response in
+    Constant.showInActivityIndicatory()
+
                         switch response.result
                        {
                        case .success(let json):
@@ -313,6 +315,11 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
                                 appDelegate.timerAction()
                                 self.updatesorting(sender)
                             }
+                            else
+                           {
+                            self.alertermsg(msg: "\(message as! String)")
+
+                            }
                         }
                        // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: " \(str!) Sorted Successfully ")
                             
@@ -321,7 +328,6 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
                            //self.errorFailer(error: error)
                        }
 
-                        Constant.showInActivityIndicatory()
 
                    }
 

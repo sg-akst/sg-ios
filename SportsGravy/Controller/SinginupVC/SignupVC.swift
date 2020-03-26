@@ -71,6 +71,8 @@ class SignupVC: UIViewController, UITextFieldDelegate {
         param["uid"] = "zHhMZCuvhtrd87Q0vN65" as AnyObject   //uidString as AnyObject?
             
             AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
+                Constant.showInActivityIndicatory()
+
                 if(!(response.error != nil)){
                     switch (response.result)
                     {

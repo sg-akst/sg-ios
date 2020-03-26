@@ -89,6 +89,8 @@ override func viewDidLoad() {
             createGroupView.isHidden = true
             sorting.isHidden = true
             self.tag_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.tag_tbl.contentInset = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+
             self.tag_tbl.sizeToFit()
         }
         func getuserDetail()
@@ -97,10 +99,10 @@ override func viewDidLoad() {
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
-            var runningWidth: CGFloat = 10.0
-            let maxWidth: CGFloat = 375.0
-            let horizontalSpaceBetweenButtons: CGFloat = 5.0
-            let verticalSpaceBetweenButtons: CGFloat = 5.0
+            var runningWidth: CGFloat = 0.0
+            let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+            let horizontalSpaceBetweenButtons: CGFloat = 8.0
+            let verticalSpaceBetweenButtons: CGFloat = 0.0
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -112,6 +114,7 @@ override func viewDidLoad() {
                 addTitle_btn = UIButton(type: .roundedRect)
     
                 addTitle_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+                addTitle_btn.titleLabel?.textAlignment = .left
                  let title: String = addorderArray?[i] as! String
                 if(title != "" && title != nil)
                 {
@@ -121,7 +124,7 @@ override func viewDidLoad() {
                 }
                 else
                 {
-                  addTitle_btn.setTitle("> \(addorderArray[i] as! String)", for: .normal)
+                  addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
 
                 }
                
@@ -178,7 +181,7 @@ override func viewDidLoad() {
                         self.addOrder.addConstraint(horizontalConstraint)
 
                         // vertical position:
-                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
                         self.addOrder.addConstraint(verticalConstraint)
 
 
@@ -206,12 +209,14 @@ override func viewDidLoad() {
             }
            
             self.addorderview.addSubview(addOrder)
-            orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+            orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
 
             if(commonArray.count > 0)
             {
                 commonArray.removeAll { $0 == "" }
+                Constant.showInActivityIndicatory()
                 tag_tbl.reloadData()
+                
 
             }
 
@@ -695,15 +700,20 @@ override func viewDidLoad() {
         func getTag()
         {
             Constant.internetconnection(vc: self)
-                   Constant.showActivityIndicatory(uiView: self.view)
-                   let getuuid = UserDefaults.standard.string(forKey: "UUID")
-                    let db = Firestore.firestore()
+            Constant.showActivityIndicatory(uiView: self.view)
+            let getuuid = UserDefaults.standard.string(forKey: "UUID")
+            let db = Firestore.firestore()
             let docRef = db.collection("users").document("\(getuuid!)")
             
             docRef.collection("roles_by_season").whereField("role", isEqualTo:self.getSelectRole).getDocuments() { (querySnapshot, err) in
+                
+                Constant.showInActivityIndicatory()
+
                    if let err = err {
                        print("Error getting documents: \(err)")
+                     Constant.showInActivityIndicatory()
                    } else {
+                     Constant.showInActivityIndicatory()
                     self.getRolebyreasonDetailArray = NSMutableArray()
 
                            for document in querySnapshot!.documents {
@@ -722,12 +732,15 @@ override func viewDidLoad() {
                                     {
                                             print("yes")
                                         self.getRolebyreasonDetailArray.add(data)
+                                        Constant.showInActivityIndicatory()
+
                                     }
                                 }
+                                
                             }
-                            
+
                           }
-                    
+
                     if(self.getRolebyreasonDetailArray.count > 0)
                     {
                         self.getorganization()
@@ -739,7 +752,7 @@ override func viewDidLoad() {
 
 
                     }
-                       Constant.showInActivityIndicatory()
+                      
 
                            }
                        }
@@ -748,7 +761,7 @@ override func viewDidLoad() {
     func getTagListMethod()
     {
         Constant.internetconnection(vc: self)
-               Constant.showActivityIndicatory(uiView: self.view)
+       // Constant.showActivityIndicatory(uiView: self.view)
                let getuuid = UserDefaults.standard.string(forKey: "UUID")
                 let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
@@ -756,6 +769,8 @@ override func viewDidLoad() {
                             {
                                 
                             docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                               // Constant.showInActivityIndicatory()
+
                             if let err = err {
                             print("Error getting documents: \(err)")
                             } else {
@@ -770,7 +785,7 @@ override func viewDidLoad() {
                             self.isTeam = true
                             self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                             self.tag_tbl.reloadData()
-                            Constant.showInActivityIndicatory()
+                           Constant.showInActivityIndicatory()
                             
                                 }
                             }
@@ -813,7 +828,7 @@ override func viewDidLoad() {
                                                                 self.isTeam = true
                                                                 self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false
                                                                 self.tag_tbl.reloadData()
-                                                                Constant.showInActivityIndicatory()
+                                                               Constant.showInActivityIndicatory()
                             
                                                             }
                                                         }
@@ -843,6 +858,8 @@ override func viewDidLoad() {
           let db = Firestore.firestore()
           let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
                 docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
+                    Constant.showInActivityIndicatory()
+
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
@@ -906,10 +923,10 @@ override func viewDidLoad() {
                         }
                     }
                     else{
-                        Constant.showInActivityIndicatory()
+                       // Constant.showInActivityIndicatory()
                         Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Deleted Successfully")
                         self.getTagListMethod()
-                        Constant.showInActivityIndicatory()
+                        //Constant.showInActivityIndicatory()
                     }
 
                     }

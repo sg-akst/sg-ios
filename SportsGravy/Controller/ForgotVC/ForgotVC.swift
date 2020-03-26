@@ -87,6 +87,8 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
 
         Constant.showActivityIndicatory(uiView: self.view)
                Auth.auth().sendPasswordReset(withEmail: email) { error in
+                Constant.showInActivityIndicatory()
+
                    callback?(error)
                 
                 self.showAlertMessage(titleStr: "SportsGravy", messageStr: "Please check your Email")

@@ -58,7 +58,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let docRef = db.collection("users").document("\(self.playerDetails.value(forKey: "user_id")!)")
 
                       docRef.getDocument { (document, error) in
-                          
+                          Constant.showInActivityIndicatory()
+
                           if let document = document, document.exists {
                             let playerInfo = document.data()! as NSDictionary
                             print("Player=>\(playerInfo)")
@@ -118,7 +119,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         func getGuardians()
         {
                 Constant.internetconnection(vc: self)
-               // Constant.showActivityIndicatory(uiView: self.view)
+                Constant.showActivityIndicatory(uiView: self.view)
                 let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
             let header: HTTPHeaders = [
                     "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
@@ -126,6 +127,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
                 
                 AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+                    Constant.showInActivityIndicatory()
+
                     if(!(response.error != nil)){
                         switch (response.result)
                         {
@@ -173,7 +176,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         func GetOrganization()
         {
             Constant.internetconnection(vc: self)
-           // Constant.showActivityIndicatory(uiView: self.view)
+            Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
             let header: HTTPHeaders = [
                 "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
@@ -181,6 +184,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
             
             AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
+                Constant.showInActivityIndicatory()
+
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
@@ -215,7 +220,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                  self.playerprofile_tbl.reloadData()
 
                                  self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant)
-                                Constant.showInActivityIndicatory()
+                        //        Constant.showInActivityIndicatory()
                                 
                                 
                                 
@@ -236,12 +241,12 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                             {
                                // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
                             }
-                            Constant.showInActivityIndicatory()
+                           // Constant.showInActivityIndicatory()
                         //}
                         break
 
                     case .failure(_):
-                        Constant.showInActivityIndicatory()
+                      //  Constant.showInActivityIndicatory()
 
                         break
                     }
@@ -361,6 +366,8 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
          param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
         param["player_id"] = player_id as AnyObject?
             AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
+                Constant.showInActivityIndicatory()
+
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
@@ -374,22 +381,22 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                             {
                                 let result = info?["data"] as! NSDictionary
                                 
-                               Constant.showInActivityIndicatory()
+                               //Constant.showInActivityIndicatory()
 
                             }
-                            Constant.showInActivityIndicatory()
+                           // Constant.showInActivityIndicatory()
                        // }
                         break
 
                     case .failure(_):
-                        Constant.showInActivityIndicatory()
+                      //  Constant.showInActivityIndicatory()
 
                         break
                     }
                 }
                 else
                 {
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                 }
             }

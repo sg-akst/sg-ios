@@ -103,16 +103,17 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
            let buttons: NSMutableArray = NSMutableArray()
            var indexOfLeftmostButtonOnCurrentLine: Int = 0
-           var runningWidth: CGFloat = 10.0
-           let maxWidth: CGFloat = 375.0
+           var runningWidth: CGFloat = 0
+        let maxWidth: CGFloat = UIScreen.main.bounds.size.width
            let horizontalSpaceBetweenButtons: CGFloat = 5.0
-           let verticalSpaceBetweenButtons: CGFloat = 5.0
+           let verticalSpaceBetweenButtons: CGFloat = 0.0
            self.addOrderView = UIView()
            self.addOrderView.frame = self.SelectorderView.bounds
            for i in 0..<self.getorderArray.count
            {
              selectOption_btn = UIButton(type: .roundedRect)
                selectOption_btn.titleLabel?.font = UIFont(name: "Arial", size: 18)
+            selectOption_btn.titleLabel?.textAlignment = .left
             let title: String = getorderArray?[i] as! String
 
             if(title != "" && title != nil)
@@ -123,7 +124,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                        }
                        else
                        {
-                         selectOption_btn.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+                         selectOption_btn.setTitle(" >  \(getorderArray[i] as! String)", for: .normal)
 
                        }
                //selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
@@ -201,7 +202,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
            }
           
            self.SelectorderView.addSubview(addOrderView)
-        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 90 : 50
+        self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
 
        }
        @objc func orderselectmethod(_ sender: UIButton)
@@ -389,6 +390,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
    
     @IBAction func Create_BtnAction(_ sender: UIButton)
     {
+        self.group_tittle_txt.resignFirstResponder()
         var ref: String!
         var teamref : DocumentReference? = nil
 
@@ -414,6 +416,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 let teamRef = db.collection("teams").document("\(self.getTeamId!)")
 
               teamRef.collection("MemberGroup").getDocuments() { (querySnapshot, err) in
+                Constant.showInActivityIndicatory()
+
               if let err = err {
                   print("Error getting documents: \(err)")
               } else {
@@ -437,7 +441,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                                print("Error writing document: \(err)")
                                         } else {
                                         print("Document successfully written!")
-                                            Constant.showInActivityIndicatory()
+                                           // Constant.showInActivityIndicatory()
                     teamRef.collection("MemberGroup").document(teamref!.documentID).updateData(["user_groupId":teamref!.documentID])
                                             if let err = err {
                                                    print("Error writing document: \(err)")
@@ -463,11 +467,11 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                                                    }
                                                 
                                                 
-                                                Constant.showInActivityIndicatory()
+                                             //   Constant.showInActivityIndicatory()
                                             }
 
                                            }
-                                           Constant.showInActivityIndicatory()
+                                          // Constant.showInActivityIndicatory()
                                        }
                 else
                 {
@@ -495,9 +499,11 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             let teamRef = db.collection("teams").document("\(self.getTeamId!)")
             teamRef.collection("MemberGroup").document("\(updateArray.value(forKey: "user_groupId") as! String)").updateData(["user_list": selectpersonArray, "updated_datetime" : Date()])
             { err in
+                Constant.showInActivityIndicatory()
+
                 if let err = err {
                     print("Error updating document: \(err)")
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                 } else {
                     print("Document successfully updated")
@@ -506,11 +512,11 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     { err in
                     if let err = err {
                         print("Error updating document: \(err)")
-                        Constant.showInActivityIndicatory()
+                      //  Constant.showInActivityIndicatory()
 
                     } else {
                         
-                        Constant.showInActivityIndicatory()
+                       // Constant.showInActivityIndicatory()
                         self.alertermsg(msg: "User group updated successfully ")
                                            
                         }

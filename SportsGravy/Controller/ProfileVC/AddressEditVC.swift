@@ -116,6 +116,8 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         let db = Firestore.firestore()
         //let docRef = db.collection("countries").document()
         db.collection("countries").getDocuments() { (querySnapshot, err) in
+            Constant.showInActivityIndicatory()
+
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
@@ -125,7 +127,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
                 let data: NSDictionary = document.data() as NSDictionary
                 self.getCountryArray.add(data)
                }
-            Constant.showInActivityIndicatory()
+           // Constant.showInActivityIndicatory()
 
                 }
             }
@@ -138,6 +140,8 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         let db = Firestore.firestore()
        // let docRef = db.collection("states").document()
         db.collection("states").getDocuments() { (querySnapshot, err) in
+            Constant.showInActivityIndicatory()
+
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
@@ -256,11 +260,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         {
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
-            
-            
-            
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
-            
             let db = Firestore.firestore()
             let updateAdd: NSMutableDictionary = NSMutableDictionary()
             
@@ -274,13 +274,15 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
             let updatePage = (isUpdate == true) ? getuuid : self.addressDetailDic.value(forKey: "user_id") as? String
             db.collection("users").document("\(updatePage!)").updateData(["street1":"\(self.street1_txt.text!)","street2": "\(self.street2_txt.text!)","city": "\(self.city_txt.text!)","postal_code": "\(self.potel_txt.text!)","state": "\(self.state_txt.text!)","country_code": "\(self.country_txt.text!)","address": updateAdd.copy(), "updated_datetime" : Date()])
             { err in
+                Constant.showInActivityIndicatory()
+
                 if let err = err {
                     print("Error updating document: \(err)")
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
 
                 } else {
                     print("Document successfully updated")
-                    Constant.showInActivityIndicatory()
+                   // Constant.showInActivityIndicatory()
                     self.alertermsg(msg: "Address updated successfully")
 
                     

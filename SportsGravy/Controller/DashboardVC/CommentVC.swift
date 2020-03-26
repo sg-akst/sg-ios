@@ -138,6 +138,8 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let db = Firestore.firestore()
             db.collection("feed").document("\(userFeedid)").updateData(["likes": updateDetail])
                        { err in
+                     //   Constant.showInActivityIndicatory()
+
                            if let err = err {
                                print("Error updating document: \(err)")
                               // Constant.showInActivityIndicatory()
@@ -224,6 +226,8 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        let db = Firestore.firestore()
         let docRef = db.collection("feed").document("\(feedid)")
         docRef.collection("feedComments").getDocuments() { (querySnapshot, err) in
+            Constant.showInActivityIndicatory()
+
             if let err = err {
                 print("Error getting documents: \(err)")
                 Constant.showInActivityIndicatory()
@@ -259,6 +263,8 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let db = Firestore.firestore()
         db.collection("feed").document("\(userFeedid)").updateData(["comments": updateDetail])
                    { err in
+                    Constant.showInActivityIndicatory()
+
                        if let err = err {
                            print("Error updating document: \(err)")
                            Constant.showInActivityIndicatory()

@@ -43,6 +43,8 @@ class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(TeamId!)")
 
             docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
+                Constant.showInActivityIndicatory()
+
                                  if let err = err {
                                      print("Error getting documents: \(err)")
                                  } else {

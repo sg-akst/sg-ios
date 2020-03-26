@@ -101,13 +101,15 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
             
         db.collection("users").document("\(UpdateID!)").updateData(["mobile_phone": "\(mobile_txt.text!)"])
         { err in
+            Constant.showInActivityIndicatory()
+
             if let err = err {
                 print("Error updating document: \(err)")
-                Constant.showInActivityIndicatory()
+                //Constant.showInActivityIndicatory()
 
             } else {
                 print("Document successfully updated")
-                Constant.showInActivityIndicatory()
+               // Constant.showInActivityIndicatory()
                 self.alertermsg(msg: "Mobile number Updated successfully")
 
             }
