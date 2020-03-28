@@ -81,6 +81,7 @@ class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostTagcell", for: indexPath)
            let dic: NSDictionary = self.taglist[indexPath.row] as! NSDictionary
            cell.textLabel?.text = dic.value(forKey: "tag_name") as? String
+        cell.textLabel?.textColor = UIColor.blue
            return cell
        }
        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

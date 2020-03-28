@@ -182,7 +182,6 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func getuserDetail()
         {
-            self.orderviewheight.constant = (self.addorderArray.count > 4) ? 70 : 40
 
             let buttons: NSMutableArray = NSMutableArray()
                     var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -211,7 +210,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                        }
                                        else
                                        {
-                                         addTitle_btn.setTitle(" > \(addorderArray[i] as! String)", for: .normal)
+                                         addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
 
                                        }
                         addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -219,7 +218,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                        
                         if(i != 0)
                         {
-                            attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                            attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
                         }
                        addTitle_btn.setAttributedTitle(attrStr, for: .normal)
 
@@ -266,7 +265,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
                                 self.addOrder.addConstraint(horizontalConstraint)
                                 // vertical position:
-                                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
+                                let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                                 self.addOrder.addConstraint(verticalConstraint)
                                 indexOfLeftmostButtonOnCurrentLine = i
                             }
@@ -289,8 +288,21 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
                         }
                     }
-                   
-                    self.addorderview.addSubview(addOrder)
+            self.addorderview.addSubview(addOrder)
+            self.orderviewheight.constant = 40
+
+            if(indexOfLeftmostButtonOnCurrentLine > 0)
+                              {
+                               self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
+                                  
+                               if(indexOfLeftmostButtonOnCurrentLine > 5)
+                               {
+                                          
+                                self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 100 : 70
+                                          
+                               }
+                               }
+
                     if(commonArray.count > 0)
                     {
                         commonArray.removeAll { $0 == "" }
@@ -355,13 +367,13 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else if(addorderArray.count == 5)
                 {
-                    if(getdifferentTeamArray.count > 1)
+                    if(getdifferentTeamArray.count >= 1)
                     {
                         feedCount(selectArray: getdifferentTeamArray)
                     }
                     else
                     {
-                       feedCount(selectArray: getSameTeamArray)
+                        feedCount(selectArray: self.getSameTeamArray)
                                        
                     }
                 }
@@ -973,6 +985,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                             cell.feed_img_Btn.addTarget(self, action: #selector(PersonIcon), for: .touchUpInside)
                             cell.feed_img_Btn.isHidden  = false
                             cell.feed_img_Btn.setImage(UIImage(named: "user"), for: .normal)
+                            cell.feed_img_Btn.tintColor = UIColor.black
                             
                             }
 
@@ -997,17 +1010,19 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                          cell.feed_count_Btn.layer.cornerRadius = 0
                          cell.feed_count_Btn.layer.borderWidth = 0.5
                          cell.feed_count_Btn.layer.borderColor = UIColor.gray.cgColor
-                             cell.feed_count_Btn.layer.masksToBounds = true
-                        cell.feed_img_Btn.frame = CGRect(x: size.width + 70, y: 10, width: 25, height: 25)
+                         cell.feed_count_Btn.layer.masksToBounds = true
+                         cell.feed_img_Btn.frame = CGRect(x: size.width + 70, y: 10, width: 25, height: 25)
                          cell.feed_img_Btn.addTarget(self, action: #selector(PersonIcon), for: .touchUpInside)
                          cell.feed_img_Btn.isHidden  = false
                          cell.feed_img_Btn.setImage(UIImage(named: "user"), for: .normal)
+                         cell.feed_img_Btn.tintColor = UIColor.black
+
                          
                          }
 
                        }
                         cell.feed_name_Btn.tag = indexPath.row
-            cell.feed_img_Btn.tag = indexPath.row
+                        cell.feed_img_Btn.tag = indexPath.row
                         cell.feed_name_Btn.setTitleColor(UIColor.blue, for: .normal)
                        cell.feed_name_Btn.addTarget(self, action: #selector(SelectTeamName), for: .touchUpInside)
                         cell.selectionStyle = .none
@@ -1070,9 +1085,15 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
              let vc = storyboard?.instantiateViewController(withIdentifier: "peopleselector") as! PeopleSelectorVC
             vc.delegate = self
-            self.addorderArray.add("\(self.commonArray[0])")
+            self.addorderArray.add("\(self.commonArray[selectpeople])")
              vc.orderArray = addorderArray
              vc.peoplegrouplist = peopleArray
+            vc.auth_UID  = UserDefaults.standard.string(forKey: "UUID")
+            vc.role = UserDefaults.standard.string(forKey: "Role")
+            vc.organization_id = getOrganization
+            vc.sport_id = getSport
+            vc.season_id = getSeasonid
+            vc.level_id = getLevelid
             if(self.getdifferentLevelArray.count > 1)
             {
                 let selectDic: NSDictionary = self.getdifferentLevelArray?[selectpeople] as! NSDictionary
@@ -1128,6 +1149,35 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     if(self.getRolebyreasonDetailArray.count > 0)
                     {
                         self.getorganization()
+    //if(self.getSameOrganization.count > 0 && self.getdifferentOrganization.count == 0)
+//                                        {
+//                                            self.addorderArray.add(self.commonArray.last!)
+//                                             self.getsportsmethod()
+//
+//                                            if(self.getSameSportsArray.count > 0 && self.getdifferentSportsArray.count == 0)
+//                                            {
+//                                                self.addorderArray.add(self.commonArray.last!)
+//                                                self.getSeasonmethod()
+//
+//                                                if(self.getSameSeasonArray.count > 0 && self.getdifferentSeasonArray.count == 0)
+//                                                {
+//                                                    self.addorderArray.add(self.commonArray.last!)
+//                                                    self.getLevelmethod()
+//
+//                                                  if(self.getSameLevelArray.count > 0 && self.getdifferentLevelArray.count == 0)
+//                                                  {
+//                                                      self.addorderArray.add(self.commonArray.last!)
+//
+//                                                      self.getTeammethod()
+//
+//                                                  }
+//
+//                                                }
+//
+//                                            }
+//                                        }
+                        
+                        
                         self.getsportsmethod()
                         self.getSeasonmethod()
                         self.getLevelmethod()

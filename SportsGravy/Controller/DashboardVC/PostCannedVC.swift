@@ -74,13 +74,14 @@ class PostCannedVC: UIViewController, UITableViewDelegate, UITableViewDataSource
               return self.tagCannedArray.count
           }
           public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-              return 80.0
+              return 70.0
           }
           
           func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell: PostCanCell = tableView.dequeueReusableCell(withIdentifier: "postcancell", for: indexPath) as! PostCanCell
               let dic: NSDictionary = self.tagCannedArray[indexPath.row] as! NSDictionary
               cell.can_title_lbl?.text = dic.value(forKey: "cannedResponseTitle") as? String
+            cell.can_title_lbl.textColor = UIColor.blue
             cell.can_desc_lbl?.text = dic.value(forKey: "cannedResponseDesc") as? String
               return cell
           }

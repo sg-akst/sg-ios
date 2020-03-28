@@ -14,6 +14,9 @@ class PostImageDetailCell: UITableViewCell {
     @IBOutlet weak var commonview: UIView!
     @IBOutlet weak var cancel_btn: UIButton!
     @IBOutlet weak var reaction_img: UIImageView!
+    @IBOutlet weak var common_view_width: NSLayoutConstraint!
+    @IBOutlet weak var select_text_width: NSLayoutConstraint!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

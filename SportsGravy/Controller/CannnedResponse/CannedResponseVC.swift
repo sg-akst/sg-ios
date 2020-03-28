@@ -101,7 +101,6 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     
     func getuserDetail()
     {
-//        self.orderviewheight.constant = (self.addorderArray.count > 5) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -141,7 +140,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                
                 if(i != 0)
                 {
-                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
                 }
                addTitle_btn.setAttributedTitle(attrStr, for: .normal)
 
@@ -189,7 +188,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                         self.addOrder.addConstraint(horizontalConstraint)
 
                         // vertical position:
-                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
+                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: addTitle_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                         self.addOrder.addConstraint(verticalConstraint)
 
                         indexOfLeftmostButtonOnCurrentLine = i
@@ -393,9 +392,23 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                                getdifferentSeasonArray.add(roleDic)
                             }
                           }
-                        var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
-                        filteredEvents.sort()
-                       self.commonArray.append(contentsOf: filteredEvents)
+            if(getdifferentSeasonArray.count > 1)
+              {
+                  var filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                filteredEvent.sort()
+                  self.commonArray.append(contentsOf: filteredEvent)
+
+              }
+             else
+            {
+                   var filteredEvent: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                filteredEvent.sort()
+                  self.commonArray.append(contentsOf: filteredEvent)
+
+              }
+//                        var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+//                        filteredEvents.sort()
+//                       self.commonArray.append(contentsOf: filteredEvents)
 
                       }
        }
@@ -597,8 +610,11 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                     }
                 }
                 self.addorderArray.add(commonArray[indexPath.row])
-               
                 getsportsmethod()
+                self.addorderArray.add(commonArray.last!)
+                getSeasonmethod()
+                self.addorderArray.add(commonArray.last!)
+                getTeammethod()
             }
             else if(addorderArray.count == 2)
             {
@@ -614,6 +630,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                 }
                 self.addorderArray.add(commonArray[indexPath.row])
                 getSeasonmethod()
+                self.addorderArray.add(commonArray.last!)
+                getTeammethod()
 
             }
             else if(addorderArray.count == 3)
@@ -679,8 +697,8 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             //let userArray: NSMutableArray = dic.value(forKey: "user_list") as! NSMutableArray
             let count : Bool = dic.value(forKey: "is_used") as! Bool
            // let groupType : String = dic.value(forKey: "group_type") as! String
-            if(count != true)
-            {
+//            if(count != true)
+//            {
             let vc = storyboard?.instantiateViewController(withIdentifier: "can_response_create") as! CannedResponseCreateVC
             vc.getorderArray = addorderArray
             vc.isCreate = false
@@ -690,7 +708,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             vc.getrolebyorganizationArray = getSameOrganization
             vc.getTeamId = getTeamId
             self.navigationController?.pushViewController(vc, animated: true)
-            }
+            //}
         }
     }
     @objc func deleteGroup_Method(_ sender: UIButton)
@@ -762,10 +780,24 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
                            if(self.getRolebyreasonDetailArray.count > 0)
                            {
                                self.getorganization()
-                              // self.getsportsmethod()
-                               //self.getSeasonmethod()
-                             //  self.getLevelmethod()
-                              // self.getTeammethod()
+                              if(self.getSameOrganization.count > 0 && self.getdifferentOrganization.count == 0)
+                                                 {
+                                                     self.addorderArray.add(self.commonArray.last!)
+                                                      self.getsportsmethod()
+                                                     
+                                                     if(self.getSameSportsArray.count > 0 && self.getdifferentSportsArray.count == 0)
+                                                     {
+                                                         self.addorderArray.add(self.commonArray.last!)
+                                                         self.getSeasonmethod()
+                                                         
+                                                         if(self.getSameSeasonArray.count > 0 && self.getdifferentSeasonArray.count == 0)
+                                                         {
+                                                             self.addorderArray.add(self.commonArray.last!)
+                                                             self.getTeammethod()
+                                                         }
+
+                                                     }
+                                                 }
                                self.getuserDetail()
                            }
                             //  Constant.showInActivityIndicatory()

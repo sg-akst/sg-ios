@@ -90,7 +90,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 let attrStr = NSMutableAttributedString(string: "\(addTitle_btn.title(for: .normal) ?? "")")
                 if(i != 0)
                 {
-                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
                 }
                 addTitle_btn.setAttributedTitle(attrStr, for: .normal)
 

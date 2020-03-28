@@ -55,7 +55,6 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.orderArray.count > 4) ? 70 : 40
 
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -63,6 +62,10 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
         let horizontalSpaceBetweenButtons: CGFloat = 8.0
         let verticalSpaceBetweenButtons: CGFloat = 0.0
+        if(self.addOrderView != nil)
+        {
+           self.addOrderView.removeFromSuperview()
+        }
         self.addOrderView = UIView()
         self.addOrderView.frame = self.peopleSelectorderView.bounds
         for i in 0..<self.orderArray.count
@@ -87,7 +90,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             let attrStr = NSMutableAttributedString(string: "\(order_btn.title(for: .normal) ?? "")")
             if(i != 0)
             {
-                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
             }
             order_btn.setAttributedTitle(attrStr, for: .normal)
             let lastIndex: Int = orderArray.count-1
@@ -136,7 +139,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
 
                     // vertical position:
-                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: order_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons + 5)
+                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: order_btn, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
                     self.addOrderView.addConstraint(verticalConstraint)
                     indexOfLeftmostButtonOnCurrentLine = i
                 }
@@ -157,10 +160,34 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
        
         self.peopleSelectorderView.addSubview(addOrderView)
+        self.orderviewheight.constant = 40
+
+        if(indexOfLeftmostButtonOnCurrentLine > 0)
+                          {
+                           self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
+                              
+                           if(indexOfLeftmostButtonOnCurrentLine > 5)
+                           {
+                                      
+                            self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 100 : 70
+                                      
+                           }
+                           }
+        if(peoplegrouplist.count > 0)
+                           {
+                              // peoplegrouplist.removeAll { $0 == "" }
+                               people_selector_tbl.reloadData()
+
+                           }
+        
+        
     }
     @objc func orderselectmethod(_ sender: UIButton)
     {
-        self.delegate?.passorderArray(select: self.orderArray,selectindex: sender)
+        let select = Int (sender.tag - 1)
+        let button = UIButton()
+        button.tag = select
+        self.delegate?.passorderArray(select: self.orderArray,selectindex: button)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -185,10 +212,10 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
            }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
-        //self.orderArray.add(self.peoplegrouplist[indexPath.row])
+        self.orderArray.add(self.peoplegrouplist[indexPath.row])
         
         getuserDetail()
-        fetchpeopleselector(selectGroup: peoplegrouplist?[indexPath.row] as! String)
+        fetchpeopleselector(selectGroup: self.peoplegrouplist?[indexPath.row] as! String)
                
     }
     @objc func selectPeople(_ sender: UIButton)
@@ -278,12 +305,12 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                             self.peoplegrouplist = NSMutableArray()
                             self.peoplegrouplist = result.mutableCopy() as? NSMutableArray
                             self.empty_img.isHidden = (self.peoplegrouplist.count == 0) ? false : true
-
                             self.people_selector_tbl.reloadData()
-
-                           // self.playerListArray = NSMutableArray()
-                            //self.playerListArray = result.mutableCopy() as? NSMutableArray
                              Constant.showInActivityIndicatory()
+                            if(self.peoplegrouplist.count == 0)
+                            {
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
+                            }
                             
                         }
                         else

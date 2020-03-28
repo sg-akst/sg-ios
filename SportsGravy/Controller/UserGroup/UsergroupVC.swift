@@ -158,7 +158,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                
                 if(i != 0)
                 {
-                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
                 }
                addTitle_btn.setAttributedTitle(attrStr, for: .normal)
             
@@ -282,15 +282,16 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                    }
         if(getdifferentOrganization.count > 1)
         {
-            let filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
-
+            var filteredEvent =  self.getdifferentOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+              filteredEvent.sort()
             self.commonArray.append(contentsOf: filteredEvent)
 
         }
         else
         {
            
-            let filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+            var filteredEvent = self.getSameOrganization.value(forKeyPath: "@distinctUnionOfObjects.organization_abbrev") as! [String]
+            filteredEvent.sort()
             self.commonArray.append(contentsOf: filteredEvent)
             
         }
@@ -322,13 +323,15 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             
             if(getdifferentSportsArray.count > 1)
             {
-                let filteredEvent: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                var filteredEvent: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                filteredEvent.sort()
                 self.commonArray.append(contentsOf: filteredEvent)
 
             }
            else
           {
-                 let filteredEvent: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+            var filteredEvent: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                filteredEvent.sort()
                 self.commonArray.append(contentsOf: filteredEvent)
 
             }
@@ -356,13 +359,15 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             }
             if(getdifferentSportsArray.count > 1)
               {
-                  let filteredEvent: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                  var filteredEvent: [String] = self.getdifferentSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                filteredEvent.sort()
                   self.commonArray.append(contentsOf: filteredEvent)
 
               }
              else
             {
-                   let filteredEvent: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                var filteredEvent: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.sport_name") as! [String]
+                filteredEvent.sort()
                   self.commonArray.append(contentsOf: filteredEvent)
 
               }
@@ -395,17 +400,20 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             
             if(getdifferentSeasonArray.count > 1)
               {
-                  let filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                  var filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                filteredEvent.sort()
                   self.commonArray.append(contentsOf: filteredEvent)
 
               }
              else
             {
-                   let filteredEvent: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                   var filteredEvent: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                filteredEvent.sort()
                   self.commonArray.append(contentsOf: filteredEvent)
 
               }
-                          }
+                       
+        }
                    else if (self.getSameSportsArray.count > 0)
                    {
 
@@ -427,10 +435,21 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                 }
                        
                        }
-                    var filteredEvents: [String] = self.getSameSportsArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
-                    filteredEvents.sort()
-                    self.commonArray.append(contentsOf: filteredEvents)
+                    if(getdifferentSeasonArray.count > 1)
+                      {
+                          var filteredEvent: [String] = self.getdifferentSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                        filteredEvent.sort()
+                          self.commonArray.append(contentsOf: filteredEvent)
 
+                      }
+                     else
+                    {
+                           var filteredEvent: [String] = self.getSameSeasonArray.value(forKeyPath: "@distinctUnionOfObjects.season_label") as! [String]
+                        filteredEvent.sort()
+                          self.commonArray.append(contentsOf: filteredEvent)
+
+                      }
+                    
                    }
     }
   
@@ -654,6 +673,14 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 self.addorderArray.add(commonArray[indexPath.row])
                
                 getsportsmethod()
+                self.addorderArray.add(commonArray.last!)
+
+                getSeasonmethod()
+                self.addorderArray.add(commonArray.last!)
+
+                getTeammethod()
+
+
             }
             else if(addorderArray.count == 2)
             {
@@ -669,6 +696,9 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 }
                 self.addorderArray.add(commonArray[indexPath.row])
                 getSeasonmethod()
+                self.addorderArray.add(commonArray.last!)
+
+                getTeammethod()
 
             }
             else if(addorderArray.count == 3)
@@ -792,21 +822,68 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
 
                        for document in querySnapshot!.documents {
                        let data: NSDictionary = document.data() as NSDictionary
-                        let getseason_end_date =  data.value(forKey: "season_end_date") as? Timestamp
-                        let getSeason_start_date = data.value(forKey: "season_start_date") as? Timestamp
-                        print("\(document.documentID) => \(String(describing: getseason_end_date))")
+                        let getseason_end_date =  data.value(forKey: "season_end_date") as! Timestamp
+                        let season_end_Date = getseason_end_date.dateValue()
+                        //print(season_end_Date)
+                        //let seasonendformatter = DateFormatter()
+                       
+                        let season_endDate:NSDate = season_end_Date as NSDate
+                        let dateFormatter:DateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        let endString:String = dateFormatter.string(from: season_endDate as Date)
+                        
+                       // let seasonendstring: String = endString
+                        //let stringdateformate: DateFormatter = DateFormatter()
+                        //let seasonenddate: NSDate = stringdateformate.date(from: endString)! as NSDate
+                        
+                        
+                        
+                        let getSeason_start_date = data.value(forKey: "season_start_date") as! Timestamp
+                        let season_start_Date = getSeason_start_date.dateValue()
+                        
+                        let season_startDate:NSDate = season_start_Date as NSDate
+                        let dateFormatters:DateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        let startString:String = dateFormatters.string(from: season_startDate as Date)
+                        
+                       // let endstringdateformate: DateFormatter = DateFormatter()
+                        //let seasonstartdate: NSDate = (endstringdateformate.date(from: startString) as NSDate?)!
+                        
+                    
+                       // print(season_start_Date)
+
+                        //print("\(document.documentID) => \(getseason_end_date)")
                         if(data.value(forKey: "team_id") as? String != nil && data.value(forKey: "team_id")as! String != "")
                         {
-                            if(getSeason_start_date != nil && getseason_end_date != nil)
+                            if(endString != nil   && startString != nil )
                             {
-                                let enddate = Date(timeIntervalSince1970: TimeInterval(getseason_end_date!.seconds))
-                                let startDate = Date(timeIntervalSince1970:TimeInterval(getSeason_start_date!.seconds))
-                                let currentDate = Date()  as Date?
-                                if(enddate > currentDate! || startDate < currentDate!)
+                                //let enddate = NSDate(timeIntervalSince1970: getseason_end_date!)
+                               // print("enddate:\(enddate)")
+                                //let startDate = NSDate(timeIntervalSince1970:getSeason_start_date!)
+                                // print("startDate:\(startDate)")
+                                //let currentDate = Date()  as Date
+                                //print("currentDate:\(currentDate ?? nil)")
+                                let todaysDate:NSDate = NSDate()
+                                let dateFormatter:DateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "yyyy-MM-dd"
+                               // let todayString:String = dateFormatter.string(from: todaysDate as Date)
+                                
+                                if(season_endDate.timeIntervalSinceNow  > todaysDate.timeIntervalSinceNow  || season_startDate.timeIntervalSinceNow < todaysDate.timeIntervalSinceNow)
                                 {
                                         print("yes")
                                     self.getRolebyreasonDetailArray.add(data)
+                                    print("\(document.documentID) => \(season_endDate)")
+                                     print("\(document.documentID) => \(season_startDate)")
+                                     print("\(document.documentID) => \(todaysDate)")
+
                                 }
+//                                else{
+//                                    print("no")
+//                                }
+                            }
+                            else
+                            {
+                                print("seasondate nil")
                             }
                         }
                         
@@ -816,17 +893,25 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                 if(self.getRolebyreasonDetailArray.count > 0)
                 {
                     self.getorganization()
-                    
+                    if(self.getSameOrganization.count > 0 && self.getdifferentOrganization.count == 0)
+                    {
+                        self.addorderArray.add(self.commonArray.last!)
+                         self.getsportsmethod()
+                        
+                        if(self.getSameSportsArray.count > 0 && self.getdifferentSportsArray.count == 0)
+                        {
+                            self.addorderArray.add(self.commonArray.last!)
+                            self.getSeasonmethod()
+                            
+                            if(self.getSameSeasonArray.count > 0 && self.getdifferentSeasonArray.count == 0)
+                            {
+                                self.addorderArray.add(self.commonArray.last!)
+                                self.getTeammethod()
+                            }
 
-                      // self.getsportsmethod()
-
-                     // self.getSeasonmethod()
-
-                       // self.getTeammethod()
-                    
+                        }
+                    }
                     self.getuserDetail()
-
-
                 }
                   
 

@@ -18,7 +18,7 @@ class ReactionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     weak var delegate:SelectReactionDelegate?
 
     
-    var mydic: NSArray = [["reation_title": "Thumbs Up", "reaction_image": "Thumbs_up"],["reation_title" : "Neutral", "reaction_image": "happy"], ["reation_title" : "Thumbs Down", "reaction_image": "Thumbs_down"]]
+    var mydic: NSArray = [["reation_title": "Thumbs-Up", "reaction_image": "Thumbs_up"],["reation_title" : "Neutral", "reaction_image": "happy"], ["reation_title" : "Thumbs-Down", "reaction_image": "Thumbs_down"]]
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +43,7 @@ class ReactionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let dic: NSDictionary = self.mydic[indexPath.row] as! NSDictionary
         cell.reaction_title?.text = dic.value(forKey: "reation_title") as? String
         cell.reation_image.image = UIImage(named: dic.value(forKey: "reaction_image") as! String )
+        cell.reaction_title.textColor = UIColor.blue
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

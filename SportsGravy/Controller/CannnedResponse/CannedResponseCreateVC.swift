@@ -91,7 +91,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     }
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+        //self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
 
         let buttons: NSMutableArray = NSMutableArray()
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
@@ -116,7 +116,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
             }
             else
             {
-              selectOption_btn.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+              selectOption_btn.setTitle(" >  \(getorderArray[i] as! String)", for: .normal)
 
             }
            // selectOption_btn.setTitle("\(getorderArray[i] as! String)", for: .normal)
@@ -124,7 +124,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
             let attrStr = NSMutableAttributedString(string: "\(selectOption_btn.title(for: .normal) ?? "")")
             if(i != 0)
             {
-                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
             }
             selectOption_btn.setAttributedTitle(attrStr, for: .normal)
             let lastIndex: Int = getorderArray.count-1

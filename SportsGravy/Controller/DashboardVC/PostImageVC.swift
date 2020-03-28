@@ -64,6 +64,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                         {
                                            //self.post_view.isHidden = false
                                             self.post_collection_view.isHidden = false
+                                            let scrollheight = self.postTbl_height.constant + CGFloat(images.count * 100)
+                                            self.scroll_view.contentSize = CGSize(width: UIScreen.main.bounds.size.width, height: scrollheight)
                                            self.post_collection_view.reloadData()
                                         }
                                         else
@@ -130,6 +132,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
          cannedResponseTitle = userTeam.value(forKey: "cannedResponseTitle") as? String
         cannedResponseDesc = userTeam.value(forKey: "cannedResponseDesc") as? String
         self.post_content_txt.text = cannedResponseDesc
+        content_count_lbl.text = "\(post_content_txt.text?.count ?? 0)/250"
+
         
          for index in postsections.indices {
              if(index == 3)
@@ -146,7 +150,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     func selectPostTagDetail(userDetail: NSDictionary) {
         let userTeam: NSDictionary = userDetail
-         //teamList = userTeam
          selectTag = userTeam.value(forKey: "tag_id") as? String
         
          for index in postsections.indices {
@@ -156,7 +159,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
              }
 
          }
-          print("usercount:\(sectionCount!)")
+          //print("usercount:\(sectionCount!)")
          let sectionIndex = IndexSet(integer: 1)
 
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
@@ -178,7 +181,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         SelectgetTeamId = userTeam.value(forKey: "team_id") as? String
         
         selectTeamName = userTeam.value(forKey: "team_name") as? String
-        usergroupid = userTeam.value(forKey: "membergroup_id") as? String
+         usergroupid = userTeam.value(forKey: "membergroup_id") as? String
+        let usergroupname = userTeam.value(forKey: "membergroup_name") as? String
         playergroupid = userTeam.value(forKey: "user_id") as? String
         
         for index in postsections.indices {
@@ -249,13 +253,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         post_collection_view.delegate = self
         post_collection_view.dataSource = self
         post_content_txt.delegate = self
-    //    post_view.isHidden = true
         getPostimageUrl = NSMutableArray()
-        let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0, y: post_content_txt.frame.height - 1, width: self.view.frame.width, height: 0.5)
-        bottomLine.backgroundColor = UIColor.lightGray.cgColor
-        //post_content_txt. = UITextBorderStyle.none
-        post_content_txt.layer.addSublayer(bottomLine)
         content_count_lbl.text = "\(post_content_txt.text?.count ?? 0)/250"
         
         close_Btn.backgroundColor = .black
@@ -298,28 +296,20 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
        
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(post_content_txt.text!.count < 250)
-        {
-            post_content_txt.isUserInteractionEnabled = true
-       if let _ = textField.text{
-           let text = textField.text! as NSString
-           let fullText = text.replacingCharacters(in: range, with: string)
-          let  wordCount = fullText.count
-           print(wordCount)
-        content_count_lbl.text =  "\(wordCount)/250" // Set value of the label
-       }
-        else
-       {
-        textField.resignFirstResponder()
-        }
-        }
-        else
-        {
-            post_content_txt.isUserInteractionEnabled = false
-        }
-        // myCounter = newLength // Optional: Save this value
-        // return newLength <= 25 // Optional: Set limits on input.
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+       
+              if let _ = textView.text{
+                  let text = textView.text! as NSString
+                let fullText = text.replacingCharacters(in: range, with: text as String)
+                 let  wordCount = fullText.count
+                  print(wordCount)
+               content_count_lbl.text =  "\(wordCount)/250" // Set value of the label
+                
+                if(wordCount > 248)
+                {
+                    textView.resignFirstResponder()
+                }
+              }
         return true
     }
     
@@ -347,46 +337,75 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.cancel_btn.tag = indexPath.section
         if(indexPath.section == 0)
        {
+        
         if(dic.value(forKey: "user_id") as! String != "")
         {
+            let font = UIFont(name: "Arial", size: 14)
+            let fontAttributes = [NSAttributedStringKey.font: font]
+            let myText = dic.value(forKey: "user_id") as? String
+            let size = myText?.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
+            cell.select_text_width.constant = size!.width + 5
+            cell.common_view_width.constant = cell.select_text_width.constant + 35
             cell.detail_btn.setTitle(dic.value(forKey: "user_id") as? String, for: .normal)
+            cell.detail_btn.setImage(UIImage(named: ""), for: .normal)
 
         }
         else
         {
-        let selectname = (dic.value(forKey: "membergroup_id") as! String != "") ? dic.value(forKey: "membergroup_id") as! String : dic.value(forKey: "team_name") as! String
-        cell.detail_btn.setTitle(selectname, for: .normal)
+        let selectname = (dic.value(forKey: "membergroup_id") as! String != "") ? dic.value(forKey: "membergroup_name") as! String : dic.value(forKey: "team_name") as! String
+            let font = UIFont(name: "Arial", size: 16)
+            let fontAttributes = [NSAttributedStringKey.font: font]
+            let size = selectname.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
+            print("select:\(selectname) \(size.width)")
+            cell.select_text_width.constant = size.width + 5
+            cell.common_view_width.constant = cell.select_text_width.constant + 35
+           cell.detail_btn.setTitle(selectname, for: .normal)
+            cell.detail_btn.setImage(UIImage(named: ""), for: .normal)
+
 
         }
         }
         else if(indexPath.section == 1)
        {
-        cell.detail_btn.setTitle(dic.value(forKey: "tag_name") as? String, for: .normal)
-       // cell.cancel_btn.tag = indexPath.row
+        let tagname = dic.value(forKey: "tag_name") as! String
+       let font = UIFont(name: "Arial", size: 16)
+       let fontAttributes = [NSAttributedStringKey.font: font]
+        let size = tagname.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
+        cell.select_text_width.constant = size.width + 5
+        cell.common_view_width.constant = cell.select_text_width.constant + 35
+        cell.detail_btn.setTitle(tagname, for: .normal)
+        cell.detail_btn.setImage(UIImage(named: ""), for: .normal)
 
         }
         else if(indexPath.section  == 2)
        {
-        //cell.detail_btn.setTitle(dic.value(forKey: "reation_title") as? String, for: .normal)
-       // cell.detail_btn.setImage(UIImage(named: "\(dic.value(forKey: "reaction_image")!)"), for: .normal)
+        let reaction = dic.value(forKey: "reation_title") as! String
+        let font = UIFont(name: "Arial", size: 16)
+        let fontAttributes = [NSAttributedStringKey.font: font]
+         let size = reaction.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
+         cell.select_text_width.constant = size.width + 35
+         cell.common_view_width.constant = cell.select_text_width.constant + 35
+        
         cell.detail_btn.setImage(UIImage(named: "\(dic.value(forKey: "reaction_image")!)"), for: .normal)
-        cell.detail_btn.setTitle(dic.value(forKey: "reation_title") as? String, for: .normal)
+        cell.detail_btn.setTitle(reaction, for: .normal)
        cell.detail_btn.titleEdgeInsets = UIEdgeInsetsMake(0.0,10.0, 0.0, 0.0)
-        cell.detail_btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
-
+        cell.detail_btn.imageEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 5.0, 10.0)
         cell.detail_btn.contentHorizontalAlignment = .left
-
         }
         else if(indexPath.section == 3)
        {
-        cell.detail_btn.setTitle(dic.value(forKey: "cannedResponseTitle") as? String, for: .normal)
+        let cantitle = dic.value(forKey: "cannedResponseTitle") as! String
+        let font = UIFont(name: "Arial", size: 16)
+        let fontAttributes = [NSAttributedStringKey.font: font]
+         let size = cantitle.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
+         cell.select_text_width.constant = size.width + 5
+         cell.common_view_width.constant = cell.select_text_width.constant + 35
+        cell.detail_btn.setTitle(cantitle, for: .normal)
+        cell.detail_btn.setImage(UIImage(named: ""), for: .normal)
 
         }
-
         cell.cancel_btn.tag = indexPath.section
-        print("row\(indexPath.row)")
         cell.commonview.layer.cornerRadius = 15
-    
         cell.commonview.layer.masksToBounds = true
         cell.cancel_btn.addTarget(self, action: #selector(RemovepostItem), for: .touchUpInside)
 
@@ -397,14 +416,14 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         
-        return  45.0
+        return  40.0
        }
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return UITableViewAutomaticDimension
         }
 
         func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-            return 45.0
+            return 40.0
         }
     
     
@@ -416,12 +435,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             header?.add_btn.layer.borderWidth = 1
             header?.add_btn.layer.borderColor = UIColor.white.cgColor
             header?.add_btn.tag = section
-            
             header?.add_btn.addTarget(self, action: #selector(directview), for: .touchUpInside)
-//        let sepFrame: CGRect = CGRect(x: 0, y: (header?.frame.size.height)!-1, width: self.view.frame.size.width, height: 1);
-//            let seperatorView = UIView.init(frame: sepFrame)
-//        seperatorView.backgroundColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
-       // header?.addSubview(seperatorView)
         header?.seprated_lbl.isHidden = (postsections[section].userlist.count > 0) ? true : false
             return header?.contentView
         }
@@ -435,13 +449,13 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-            print("You tapped cell number \(indexPath.section).")
+            //print("You tapped cell number \(indexPath.section).")
 
         }
     @objc func RemovepostItem(_ sender: UIButton)
     {
        let button = sender.tag
-        print(button)
+       // print(button)
         let userTeam: NSDictionary = NSDictionary()
 
         for index in postsections.indices {
@@ -461,15 +475,23 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @objc func directview(_ sender: UIButton)
     {
         let button = sender.tag
-        print(button)
+        //print(button)
         if(button == 0)
         {
+            if(selectTeamName != nil && selectTeamName != "")
+            {
+                RemovepostItem(sender)
+            }
           let objPosttag: PostUsergroupVC = (self.storyboard?.instantiateViewController(identifier: "postuser"))!
             objPosttag.delegate = self
             self.navigationController?.pushViewController(objPosttag, animated: true)
         }
         else if(button == 1)
         {
+            if(selectTag != nil && selectTag != "")
+            {
+                RemovepostItem(sender)
+            }
             if(SelectgetrolebySeasonid != nil)
             {
             let objPosttag: PostTagVC = (self.storyboard?.instantiateViewController(identifier: "posttag"))!
@@ -486,6 +508,10 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
         else if(button == 2)
         {
+            if(Reaction != nil && Reaction != "")
+            {
+                RemovepostItem(sender)
+            }
             let objReaction: ReactionVC = (self.storyboard?.instantiateViewController(identifier:"reactionvc"))!
             objReaction.delegate = self
             self.navigationController?.pushViewController(objReaction, animated: true)
@@ -493,6 +519,11 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else if(button == 3)
         {
+            if(cannedResponseTitle != nil && cannedResponseTitle != "")
+            {
+                RemovepostItem(sender)
+            }
+            
             if(SelectgetrolebySeasonid != nil)
             {
             let objcanned: PostCannedVC = (self.storyboard?.instantiateViewController(identifier:"PostCannedVC"))!
@@ -562,12 +593,31 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         if mediaType.isEqual(to: kUTTypeMovie as NSString as String){
-            print("movie")
+            //print("movie")
             let tempMedia = info[UIImagePickerControllerMediaURL] as! NSURL
             //let pathString = tempMedia.relativePath
            let metadata = StorageMetadata()
             metadata.contentType = "mp4"
-            print("videourl",tempMedia)
+            let player = AVPlayer(url: tempMedia as URL)
+                
+                let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = self.postimage.bounds
+                player.play()
+                let videoview = UIView()
+                                   
+            videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
+            videoview.layer.addSublayer(playerLayer)
+                videoview.layer.display()
+            videoview.contentMode = .scaleAspectFill
+            self.postimage.addSubview(videoview)
+            self.close_Btn.isHidden = false
+            self.postimage.isHidden = false
+            self.post_collection_view.isHidden = true
+            self.video_btn.isUserInteractionEnabled = false
+            self.camera_btn.isUserInteractionEnabled = false
+            self.gallery_btn.isUserInteractionEnabled = false
+            
+           // print("videourl",tempMedia)
             let user = Auth.auth().currentUser
             if let user = user{
                 let storeref = Storage.storage().reference().child("feedpostvideo/\(user.uid).mp4")
@@ -577,25 +627,25 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                    print("error occurred: \(error.debugDescription)")
                                    return
                                }
-                    let player = AVPlayer(url: tempMedia as URL)
-                        
-                        let playerLayer = AVPlayerLayer(player: player)
-                    playerLayer.frame = self.postimage.bounds
-                        player.play()
-                        let videoview = UIView()
-                                           
-                    videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
-                    videoview.layer.addSublayer(playerLayer)
-                        videoview.layer.display()
-                    videoview.contentMode = .scaleAspectFill
-                    self.postimage.addSubview(videoview)
+//                    let player = AVPlayer(url: tempMedia as URL)
+//
+//                        let playerLayer = AVPlayerLayer(player: player)
+//                    playerLayer.frame = self.postimage.bounds
+//                        player.play()
+//                        let videoview = UIView()
+//
+//                    videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
+//                    videoview.layer.addSublayer(playerLayer)
+//                        videoview.layer.display()
+//                    videoview.contentMode = .scaleAspectFill
+//                    self.postimage.addSubview(videoview)
                                storeref.downloadURL { (URL, error) -> Void in
                                  if (error != nil) {
                                    // Handle any errors
                                  } else {
 
                                    let UrlString = URL!.absoluteString
-                                   print(UrlString)
+                                  // print(UrlString)
                                     self.getPostVideoUrl = UrlString
                                     Constant.showInActivityIndicatory()
                                     self.close_Btn.isHidden = false
@@ -640,7 +690,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                            // Get the download URL for 'images/stars.jpg'
 
                            let UrlString = URL!.absoluteString
-                           print(UrlString)
+                         //  print(UrlString)
                             self.getPostimageUrl = NSMutableArray()
                             self.getPostimageUrl.add(UrlString)
                           //  Constant.showInActivityIndicatory()
@@ -784,9 +834,22 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     @IBAction func backpostbtn(_ sender: UIButton)
     {
-        self.navigationController?.popViewController(animated: true)
+        if(teamList.count > 0)
+        {
+        let alert = UIAlertController(title: "SportsGravy", message: "Are you sure want to Decard", preferredStyle: UIAlertController.Style.alert);
+        alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
+               }))
+        alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
+           self.navigationController?.popViewController(animated: true)
+
+                }))
+        self.present(alert, animated: true, completion: nil)
     }
-    
+        else
+        {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
     // Collectionview
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -810,7 +873,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
-        print("You selected cell #\(indexPath.item)!")
+       // print("You selected cell #\(indexPath.item)!")
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let flowayout = collectionViewLayout as? UICollectionViewFlowLayout

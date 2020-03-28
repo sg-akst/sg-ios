@@ -94,7 +94,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
             let attrStr = NSMutableAttributedString(string: "\(button.title(for: .normal) ?? "")")
             if(i != 0)
             {
-                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+                attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
             }
             button.setAttributedTitle(attrStr, for: .normal)
             let lastIndex: Int = getorderArray.count-1
