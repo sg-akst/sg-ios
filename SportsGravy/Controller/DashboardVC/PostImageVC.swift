@@ -29,71 +29,34 @@ struct PostGroupSection {
 
 class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectuserGroubDelegate, SelectPostTagDelegate, SelectpostCanDelegate,SelectReactionDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ImagePickerDelegate, UITextViewDelegate {
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        self.getPostimageUrl = NSMutableArray()
-        Constant.showActivityIndicatory(uiView: self.view)
-        for i in 0..<images.count
+         self.getPostimageUrl = NSMutableArray()
+        self.Select_post_image = images
+        isImage = true
+      for i in 0..<images.count
         {
-            let profileImageFromPicker = images[i]
-            let metadata = StorageMetadata()
-                metadata.contentType = "image/jpeg"
-                let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
-            let fileName = NSUUID().uuidString
-
-                let store = Storage.storage()
-                let user = Auth.auth().currentUser
-                if let user = user{
-                    let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg").child(fileName)
-                    storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
-                        Constant.showInActivityIndicatory()
-
-                               guard let _ = metadata else {
-                                   print("error occurred: \(error.debugDescription)")
-                                   return
-                               }
-                               storeRef.downloadURL { (URL, error) -> Void in
-                                 if (error != nil) {
-                                   // Handle any errors
-                                 } else {
-                                   let UrlString = URL!.absoluteString
-                                   print(UrlString)
-                                    self.getPostimageUrl.add(UrlString)
-                                    if(self.getPostimageUrl.count == images.count)
-                                    {
-                                        self.close_Btn.isHidden = false
-                                        if(self.getPostimageUrl.count > 1)
-                                        {
-                                           //self.post_view.isHidden = false
-                                            self.post_collection_view.isHidden = false
-                                            let scrollheight = self.postTbl_height.constant + CGFloat(images.count * 100)
-                                            self.scroll_view.contentSize = CGSize(width: UIScreen.main.bounds.size.width, height: scrollheight)
-                                           self.post_collection_view.reloadData()
-                                        }
-                                        else
-                                        {
-                                            //self.post_view.isHidden = false
-                                            self.postimage.isHidden = false
-                                            self.post_collection_view.isHidden = true
-                                            let urls = NSURL(string: "\(self.getPostimageUrl[0])")
-                                            self.postimage.af.setImage(withURL: urls! as URL)
-                                        }
-                                        self.video_btn.isUserInteractionEnabled = false
-                                        self.camera_btn.isUserInteractionEnabled = false
-                                        self.gallery_btn.isUserInteractionEnabled = false
-                                        
-                                        //Constant.showInActivityIndicatory()
-
-                                    }
-
-
-                                 }
-                                //Constant.showInActivityIndicatory()
-
-                               }
-
-                           }
-
-                        }
+            self.getPostimageUrl.add(images[i])
         }
+        self.close_Btn.isHidden = false
+        if(getPostimageUrl.count > 1)
+        {
+           //self.post_view.isHidden = false
+            self.post_collection_view.isHidden = false
+            let scrollheight = self.postTbl_height.constant + CGFloat(images.count * 100)
+            self.scroll_view.contentSize = CGSize(width: UIScreen.main.bounds.size.width, height: scrollheight)
+           self.post_collection_view.reloadData()
+        }
+        else
+        {
+            //self.post_view.isHidden = false
+            self.postimage.isHidden = false
+            self.post_collection_view.isHidden = true
+            self.postimage.image = getPostimageUrl[0] as? UIImage
+        }
+        self.video_btn.isUserInteractionEnabled = false
+        self.camera_btn.isUserInteractionEnabled = false
+        self.gallery_btn.isUserInteractionEnabled = false
+        
+       
         imagePicker.dismiss(animated: true, completion: nil)
     }
     
@@ -203,6 +166,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var postteam_tbl: UITableView!
     @IBOutlet weak var post_content_txt: UITextView!
     @IBOutlet weak var postimage: UIImageView!
+    
    // @IBOutlet weak var postvideo: UIImageView!
     @IBOutlet weak var postTbl_height: NSLayoutConstraint!
     @IBOutlet weak var post_collection_view: UICollectionView!
@@ -240,6 +204,9 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var usergroupid: String!
     var playergroupid: String!
     var getUserInfo: NSDictionary!
+    
+    var Select_post_image: [Image]!
+    var tempMedia: URL?
 
     var isImage: Bool!
    
@@ -594,11 +561,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         if mediaType.isEqual(to: kUTTypeMovie as NSString as String){
             //print("movie")
-            let tempMedia = info[UIImagePickerControllerMediaURL] as! NSURL
-            //let pathString = tempMedia.relativePath
-           let metadata = StorageMetadata()
-            metadata.contentType = "mp4"
-            let player = AVPlayer(url: tempMedia as URL)
+            tempMedia = info[UIImagePickerControllerMediaURL] as? URL
+            let player = AVPlayer(url: tempMedia!)
                 
                 let playerLayer = AVPlayerLayer(player: player)
             playerLayer.frame = self.postimage.bounds
@@ -616,92 +580,18 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             self.video_btn.isUserInteractionEnabled = false
             self.camera_btn.isUserInteractionEnabled = false
             self.gallery_btn.isUserInteractionEnabled = false
-            
-           // print("videourl",tempMedia)
-            let user = Auth.auth().currentUser
-            if let user = user{
-                let storeref = Storage.storage().reference().child("feedpostvideo/\(user.uid).mp4")
-                
-                storeref.putFile(from: tempMedia as URL, metadata: nil) { (metadata, error) in
-                               guard let _ = metadata else {
-                                   print("error occurred: \(error.debugDescription)")
-                                   return
-                               }
-//                    let player = AVPlayer(url: tempMedia as URL)
-//
-//                        let playerLayer = AVPlayerLayer(player: player)
-//                    playerLayer.frame = self.postimage.bounds
-//                        player.play()
-//                        let videoview = UIView()
-//
-//                    videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
-//                    videoview.layer.addSublayer(playerLayer)
-//                        videoview.layer.display()
-//                    videoview.contentMode = .scaleAspectFill
-//                    self.postimage.addSubview(videoview)
-                               storeref.downloadURL { (URL, error) -> Void in
-                                 if (error != nil) {
-                                   // Handle any errors
-                                 } else {
-
-                                   let UrlString = URL!.absoluteString
-                                  // print(UrlString)
-                                    self.getPostVideoUrl = UrlString
-                                    Constant.showInActivityIndicatory()
-                                    self.close_Btn.isHidden = false
-                                    self.postimage.isHidden = false
-                                    self.post_collection_view.isHidden = true
-                                    self.video_btn.isUserInteractionEnabled = false
-                                    self.camera_btn.isUserInteractionEnabled = false
-                                    self.gallery_btn.isUserInteractionEnabled = false
-                                 }
-                               }
-                           }
-            }
+            isImage = false
             
         }
          else
               {
                let profileImageFromPicker = info[UIImagePickerControllerOriginalImage] as! UIImage
-                
-               let metadata = StorageMetadata()
-               metadata.contentType = "image/jpeg"
-                
-               let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
-           Constant.showActivityIndicatory(uiView: self.view)
-               let store = Storage.storage()
-               let user = Auth.auth().currentUser
-               if let user = user{
-                   let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg")
-                   let _ = storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
-                    Constant.showInActivityIndicatory()
+                self.postimage.image = profileImageFromPicker
+                isImage = true
 
-                       guard let _ = metadata else {
-                           print("error occurred: \(error.debugDescription)")
-                           return
-                       }
-        
-                       self.postimage.image = profileImageFromPicker
-
-                       storeRef.downloadURL { (URL, error) -> Void in
-                         if (error != nil) {
-                           // Handle any errors
-                         } else {
-                           // Get the download URL for 'images/stars.jpg'
-
-                           let UrlString = URL!.absoluteString
-                         //  print(UrlString)
-                            self.getPostimageUrl = NSMutableArray()
-                            self.getPostimageUrl.add(UrlString)
-                          //  Constant.showInActivityIndicatory()
-
-                         }
-                       }
-                   }
                 }
         }
-               }
-                
+ 
     
     func getuserDetail()
     {
@@ -741,6 +631,14 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else
         {
+            post_content_txt.resignFirstResponder()
+            uploadImageOrvideo()
+        }
+    
+    }
+    
+    func feedPostMethod()
+    {
         let getUserorgInfo: NSDictionary = teamList
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
@@ -813,6 +711,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                           Constant.showInActivityIndicatory()
                                        }
                                        Constant.showInActivityIndicatory()
+                                self.navigationController?.popViewController(animated: false)
                                    //}
                                    break
 
@@ -828,8 +727,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                            }
                        }
-    }
-    
     }
     
     @IBAction func backpostbtn(_ sender: UIButton)
@@ -861,8 +758,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         // get a reference to our storyboard cell
         let cell: MutiplephotoCell = self.post_collection_view.dequeueReusableCell(withReuseIdentifier: "Muti", for: indexPath as IndexPath) as! MutiplephotoCell
-        let urls = NSURL(string: "\(self.getPostimageUrl[indexPath.row])")
-        cell.collectionImage.af.setImage(withURL: urls! as URL)  //setImage(with: urls! as URL)
+       // let urls = NSURL(string: "\(self.getPostimageUrl[indexPath.row])")
+        cell.collectionImage.image = getPostimageUrl[indexPath.row] as? UIImage
        // cell.collectionImage.image = self.getPostimageUrl[indexPath.item] as? UIImage
         //cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
 
@@ -898,6 +795,89 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             postimage.isHidden = true
             postimage.image = UIImage(named: "")
         }
+    }
+    
+    func uploadImageOrvideo() {
+        if self.isImage! {
+            Constant.showActivityIndicatory(uiView: self.view)
+            getPostimageUrl = NSMutableArray()
+            for i in 0..<self.Select_post_image.count{
+                        let profileImageFromPicker = self.Select_post_image[i]
+                        let metadata = StorageMetadata()
+                            metadata.contentType = "image/jpeg"
+                            let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
+                        let fileName = NSUUID().uuidString
+            
+                            let store = Storage.storage()
+                            let user = Auth.auth().currentUser
+                            if let user = user{
+                                let storeRef = store.reference().child("feedpostimages/\(user.uid).jpg").child(fileName)
+                                storeRef.putData(imageData, metadata: metadata) { (metadata, error) in
+                                    Constant.showInActivityIndicatory()
+            
+                                           guard let _ = metadata else {
+                                               print("error occurred: \(error.debugDescription)")
+                                               return
+                                           }
+                                           storeRef.downloadURL { (URL, error) -> Void in
+                                             if (error != nil) {
+                                               // Handle any errors
+                                             } else {
+                                               let UrlString = URL!.absoluteString
+                                               print(UrlString)
+                                                self.getPostimageUrl.add(UrlString)
+                                                if(self.getPostimageUrl.count == self.Select_post_image.count)
+                                                {
+                                                    self.feedPostMethod()
+
+                                                }
+            
+                                             }
+            
+                                           }
+            
+                                       }
+            
+                                    }
+                    }
+
+        } else {
+            Constant.showActivityIndicatory(uiView: self.view)
+            let metadata = StorageMetadata()
+            metadata.contentType = "mp4"
+             let uuid = UUID().uuidString
+            print("uuidstr:\(uuid)")
+          
+            let store = Storage.storage()
+           // let profileImageFromPicker = self.Select_post_image[i]
+            let storeref = store.reference().child("feedpostvideo/\(uuid).mp4")
+
+             storeref.putFile(from: self.tempMedia! as URL, metadata: metadata) { (metadata, error) in
+                Constant.showInActivityIndicatory()
+
+                                           guard let _ = metadata else {
+                                               print("error occurred: \(error.debugDescription)")
+                                               return
+                                           }
+                                          // self.postimage.image = profileImageFromPicker
+
+                                           storeref.downloadURL { (URL, error) -> Void in
+                                             if (error != nil) {
+                                               // Handle any errors
+                                             } else {
+                                               // Get the download URL for 'images/stars.jpg'
+
+                                                let UrlString: String = URL!.absoluteString
+                                               print(UrlString)
+                                                 self.getPostVideoUrl = UrlString
+                                                self.feedPostMethod()
+                                                Constant.showInActivityIndicatory()
+
+                                             }
+                                           }
+                                       }
+        }
+
     }
     
 }

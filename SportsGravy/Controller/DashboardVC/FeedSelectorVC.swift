@@ -292,8 +292,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.orderviewheight.constant = 40
 
             if(indexOfLeftmostButtonOnCurrentLine > 0)
-                              {
-                               self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
+            {
+                self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
                                   
                                if(indexOfLeftmostButtonOnCurrentLine > 5)
                                {

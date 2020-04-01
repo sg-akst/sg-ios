@@ -10,10 +10,10 @@ import UIKit
 import SWRevealViewController
 import FirebaseFirestore
 import Alamofire
-//import AlamofireImage
 import Firebase
 import AVKit
 import Kingfisher
+
 
 
 class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate, FeedSelectorDelegate {
@@ -86,7 +86,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var postvielname_lbl: UILabel!
     @IBOutlet weak var displayselectitem: UIView!
      var cancel_btn: UIButton!
-    var addOrder: UIView!
+    //var addOrder: UIView!
     var selectindexArray: NSMutableArray!
 
 
@@ -96,13 +96,12 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     var commonArray: NSMutableArray!
     
-    var avPlayer: AVPlayer?
-       var avPlayerLayer: AVPlayerLayer?
+//    var avPlayer: AVPlayer?
+//       var avPlayerLayer: AVPlayerLayer?
        var paused: Bool = false
-    var postImg: UIImageView!
-    var videoview: UIView!
+   
     var selectRole: String!
-    
+    var videoplay_btn: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -290,7 +289,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
     cell.comment_lbl_height.constant = (Dic.value(forKey: "feedText") as? String != "" && Dic.value(forKey: "feedText") != nil) ? 50 : 0
     cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
-           cell.infoviewHeight.constant = (Dic.value(forKey: "isInfo") as! Bool  == true) ? 140 : 0
+           cell.infoviewHeight.constant = (Dic.value(forKey: "isInfo") as! Bool  == true) ? 110 : 0
            cell.infoview.isHidden = (Dic.value(forKey: "isInfo") as! Bool == true ) ? false : true
             cell.info_btn.tag = indexPath.row
             cell.like_btn.tag = indexPath.row
@@ -301,206 +300,49 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
            let postInfo: NSMutableArray = (Dic["feededLevelObject"]! as! NSArray).mutableCopy() as! NSMutableArray
            let postinfoDic: NSDictionary = postInfo[0] as! NSDictionary
-    
+    let infoDetail = NSMutableArray()
     if(postinfoDic.value(forKey:"organization_name") != nil && postinfoDic.value(forKey: "organization_name")as? String != "")
     {
-        let size = ("Org:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
-        let width: CGFloat = size.width
-        cell.org_title_lbl.frame = CGRect(x: cell.infoview.frame.origin.x + 10, y: 40, width: width, height: 30)
         
-        
-        let org_name = (postinfoDic.value(forKey:"organization_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
-               let width_org: CGFloat = org_name.width
-        
-        cell.org_lbl.frame = CGRect(x: cell.org_title_lbl.frame.origin.x + cell.org_title_lbl.frame.size.width , y: cell.org_title_lbl.frame.origin.y, width: width_org, height: 30)
-        cell.org_lbl.text = postinfoDic.value(forKey:"organization_name") as! NSString as String
-        cell.org_lbl.isHidden = false
-        cell.org_title_lbl.isHidden = false
-       // cell.org_lbl.sizeToFit()
-       // cell.org_title_lbl.sizeToFit()
-
+        infoDetail.add(" org:  \(postinfoDic.value(forKey:"organization_name") as! NSString)")
     }
-    else
-    {
-        cell.org_lbl.isHidden = true
-        cell.org_title_lbl.isHidden = true
-    }
+    
     if(postinfoDic.value(forKey:"sport_name") != nil && postinfoDic.value(forKey:"sport_name")as? String != "")
       {
-          let size = ("Sport:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)])
-          let width: CGFloat = size.width
-        cell.sport_title_lbl.frame = CGRect(x: cell.org_lbl.frame.origin.x + cell.org_lbl.frame.size.width, y: cell.org_title_lbl.frame.origin.y, width: width, height: 30)
-          
-          let org_name = (postinfoDic.value(forKey:"sport_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
-                 let width_org: CGFloat = org_name.width
-          
-          cell.sport_lbl.frame = CGRect(x: cell.sport_title_lbl.frame.origin.x + cell.sport_title_lbl.frame.size.width , y: cell.org_title_lbl.frame.origin.y, width: width_org, height: 30)
-        cell.sport_lbl.text = postinfoDic.value(forKey:"sport_name") as? String
-
-          cell.sport_lbl.isHidden = false
-          cell.sport_title_lbl.isHidden = false
-        //cell.sport_lbl.sizeToFit()
-        //cell.sport_title_lbl.sizeToFit()
-
-      }
-      else
-      {
-          cell.sport_lbl.isHidden = true
-          cell.sport_title_lbl.isHidden = true
+        infoDetail.add(" Sport:  \(postinfoDic.value(forKey:"sport_name") as! NSString)")
       }
     
     if(postinfoDic.value(forKey:"season_name") != nil && postinfoDic.value(forKey: "season_name")as? String != "")
          {
-             let size = ("Season:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
-             let width: CGFloat = size.width
-           cell.season_title_lbl.frame = CGRect(x: cell.sport_lbl.frame.origin.x + cell.sport_lbl.frame.size.width, y: cell.sport_lbl.frame.origin.y, width: width, height: 30)
-             
-             let org_name = (postinfoDic.value(forKey:"season_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
-                    let width_org: CGFloat = org_name.width
-             
-             cell.season_lbl.frame = CGRect(x: cell.season_title_lbl.frame.origin.x + cell.season_title_lbl.frame.size.width , y: cell.sport_lbl.frame.origin.y, width: width_org, height: 30)
-            
-            cell.season_lbl.text = postinfoDic.value(forKey:"season_name") as? String
-
-             cell.season_title_lbl.isHidden = false
-             cell.season_lbl.isHidden = false
-           // cell.season_title_lbl.sizeToFit()
-            //cell.season_lbl.sizeToFit()
-
+            infoDetail.add(" Season:  \(postinfoDic.value(forKey:"season_name") as! NSString)")
          }
-         else
-         {
-             cell.season_lbl.isHidden = true
-             cell.season_title_lbl.isHidden = true
-         }
+         
     if(postinfoDic.value(forKey:"level_name") != nil && postinfoDic.value(forKey: "level_name")as? String != "")
          {
-             let size = ("Leavel:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
-             let width: CGFloat = size.width
-            cell.level_title_lbl.frame = CGRect(x: cell.org_title_lbl.frame.origin.x, y: cell.org_title_lbl.frame.origin.y + cell.org_title_lbl.frame.size.height, width: width, height: 30)
-             
-             let org_name = (postinfoDic.value(forKey: "level_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
-                    let width_org: CGFloat = org_name.width
-             
-             cell.level_lbl.frame = CGRect(x: cell.level_title_lbl.frame.origin.x + cell.level_title_lbl.frame.size.width , y: cell.level_title_lbl.frame.origin.y, width: width_org, height: 30)
-            cell.level_lbl.text = postinfoDic.value(forKey: "level_name") as? String
-
-             cell.level_title_lbl.isHidden = false
-             cell.level_lbl.isHidden = false
+            infoDetail.add(" Leavel:  \(postinfoDic.value(forKey:"level_name") as! NSString)")
 
          }
-         else
-         {
-             cell.level_lbl.isHidden = true
-             cell.level_title_lbl.isHidden = true
-         }
+         
     if(postinfoDic.value(forKey: "team_name") != nil && postinfoDic.value(forKey: "team_name")as? String != "")
           {
-              let size = ("Team:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
-              let width: CGFloat = size.width
-            cell.team_title_lbl.frame = CGRect(x: cell.level_lbl.frame.origin.x + cell.level_lbl.frame.size.width, y: cell.level_title_lbl.frame.origin.y, width: width, height: 30)
-              
-              let org_name = (postinfoDic.value(forKey: "team_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
-                     let width_org: CGFloat = org_name.width
-              
-              cell.team_lbl.frame = CGRect(x: cell.team_title_lbl.frame.origin.x + cell.team_title_lbl.frame.size.width , y: cell.team_title_lbl.frame.origin.y, width: width_org, height: 30)
-            cell.team_lbl.text = postinfoDic.value(forKey: "team_name") as? String
-              cell.team_title_lbl.isHidden = false
-              cell.team_lbl.isHidden = false
+            infoDetail.add(" Team:  \(postinfoDic.value(forKey:"team_name") as! NSString)")
 
           }
-          else
-          {
-              cell.team_lbl.isHidden = true
-              cell.team_title_lbl.isHidden = true
-          }
+          
     
     if(postinfoDic.value(forKey:"membergroup_name") != nil && postinfoDic.value(forKey: "membergroup_name")as? String != "")
     {
-        let size = ("Group:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
-        let width: CGFloat = size.width
-      cell.group_title_lbl.frame = CGRect(x: cell.team_lbl.frame.origin.x + cell.team_lbl.frame.size.width, y: cell.team_lbl.frame.origin.y, width: width, height: 30)
-        
-        let org_name = (postinfoDic.value(forKey:"membergroup_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
-               let width_org: CGFloat = org_name.width
-        
-        cell.group_lbl.frame = CGRect(x: cell.group_title_lbl.frame.origin.x + cell.group_title_lbl.frame.size.width , y: cell.group_title_lbl.frame.origin.y , width: width_org, height: 30)
-      cell.group_lbl.text = postinfoDic.value(forKey: "membergroup_name") as? String
-        cell.group_title_lbl.isHidden = false
-        cell.group_lbl.isHidden = false
+        infoDetail.add(" Group:  \(postinfoDic.value(forKey:"membergroup_name") as! NSString)")
+
 
     }
-    else
-    {
-        cell.group_lbl.isHidden = true
-        cell.group_title_lbl.isHidden = true
-    }
+    
     if(postinfoDic.value(forKey:"user_name") != nil && postinfoDic.value(forKey: "user_name")as? String != "")
     {
-        let size = ("Player:" as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
-        let width: CGFloat = size.width
-        cell.player_title_lbl.frame = CGRect(x: cell.level_title_lbl.frame.origin.x, y: cell.group_lbl.frame.origin.y + cell.group_lbl.frame.size.height, width: width, height: 30)
-        
-        let org_name = (postinfoDic.value(forKey: "user_name") as! NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
-               let width_org: CGFloat = org_name.width
-        
-        cell.player_lbl.frame = CGRect(x: cell.player_title_lbl.frame.origin.x + cell.player_title_lbl.frame.size.width , y: cell.player_title_lbl.frame.origin.y, width: width_org, height: 30)
-      cell.player_lbl.text = postinfoDic.value(forKey: "user_name") as? String
-        cell.player_title_lbl.isHidden = false
-        cell.player_lbl.isHidden = false
-
-    }
-    else
-    {
-        cell.player_lbl.isHidden = true
-        cell.player_title_lbl.isHidden = true
+        infoDetail.add(" Player:  \(postinfoDic.value(forKey:"user_name") as! NSString)")
     }
     
-//    let feedlevobj: NSMutableArray = NSMutableArray()
-//     if(postinfoDic.value(forKey: "organization_name") as? String != "" && postinfoDic.value(forKey: "organization_name") != nil)
-//     {
-//        feedlevobj.add("org: \(postinfoDic.value(forKey: "organization_name") as! String )")
-//    }
-//   if(postinfoDic.value(forKey: "sport_name") as? String != "" || postinfoDic.value(forKey: "sport_name") != nil)
-//     {
-//        feedlevobj.add("Sport: \(postinfoDic.value(forKey: "sport_name") as! String )")
-//
-//    }
-//    if(postinfoDic.value(forKey: "season_name") as? String != "" || postinfoDic.value(forKey: "season_name") != nil)
-//     {
-//        feedlevobj.add("Season: \(postinfoDic.value(forKey: "season_name") as! String )")
-//
-//    }
-// if(postinfoDic.value(forKey: "level_name") as? String != "" || postinfoDic.value(forKey: "level_name") != nil)
-//    {
-//       feedlevobj.add("Leavel: \(postinfoDic.value(forKey: "level_name") as! String )")
-//
-//   }
-//   if(postinfoDic.value(forKey: "team_name") as? String != "" || postinfoDic.value(forKey: "team_name") != nil)
-//     {
-//        feedlevobj.add("Team: \(postinfoDic.value(forKey: "team_name") as! String )")
-//
-//    }
-//    if(postinfoDic.value(forKey: "membergroup_name") as? String != "" || postinfoDic.value(forKey: "membergroup_name") != nil)
-//     {
-//        feedlevobj.add("Group: \(postinfoDic.value(forKey: "membergroup_name") as! String )")
-//
-//    }
-//     if(postinfoDic.value(forKey: "user_name") as? String != "" || postinfoDic.value(forKey: "user_name") != nil)
-//     {
-//        feedlevobj.add("Player: \(postinfoDic.value(forKey: "user_name") as! String )")
-//
-//    }
-       //cell.infoviewHeight.constant = (feedlevobj.count < 8) ? 140 : 100
-
-    
-
-//            cell.org_lbl.text = postinfoDic.value(forKey: "organization_name") as? String
-//            cell.season_lbl.text = postinfoDic.value(forKey: "season_name") as? String
-//            cell.sport_lbl.text = postinfoDic.value(forKey: "sport_name") as? String
-//            cell.team_lbl.text = postinfoDic.value(forKey: "team_name") as? String
-//          // cell.video_view.isHidden = true
-
+    cell.getInfoDetail(getinfodetailArray: infoDetail)
             var postimageArray = NSMutableArray()
             let keyExists = Dic.value(forKey: "feedImageURL") != nil
             let videoExists = Dic.value(forKey: "feedVideoURL") != nil
@@ -513,53 +355,68 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 if(videoExists)
                 {
                     
-                    if(postImg != nil)
+                    if(cell.postImg != nil)
                     {
-                        postImg.removeFromSuperview()
+                        cell.postImg.removeFromSuperview()
+                        //cell.videoview.isHidden = false
+
                     }
+
                     let postvideo : String = Dic.value(forKey: "feedVideoURL") as! String
                     let videoURL = NSURL(string: "\(postvideo)")
-                    avPlayer = AVPlayer(url: videoURL! as URL)
-                    
-                     avPlayerLayer = AVPlayerLayer(player: avPlayer)
-                    avPlayerLayer?.frame = cell.bounds
-                    videoview = UIView()
-                                       
-                    videoview.frame =  CGRect(x: 0, y: 0, width: imagewidth, height: imageheight)
-                    videoview.layer.addSublayer(avPlayerLayer!)
-                    videoview.layer.display()
-                    let videoplay_btn: UIButton = UIButton()
-                    videoplay_btn.frame = CGRect(x: videoview.frame.size.width/2, y: videoview.frame.size.height/2, width: 30, height: 30)
-                    videoplay_btn.setImage(UIImage(named: "video"), for: .normal)
-                    videoplay_btn.tag = indexPath.row
-                    videoplay_btn.addTarget(self, action: #selector(videoplay), for: .touchUpInside)
-                    videoview.addSubview(videoplay_btn)
-                    avPlayer?.pause()
-                cell.postimageScroll.addSubview(videoview)
-                
-                    
+//                    cell.avPlayer = AVPlayer(url: videoURL! as URL)
+//
+//                    cell.avPlayerLayer = AVPlayerLayer(player: cell.avPlayer)
+//                    cell.avPlayerLayer?.frame = cell.bounds
+                    cell.videoview = AGVideoPlayerView()
+                    cell.videoview.frame =  CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: imageheight)
+                    cell.postimageScroll.addSubview(cell.videoview)
+
+                    cell.videoview.videoUrl = videoURL as URL?
+                    cell.videoview.previewImageUrl = nil
+                    cell.videoview.shouldAutoplay = false
+                    cell.videoview.shouldAutoRepeat = false
+                    cell.videoview.showsCustomControls = false
+                    cell.videoview.shouldSwitchToFullscreen = true
+//                    cell.videoview = UIView()
+//
+//                    cell.videoview.frame =  CGRect(x: 0, y: -10, width: imagewidth, height: imageheight)
+//                    cell.videoview.layer.addSublayer(cell.avPlayerLayer!)
+//                    cell.videoview.layer.display()
+//                    videoplay_btn = UIButton()
+//                    videoplay_btn.frame = CGRect(x: videoview.frame.size.width/2, y: videoview.frame.size.height/2, width: 30, height: 30)
+//                    videoplay_btn.setImage(UIImage(named: "video_play"), for: .normal)
+//                    videoplay_btn.tag = indexPath.row
+//                    videoplay_btn.addTarget(self, action: #selector(videoplay), for: .touchUpInside)
+//                    videoview.addSubview(videoplay_btn)
+                   // cell.avPlayer?.play()
+                   
                 }
                 else
                 {
-                    
+                   
+                   
+
                 postimageArray = (Dic["feedImageURL"]! as! NSArray).mutableCopy() as! NSMutableArray
                     //(Dic.value(forKey: "feedImageURL") as? NSMutableArray ?? nil)!
                     
 
                 for i in 0..<postimageArray.count
                 {
-                    self.postImg = UIImageView()
+                    cell.postImg = UIImageView()
                     
-                    postImg.frame = (i==0) ? CGRect(x: 0, y: 0, width: imagewidth, height: imageheight) : CGRect(x: CGFloat(i) * imagewidth, y: 0, width : imagewidth, height: imageheight)
+                    cell.postImg.frame = (i==0) ? CGRect(x: 0, y: 0, width: imagewidth, height: imageheight) : CGRect(x: CGFloat(i) * imagewidth, y: 0, width : imagewidth, height: imageheight)
                    // postImg.backgroundColor = UIColor.red
                     let posturl = URL(string: "\(postimageArray[i])")
-                    postImg.kf.setImage(with: posturl! as URL)
-                    cell.postimageScroll.addSubview(postImg)
+                    cell.postImg.kf.setImage(with: posturl! as URL)
+                    cell.postimageScroll.addSubview(cell.postImg)
                     cell.pageControl.numberOfPages = postimageArray.count
                     cell.pageControl.tag = i
                     
 
                 }
+//                    cell.postImg.isHidden = false
+//                    cell.videoview.isHidden = true
                 }
                 cell.postimageScroll.contentSize = CGSize(width: CGFloat(postimageArray.count) * imagewidth, height: imageheight)
                 cell.pageControl.isHidden = (postimageArray.count > 1) ? false : true
@@ -583,7 +440,143 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
         }
-    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! PostCell
+// Check the player object is set (unwrap it)
+    if let player = cell.avPlayerLayer?.player {
+    // Check if the player is playing
+    if player.rate != 0 {
+        // Pause the player
+        player.pause()
+    }
+}
+    }
+//    func getInfoDetail(getinfodetailArray: NSMutableArray) -> UIView{
+//
+//            let buttons: NSMutableArray = NSMutableArray()
+//            var indexOfLeftmostButtonOnCurrentLine: Int = 0
+//            var runningWidth: CGFloat = 0.0
+//            let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+//            let horizontalSpaceBetweenButtons: CGFloat = 8.0
+//            let verticalSpaceBetweenButtons: CGFloat = 0.0
+////            if(self.addOrder != nil)
+////            {
+////               self.addOrder.removeFromSuperview()
+////            }
+//            let addinfo = UIView()
+//        addinfo.frame = CGRect(x: 10, y: 50, width: self.view.frame.size.width-20, height: 70)
+//            for i in 0..<getinfodetailArray.count
+//            {
+//                let button_title = UIButton(type: .roundedRect)
+//
+//                button_title.titleLabel?.font = UIFont(name: "Arial", size: 18)
+//                button_title.titleLabel?.textAlignment = .left
+//                let title: String = getinfodetailArray[i] as! String
+//                if(title != "" && title != nil)
+//                {
+//                if(i == 0)
+//                {
+//                   button_title.setTitle("\(getinfodetailArray[i] as! String)", for: .normal)
+//                }
+//                else
+//                {
+//                  button_title.setTitle("\(getinfodetailArray[i] as! String)", for: .normal)
+//
+//                }
+//
+//                button_title.translatesAutoresizingMaskIntoConstraints = false
+//                let attrStr = NSMutableAttributedString(string: "\(button_title.title(for: .normal) ?? "")")
+//
+//                if(i != 0)
+//                {
+//                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
+//                }
+//               button_title.setAttributedTitle(attrStr, for: .normal)
+//
+//                let lastIndex: Int = getinfodetailArray.count-1
+//
+//                if(lastIndex == i)
+//               {
+//                button_title.tintColor = UIColor.gray
+//                button_title.setTitleColor(UIColor.gray, for: .normal)
+//                button_title.isUserInteractionEnabled = false
+//                }
+//                else
+//               {
+//                button_title.tintColor = UIColor.blue
+//                button_title.setTitleColor(UIColor.blue, for: .normal)
+//                button_title.isUserInteractionEnabled = true
+//
+//                }
+//                button_title.sizeToFit()
+//                button_title.tag = i
+//                addinfo.addSubview(button_title)
+//              //  button_title.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
+//                if ((i == 0) || (runningWidth + button_title.frame.size.width > maxWidth))
+//                 {
+//                     runningWidth = button_title.frame.size.width
+//                    if(i==0)
+//                    {
+//                        // first button (top left)
+//                        // horizontal position: same as previous leftmost button (on line above)
+//                       let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .left, relatedBy: .equal, toItem: addinfo, attribute: .left, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+//                       button_title.setAttributedTitle(attrStr, for: .normal)
+//                        addinfo.addConstraint(horizontalConstraint)
+//
+//                        // vertical position:
+//                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .top, relatedBy: .equal, toItem: addinfo, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+//                        addinfo.addConstraint(verticalConstraint)
+//
+//                    }
+//                    else{
+//                        // put it in new line
+//                        let previousLeftmostButton: UIButton = buttons.object(at: indexOfLeftmostButtonOnCurrentLine) as! UIButton
+//
+//                        // horizontal position: same as previous leftmost button (on line above)
+//                        let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
+//                        addinfo.addConstraint(horizontalConstraint)
+//
+//                        // vertical position:
+//                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
+//                        addinfo.addConstraint(verticalConstraint)
+//
+//
+//                        indexOfLeftmostButtonOnCurrentLine = i
+//                    }
+//                }
+//                else
+//                {
+//                    runningWidth += button_title.frame.size.width + horizontalSpaceBetweenButtons;
+//
+//                    let previousButton: UIButton = buttons.object(at: i-1) as! UIButton  //[buttons objectAtIndex:(i-1)];
+//
+//                               // horizontal position: right from previous button
+//                    let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
+//                    addinfo.addConstraint(horizontalConstraint)
+//
+//                               // vertical position same as previous button
+//                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
+//                    addinfo.addConstraint(verticalConstraint)
+//
+//                }
+//                buttons.add(button_title)
+//            }
+//
+//            }
+//
+//            //self.addorderview.addSubview(addOrder)
+//           // orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
+//
+////            if(commonArray.count > 0)
+////            {
+////                commonArray.removeAll { $0 == "" }
+////                //Constant.showInActivityIndicatory()
+////                //tag_tbl.reloadData()
+////
+////
+////            }
+//            return addinfo
+//        }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
     let Dic: NSDictionary = self.commonArray?[indexPath.row] as! NSDictionary
@@ -636,6 +629,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         }
     }
+//   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//       pausePlayeVideos()
+//   }
+   
+   
    
     @objc func videoplay(_ sender: UIButton)
     {
@@ -645,23 +643,22 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let dic: NSDictionary = commonArray?[sender.tag] as! NSDictionary
         let postvideo : String = dic.value(forKey: "feedVideoURL") as! String
         let videoURL = NSURL(string: "\(postvideo)")
-       // avPlayer = AVPlayer(url: videoURL! as URL)
-
-        //let playerLayer = AVPlayerLayer(player: avPlayer)
-        //playerLayer.frame = videoview.bounds
-//        cell?.postimageScroll.insertSubview(postImg, at: button.tag)
-        if(avPlayer?.rate == 0)
+       //avPlayer = AVPlayer(url: videoURL! as URL)
+       
+        //avPlayerLayer = AVPlayerLayer(player: avPlayer)
+        //avPlayerLayer?.frame = cell!.bounds
+        if(cell?.avPlayer?.rate == 0)
         {
-        avPlayer!.play()
-        
+            cell?.avPlayer!.play()
+            
+            videoplay_btn.setImage(UIImage(named: "pause"), for: .normal)
         }
         else
         {
-            avPlayer?.pause()
-        }
-        //let indexPosition = IndexPath(row: button.tag, section: 0)
-        //self.post_tbl.reloadRows(at: [indexPosition], with: .none)
+            cell?.avPlayer?.pause()
+            videoplay_btn.setImage(UIImage(named: "video_play"), for: .normal)
 
+        }
        
     }
     @objc func InformationDetail(_ sender: UIButton)
@@ -679,14 +676,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         }
         else{
-           // replaceDic.setValue(false, forKey: "isInfo")
             newDict.setValue(false, forKey: "isInfo")
 
 
         }
         commonArray.replaceObject(at: indexno, with: newDict)
-        //[dataArray replaceObjectAtIndex:0 withObject:newDict];
-
         selectIndex = indexno
         let indexPosition = IndexPath(row: selectIndex, section: 0)
         self.post_tbl.reloadRows(at: [indexPosition], with: .none)
@@ -827,6 +821,7 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
         let w = scrollView.bounds.size.width
         let page: Int = Int(x/w)
         cell?.pageControl.currentPage = page
+
     }
     
   

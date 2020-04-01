@@ -294,6 +294,21 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - PINCache (3.0.1-beta.8):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.8)
+    - PINCache/Core (= 3.0.1-beta.8)
+  - PINCache/Arc-exception-safe (3.0.1-beta.8):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.8):
+    - PINOperation (~> 1.1.1)
+  - PINOperation (1.1.2)
+  - PINRemoteImage (3.0.0):
+    - PINRemoteImage/PINCache (= 3.0.0)
+  - PINRemoteImage/Core (3.0.0):
+    - PINOperation
+  - PINRemoteImage/PINCache (3.0.0):
+    - PINCache (= 3.0.1-beta.8)
+    - PINRemoteImage/Core
   - PromisesObjC (1.2.8)
   - ResizingTokenField (0.1.1)
   - STPopup (1.8.7)
@@ -314,6 +329,7 @@ DEPENDENCIES:
   - Kingfisher
   - LayoutHelper
   - Lightbox
+  - PINRemoteImage
   - ResizingTokenField
   - STPopup
   - SwiftyJSON
@@ -354,6 +370,9 @@ SPEC REPOS:
     - leveldb-library
     - Lightbox
     - nanopb
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
     - PromisesObjC
     - ResizingTokenField
     - STPopup
@@ -394,6 +413,9 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   Lightbox: d317750e4132bfb871a5307cfe0a2c7d6a583c65
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PINCache: 534fd41d358d828dfdf227a0d327f3673a65e20b
+  PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
+  PINRemoteImage: e2b89e19fb6e77ffc099f9d9f3b3fe1745e3f9f9
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   ResizingTokenField: 961ea54ab84b755998b5713cf5a87d4bf7a92ff9
   STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
@@ -401,6 +423,6 @@ SPEC CHECKSUMS:
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
 
-PODFILE CHECKSUM: 2a358eebd547a49cb1747a16e06f3d5ec93c36d8
+PODFILE CHECKSUM: 134bfd1cba034800dc7d8d34cb87baba4f21d5be
 
 COCOAPODS: 1.8.4

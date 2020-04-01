@@ -531,6 +531,8 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     func usergroup()
     {
+        self.GroupList = NSMutableArray()
+
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.getrolebySeasonid!)")
@@ -538,7 +540,6 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                 if let err = err {
                     print("Error getting documents: \(err)")
                     } else {
-                        self.GroupList = NSMutableArray()
                         for document in querySnapshot!.documents {
                         let data: NSDictionary = document.data() as NSDictionary
                         self.GroupList.add(data)
@@ -882,7 +883,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let docRef = db.collection("users").document("\(getuuid!)")
         
         docRef.collection("roles_by_season").whereField("role", isEqualTo: getRole!).getDocuments() { (querySnapshot, err) in
-            Constant.showInActivityIndicatory()
 
                if let err = err {
                   // print("Error getting documents: \(err)")
@@ -905,6 +905,8 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                                 {
                                        // print("yes")
                                     self.getRolebyreasonDetailArray.add(data)
+                                    Constant.showInActivityIndicatory()
+
                                 }
                             }
                         }

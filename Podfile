@@ -23,6 +23,8 @@ target 'SportsGravy' do
   pod 'ImagePicker'
   pod 'Lightbox'
   pod 'Hue'
+  pod 'PINRemoteImage'
+
 
 
   # Pods for SportsGravy
