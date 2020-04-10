@@ -24,6 +24,7 @@ class PostCannedVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     var tagCannedArray: NSMutableArray!
     var TeamId: String!
+    var rolebyseasonid: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,28 +42,94 @@ class PostCannedVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                Constant.showActivityIndicatory(uiView: self.view)
                let getuuid = UserDefaults.standard.string(forKey: "UUID")
                 let db = Firestore.firestore()
-                    let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(TeamId!)")
+                    let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebyseasonid!)")
 
-        docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
-            Constant.showInActivityIndicatory()
+        if (UserDefaults.standard.bool(forKey: "canned_user") == true) {
+                            
+                            docRef.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                //Constant.showInActivityIndicatory()
 
-                             if let err = err {
-                                 print("Error getting documents: \(err)")
-                             } else {
-                                self.tagCannedArray = NSMutableArray()
-
-                                 for document in querySnapshot!.documents {
-                                     let data: NSDictionary = document.data() as NSDictionary
-                                     
-                                    self.tagCannedArray.add(data)
-            
+                                 if let err = err {
+                                     print("Error getting documents: \(err)")
+                                 } else {
+                                    self.tagCannedArray = NSMutableArray()
+        
+                                     for document in querySnapshot!.documents {
+                                         let data: NSDictionary = document.data() as NSDictionary
+                                        self.tagCannedArray.add(data)
+        
+        
+                                    }
+                                    
+                                    self.postcanned_tbl.reloadData()
+                                    Constant.showInActivityIndicatory()
+        
                                 }
-                               
-                                self.postcanned_tbl.reloadData()
-                                Constant.showInActivityIndicatory()
-
                             }
-                        }
+                }
+        else if (UserDefaults.standard.bool(forKey: "canned_team") == true) {
+        let docRefteam = db.collection("teams").document("\(TeamId!)")
+
+                            docRefteam.collection("CannedResponse").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                 if let err = err {
+                                     print("Error getting documents: \(err)")
+                                 } else {
+                                    self.tagCannedArray = NSMutableArray()
+        
+                                     for document in querySnapshot!.documents {
+                                         let data: NSDictionary = document.data() as NSDictionary
+                                        self.tagCannedArray.add(data)
+        
+        
+                                    }
+                                   
+                                    self.postcanned_tbl.reloadData()
+                                    Constant.showInActivityIndicatory()
+        
+                                }
+                            }
+                }
+       else {
+                    docRef.collection("CannedResponse").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                                            if let err = err {
+                                                print("Error getting documents: \(err)")
+                                            } else {
+                                               self.tagCannedArray = NSMutableArray()
+        
+                                                for document in querySnapshot!.documents {
+                                                    let data: NSDictionary = document.data() as NSDictionary
+                                                   self.tagCannedArray.add(data)
+        
+        
+                                               }
+                                               
+                                               self.postcanned_tbl.reloadData()
+                                               Constant.showInActivityIndicatory()
+        
+                                           }
+                                       }
+                }
+        
+//        docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
+//            Constant.showInActivityIndicatory()
+//
+//                             if let err = err {
+//                                 print("Error getting documents: \(err)")
+//                             } else {
+//                                self.tagCannedArray = NSMutableArray()
+//
+//                                 for document in querySnapshot!.documents {
+//                                     let data: NSDictionary = document.data() as NSDictionary
+//                                     
+//                                    self.tagCannedArray.add(data)
+//            
+//                                }
+//                               
+//                                self.postcanned_tbl.reloadData()
+//                                Constant.showInActivityIndicatory()
+//
+//                            }
+//                        }
         }
        
     

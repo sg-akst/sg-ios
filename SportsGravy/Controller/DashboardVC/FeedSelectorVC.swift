@@ -188,7 +188,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     var runningWidth: CGFloat = 0.0
             let maxWidth: CGFloat = UIScreen.main.bounds.size.width
                     let horizontalSpaceBetweenButtons: CGFloat = 8.0
-                    let verticalSpaceBetweenButtons: CGFloat = 0.0
+                    let verticalSpaceBetweenButtons: CGFloat = 1.5
                     if(self.addOrder != nil)
                     {
                        self.addOrder.removeFromSuperview()
@@ -210,7 +210,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                        }
                                        else
                                        {
-                                         addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
+                                         addTitle_btn.setTitle(" > \(addorderArray[i] as! String)", for: .normal)
 
                                        }
                         addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -386,7 +386,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                getSameOrganization = NSMutableArray()
                getdifferentOrganization = NSMutableArray()
                addorderArray.add("All")
-            var filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
+            let filteredEvents: [String] = self.getRolebyreasonDetailArray.value(forKeyPath: "@distinctUnionOfObjects.organization_id") as! [String]
                           
                           for i  in 0..<getRolebyreasonDetailArray.count
                           {
@@ -1075,7 +1075,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         {
             let selectpeople = sender.tag
             var peopleArray: NSMutableArray = NSMutableArray()
-            if((getRole == "coach" || getRole == "manager"))
+            if((getRole == "coach" || getRole == "manager") && addorderArray.count>3)
             {
                peopleArray = ["Coaches", "Guardians", "Players", "Managers"]
             }
@@ -1149,35 +1149,6 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     if(self.getRolebyreasonDetailArray.count > 0)
                     {
                         self.getorganization()
-    //if(self.getSameOrganization.count > 0 && self.getdifferentOrganization.count == 0)
-//                                        {
-//                                            self.addorderArray.add(self.commonArray.last!)
-//                                             self.getsportsmethod()
-//
-//                                            if(self.getSameSportsArray.count > 0 && self.getdifferentSportsArray.count == 0)
-//                                            {
-//                                                self.addorderArray.add(self.commonArray.last!)
-//                                                self.getSeasonmethod()
-//
-//                                                if(self.getSameSeasonArray.count > 0 && self.getdifferentSeasonArray.count == 0)
-//                                                {
-//                                                    self.addorderArray.add(self.commonArray.last!)
-//                                                    self.getLevelmethod()
-//
-//                                                  if(self.getSameLevelArray.count > 0 && self.getdifferentLevelArray.count == 0)
-//                                                  {
-//                                                      self.addorderArray.add(self.commonArray.last!)
-//
-//                                                      self.getTeammethod()
-//
-//                                                  }
-//
-//                                                }
-//
-//                                            }
-//                                        }
-                        
-                        
                         self.getsportsmethod()
                         self.getSeasonmethod()
                         self.getLevelmethod()
@@ -1196,7 +1167,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let button = sender.tag
             let getTeam: String = self.commonArray[button]
             print(getTeam)
-            var selectTeamDetail: NSMutableArray = NSMutableArray()
+            let selectTeamDetail: NSMutableArray = NSMutableArray()
 
             if(self.addorderArray.count < 8)
             {
@@ -1279,9 +1250,17 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                     else
                     {
+                        if(self.getSameTeamArray.count>0)
+                        {
                         let dic: NSDictionary = self.getSameTeamArray?[button] as! NSDictionary
 
                         selectTeamDetail.add(dic)
+                        }
+                        else{
+                            let dic: NSDictionary = self.getdifferentTeamArray?[button] as! NSDictionary
+
+                                selectTeamDetail.add(dic)
+                        }
                                        
                     }
                 }
@@ -1331,89 +1310,6 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                         
             }
             selectmethod(selectitem: selectTeamDetail, selectitemname: getTeam)
-
-                  //     }
-            
-      //      {
-   //         for i in 0..<self.getSameLevelArray.count
-//            {
-//                let dic: NSDictionary = self.getSameLevelArray?[i] as! NSDictionary
-//                if(getTeam == dic.value(forKey: "team_name") as? String)
-//                {
-//                    print(dic)
-//                    let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary
-//                    addgroup.setValue("", forKey: "membergroup_id")
-//                    addgroup.setValue("", forKey: "membergroup_name")
-//                    addgroup.setValue("", forKey: "user_id")
-//                    addgroup.setValue("", forKey: "user_name")
-//                    selectTeamDetail.add(addgroup)
-//                }
-//            }
-                
-    //        }
- //           else if(self.addorderArray.count == 6)
-//            {
-//                for i in 0..<self.GroupList.count
-//                {
-//                    let dic: NSDictionary = GroupList?[i] as! NSDictionary
-//                    if(getTeam == dic.value(forKey: "display_name") as? String)
-//                    {
-//                        print(dic)
-//
-//                        let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary
-//                        addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_id")
-//                        addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_name")
-//                        addgroup.setValue("", forKey: "user_id")
-//                        addgroup.setValue("", forKey: "user_name")
-//                        selectTeamDetail.add(addgroup)
-//                    }
-//                }
-//            }
-//            else if(self.addorderArray.count > 6)
-//            {
-//                for i in 0..<self.GroupList.count
-//                {
-//                    let dic: NSDictionary = GroupList?[i] as! NSDictionary
-//                    let slectplayer: NSArray = dic.value(forKey: "user_list") as! NSArray
-//                    for i in 0..<slectplayer.count
-////                    {
-//                        let roleDic: NSDictionary = slectplayer[i] as! NSDictionary
-//                        let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + "\(roleDic.value(forKey: "last_name")!)"
-//                        if(role == getTeam)
-//                        {
-//                            let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary
-//                            addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_id")
-//                            addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_name")
-//                            addgroup.setValue(role, forKey: "user_id")
-//                            addgroup.setValue(role, forKey: "user_name")
-//
-//                            selectTeamDetail.add(addgroup)
-//                        }
-//
-//                    }
-                    
-                    
-//                    if(getTeam == dic.value(forKey: "display_name") as? String)
-//                    {
-//                        print(dic)
-//
-//                        let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary
-//                        addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "user_groupId")
-//                        selectTeamDetail.add(addgroup)
-//                    }
-//                    }
-           // }
-            
-//            if(selectTeamDetail.count > 0)
-//            {
-//             self.delegate?.feddSelectDetail(userDetail: selectTeamDetail)
-//            }
-//            else
-//            {
-//                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Coach can select Team or above as Tag")
-//            }
-//
-//            self.navigationController?.popViewController(animated: true)
 
 
         }
@@ -1493,7 +1389,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Coach can select Team or above as Tag")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Coach Can Select Team or Above As Tag")
         }
 
         self.navigationController?.popViewController(animated: true)

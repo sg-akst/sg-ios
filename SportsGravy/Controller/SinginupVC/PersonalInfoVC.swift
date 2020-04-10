@@ -99,49 +99,49 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     {
         if(self.suffix_lbl.text == "" || self.suffix_lbl.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select suffix ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Suffix ")
 
         }
         
         if(self.dob_lbl.text == "" || self.dob_lbl.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please choose date of birth ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Choose Date Of Birth ")
 
         }
         if(self.email_lbl.text == "" || self.email_lbl.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter email address ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Email Address ")
 
         }
        
         if(isValidEmail(self.email_lbl.text!) == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check email id ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Check Email Id ")
 
         }
         if(self.mobile_lbl.text == "" || self.mobile_lbl.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Mobile Number ")
 
         }
         if(isValidMobile(testStr: self.mobile_lbl.text!) == false)
         {
-           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please check mobile number ")
+           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Check Mobile Number ")
 
         }
         if(self.password_lbl.text == "" || self.password_lbl.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Password ")
 
         }
         if(self.confirm_lbl.text == "" || self.confirm_lbl.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter confirm password ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Confirm Password ")
 
         }
         if(self.password_lbl.text != self.confirm_lbl.text)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password and confirm password doesn’t match")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Password And Confirm Password Doesn’t Match")
 
         }
        

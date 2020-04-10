@@ -25,6 +25,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var order_btn: UIButton!
     var peoplegrouplist: NSMutableArray!
     var getpeopleselectorArray: NSMutableArray!
+    var selectGrouptoPlayerlist: NSMutableArray!
     
     var auth_UID: String!
     var role: String!
@@ -61,7 +62,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         var runningWidth: CGFloat = 0.0
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
         let horizontalSpaceBetweenButtons: CGFloat = 8.0
-        let verticalSpaceBetweenButtons: CGFloat = 0.0
+        let verticalSpaceBetweenButtons: CGFloat = 1.5
         if(self.addOrderView != nil)
         {
            self.addOrderView.removeFromSuperview()
@@ -163,24 +164,19 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.orderviewheight.constant = 40
 
         if(indexOfLeftmostButtonOnCurrentLine > 0)
-                          {
-                           self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
+        {
+            self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
                               
-                           if(indexOfLeftmostButtonOnCurrentLine > 5)
-                           {
+        if(indexOfLeftmostButtonOnCurrentLine > 5)
+        {
+            self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 100 : 70
                                       
-                            self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 100 : 70
-                                      
-                           }
-                           }
+        }
+    }
         if(peoplegrouplist.count > 0)
-                           {
-                              // peoplegrouplist.removeAll { $0 == "" }
-                               people_selector_tbl.reloadData()
-
-                           }
-        
-        
+        {
+            people_selector_tbl.reloadData()
+        }
     }
     @objc func orderselectmethod(_ sender: UIButton)
     {
@@ -192,8 +188,14 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-              
-        return self.peoplegrouplist.count
+        if(self.peoplegrouplist.count > 0)
+        {
+            return self.peoplegrouplist.count
+        }
+        else
+        {
+            return self.selectGrouptoPlayerlist.count
+        }
            }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
                   return 50.0
@@ -201,22 +203,41 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PeopleCell = self.people_selector_tbl.dequeueReusableCell(withIdentifier: "peopel") as! PeopleCell
+        if(peoplegrouplist.count > 0)
+        {
         cell.people_group_btn?.setTitle("\(peoplegrouplist?[indexPath.row] as! String)", for: .normal)
+            cell.accessoryType = .disclosureIndicator
+
+        }
+        else
+        {
+            let dic: NSDictionary  =  self.selectGrouptoPlayerlist?[indexPath.row] as! NSDictionary
+            
+            cell.people_group_btn?.setTitle("\(dic.value(forKey: "first_name") as! String)" + "\(dic.value(forKey: "last_name") as! String)", for: .normal)
+            cell.accessoryType = .none
+
+        }
         cell.people_group_btn?.setTitleColor(UIColor.blue, for: .normal)
         cell.people_group_btn.tag = indexPath.row
         cell.people_group_btn.addTarget(self, action: #selector(selectPeople), for: .touchUpInside)
         cell.selectionStyle = .none
-        cell.accessoryType = .disclosureIndicator
         return cell
                 
            }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
-        self.orderArray.add(self.peoplegrouplist[indexPath.row])
-        
-        getuserDetail()
+
+        if(peoplegrouplist.count > 0)
+        {
         fetchpeopleselector(selectGroup: self.peoplegrouplist?[indexPath.row] as! String)
-               
+        self.orderArray.add(self.peoplegrouplist[indexPath.row])
+        }
+        else
+        {
+            fetchpeopleselector(selectGroup: self.selectGrouptoPlayerlist?[indexPath.row] as! String)
+            self.orderArray.add(self.selectGrouptoPlayerlist[indexPath.row])
+        }
+
     }
     @objc func selectPeople(_ sender: UIButton)
     {
@@ -224,7 +245,31 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         let getgroup: String = self.peoplegrouplist?[button] as! String
         print(getgroup)
         let selectTeamDetail: NSMutableArray = NSMutableArray()
-        if(self.orderArray.count == 6)
+        
+        if(self.orderArray.count == 1)
+        {
+            
+        }
+        
+       else if(self.orderArray.count == 2)
+        {
+            
+        }
+        
+       else if(self.orderArray.count == 3)
+        {
+            
+        }
+        
+       else if(self.orderArray.count == 4)
+        {
+            
+        }
+       else if(self.orderArray.count == 5)
+        {
+            
+        }
+        else if(self.orderArray.count == 6)
         {
         for i in 0..<self.getpeopleselectorArray.count
         {
@@ -260,10 +305,12 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
         }
 
+        if(selectTeamDetail.count>0)
+        {
         self.delegate?.selectPeopleSelectorDetail(userDetail: selectTeamDetail)
         self.navigationController?.popViewController(animated: true)
         self.navigationController?.popViewController(animated: true)
-
+        }
 
     }
     
@@ -283,8 +330,34 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         param["season_id"] = season_id as AnyObject?
         param["level_id"] = level_id as AnyObject?
         param["team_id"] = team_id as AnyObject?
-        param["user_group_id"] = selectGroup as AnyObject?
-        
+        var selectGroupName: String!
+        if(selectGroup == "Coaches")
+        {
+            selectGroupName = "coach"
+        }
+        else if(selectGroup == "Guardians")
+        {
+            selectGroupName = "guardian"
+        }
+        else if(selectGroup == "Players")
+        {
+            selectGroupName = "player"
+        }
+        else if(selectGroup == "Managers")
+        {
+            selectGroupName = "manager"
+        }
+        else if(selectGroup == "Administrators")
+        {
+            selectGroupName = "administrator"
+        }
+        else if(selectGroup == "Evaluators")
+        {
+            selectGroupName = "evaluator" 
+        }
+       
+        param["user_group_id"] = selectGroupName as AnyObject?
+        print(param)
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
             Constant.showInActivityIndicatory()
 
@@ -303,13 +376,19 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                         {
                             let result = info?["data"] as! NSArray
                             self.peoplegrouplist = NSMutableArray()
-                            self.peoplegrouplist = result.mutableCopy() as? NSMutableArray
+                            self.selectGrouptoPlayerlist = NSMutableArray()
+                            self.selectGrouptoPlayerlist = result.mutableCopy() as? NSMutableArray
                             self.empty_img.isHidden = (self.peoplegrouplist.count == 0) ? false : true
                             self.people_selector_tbl.reloadData()
                              Constant.showInActivityIndicatory()
-                            if(self.peoplegrouplist.count == 0)
+                            if(self.selectGrouptoPlayerlist.count == 0)
                             {
                                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
+                            }
+                            else
+                            {
+                                
+                                self.getuserDetail()
                             }
                             
                         }

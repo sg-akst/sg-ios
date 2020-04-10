@@ -97,8 +97,8 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
         var runningWidth: CGFloat = 0.0
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
-        let horizontalSpaceBetweenButtons: CGFloat = 5.0
-        let verticalSpaceBetweenButtons: CGFloat = 0.0
+        let horizontalSpaceBetweenButtons: CGFloat = 8.0
+        let verticalSpaceBetweenButtons: CGFloat = 1.5
         self.addOrderView = UIView()
         self.addOrderView.frame = self.SelectorderView.bounds
         for i in 0..<self.getorderArray.count
@@ -292,7 +292,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
         {
             if(canRespons_tittle_txt.text == nil || canRespons_tittle_txt.text?.isEmpty == true)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Canned Response Tiltle")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Canned Response Tiltle")
             }
             else
             {
@@ -337,7 +337,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                                                                 
                                                                                                                
                                     //            Constant.showInActivityIndicatory()
-                                            self.alertermsg(msg: "Canned Response created successfully ")
+                                            self.alertermsg(msg: "Canned Response Created Successfully ")
                                                             
                                                                                                            }
                                                                                                    
@@ -352,7 +352,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                             }
                             else
                             {
-                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This CannedResponse Already exit")
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This Canned Response Already Exist")
                                // Constant.showInActivityIndicatory()
                             }
             }
@@ -390,7 +390,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
                     } else {
                        // Constant.showInActivityIndicatory()
 
-                        self.alertermsg(msg: "Canned Response updated successfully ")
+                        self.alertermsg(msg: "Canned Response Updated Successfully ")
 
                         }
                     }
@@ -404,7 +404,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
     
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
     //        self.delegate?.usernameupdateSuccess()
             self.navigationController?.popViewController(animated: true)

@@ -105,11 +105,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         self.getdifferentLevelArray = NSMutableArray()
 
         getmembergroup()
-//        getorganization()
-//        getsportsmethod()
-//        getSeasonmethod()
-//        getTeammethod()
-//        getuserDetail()
         createGroupView.isHidden = true
         sortingUser.isHidden = true
         self.usergroup_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -126,7 +121,7 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
             var runningWidth: CGFloat = 0.0
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
             let horizontalSpaceBetweenButtons: CGFloat = 8.0
-            let verticalSpaceBetweenButtons: CGFloat = 0.0
+            let verticalSpaceBetweenButtons: CGFloat = 1.5
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -786,11 +781,11 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
         let isDelete: Bool = (count != false || groupType == "System_Group") ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Usergroup is tied with feed, So can't able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Usergroup Is Tied With Feed, So Can't Able To Delete")
         }
         else
         {
-            let alert = UIAlertController(title: " Delete User Group? ", message: "Are you sure want to delete \(teamDic.value(forKey: "display_name")!)", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete User Group? ", message: "Are You Sure Want To Delete \(teamDic.value(forKey: "display_name")!)".capitalized, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        //Cancel Action
                    }))
@@ -832,11 +827,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                         dateFormatter.dateFormat = "yyyy-MM-dd"
                         let endString:String = dateFormatter.string(from: season_endDate as Date)
                         
-                       // let seasonendstring: String = endString
-                        //let stringdateformate: DateFormatter = DateFormatter()
-                        //let seasonenddate: NSDate = stringdateformate.date(from: endString)! as NSDate
-                        
-                        
                         
                         let getSeason_start_date = data.value(forKey: "season_start_date") as! Timestamp
                         let season_start_Date = getSeason_start_date.dateValue()
@@ -846,27 +836,14 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                         dateFormatter.dateFormat = "yyyy-MM-dd"
                         let startString:String = dateFormatters.string(from: season_startDate as Date)
                         
-                       // let endstringdateformate: DateFormatter = DateFormatter()
-                        //let seasonstartdate: NSDate = (endstringdateformate.date(from: startString) as NSDate?)!
-                        
-                    
-                       // print(season_start_Date)
-
-                        //print("\(document.documentID) => \(getseason_end_date)")
                         if(data.value(forKey: "team_id") as? String != nil && data.value(forKey: "team_id")as! String != "")
                         {
                             if(endString != nil   && startString != nil )
                             {
-                                //let enddate = NSDate(timeIntervalSince1970: getseason_end_date!)
-                               // print("enddate:\(enddate)")
-                                //let startDate = NSDate(timeIntervalSince1970:getSeason_start_date!)
-                                // print("startDate:\(startDate)")
-                                //let currentDate = Date()  as Date
-                                //print("currentDate:\(currentDate ?? nil)")
+                                
                                 let todaysDate:NSDate = NSDate()
                                 let dateFormatter:DateFormatter = DateFormatter()
                                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                               // let todayString:String = dateFormatter.string(from: todaysDate as Date)
                                 
                                 if(season_endDate.timeIntervalSinceNow  > todaysDate.timeIntervalSinceNow  || season_startDate.timeIntervalSinceNow < todaysDate.timeIntervalSinceNow)
                                 {
@@ -877,9 +854,6 @@ class UsergroupVC: UIViewController, SWRevealViewControllerDelegate, UITableView
                                      print("\(document.documentID) => \(todaysDate)")
 
                                 }
-//                                else{
-//                                    print("no")
-//                                }
                             }
                             else
                             {
@@ -990,10 +964,9 @@ docRef.collection("MemberGroup").order(by: "count", descending: true).getDocumen
                                                 for document in querySnapshot!.documents {
                                                     let data: NSDictionary = document.data() as NSDictionary
                                                     print("\(document.documentID) => \(data)")
-//                                                    if(data.value(forKey: "role") as? String == self.getSelectRole)
-//                                                    {
+
                                                    self.TeamArray.add(data)
-                                                    //}
+                                                    
                                                }
                                                self.isTeam = true
                                                 self.createGroupView.isHidden = (self.TeamArray.count == 0) ? true : false

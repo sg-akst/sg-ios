@@ -70,19 +70,19 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     {
         if(email_txt.text!.isEmpty)
         {
-          Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
+          Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Valid Email Address")
         }
       else if Constant.isValidEmail(testStr: email_txt.text!) == false{
             print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Valid Email Address")
         }
         else if(password_txt.text!.isEmpty)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Password")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Password")
         }
         else if(password_txt.text!.count < 5)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Invalid username or Password please try again")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Invalid Username or Password Please Try Again")
 
         }
             
@@ -119,7 +119,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
             }
             else
             {
-                Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invalid username or Password please try again")
+                Constant.showAlertMessage(vc: self!, titleStr: "SportsGravy", messageStr: "Invalid Username or Password Please Try Again")
                 Constant.showInActivityIndicatory()
 
             }

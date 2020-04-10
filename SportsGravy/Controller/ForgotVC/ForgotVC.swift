@@ -70,12 +70,12 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
     {
         if(email_txt.text!.isEmpty)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Sportgravy", messageStr: "Please enter valid email address")
+            Constant.showAlertMessage(vc: self, titleStr: "Sportgravy", messageStr: "Please Enter Valid Email Address")
 
         }
         else if Constant.isValidEmail(testStr: email_txt.text!) == false{
             print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Valid Email Address")
         }
         else
         {
@@ -91,13 +91,13 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
 
                    callback?(error)
                 
-                self.showAlertMessage(titleStr: "SportsGravy", messageStr: "Please check your Email")
+                self.showAlertMessage(titleStr: "SportsGravy", messageStr: "Please Check Your Email")
                 Constant.showInActivityIndicatory()
 
                }
            }
     func showAlertMessage(titleStr:String, messageStr:String) -> Void {
-           let alert = UIAlertController(title: titleStr, message: messageStr, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: titleStr, message: messageStr.capitalized, preferredStyle: UIAlertController.Style.alert);
            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
                 self.navigationController?.pushViewController(objSigninvc, animated: true)

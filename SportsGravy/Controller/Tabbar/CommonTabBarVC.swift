@@ -191,10 +191,12 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
         }
     }
     func showcontroller() {
+        
         let image1 = UIImage(named: "photo")
         let image2 = UIImage(named: "video")
+        
         let actionSheet = UIAlertController(title: "", message:"", preferredStyle: .actionSheet)
-        let action1 = UIAlertAction(title: "Quick Photo", style: .default){ (action: UIAlertAction!) in
+        let action1 = UIAlertAction(title:"Quick Photo", style: .default){ (action: UIAlertAction!) in
             self.imageviewcontroller.allowsEditing = false
             self.imageviewcontroller.delegate = self
             self.imageviewcontroller.sourceType = .camera
@@ -204,7 +206,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
             self.present(self.imageviewcontroller, animated: true, completion: nil)
         }
 
-        let action2 = UIAlertAction(title: "Quick Video", style: .default){ (action: UIAlertAction!) in
+        let action2 = UIAlertAction(title:"Quick Video", style: .default){ (action: UIAlertAction!) in
             self.imageviewcontroller.allowsEditing = true
             self.imageviewcontroller.delegate = self
             self.imageviewcontroller.mediaTypes = [kUTTypeMovie as String];
@@ -233,6 +235,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
             self.clickVideoTitle = "4"
             self.present(self.imageviewcontroller, animated: true, completion: nil)
         }
+    
         action1.setValue(image1?.withRenderingMode(.alwaysOriginal), forKey: "image")
         action2.setValue(image2?.withRenderingMode(.alwaysOriginal), forKey: "image")
         action3.setValue(image1?.withRenderingMode(.alwaysOriginal), forKey: "image")
@@ -241,6 +244,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
         actionSheet.addAction(action2)
         actionSheet.addAction(action3)
         actionSheet.addAction(action4)
+    
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(actionSheet, animated: true, completion: nil)
     }

@@ -42,8 +42,12 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     }
    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
+           
+     
            let newString = (text as NSString).replacingCharacters(in: range, with: string)
+    
            textField.text = formattedNumber(number: newString)
+    
              if(self.getAllDic.value(forKey: "mobile_phone") as? String == textField.text)
             {
                updatemobile_btn.isUserInteractionEnabled = false
@@ -54,11 +58,12 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
                updatemobile_btn.isUserInteractionEnabled = true
                updatemobile_btn.setTitleColor(UIColor.blue, for: .normal)
             }
+    
            return false
       }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text != "" && text != "+1 (XXX) XXX-XXXX" {
+        if let text = textField.text, text != "" && text != "+X (XXX) XXX-XXXX" {
             // Do something with your value
         } else {
             textField.text = ""
@@ -84,11 +89,11 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     {
         if(mobile_txt.text == nil || mobile_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Mobile Number")
         }
         else if(isValidMobile(testStr: mobile_txt.text!) == false)
         {
-           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter vaild mobile number")
+           Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Vaild Mobile Number")
         }
         else
         {
@@ -110,7 +115,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
             } else {
                 print("Document successfully updated")
                // Constant.showInActivityIndicatory()
-                self.alertermsg(msg: "Mobile number Updated successfully")
+                self.alertermsg(msg: "Mobile Number Updated Successfully")
 
             }
         }
@@ -162,7 +167,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
      
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.mobileupdateSuccess()
             self.navigationController?.popViewController(animated: true)

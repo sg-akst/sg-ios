@@ -25,6 +25,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var sorting_tbl: UITableView!
     @IBOutlet weak var SelectorderView: UIView!
     @IBOutlet weak var Title_lbl: UILabel!
+    @IBOutlet weak var sort_btn: UIButton!
 
 
     var sortingOrderArray: NSMutableArray!
@@ -48,18 +49,19 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Title_lbl.text = (selectType == "MemberGroup") ? "Sort User Group" : selectType
         sorting_tbl.sizeToFit()
         getuserDetail()
-
+        sort_btn.isUserInteractionEnabled = false
+        sort_btn.setTitleColor(UIColor.darkGray, for: .normal)
     }
     func getuserDetail()
     {
-        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
+//        self.orderviewheight.constant = (self.getorderArray.count > 5) ? 90 : 50
 
             let buttons: NSMutableArray = NSMutableArray()
             var indexOfLeftmostButtonOnCurrentLine: Int = 0
-            var runningWidth: CGFloat = 10.0
-            let maxWidth: CGFloat = 375.0
-            let horizontalSpaceBetweenButtons: CGFloat = 5.0
-            let verticalSpaceBetweenButtons: CGFloat = 5.0
+            var runningWidth: CGFloat = 0.0
+        let maxWidth: CGFloat = UIScreen.main.bounds.size.width
+            let horizontalSpaceBetweenButtons: CGFloat = 8.0
+            let verticalSpaceBetweenButtons: CGFloat = 1.5
             if(self.addOrderView != nil)
             {
                self.addOrderView.removeFromSuperview()
@@ -81,7 +83,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                  }
                  else
                  {
-                   addTitle_btn.setTitle("> \(getorderArray[i] as! String)", for: .normal)
+                   addTitle_btn.setTitle(" >  \(getorderArray[i] as! String)", for: .normal)
 
                  }
                 }
@@ -166,7 +168,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
            
             self.SelectorderView.addSubview(addOrderView)
-
+ self.orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
         }
 
        @objc func orderselectmethod(_ sender: UIButton)
@@ -198,7 +200,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         {
         cell.username_lbl?.text = headline.value(forKey: "tag_name") as? String
         }
-        else if(selectType == "CannedResponse")
+        else if(selectType == "Canned Response")
         {
             cell.username_lbl?.text = headline.value(forKey: "cannedResponseDesc") as? String
             cell.detail_lbl?.text = headline.value(forKey: "cannedResponseTitle") as? String
@@ -241,25 +243,16 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
+        sort_btn.isUserInteractionEnabled = true
+        sort_btn.setTitleColor(UIColor.blue, for: .normal)
         let item : NSDictionary = sortingOrderArray?[sourceIndexPath.row] as! NSDictionary;
         self.sortingOrderArray.removeObject(at: sourceIndexPath.row)
         self.sortingOrderArray.insert(item, at: destinationIndexPath.row)
-        
-        
-//           let movedObject = self.sortingOrderArray[sourceIndexPath.row]
-//        self.sortingOrderArray.remove(sourceIndexPath.row)
-//        self.sortingOrderArray.insert(movedObject, at: destinationIndexPath.row)
         for i in 0..<self.sortingOrderArray.count
         {
             let dic: NSMutableDictionary = self.sortingOrderArray?[i] as! NSMutableDictionary
             dic.removeObject(forKey: "updated_datetime")
             dic.removeObject(forKey: "created_datetime")
-//            if(self.selectType == "CannedResponse")
-//            {
-//                dic.removeObject(forKey: "created_datetime")
-//
-//            }
             self.updateArray.append(dic)
         }
         print("\(self.updateArray)")
@@ -317,12 +310,11 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
                             }
                             else
                            {
-                            self.alertermsg(msg: "\(message as! String)")
+                            self.alertermsg(msg: "\(message!)")
 
                             }
                         }
-                       // Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: " \(str!) Sorted Successfully ")
-                            
+                       
                             
                         case .failure(let error): break
                            //self.errorFailer(error: error)
@@ -334,7 +326,7 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
     }
     func alertermsg(msg: String)
          {
-             let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
              alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                 if(self.selectType == "MemberGroup")
                 {

@@ -105,8 +105,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
            var indexOfLeftmostButtonOnCurrentLine: Int = 0
            var runningWidth: CGFloat = 0
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
-           let horizontalSpaceBetweenButtons: CGFloat = 5.0
-           let verticalSpaceBetweenButtons: CGFloat = 0.0
+           let horizontalSpaceBetweenButtons: CGFloat = 8.0
+           let verticalSpaceBetweenButtons: CGFloat = 1.5
            self.addOrderView = UIView()
            self.addOrderView.frame = self.SelectorderView.bounds
            for i in 0..<self.getorderArray.count
@@ -398,11 +398,11 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         {
             if(group_tittle_txt.text == nil || group_tittle_txt.text?.isEmpty == true)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter user group name")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter User Group Name")
             }
             else if(self.selectpersonArray.count == 0)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user to create custom group")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User To Create Custom Group")
             }
             else
             {
@@ -454,7 +454,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                         print("Error writing document: \(err)")
                                                                            } else {
                                         print("Team Document successfully written!")
-                                    self.alertermsg(msg: "User group created successfully ")
+                                    self.alertermsg(msg: "User Group Created Successfully ")
 //docRef.collection("MemberGroup").document(ref).updateData(["user_groupId":ref])
 //                                            if let err = err {
 //                                        print("Error writing document: \(err)")
@@ -475,7 +475,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                                        }
                 else
                 {
-                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This UserGroup Already exit")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This UserGroup Already Exist")
                     Constant.showInActivityIndicatory()
 
                 }
@@ -488,7 +488,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
         {
             if(self.selectpersonArray.count == 0)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user to update custom group")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User To Update Custom Group")
             }
             else
            {
@@ -517,7 +517,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     } else {
                         
                        // Constant.showInActivityIndicatory()
-                        self.alertermsg(msg: "User group updated successfully ")
+                        self.alertermsg(msg: "User Group Updated Successfully ")
                                            
                         }
                     }
@@ -530,7 +530,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
      func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                 self.delegate?.createAfterCallMethod()
                 self.navigationController?.popViewController(animated: false)

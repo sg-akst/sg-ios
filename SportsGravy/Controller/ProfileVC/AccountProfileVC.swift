@@ -327,7 +327,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             }
                             else
                             {
-                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message as! String)")
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
                             }
                            
                         }
@@ -482,14 +482,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
               guard let tableView = view as? UITableViewHeaderFooterView else { return }
-        tableView.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor.lightGray
         //tableView.textLabel?.textColor = UIColor.black
-        view.tintColor = UIColor.clear
+        view.tintColor = Constant.getUIColor(hex: "#EEEEEE")
         
         let headerLabel = UILabel(frame: CGRect(x: 10, y: 8, width:
         tableView.bounds.size.width-5, height: 30))
         headerLabel.font = UIFont(name: "Arial-BoldMT", size: 20)
-        headerLabel.textColor = UIColor.black
+        headerLabel.textColor = Constant.getUIColor(hex: "#333333")
         headerLabel.text = self.sections[section].name
         headerLabel.sizeToFit()
         
@@ -700,7 +700,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                 } else {
                     print("Document successfully updated")
                     Constant.showInActivityIndicatory()
-                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Re-invite successfully")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Re-Invite Successfully")
                 }
             }
         }

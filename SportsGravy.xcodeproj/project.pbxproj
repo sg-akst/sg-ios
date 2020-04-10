@@ -73,6 +73,8 @@
 		085CF0122421FCE5009DF1BE /* MutiplephotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CF0112421FCE5009DF1BE /* MutiplephotoCell.swift */; };
 		088625F223EC334C008E7CCD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F123EC334C008E7CCD /* CommentVC.swift */; };
 		088625F423EC347E008E7CCD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088625F323EC347E008E7CCD /* CommentCell.swift */; };
+		088AD9BB2435699200804D82 /* DBHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088AD9BA2435699200804D82 /* DBHelp.swift */; };
+		088AD9BD243569E600804D82 /* FeedPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088AD9BC243569E600804D82 /* FeedPostData.swift */; };
 		08A436B32404F16E00A67FF2 /* CommonTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A436B22404F16E00A67FF2 /* CommonTabBarVC.swift */; };
 		08AB2B7323F3CB6D00439D22 /* CoppaParentFormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB2B7223F3CB6D00439D22 /* CoppaParentFormVC.swift */; };
 		08B5631323FB368000D90E23 /* PostCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B5631223FB368000D90E23 /* PostCanCell.swift */; };
@@ -89,9 +91,9 @@
 		08FDB5982415BD2200B59752 /* MiniToLargeViewInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB5952415BD2200B59752 /* MiniToLargeViewInteractive.swift */; };
 		08FDB5992415BD2200B59752 /* BaseAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FDB5962415BD2200B59752 /* BaseAnimator.swift */; };
 		08FDB5A124163BB500B59752 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08FDB5A024163BB500B59752 /* GoogleService-Info.plist */; };
-		9A5C0C125008D145498D6F3E /* Pods_SportsGravy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E30969A231F2AE3102D712 /* Pods_SportsGravy.framework */; };
-		C6F0580C7D1F87DAFE501885 /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 546B5853BD4D7C956A13F65C /* Pods_SportsGravy_SportsGravyUITests.framework */; };
-		DF968D23F4EDE864C27CB0CB /* Pods_SportsGravyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF62AEC79F0D1502302A9A9 /* Pods_SportsGravyTests.framework */; };
+		862C456758B60243B868DA7D /* Pods_SportsGravy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9AD847CD202A3059671A2F /* Pods_SportsGravy.framework */; };
+		BE12294B9C9F1B14D34F67CB /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA41311C2076FB597E0BED5 /* Pods_SportsGravy_SportsGravyUITests.framework */; };
+		E0A418860FD23C62B6232E56 /* Pods_SportsGravyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044F4A38CA95838BBCAC3A1E /* Pods_SportsGravyTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		044F4A38CA95838BBCAC3A1E /* Pods_SportsGravyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0805FB0823FA58D800AD3426 /* PostUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserCell.swift; sourceTree = "<group>"; };
 		0808875123ED3BEE001A0191 /* PostImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageVC.swift; sourceTree = "<group>"; };
 		0808875323ED46F2001A0191 /* PostimageHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostimageHeaderCell.swift; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 		087E8B4323C74E4C00D1F0FF /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		088625F123EC334C008E7CCD /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		088625F323EC347E008E7CCD /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		088AD9BA2435699200804D82 /* DBHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelp.swift; sourceTree = "<group>"; };
+		088AD9BC243569E600804D82 /* FeedPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostData.swift; sourceTree = "<group>"; };
 		089C0C6423D706B2008A33DA /* AccountProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProfileVC.swift; sourceTree = "<group>"; };
 		089F228623D851F0008B110D /* OrganizationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationVC.swift; sourceTree = "<group>"; };
 		089F228823D85A40008B110D /* UsernameEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameEditVC.swift; sourceTree = "<group>"; };
@@ -200,15 +205,14 @@
 		08FDB5962415BD2200B59752 /* BaseAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAnimator.swift; sourceTree = "<group>"; };
 		08FDB5A024163BB500B59752 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08FDF32623E2F34800400919 /* InvitePlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayerVC.swift; sourceTree = "<group>"; };
-		12A726E3EA48EE33634FED6D /* Pods-SportsGravyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravyTests.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravyTests/Pods-SportsGravyTests.debug.xcconfig"; sourceTree = "<group>"; };
-		1CF62AEC79F0D1502302A9A9 /* Pods_SportsGravyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		31DE7BA5A22B7DBF54B1D61E /* Pods-SportsGravy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravy/Pods-SportsGravy.debug.xcconfig"; sourceTree = "<group>"; };
-		42E30969A231F2AE3102D712 /* Pods_SportsGravy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		546B5853BD4D7C956A13F65C /* Pods_SportsGravy_SportsGravyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy_SportsGravyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		79DD514856F887A3572DCFD5 /* Pods-SportsGravy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy.release.xcconfig"; path = "Target Support Files/Pods-SportsGravy/Pods-SportsGravy.release.xcconfig"; sourceTree = "<group>"; };
-		7C63BC49B20F785C83BDCBCB /* Pods-SportsGravyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravyTests.release.xcconfig"; path = "Target Support Files/Pods-SportsGravyTests/Pods-SportsGravyTests.release.xcconfig"; sourceTree = "<group>"; };
-		C4308F01DC00213D7BA564E4 /* Pods-SportsGravy-SportsGravyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy-SportsGravyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		DFFE83428FD29058EB19B653 /* Pods-SportsGravy-SportsGravyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy-SportsGravyUITests.release.xcconfig"; path = "Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		262690E287B2FE9ACB0987C6 /* Pods-SportsGravyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravyTests.release.xcconfig"; path = "Target Support Files/Pods-SportsGravyTests/Pods-SportsGravyTests.release.xcconfig"; sourceTree = "<group>"; };
+		2AA41311C2076FB597E0BED5 /* Pods_SportsGravy_SportsGravyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy_SportsGravyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F8EF565F4FDC9E487ACACAD /* Pods-SportsGravy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy.release.xcconfig"; path = "Target Support Files/Pods-SportsGravy/Pods-SportsGravy.release.xcconfig"; sourceTree = "<group>"; };
+		3F9AD847CD202A3059671A2F /* Pods_SportsGravy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsGravy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		888BFA4849DBCF0C6D7CB874 /* Pods-SportsGravy-SportsGravyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy-SportsGravyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A5AE5B974B21E8EDC185CADB /* Pods-SportsGravy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravy/Pods-SportsGravy.debug.xcconfig"; sourceTree = "<group>"; };
+		B75B4CB3733FDC1D607B56B7 /* Pods-SportsGravy-SportsGravyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravy-SportsGravyUITests.release.xcconfig"; path = "Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D88E14A395134E15D8A06089 /* Pods-SportsGravyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsGravyTests.debug.xcconfig"; path = "Target Support Files/Pods-SportsGravyTests/Pods-SportsGravyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A5C0C125008D145498D6F3E /* Pods_SportsGravy.framework in Frameworks */,
+				862C456758B60243B868DA7D /* Pods_SportsGravy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF968D23F4EDE864C27CB0CB /* Pods_SportsGravyTests.framework in Frameworks */,
+				E0A418860FD23C62B6232E56 /* Pods_SportsGravyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F0580C7D1F87DAFE501885 /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */,
+				BE12294B9C9F1B14D34F67CB /* Pods_SportsGravy_SportsGravyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +272,7 @@
 				081120EB23BDF77900327FF1 /* SportsGravyUITests */,
 				081120C823BDF77500327FF1 /* Products */,
 				A13BFF3EDCF285D3EACF8D33 /* Pods */,
-				154B1F96516D20B3111696B8 /* Frameworks */,
+				B8F2F5A079A75D622E1F17A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -375,6 +379,7 @@
 		0811210323BE085700327FF1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				088AD9B92435697600804D82 /* DBHelp */,
 				0811210423BE08BC00327FF1 /* Constant */,
 			);
 			path = Utilities;
@@ -428,6 +433,15 @@
 				087E8B3B23C6F70D00D1F0FF /* UserRecord.swift */,
 			);
 			path = Records;
+			sourceTree = "<group>";
+		};
+		088AD9B92435697600804D82 /* DBHelp */ = {
+			isa = PBXGroup;
+			children = (
+				088AD9BA2435699200804D82 /* DBHelp.swift */,
+				088AD9BC243569E600804D82 /* FeedPostData.swift */,
+			);
+			path = DBHelp;
 			sourceTree = "<group>";
 		};
 		089C0C6323D7065B008A33DA /* ProfileVC */ = {
@@ -607,27 +621,27 @@
 			path = SplashVC;
 			sourceTree = "<group>";
 		};
-		154B1F96516D20B3111696B8 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				42E30969A231F2AE3102D712 /* Pods_SportsGravy.framework */,
-				546B5853BD4D7C956A13F65C /* Pods_SportsGravy_SportsGravyUITests.framework */,
-				1CF62AEC79F0D1502302A9A9 /* Pods_SportsGravyTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		A13BFF3EDCF285D3EACF8D33 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				31DE7BA5A22B7DBF54B1D61E /* Pods-SportsGravy.debug.xcconfig */,
-				79DD514856F887A3572DCFD5 /* Pods-SportsGravy.release.xcconfig */,
-				C4308F01DC00213D7BA564E4 /* Pods-SportsGravy-SportsGravyUITests.debug.xcconfig */,
-				DFFE83428FD29058EB19B653 /* Pods-SportsGravy-SportsGravyUITests.release.xcconfig */,
-				12A726E3EA48EE33634FED6D /* Pods-SportsGravyTests.debug.xcconfig */,
-				7C63BC49B20F785C83BDCBCB /* Pods-SportsGravyTests.release.xcconfig */,
+				A5AE5B974B21E8EDC185CADB /* Pods-SportsGravy.debug.xcconfig */,
+				3F8EF565F4FDC9E487ACACAD /* Pods-SportsGravy.release.xcconfig */,
+				888BFA4849DBCF0C6D7CB874 /* Pods-SportsGravy-SportsGravyUITests.debug.xcconfig */,
+				B75B4CB3733FDC1D607B56B7 /* Pods-SportsGravy-SportsGravyUITests.release.xcconfig */,
+				D88E14A395134E15D8A06089 /* Pods-SportsGravyTests.debug.xcconfig */,
+				262690E287B2FE9ACB0987C6 /* Pods-SportsGravyTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B8F2F5A079A75D622E1F17A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F9AD847CD202A3059671A2F /* Pods_SportsGravy.framework */,
+				2AA41311C2076FB597E0BED5 /* Pods_SportsGravy_SportsGravyUITests.framework */,
+				044F4A38CA95838BBCAC3A1E /* Pods_SportsGravyTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -637,11 +651,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 081120F123BDF77900327FF1 /* Build configuration list for PBXNativeTarget "SportsGravy" */;
 			buildPhases = (
-				C7270491F3E555C840128314 /* [CP] Check Pods Manifest.lock */,
+				E8B539308CB438A7FC6BE9BD /* [CP] Check Pods Manifest.lock */,
 				081120C323BDF77500327FF1 /* Sources */,
 				081120C423BDF77500327FF1 /* Frameworks */,
 				081120C523BDF77500327FF1 /* Resources */,
-				5E71394FE5C3751F6B9AA8D1 /* [CP] Embed Pods Frameworks */,
+				2EDEFFF17634EA2AA8151FA8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -656,7 +670,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 081120F423BDF77900327FF1 /* Build configuration list for PBXNativeTarget "SportsGravyTests" */;
 			buildPhases = (
-				BAC360328A1F41E1ECBDF894 /* [CP] Check Pods Manifest.lock */,
+				E49E1354D53400328A985964 /* [CP] Check Pods Manifest.lock */,
 				081120D923BDF77900327FF1 /* Sources */,
 				081120DA23BDF77900327FF1 /* Frameworks */,
 				081120DB23BDF77900327FF1 /* Resources */,
@@ -675,11 +689,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 081120F723BDF77900327FF1 /* Build configuration list for PBXNativeTarget "SportsGravyUITests" */;
 			buildPhases = (
-				2B1FE7D43EC4F051796FFC98 /* [CP] Check Pods Manifest.lock */,
+				CDF5674C48D1098CFCB0D7E8 /* [CP] Check Pods Manifest.lock */,
 				081120E423BDF77900327FF1 /* Sources */,
 				081120E523BDF77900327FF1 /* Frameworks */,
 				081120E623BDF77900327FF1 /* Resources */,
-				1D0535AEA22A613586F4B87C /* [CP] Embed Pods Frameworks */,
+				4A361566726B659C411E4BC5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -764,7 +778,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D0535AEA22A613586F4B87C /* [CP] Embed Pods Frameworks */ = {
+		2EDEFFF17634EA2AA8151FA8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A361566726B659C411E4BC5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -781,7 +812,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy-SportsGravyUITests/Pods-SportsGravy-SportsGravyUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2B1FE7D43EC4F051796FFC98 /* [CP] Check Pods Manifest.lock */ = {
+		CDF5674C48D1098CFCB0D7E8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -803,24 +834,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5E71394FE5C3751F6B9AA8D1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SportsGravy/Pods-SportsGravy-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BAC360328A1F41E1ECBDF894 /* [CP] Check Pods Manifest.lock */ = {
+		E49E1354D53400328A985964 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -842,7 +856,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C7270491F3E555C840128314 /* [CP] Check Pods Manifest.lock */ = {
+		E8B539308CB438A7FC6BE9BD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -910,6 +924,7 @@
 				080E846F23E3F2410092CDB3 /* CannedResponseVC.swift in Sources */,
 				08FDB5992415BD2200B59752 /* BaseAnimator.swift in Sources */,
 				080E846E23E3F23C0092CDB3 /* SittingsVC.swift in Sources */,
+				088AD9BD243569E600804D82 /* FeedPostData.swift in Sources */,
 				080E846D23E3F2370092CDB3 /* PlayerProfileVC.swift in Sources */,
 				080E846C23E3F2330092CDB3 /* AddressEditVC.swift in Sources */,
 				080E846B23E3F22F0092CDB3 /* GenderEditVC.swift in Sources */,
@@ -944,6 +959,7 @@
 				088625F223EC334C008E7CCD /* CommentVC.swift in Sources */,
 				080E845B23E3F1AD0092CDB3 /* ChildernCell.swift in Sources */,
 				080E845A23E3F1A80092CDB3 /* Reachability.swift in Sources */,
+				088AD9BB2435699200804D82 /* DBHelp.swift in Sources */,
 				08A436B32404F16E00A67FF2 /* CommonTabBarVC.swift in Sources */,
 				080E845923E3F1A30092CDB3 /* UserRecord.swift in Sources */,
 				080E845823E3F19E0092CDB3 /* AppDelegate.swift in Sources */,
@@ -1036,10 +1052,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTABILITY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1099,7 +1115,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1119,9 +1135,10 @@
 		};
 		081120F223BDF77900327FF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31DE7BA5A22B7DBF54B1D61E /* Pods-SportsGravy.debug.xcconfig */;
+			baseConfigurationReference = A5AE5B974B21E8EDC185CADB /* Pods-SportsGravy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = U8DDB8SCQ2;
@@ -1134,6 +1151,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportgravy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1141,9 +1159,10 @@
 		};
 		081120F323BDF77900327FF1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79DD514856F887A3572DCFD5 /* Pods-SportsGravy.release.xcconfig */;
+			baseConfigurationReference = 3F8EF565F4FDC9E487ACACAD /* Pods-SportsGravy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = U8DDB8SCQ2;
@@ -1156,6 +1175,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportgravy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1163,7 +1183,7 @@
 		};
 		081120F523BDF77900327FF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 12A726E3EA48EE33634FED6D /* Pods-SportsGravyTests.debug.xcconfig */;
+			baseConfigurationReference = D88E14A395134E15D8A06089 /* Pods-SportsGravyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1186,7 +1206,7 @@
 		};
 		081120F623BDF77900327FF1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C63BC49B20F785C83BDCBCB /* Pods-SportsGravyTests.release.xcconfig */;
+			baseConfigurationReference = 262690E287B2FE9ACB0987C6 /* Pods-SportsGravyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1209,9 +1229,10 @@
 		};
 		081120F823BDF77900327FF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C4308F01DC00213D7BA564E4 /* Pods-SportsGravy-SportsGravyUITests.debug.xcconfig */;
+			baseConfigurationReference = 888BFA4849DBCF0C6D7CB874 /* Pods-SportsGravy-SportsGravyUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U8DDB8SCQ2;
 				INFOPLIST_FILE = SportsGravyUITests/Info.plist;
@@ -1223,16 +1244,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.iz.app.SportsGravyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = SportsGravy;
 			};
 			name = Debug;
 		};
 		081120F923BDF77900327FF1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFFE83428FD29058EB19B653 /* Pods-SportsGravy-SportsGravyUITests.release.xcconfig */;
+			baseConfigurationReference = B75B4CB3733FDC1D607B56B7 /* Pods-SportsGravy-SportsGravyUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U8DDB8SCQ2;
 				INFOPLIST_FILE = SportsGravyUITests/Info.plist;
@@ -1244,7 +1266,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.iz.app.SportsGravyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = SportsGravy;
 			};
 			name = Release;

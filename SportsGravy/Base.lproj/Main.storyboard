@@ -196,7 +196,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                         <state key="normal" title="Forgot Password?">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -684,7 +684,7 @@
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="5hG-9P-cU4" eventType="touchUpInside" id="z1M-Yz-069"/>
@@ -976,7 +976,7 @@
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="TRf-yp-E1X" eventType="touchUpInside" id="5Mf-Pt-ncs"/>
@@ -1083,12 +1083,12 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQu-b4-jXx">
                                                         <rect key="frame" x="10" y="5" width="345" height="40"/>
                                                         <viewLayoutGuide key="safeArea" id="q4x-cD-PXl"/>
-                                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
+                                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="iQu-b4-jXx" firstAttribute="leading" secondItem="Y44-SA-XyC" secondAttribute="leading" constant="10" id="1VF-Ur-JUf"/>
                                                     <constraint firstAttribute="trailing" secondItem="iQu-b4-jXx" secondAttribute="trailing" constant="20" id="XeQ-GP-LOa"/>
@@ -1420,14 +1420,14 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nga-pa-ZW9">
-                                                                    <rect key="frame" x="10" y="10" width="42" height="30"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nga-pa-ZW9">
+                                                                    <rect key="frame" x="10" y="10" width="44.5" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="SKs-vi-OmQ"/>
                                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="SNd-8H-SC0"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="16"/>
-                                                                    <nil key="textColor"/>
+                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1y-66-hgY">
@@ -1441,7 +1441,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NVS-eV-J4F">
-                                                                    <rect key="frame" x="57" y="16" width="20" height="20"/>
+                                                                    <rect key="frame" x="59.5" y="16" width="20" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="20" id="86p-Zf-bH3"/>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="Agt-Ep-OCG"/>
@@ -1450,7 +1450,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsS-4M-Tuh">
-                                                                    <rect key="frame" x="92" y="10" width="90" height="30"/>
+                                                                    <rect key="frame" x="94.5" y="10" width="90" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="FxY-4B-u68"/>
                                                                         <constraint firstAttribute="width" constant="90" id="Sq3-Tz-ujl"/>
@@ -1580,7 +1580,7 @@
                         <viewLayoutGuide key="safeArea" id="4bg-zk-dZk"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="video" id="UmC-xX-XmH">
-                        <inset key="imageInsets" minX="-5" minY="-5" maxX="-5" maxY="-10"/>
+                        <inset key="imageInsets" minX="-4" minY="-4" maxX="-4" maxY="-4"/>
                         <color key="badgeColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                 </viewController>
@@ -1863,7 +1863,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LHo-Qs-Azf">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="xuk-fu-g1w">
+                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="xuk-fu-g1w">
                                                             <rect key="frame" x="10" y="5" width="80" height="80"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1895,7 +1895,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="12"/>
-                                                            <state key="normal" title="Button">
+                                                            <state key="normal">
                                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="medium" weight="medium">
                                                                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="12"/>
@@ -1911,7 +1911,7 @@
                                                             <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="12"/>
                                                             <inset key="imageEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="Button">
+                                                            <state key="normal">
                                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="medium" weight="medium">
                                                                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="12"/>
@@ -1987,7 +1987,7 @@
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Phy-Az-SPa">
                                                             <rect key="frame" x="0.0" y="40" width="375" height="100"/>
-                                                            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="100" id="xdh-Xc-Brh"/>
                                                             </constraints>
@@ -2314,7 +2314,7 @@ your password.</string>
                                         <rect key="frame" x="0.0" y="55" width="345" height="50"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                         <state key="normal" title="Back to Login?">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="gotologin:" destination="Ri0-Y7-ZnZ" eventType="touchUpInside" id="EhU-9S-fFO"/>
@@ -3028,7 +3028,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="NLt-Uw-6gN" eventType="touchUpInside" id="TeW-N5-paP"/>
@@ -3225,7 +3225,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="5Mm-Nw-f6R" eventType="touchUpInside" id="3GE-fM-dvf"/>
@@ -3345,7 +3345,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="vM1-Yx-SNJ" eventType="touchUpInside" id="Op2-qX-OWy"/>
@@ -3552,7 +3552,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="LLh-lB-shN" eventType="touchUpInside" id="Jj1-MA-mZe"/>
@@ -3617,7 +3617,7 @@ help with to continue to improve.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ixs-2o-5Fa"/>
                                 </constraints>
-                                <color key="textColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -3636,8 +3636,8 @@ help with to continue to improve.</string>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AcZ-nK-bDR">
                                 <rect key="frame" x="20" y="232" width="335" height="385"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
@@ -3704,7 +3704,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="Sortingcancelbtn:" destination="Dga-Bn-LKs" eventType="touchUpInside" id="hVg-xG-NwR"/>
@@ -3828,6 +3828,7 @@ help with to continue to improve.</string>
                         <outlet property="SelectorderView" destination="AAv-Mt-hWf" id="YAM-iv-ey6"/>
                         <outlet property="Title_lbl" destination="VT9-n3-2vh" id="Q0l-gz-JPx"/>
                         <outlet property="orderviewheight" destination="EIy-DJ-xCI" id="TMV-tX-JBB"/>
+                        <outlet property="sort_btn" destination="Aee-iL-lrt" id="Yc6-8F-dFr"/>
                         <outlet property="sorting_tbl" destination="DaV-nm-dzz" id="P8h-hF-KhC"/>
                     </connections>
                 </viewController>
@@ -3855,7 +3856,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpostbtn:" destination="z6w-5G-c61" eventType="touchUpInside" id="BUE-Fv-qaw"/>
@@ -4037,11 +4038,11 @@ help with to continue to improve.</string>
                                         </prototypes>
                                         <sections/>
                                     </tableView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IOj-QN-JXe">
-                                        <rect key="frame" x="10" y="158" width="363" height="40"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOj-QN-JXe">
+                                        <rect key="frame" x="10" y="158" width="363" height="35"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="x6C-Rf-72B"/>
+                                            <constraint firstAttribute="height" constant="35" id="x6C-Rf-72B"/>
                                         </constraints>
                                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
@@ -4051,7 +4052,7 @@ help with to continue to improve.</string>
                                         </connections>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5R-YT-UBE">
-                                        <rect key="frame" x="0.0" y="199" width="383" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="194" width="383" height="0.5"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="XTG-RB-mgl"/>
@@ -4061,20 +4062,20 @@ help with to continue to improve.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/250" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbs-H4-SHf">
-                                        <rect key="frame" x="313" y="208" width="60" height="20"/>
+                                        <rect key="frame" x="313" y="196" width="60" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="5oP-ih-kob"/>
-                                            <constraint firstAttribute="height" constant="20" id="TvL-gJ-aEC"/>
+                                            <constraint firstAttribute="height" constant="15" id="TvL-gJ-aEC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6VF-zz-hF8">
-                                        <rect key="frame" x="0.0" y="243" width="383" height="300"/>
+                                        <rect key="frame" x="0.0" y="212" width="383" height="300"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HLj-0G-Yk2">
-                                                <rect key="frame" x="10" y="10" width="363" height="280"/>
+                                                <rect key="frame" x="10" y="3" width="363" height="287"/>
                                             </imageView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lEZ-5t-2tq">
                                                 <rect key="frame" x="0.0" y="0.0" width="383" height="300"/>
@@ -4120,14 +4121,14 @@ help with to continue to improve.</string>
                                             <constraint firstItem="lEZ-5t-2tq" firstAttribute="top" secondItem="6VF-zz-hF8" secondAttribute="top" id="OB9-DU-9VS"/>
                                             <constraint firstAttribute="trailing" secondItem="HLj-0G-Yk2" secondAttribute="trailing" constant="10" id="RQU-D3-VXx"/>
                                             <constraint firstAttribute="width" constant="383" id="aAJ-PV-45b"/>
-                                            <constraint firstItem="HLj-0G-Yk2" firstAttribute="top" secondItem="6VF-zz-hF8" secondAttribute="top" constant="10" id="g5f-62-ck1"/>
+                                            <constraint firstItem="HLj-0G-Yk2" firstAttribute="top" secondItem="6VF-zz-hF8" secondAttribute="top" constant="3" id="g5f-62-ck1"/>
                                             <constraint firstItem="lEZ-5t-2tq" firstAttribute="leading" secondItem="6VF-zz-hF8" secondAttribute="leading" id="i4H-ln-tcG"/>
                                             <constraint firstAttribute="height" constant="300" id="q8o-xU-aZ0"/>
                                             <constraint firstAttribute="bottom" secondItem="HLj-0G-Yk2" secondAttribute="bottom" constant="10" id="rT4-Tr-WMQ"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KeW-mZ-7Nz">
-                                        <rect key="frame" x="343" y="221" width="40" height="40"/>
+                                        <rect key="frame" x="343" y="216" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="N8M-oW-Vcm"/>
                                             <constraint firstAttribute="width" constant="40" id="kzU-8L-FpW"/>
@@ -4143,11 +4144,11 @@ help with to continue to improve.</string>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="dbs-H4-SHf" firstAttribute="top" secondItem="IOj-QN-JXe" secondAttribute="bottom" constant="10" id="4VZ-av-BVK"/>
+                                    <constraint firstItem="dbs-H4-SHf" firstAttribute="top" secondItem="IOj-QN-JXe" secondAttribute="bottom" constant="3" id="4VZ-av-BVK"/>
                                     <constraint firstAttribute="trailing" secondItem="KeW-mZ-7Nz" secondAttribute="trailing" id="BTE-nF-js4"/>
                                     <constraint firstItem="IOj-QN-JXe" firstAttribute="leading" secondItem="qm0-at-0Qa" secondAttribute="leading" constant="10" id="Dn8-QR-3io"/>
                                     <constraint firstItem="6VF-zz-hF8" firstAttribute="leading" secondItem="qm0-at-0Qa" secondAttribute="leading" id="For-Of-lJe"/>
-                                    <constraint firstItem="6VF-zz-hF8" firstAttribute="top" secondItem="dbs-H4-SHf" secondAttribute="bottom" constant="15" id="I67-SS-R1e"/>
+                                    <constraint firstItem="6VF-zz-hF8" firstAttribute="top" secondItem="dbs-H4-SHf" secondAttribute="bottom" constant="1" id="I67-SS-R1e"/>
                                     <constraint firstItem="4IX-Zw-p6v" firstAttribute="leading" secondItem="qm0-at-0Qa" secondAttribute="leading" id="N6f-9K-nor"/>
                                     <constraint firstAttribute="trailing" secondItem="v5R-YT-UBE" secondAttribute="trailing" id="Oq8-6t-yM5"/>
                                     <constraint firstItem="4IX-Zw-p6v" firstAttribute="top" secondItem="qm0-at-0Qa" secondAttribute="top" id="UUD-2U-Tbl"/>
@@ -4240,9 +4241,11 @@ help with to continue to improve.</string>
                         <viewLayoutGuide key="safeArea" id="zXr-Zx-PVg"/>
                     </view>
                     <connections>
+                        <outlet property="DoneBtn" destination="Hqn-K2-3Oc" id="knh-Id-Ybi"/>
                         <outlet property="camera_btn" destination="bu8-1L-o2X" id="imY-6C-nRR"/>
                         <outlet property="close_Btn" destination="KeW-mZ-7Nz" id="SkZ-Kz-pj6"/>
                         <outlet property="content_count_lbl" destination="dbs-H4-SHf" id="De5-g2-fNq"/>
+                        <outlet property="description_view_height" destination="x6C-Rf-72B" id="7DZ-ix-Skb"/>
                         <outlet property="gallery_btn" destination="WIh-QF-nEx" id="kWi-TK-OOA"/>
                         <outlet property="postTbl_height" destination="LZj-w4-zDh" id="P1V-QW-ZWA"/>
                         <outlet property="post_collection_view" destination="lEZ-5t-2tq" id="oSM-fv-Ncy"/>
@@ -4278,7 +4281,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpostReactionbtn:" destination="im0-WM-rQt" eventType="touchUpInside" id="ADz-WN-Cph"/>
@@ -4390,7 +4393,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpostTagbtn:" destination="VRi-Pi-k7o" eventType="touchUpInside" id="7mb-6c-Amq"/>
@@ -4476,7 +4479,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpostCannedbtn:" destination="KgF-gA-Y8W" eventType="touchUpInside" id="wVi-Zr-aIJ"/>
@@ -4594,7 +4597,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpostuserbtn:" destination="pCM-kd-fFj" eventType="touchUpInside" id="rig-mk-1Gb"/>
@@ -4740,7 +4743,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backpeopleselectorbtn:" destination="qOZ-w7-kCp" eventType="touchUpInside" id="Wc5-q3-YJV"/>
@@ -4866,7 +4869,7 @@ help with to continue to improve.</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backfeedselectorbtn:" destination="bhm-8R-8sc" eventType="touchUpInside" id="ypn-wf-5rt"/>
@@ -5139,7 +5142,7 @@ virtual foot closer to success</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="congz" translatesAutoresizingMaskIntoConstraints="NO" id="TXJ-X4-w8t">
-                                <rect key="frame" x="42" y="100" width="291" height="253"/>
+                                <rect key="frame" x="42" y="100" width="291" height="253.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="253" id="OaS-5B-zJ5"/>
                                     <constraint firstAttribute="width" constant="291" id="TzA-bb-a8N"/>
@@ -5216,16 +5219,19 @@ virtual foot closer to success</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mda-AF-eKS">
-                                        <rect key="frame" x="10" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="10" y="15" width="70" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Dbe-C5-Kma"/>
-                                            <constraint firstAttribute="width" constant="40" id="MsY-mu-CHZ"/>
+                                            <constraint firstAttribute="height" constant="50" id="Dbe-C5-Kma"/>
+                                            <constraint firstAttribute="width" constant="70" id="MsY-mu-CHZ"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="back_ic"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COPPA PARENTAL CONSENT FORM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FW2-lg-bxf">
-                                        <rect key="frame" x="55" y="5" width="315" height="55"/>
+                                        <rect key="frame" x="85" y="5" width="285" height="55"/>
                                         <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -5811,149 +5817,6 @@ virtual foot closer to success</string>
             </objects>
             <point key="canvasLocation" x="5736.8000000000002" y="-410.19490254872568"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="HMm-zc-xnH">
-            <objects>
-                <viewController id="hpK-N0-Hqq" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="NUf-JB-hLL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hbk-4o-OkU">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gtp-Ys-oXJ">
-                                        <rect key="frame" x="5" y="15" width="60" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="U2I-kS-LCt"/>
-                                            <constraint firstAttribute="width" constant="60" id="zLE-Dk-Ekg"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="settingcancelbtn:" destination="hpK-N0-Hqq" eventType="touchUpInside" id="Pb9-KA-gEM"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7k-vm-qHr">
-                                        <rect key="frame" x="40" y="15" width="295" height="40.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="295" id="S4M-98-emv"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
-                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="AEY-C9-a2e"/>
-                                    <constraint firstItem="Gtp-Ys-oXJ" firstAttribute="top" secondItem="oJa-1h-Juu" secondAttribute="top" constant="15" id="C3d-LI-SiO"/>
-                                    <constraint firstItem="oJa-1h-Juu" firstAttribute="bottom" secondItem="H7k-vm-qHr" secondAttribute="bottom" constant="4.5" id="FkO-Lj-ntW"/>
-                                    <constraint firstItem="H7k-vm-qHr" firstAttribute="centerX" secondItem="hbk-4o-OkU" secondAttribute="centerX" id="ULH-ff-Q3y"/>
-                                    <constraint firstItem="Gtp-Ys-oXJ" firstAttribute="leading" secondItem="oJa-1h-Juu" secondAttribute="leading" constant="5" id="VmO-7a-Il6"/>
-                                    <constraint firstItem="H7k-vm-qHr" firstAttribute="top" secondItem="oJa-1h-Juu" secondAttribute="top" constant="15" id="znf-63-zxb"/>
-                                </constraints>
-                                <viewLayoutGuide key="safeArea" id="oJa-1h-Juu"/>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BSk-eP-mjC">
-                                <rect key="frame" x="0.0" y="61" width="375" height="606"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sittingCell" rowHeight="70" id="f3O-Xo-smK" customClass="SittingCell" customModule="SportsGravy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f3O-Xo-smK" id="MYj-lM-u43">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXh-sC-gdW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed Post" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1f-uZ-hxZ">
-                                                            <rect key="frame" x="10" y="5" width="295" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="j3v-QZ-DRc"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
-                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3E-GO-XvF">
-                                                            <rect key="frame" x="10" y="36" width="300" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="35" id="5oJ-CJ-1jY"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
-                                                            <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nk3-KC-mg2">
-                                                            <rect key="frame" x="320" y="17" width="52" height="35"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="35" id="ItV-es-tE3"/>
-                                                                <constraint firstAttribute="width" constant="50" id="y1v-En-XuO"/>
-                                                            </constraints>
-                                                        </switch>
-                                                    </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                    <constraints>
-                                                        <constraint firstItem="nk3-KC-mg2" firstAttribute="top" secondItem="LXh-sC-gdW" secondAttribute="top" constant="17" id="0kN-Mq-HbF"/>
-                                                        <constraint firstAttribute="bottom" secondItem="H3E-GO-XvF" secondAttribute="bottom" constant="4" id="5fe-Kc-2Lc"/>
-                                                        <constraint firstItem="H3E-GO-XvF" firstAttribute="top" secondItem="C1f-uZ-hxZ" secondAttribute="bottom" constant="1" id="7yJ-Sa-1QD"/>
-                                                        <constraint firstItem="H3E-GO-XvF" firstAttribute="leading" secondItem="LXh-sC-gdW" secondAttribute="leading" constant="10" id="8yc-ER-QHQ"/>
-                                                        <constraint firstItem="nk3-KC-mg2" firstAttribute="leading" secondItem="H3E-GO-XvF" secondAttribute="trailing" constant="10" id="Fnh-Xg-1Lb"/>
-                                                        <constraint firstItem="H3E-GO-XvF" firstAttribute="top" secondItem="C1f-uZ-hxZ" secondAttribute="bottom" constant="1" id="J1e-1K-lk3"/>
-                                                        <constraint firstItem="C1f-uZ-hxZ" firstAttribute="top" secondItem="LXh-sC-gdW" secondAttribute="top" constant="5" id="LJq-VM-8EX"/>
-                                                        <constraint firstItem="nk3-KC-mg2" firstAttribute="leading" secondItem="C1f-uZ-hxZ" secondAttribute="trailing" constant="15" id="Qml-Y8-6SG"/>
-                                                        <constraint firstAttribute="trailing" secondItem="nk3-KC-mg2" secondAttribute="trailing" constant="5" id="dcT-gI-zgL"/>
-                                                        <constraint firstItem="C1f-uZ-hxZ" firstAttribute="leading" secondItem="LXh-sC-gdW" secondAttribute="leading" constant="10" id="dz4-HE-2YU"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="LXh-sC-gdW" firstAttribute="top" secondItem="MYj-lM-u43" secondAttribute="top" id="861-Jz-zoX"/>
-                                                <constraint firstAttribute="bottom" secondItem="LXh-sC-gdW" secondAttribute="bottom" id="Ihe-J5-toC"/>
-                                                <constraint firstAttribute="trailing" secondItem="LXh-sC-gdW" secondAttribute="trailing" id="S95-Td-tkH"/>
-                                                <constraint firstItem="LXh-sC-gdW" firstAttribute="leading" secondItem="MYj-lM-u43" secondAttribute="leading" id="ize-mF-QnG"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <outlet property="segment_btn" destination="nk3-KC-mg2" id="AGu-op-gSR"/>
-                                            <outlet property="subtitle_lbl" destination="H3E-GO-XvF" id="wjO-8p-2Sf"/>
-                                            <outlet property="title_lbl" destination="C1f-uZ-hxZ" id="MQO-2Y-SSE"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="hpK-N0-Hqq" id="4a7-rm-v8m"/>
-                                    <outlet property="delegate" destination="hpK-N0-Hqq" id="n8s-3B-2p6"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="BSk-eP-mjC" firstAttribute="leading" secondItem="HAb-JG-TxG" secondAttribute="leading" id="7Ai-9M-wwe"/>
-                            <constraint firstItem="hbk-4o-OkU" firstAttribute="leading" secondItem="HAb-JG-TxG" secondAttribute="leading" id="Hoe-q2-zPX"/>
-                            <constraint firstItem="BSk-eP-mjC" firstAttribute="trailing" secondItem="HAb-JG-TxG" secondAttribute="trailing" id="KbQ-0e-KTW"/>
-                            <constraint firstItem="BSk-eP-mjC" firstAttribute="top" secondItem="hbk-4o-OkU" secondAttribute="bottom" constant="1" id="cfc-BH-buM"/>
-                            <constraint firstItem="BSk-eP-mjC" firstAttribute="bottom" secondItem="HAb-JG-TxG" secondAttribute="bottom" id="h3a-FS-zB9"/>
-                            <constraint firstItem="hbk-4o-OkU" firstAttribute="trailing" secondItem="HAb-JG-TxG" secondAttribute="trailing" id="mFy-Wx-vIn"/>
-                            <constraint firstItem="hbk-4o-OkU" firstAttribute="top" secondItem="HAb-JG-TxG" secondAttribute="top" id="yDR-0A-yJV"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="HAb-JG-TxG"/>
-                    </view>
-                    <connections>
-                        <outlet property="sitting_tbl" destination="BSk-eP-mjC" id="mpn-Z2-tIR"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wqp-3I-6h0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4880.8000000000002" y="749.7751124437782"/>
-        </scene>
         <!--User Group CreateVC-->
         <scene sceneID="78r-Uc-ABN">
             <objects>
@@ -5974,7 +5837,7 @@ virtual foot closer to success</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="4hM-h1-FEu" eventType="touchUpInside" id="zxQ-nA-gd9"/>
@@ -6180,7 +6043,7 @@ virtual foot closer to success</string>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditPasswordcancelbtn:" destination="eaf-KR-aty" eventType="touchUpInside" id="A4l-BP-IQH"/>
@@ -6360,7 +6223,7 @@ virtual foot closer to success</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
                                             <action selector="EditMobilecancelbtn:" destination="GhN-Bg-5la" eventType="touchUpInside" id="jbq-s8-F1b"/>
@@ -6398,16 +6261,6 @@ virtual foot closer to success</string>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7r-7a-Sgk">
-                                        <rect key="frame" x="0.0" y="41" width="375" height="1"/>
-                                        <color key="backgroundColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="bUc-1x-fb0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+1" placeholder="(xxx) xxx-xxxx" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="koo-Mn-7tR">
                                         <rect key="frame" x="10" y="50" width="355" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6434,10 +6287,7 @@ virtual foot closer to success</string>
                                     <constraint firstAttribute="trailing" secondItem="koo-Mn-7tR" secondAttribute="trailing" constant="10" id="NwT-JX-1w0"/>
                                     <constraint firstAttribute="height" constant="100" id="QeB-rE-dzA"/>
                                     <constraint firstAttribute="trailing" secondItem="eAB-Nx-ILI" secondAttribute="trailing" constant="10" id="acw-H2-KrQ"/>
-                                    <constraint firstItem="Q7r-7a-Sgk" firstAttribute="top" secondItem="eAB-Nx-ILI" secondAttribute="bottom" constant="1" id="oA0-tt-BiH"/>
-                                    <constraint firstAttribute="trailing" secondItem="Q7r-7a-Sgk" secondAttribute="trailing" id="oYz-6y-x5k"/>
                                     <constraint firstItem="eAB-Nx-ILI" firstAttribute="top" secondItem="Ohb-V2-ogK" secondAttribute="top" constant="10" id="vBE-je-Hc9"/>
-                                    <constraint firstItem="Q7r-7a-Sgk" firstAttribute="leading" secondItem="Ohb-V2-ogK" secondAttribute="leading" id="wmY-RS-XZn"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGg-3m-bdm">
@@ -6504,7 +6354,7 @@ virtual foot closer to success</string>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditGendercancelbtn:" destination="NYJ-3m-bSq" eventType="touchUpInside" id="kDK-Js-xY8"/>
@@ -6647,7 +6497,7 @@ virtual foot closer to success</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="EditAddresscancelbtn:" destination="UkH-s6-0Nt" eventType="touchUpInside" id="NA9-0r-aYI"/>
@@ -6880,7 +6730,7 @@ virtual foot closer to success</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="backcommentbtn:" destination="4sj-Mk-a8t" eventType="touchUpInside" id="Ask-xb-GlQ"/>
@@ -7003,8 +6853,9 @@ virtual foot closer to success</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-rH-SjO">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-rH-SjO">
                                                     <rect key="frame" x="10" y="15" width="50" height="50"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="6GP-Ow-hVa"/>
                                                         <constraint firstAttribute="height" constant="50" id="qmA-Ma-N00"/>
@@ -7140,7 +6991,7 @@ virtual foot closer to success</string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="61H-XZ-Q5o" eventType="touchUpInside" id="VWz-M4-w6R"/>
@@ -7345,7 +7196,7 @@ to improve.  </string>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="5hG-9P-cU4" eventType="touchUpInside" id="Kts-A7-xkS"/>
@@ -7836,7 +7687,7 @@ to improve.  </string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="nextviewBackbtn:" destination="0b3-eo-5YI" eventType="touchUpInside" id="RJ4-xg-MvH"/>
@@ -8138,7 +7989,7 @@ to improve.  </string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="organizationcancelbtn:" destination="K9w-Dq-WZ4" eventType="touchUpInside" id="4VX-4R-ITh"/>
@@ -8210,7 +8061,7 @@ to improve.  </string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="Editusercancelbtn:" destination="puM-CO-OCg" eventType="touchUpInside" id="bqx-xe-5Nc"/>
@@ -8420,7 +8271,7 @@ to improve.  </string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" red="0.2784313725" green="0.32156862749999998" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="organizationcancelbtn:" destination="K9w-Dq-WZ4" eventType="touchUpInside" id="9Kx-vR-XO3"/>
@@ -8995,7 +8846,7 @@ to improve.  </string>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="cancelbtn:" destination="sak-gN-6D2" eventType="touchUpInside" id="1fU-uD-s0c"/>
@@ -9494,7 +9345,6 @@ to improve.  </string>
     <resources>
         <image name="Thumbs_down" width="24" height="24"/>
         <image name="Thumbs_up" width="24" height="24"/>
-        <image name="back_ic" width="30" height="30"/>
         <image name="calendar" width="24" height="24"/>
         <image name="camera" catalog="system" width="64" height="48"/>
         <image name="camera.fill" catalog="system" width="64" height="48"/>
@@ -9523,7 +9373,7 @@ to improve.  </string>
         <image name="trash" catalog="system" width="60" height="64"/>
         <image name="unselect" width="30" height="30"/>
         <image name="user" width="24" height="24"/>
-        <image name="video" width="24" height="24"/>
+        <image name="video" width="30" height="30"/>
         <image name="video.fill" catalog="system" width="64" height="40"/>
     </resources>
 </document>

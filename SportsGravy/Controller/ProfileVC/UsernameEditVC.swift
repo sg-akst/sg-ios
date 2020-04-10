@@ -93,11 +93,11 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
         }
       else if(self.last_name_txt.text == nil || self.last_name_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter lastname")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Lastname")
         }
       else if(self.suffix_name_txt.text == nil || self.suffix_name_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select suffix ")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Suffix ")
         }
       else
         {
@@ -128,7 +128,8 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
             return true
         }
        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(userDetailDic.value(forKey: "first_name") as? String == textField.text || userDetailDic.value(forKey: "middle_initial") as? String == textField.text || userDetailDic.value(forKey: "last_name") as? String == textField.text)
+        //if(userDetailDic.value(forKey: "first_name") as? String == textField.text || userDetailDic.value(forKey: "middle_initial") as? String == textField.text || userDetailDic.value(forKey: "last_name") as? String == textField.text)
+        if(string == "")
            {
               update_btn.isUserInteractionEnabled = false
                update_btn.setTitleColor(UIColor.darkGray, for: .normal)
@@ -138,8 +139,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
                update_btn.isUserInteractionEnabled = true
                update_btn.setTitleColor(UIColor.blue, for: .normal)
            }
-            print("textField")
-            print("Leaving textField")
+            
             return true
         }
        
@@ -165,7 +165,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     
     func alertermsg(msg: String)
     {
-        let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
         self.delegate?.usernameupdateSuccess()
         self.navigationController?.popViewController(animated: true)

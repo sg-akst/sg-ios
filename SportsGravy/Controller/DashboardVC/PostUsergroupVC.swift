@@ -89,7 +89,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                     var runningWidth: CGFloat = 0.0
             let maxWidth: CGFloat = UIScreen.main.bounds.size.width
                     let horizontalSpaceBetweenButtons: CGFloat = 8.0
-                    let verticalSpaceBetweenButtons: CGFloat = 0.0
+                    let verticalSpaceBetweenButtons: CGFloat = 1.5
                     if(self.addOrder != nil)
                     {
                        self.addOrder.removeFromSuperview()
@@ -531,27 +531,114 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     func usergroup()
     {
-        self.GroupList = NSMutableArray()
+//        self.GroupList = NSMutableArray()
 
         let getuuid = UserDefaults.standard.string(forKey: "UUID")
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(self.getrolebySeasonid!)")
-        docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                    } else {
-                        for document in querySnapshot!.documents {
-                        let data: NSDictionary = document.data() as NSDictionary
-                        self.GroupList.add(data)
+        
+       if (UserDefaults.standard.bool(forKey: "user_group_user") == true) {
+        docRef.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+            //Constant.showInActivityIndicatory()
+
+                                         if let err = err {
+                                             print("Error getting documents: \(err)")
+                                         } else {
+                                            //self.TeamArray = NSMutableArray()
+                                             self.GroupList = NSMutableArray()
+
+                                             for document in querySnapshot!.documents {
+                                                 let data: NSDictionary = document.data() as NSDictionary
+                                                 print("\(document.documentID) => \(data)")
+                                                self.GroupList.add(data)
+                
+                
+                                            }
+
+                                           self.commonArray = NSMutableArray() as? [String]
+                                            let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+                                               // filteredEvents.sort()
+                                            self.commonArray.append(contentsOf: filteredEvents)
+                                            self.getuserDetail()
+                                            self.postusergroup_tbl.reloadData()
+
+                                            Constant.showInActivityIndicatory()
+                
+                
+                                        }
+                                    }
                         }
-                        self.commonArray = NSMutableArray() as? [String]
-                        var filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
-                    filteredEvents.sort()
-                        self.commonArray.append(contentsOf: filteredEvents)
-                        self.getuserDetail()
+        
+         else if(UserDefaults.standard.bool(forKey: "user_group_team") == true){
+             let docRefteam = db.collection("teams").document("\(getTeamId!)")
+            docRefteam.collection("MemberGroup").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                                     if let err = err {
+                                         print("Error getting documents: \(err)")
+                                        Constant.showInActivityIndicatory()
+
+                                     } else {
+                                        self.GroupList = NSMutableArray()
+                                         for document in querySnapshot!.documents {
+                                             let data: NSDictionary = document.data() as NSDictionary
+                                             print("\(document.documentID) => \(data)")
+                                            self.GroupList.add(data)
+                                        }
+                                       self.commonArray = NSMutableArray() as? [String]
+                                        let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+                                        //filteredEvents.sort()
+                                        self.commonArray.append(contentsOf: filteredEvents)
+                                        self.getuserDetail()
+                                        self.postusergroup_tbl.reloadData()
+
+                                        Constant.showInActivityIndicatory()
+                                    }
+                                }
+        }
+         else {
+                    docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                                            if let err = err {
+                                                print("Error getting documents: \(err)")
+                                                Constant.showInActivityIndicatory()
+
+                                            } else {
+                                               self.GroupList = NSMutableArray()
+        
+                                                for document in querySnapshot!.documents {
+                                                    let data: NSDictionary = document.data() as NSDictionary
+                                                    print("\(document.documentID) => \(data)")
+
+                                                   self.GroupList.add(data)
+                                                    
+                                               }
+                                                self.commonArray = NSMutableArray() as? [String]
+                                                let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+                                                    //filteredEvents.sort()
+                                                self.commonArray.append(contentsOf: filteredEvents)
+                                                self.getuserDetail()
+                                                self.postusergroup_tbl.reloadData()
+
+        Constant.showInActivityIndicatory()
+
+                                           }
+                        
+                                       }
                 }
-                Constant.showInActivityIndicatory()
-           }
+//        docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+//                if let err = err {
+//                    print("Error getting documents: \(err)")
+//                    } else {
+//                        for document in querySnapshot!.documents {
+//                        let data: NSDictionary = document.data() as NSDictionary
+//                        self.GroupList.add(data)
+//                        }
+//                        self.commonArray = NSMutableArray() as? [String]
+//                        var filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
+//                    filteredEvents.sort()
+//                        self.commonArray.append(contentsOf: filteredEvents)
+//                        self.getuserDetail()
+//                }
+//                Constant.showInActivityIndicatory()
+//           }
         }
        
     @objc func orderselectmethod(_ sender: UIButton)
@@ -708,7 +795,6 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                 return cell
                 }
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-             // print("You tapped cell number \(indexPath.row).")
     if(self.addorderArray.count < 5)
     {
     //self.addorderArray = NSMutableArray()
@@ -766,10 +852,10 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             for i in 0..<self.getRolebyreasonDetailArray.count
             {
                  let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
-                 let role: String = roleDic.value(forKey: "sport_name") as! String
+                 let role: String = roleDic.value(forKey: "season_label") as! String
                 if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "sport_id") as? String == getSport)
                 {
-                    getLevelId = roleDic.value(forKey: "level_id") as? String
+                    getSeasonid = roleDic.value(forKey: "season_id") as? String
 
                 }
             }
@@ -785,9 +871,10 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             {
                  let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
                  let role: String = roleDic.value(forKey: "level_name") as! String
-                if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "level_id") as? String == getSport)
+                if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "season_id") as? String == getSeasonid)
+                    
                 {
-                    getTeamId = roleDic.value(forKey: "team_id") as? String
+                    getLevelId = roleDic.value(forKey: "level_id") as? String
 
                 }
             }
@@ -795,18 +882,24 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
              getTeammethod()
 
         }
-   // getorganization()
-    //getsportsmethod()
-   // getSeasonmethod()
-    //getLevelmethod()
-    //getTeammethod()
     getuserDetail()
 
     }
     else if(self.addorderArray.count == 5)
     {
+        for i in 0..<self.getRolebyreasonDetailArray.count
+                   {
+                        let roleDic: NSDictionary = getRolebyreasonDetailArray?[i] as! NSDictionary
+                        let role: String = roleDic.value(forKey: "team_name") as! String
+                       if(self.commonArray[indexPath.row] == role && roleDic.value(forKey: "level_id") as? String == getLevelId)
+                           
+                       {
+                           getTeamId = roleDic.value(forKey: "team_id") as? String
+
+                       }
+                   }
         self.addorderArray.add("\(self.commonArray[indexPath.row])")
-        self.getTeamId = self.commonArray[indexPath.row]
+        //self.getTeamId = self.commonArray[indexPath.row]
         usergroup()
     }
     else if(self.addorderArray.count  == 6)
@@ -876,12 +969,14 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                      
     func getusergroup()
     {
-                Constant.internetconnection(vc: self)
-               Constant.showActivityIndicatory(uiView: self.view)
-               let getuuid = UserDefaults.standard.string(forKey: "UUID")
-                let db = Firestore.firestore()
+        Constant.internetconnection(vc: self)
+        Constant.showActivityIndicatory(uiView: self.view)
+        let getuuid = UserDefaults.standard.string(forKey: "UUID")
+        let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(getuuid!)")
         
+        if(getRole != "" && getRole != nil)
+        {
         docRef.collection("roles_by_season").whereField("role", isEqualTo: getRole!).getDocuments() { (querySnapshot, err) in
 
                if let err = err {
@@ -890,28 +985,52 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 self.getRolebyreasonDetailArray = NSMutableArray()
 
                        for document in querySnapshot!.documents {
-                       let data: NSDictionary = document.data() as NSDictionary
-                        let getseason_end_date =  data.value(forKey: "season_end_date") as? Timestamp
-                        let getSeason_start_date = data.value(forKey: "season_start_date") as? Timestamp
-                        //print("\(document.documentID) => \(String(describing: getseason_end_date))")
-                        if(data.value(forKey: "team_id") as? String != nil && data.value(forKey: "team_id")as! String != "")
-                        {
-                            if(getSeason_start_date != nil && getseason_end_date != nil)
-                            {
-                                let enddate = Date(timeIntervalSince1970: TimeInterval(getseason_end_date!.seconds))
-                                let startDate = Date(timeIntervalSince1970:TimeInterval(getSeason_start_date!.seconds))
-                                let currentDate = Date()  as Date?
-                                if(enddate > currentDate! || startDate < currentDate!)
-                                {
-                                       // print("yes")
-                                    self.getRolebyreasonDetailArray.add(data)
-                                    Constant.showInActivityIndicatory()
-
-                                }
-                            }
-                        }
+                        let data: NSDictionary = document.data() as NSDictionary
+                         let getseason_end_date =  data.value(forKey: "season_end_date") as! Timestamp
+                         let season_end_Date = getseason_end_date.dateValue()
+                         //print(season_end_Date)
+                         //let seasonendformatter = DateFormatter()
                         
-                      }
+                         let season_endDate:NSDate = season_end_Date as NSDate
+                         let dateFormatter:DateFormatter = DateFormatter()
+                         dateFormatter.dateFormat = "yyyy-MM-dd"
+                         let endString:String = dateFormatter.string(from: season_endDate as Date)
+                         
+                         
+                         let getSeason_start_date = data.value(forKey: "season_start_date") as! Timestamp
+                         let season_start_Date = getSeason_start_date.dateValue()
+                         
+                         let season_startDate:NSDate = season_start_Date as NSDate
+                         let dateFormatters:DateFormatter = DateFormatter()
+                         dateFormatter.dateFormat = "yyyy-MM-dd"
+                         let startString:String = dateFormatters.string(from: season_startDate as Date)
+                         
+                         if(data.value(forKey: "team_id") as? String != nil && data.value(forKey: "team_id")as! String != "")
+                         {
+                             if(endString != nil   && startString != nil )
+                             {
+                                 
+                                 let todaysDate:NSDate = NSDate()
+                                 let dateFormatter:DateFormatter = DateFormatter()
+                                 dateFormatter.dateFormat = "yyyy-MM-dd"
+                                 
+                                 if(season_endDate.timeIntervalSinceNow  > todaysDate.timeIntervalSinceNow  || season_startDate.timeIntervalSinceNow < todaysDate.timeIntervalSinceNow)
+                                 {
+                                         print("yes")
+                                     self.getRolebyreasonDetailArray.add(data)
+                                     print("\(document.documentID) => \(season_endDate)")
+                                      print("\(document.documentID) => \(season_startDate)")
+                                      print("\(document.documentID) => \(todaysDate)")
+
+                                 }
+                             }
+                             else
+                             {
+                                 print("seasondate nil")
+                             }
+                         }
+                         
+                       }
                 
                 if(self.getRolebyreasonDetailArray.count > 0)
                 {
@@ -951,7 +1070,13 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
                        }
                    }
+        }
+        else
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Role")
+            Constant.showInActivityIndicatory()
 
+        }
     }
   
     
@@ -1014,7 +1139,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                     {
                         let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary
                         addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_id")
-                        addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_name")
+                        addgroup.setValue(addorderArray.lastObject, forKey: "membergroup_name")
                         addgroup.setValue(role, forKey: "user_id")
                         addgroup.setValue(role, forKey: "user_name")
                         
@@ -1042,7 +1167,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         }
         else
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Coach can select Team or above as usergroup")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Coach Can Select Team or Above As Usergroup")
         }
 
 

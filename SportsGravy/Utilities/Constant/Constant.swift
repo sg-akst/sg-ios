@@ -8,6 +8,7 @@
 
 import UIKit
 
+
  //let BaseUrl = "https://us-central1-sports-gravy-app.cloudfunctions.net/"
   let BaseUrl = "https://us-central1-sportsgravy-testing.cloudfunctions.net/"
 
@@ -33,17 +34,32 @@ class Constant: NSObject {
 
     static func internetconnection(vc: UIViewController)
     {
-        if Reachability.isConnectedToNetwork()
+       let reachability: Reachability = Reachability.networkReachabilityForInternetConnection()!
+        if reachability.isReachable
         {
+//            let netStatus = reachability.currentReachabilityStatus
+//            switch netStatus {
+//            case .notReachable:
+//                break
+//            case .reachableViaWiFi:
+//
+//                print(netStatus)
+//              break
+//
+//              case .reachableViaWWAN:
+//                break
+//            }
+            
             print("Internet Connection Available!")
                    
         }else{
           print("Internet Connection not Available!")
-          Constant.showAlertMessage(vc: vc, titleStr: "SportsGravy", messageStr: "Internet Connection not Available!")
+          Constant.showAlertMessage(vc: vc, titleStr: "SportsGravy", messageStr: "Internet Connection Not Available!")
           }
                
     }
-
+    
+    
     
     struct ScreenSize
       {
@@ -133,7 +149,7 @@ static func showInActivityIndicatory() {
     }
     
     static func showAlertMessage(vc: UIViewController, titleStr:String, messageStr:String) -> Void {
-        let alert = UIAlertController(title: titleStr, message: messageStr, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: titleStr, message: messageStr.capitalized, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                    //Cancel Action
                }))

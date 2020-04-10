@@ -89,7 +89,7 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
                 {
                     let button_title = UIButton(type: .roundedRect)
         
-                    button_title.titleLabel?.font = UIFont(name: "Arial", size: 14)
+                    button_title.titleLabel?.font = UIFont(name: "Arial", size: 16)
                     button_title.titleLabel?.textAlignment = .left
                     button_title.setTitleColor(UIColor.lightGray, for: .normal)
                     button_title.isUserInteractionEnabled = false
@@ -169,12 +169,17 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
                if(indexOfLeftmostButtonOnCurrentLine > 0)
                 {
                 self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 80 : 60
-                if(indexOfLeftmostButtonOnCurrentLine > 5)
+                if(indexOfLeftmostButtonOnCurrentLine > 5 && indexOfLeftmostButtonOnCurrentLine < 7)
                                              {
                                                         
-                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 110 : 80
+                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 115 : 80
                                                         
                                              }
+            if(indexOfLeftmostButtonOnCurrentLine > 6)
+            {
+                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 115 : 115
+
+            }
                                              }
             }
     

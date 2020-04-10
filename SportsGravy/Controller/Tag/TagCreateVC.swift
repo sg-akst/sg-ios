@@ -67,8 +67,8 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         var indexOfLeftmostButtonOnCurrentLine: Int = 0
         var runningWidth: CGFloat = 0.0
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
-        let horizontalSpaceBetweenButtons: CGFloat = 5.0
-        let verticalSpaceBetweenButtons: CGFloat = 0.0
+        let horizontalSpaceBetweenButtons: CGFloat = 8.0
+        let verticalSpaceBetweenButtons: CGFloat = 1.5
         self.addOrderView = UIView()
         self.addOrderView.frame = self.SelectorderView.bounds
         for i in 0..<self.getorderArray.count
@@ -227,7 +227,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
 
         if(tag_txt.text == nil || tag_txt.text == "")
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter Tag name")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Tag Name")
         }
         else {
         Constant.internetconnection(vc: self)
@@ -294,7 +294,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                                                print("Error writing document: \(err)")
                                         } else {
                                             
-                                        self.alertermsg(msg: "Tag created successfully ")
+                                        self.alertermsg(msg: "Tag Created Successfully ")
                                         }
                                         }
                                     }
@@ -304,21 +304,16 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                                 }
                             }
                             
-                            
-                            
-                           //  Constant.showInActivityIndicatory()
-
-
                          }
 
                      }
-                    //  Constant.showInActivityIndicatory()
+                   
                  }
                 
                 }
                 else
                 {
-                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This Tag Already exit")
+                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "This Tag Already Exist")
                     Constant.showInActivityIndicatory()
                 }
               
@@ -329,7 +324,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
     }
     func alertermsg(msg: String)
         {
-            let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
                 self.delegate?.createAfterCallMethod()
                 self.navigationController?.popViewController(animated: false)

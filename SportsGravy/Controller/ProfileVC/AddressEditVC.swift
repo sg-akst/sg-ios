@@ -198,7 +198,12 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
           return true
       }
      func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(textField.text == addressDetailDic.value(forKey: "street1") as? String || textField.text == addressDetailDic.value(forKey: "street2") as? String || textField.text == addressDetailDic.value(forKey: "city")as? String || textField.text == addressDetailDic.value(forKey: "postal_code")as? String)
+       //let newString = (string as NSString).replacingCharacters(in: range, with: string)
+        //textField.text = string
+
+
+       // if(textField.text == addressDetailDic.value(forKey: "street1") as? String || textField.text == addressDetailDic.value(forKey: "street2") as? String || textField.text == addressDetailDic.value(forKey: "city")as? String || textField.text == addressDetailDic.value(forKey: "postal_code")as? String)
+          if (string == "")
          {
             update_address_btn.isUserInteractionEnabled = false
             update_address_btn.setTitleColor(UIColor.darkGray, for: .normal)
@@ -208,8 +213,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
              update_address_btn.isUserInteractionEnabled = true
              update_address_btn.setTitleColor(UIColor.blue, for: .normal)
          }
-          print("textField")
-          print("Leaving textField")
+       
           return true
       }
      
@@ -220,40 +224,45 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
           print("Leaving textFieldDidEndEditing")
       }
      func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+
          return true
      }
      func textFieldDidBeginEditing(_ textField: UITextField) {
         
      }
 
-     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        //delegate method
+        textField.resignFirstResponder()
          return true
      }
     @IBAction func updateAddress(_ sender: UIButton)
     {
+         
         if(self.street1_txt.text == nil || self.street1_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter address")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Address")
 
         }
         else if(self.city_txt.text == nil || self.city_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter city")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter City")
 
         }
         else if(self.potel_txt.text == nil || self.potel_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter potelcode")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Potelcode")
 
         }
         else if(self.state_txt.text == nil || self.state_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select state")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select State")
 
         }
         else if(self.country_txt.text == nil || self.country_txt.text?.isEmpty == true)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select country")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Country")
 
         }
         else
@@ -283,7 +292,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
                 } else {
                     print("Document successfully updated")
                    // Constant.showInActivityIndicatory()
-                    self.alertermsg(msg: "Address updated successfully")
+                    self.alertermsg(msg: "Address Updated Successfully")
 
                     
                 }
@@ -292,7 +301,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     }
     func alertermsg(msg: String)
     {
-        let alert = UIAlertController(title: "SportsGravy", message: msg, preferredStyle: UIAlertController.Style.alert);
+        let alert = UIAlertController(title: "SportsGravy", message: msg.capitalized, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
             self.delegate?.addressupdateSuccess()
         self.navigationController?.popViewController(animated: true)

@@ -57,6 +57,12 @@ class SittingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         {
             user_group_custom.setImage(UIImage(named: "select"), for: .normal)
         }
+        else if(UserDefaults.standard.bool(forKey: "user_group_team") == false)
+        {
+            UserDefaults.standard.set(true, forKey: "user_group_team")
+
+            user_group_team.setImage(UIImage(named: "select"), for: .normal)
+        }
         
         if(UserDefaults.standard.bool(forKey: "tag_team") == true)
         {
@@ -70,6 +76,13 @@ class SittingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         {
             tag_custom.setImage(UIImage(named: "select"), for: .normal)
         }
+        else  if(UserDefaults.standard.bool(forKey: "tag_team") == false)
+        {
+            UserDefaults.standard.set(true, forKey: "tag_team")
+
+            tag_team.setImage(UIImage(named: "select"), for: .normal)
+        }
+        
         
         if(UserDefaults.standard.bool(forKey: "canned_team") == true)
         {
@@ -83,28 +96,18 @@ class SittingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         {
             canned_custom.setImage(UIImage(named: "select"), for: .normal)
         }
-        
+        else if(UserDefaults.standard.bool(forKey: "canned_team") == false)
+        {
+            UserDefaults.standard.set(true, forKey: "canned_team")
+
+            canned_team.setImage(UIImage(named: "select"), for: .normal)
+        }
         if(UserDefaults.standard.bool(forKey: "feedpost"))
         {
             feed_post_switch.isOn = true
         }
         
-        
-//        sitting_tbl.delegate = self
-//        sitting_tbl.dataSource = self
-//        sittingslistArray = NSMutableArray()
-//        let titleArray  = ["Feed Post", "User Groups", "Tags", "Canned Responses"]
-//        let subTitle   = ["Enable Posting Feed When WIFI is Connected","Enable Custom Sort ordering","Enable Custom Sort ordering","Enable Custom Sort ordering"]
-//        for i in 0..<titleArray.count
-//        {
-//            let createList: NSMutableDictionary = NSMutableDictionary()
-//            createList.setValue(titleArray[i], forKey: "title")
-//            createList.setValue(subTitle[i], forKey: "subTitle")
-//            sittingslistArray.add(createList)
-//        }
-//        sitting_tbl.tableFooterView = UIView()
-//        sitting_tbl.sizeToFit()
-
+   
 
     }
     
@@ -400,61 +403,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
        
         
     }
-//   @IBAction func switchValueDidChange(_ sender: UISwitch){
-//       let button = sender
-//    let cell = button.superview?.superview as? SittingCell
-//        if sender.isOn {
-//           cell?.segment_btn.isOn =  true
-//            if(sender.tag == 0)
-//            {
-//                UserDefaults.standard.set(true, forKey: "\(button.tag)")
-//
-//                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Feed Post Only when wifi is connected")
-//            }
-//            if(button.tag == 1)
-//            {
-//                UserDefaults.standard.set(true, forKey: "\(button.tag)")
-//                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "User group based on custom sort order")
-//
-//            }
-//            if(button.tag == 2)
-//            {
-//                UserDefaults.standard.set(true, forKey: "\(button.tag)")
-//
-//                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Custom tag based on custom sort order")
-//            }
-//            if(button.tag == 3)
-//            {
-//                UserDefaults.standard.set(true, forKey: "\(button.tag)")
-//
-//                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Canned Response based on custom sort order")
-//            }
-//          } else {
-//
-//              cell?.segment_btn.isOn =  false
-//           if(button.tag == 0)
-//           {
-//               UserDefaults.standard.set(false, forKey: "\(button.tag)")
-//            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Feed Post with both wifi and mobile network")
-//           }
-//           if(button.tag == 1)
-//           {
-//               UserDefaults.standard.set(false, forKey: "\(button.tag)")
-//             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "User group based on frequently used order ")
-//           }
-//           if(button.tag == 2)
-//           {
-//               UserDefaults.standard.set(false, forKey: "\(button.tag)")
-//            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Custom Tag based on frequently used order")
-//           }
-//           if(button.tag == 3)
-//           {
-//               UserDefaults.standard.set(false, forKey: "\(button.tag)")
-//             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Canned Response based on frequently used order")
-//           }
-//          }
-//
-//      }
+
 @IBAction func settingcancelbtn(_ sender: UIButton)
 {
     self.navigationController?.popViewController(animated: true)

@@ -113,7 +113,7 @@ class SignupVC: UIViewController, UITextFieldDelegate {
     {
         if Constant.isValidEmail(testStr: email_txt.text!) == false{
             print("Validate EmailID")
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter valid EmailID")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Valid EmailID")
         }
         else
         {

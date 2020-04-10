@@ -19,6 +19,7 @@ class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var posttag_tbl: UITableView!
     var TeamId: String!
+    var rolebySeasonId: String!
     
     var taglist: NSMutableArray!
     weak var delegate:SelectPostTagDelegate?
@@ -40,28 +41,89 @@ class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                    Constant.showActivityIndicatory(uiView: self.view)
                    let getuuid = UserDefaults.standard.string(forKey: "UUID")
                     let db = Firestore.firestore()
-                        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(TeamId!)")
+                        let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonId!)")
+            if (UserDefaults.standard.bool(forKey: "tag_user") == true)
+{
+                    
+                docRef.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                   // Constant.showInActivityIndicatory()
 
-            docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
-                Constant.showInActivityIndicatory()
-
-                                 if let err = err {
-                                     print("Error getting documents: \(err)")
-                                 } else {
-                                    self.taglist = NSMutableArray()
-
-                                     for document in querySnapshot!.documents {
-                                         let data: NSDictionary = document.data() as NSDictionary
-                                         
-                                        self.taglist.add(data)
+                if let err = err {
+                print("Error getting documents: \(err)")
+                } else {
+                self.taglist = NSMutableArray()
                 
-                                    }
-                                   
-                                    self.posttag_tbl.reloadData()
-                                    Constant.showInActivityIndicatory()
-
-                                }
+                for document in querySnapshot!.documents {
+                let data: NSDictionary = document.data() as NSDictionary
+                
+                self.taglist.add(data)
+                
+                }
+                self.posttag_tbl.reloadData()
+               Constant.showInActivityIndicatory()
+                
+                    }
+                }
+            }
+            else if(UserDefaults.standard.bool(forKey: "tag_team") == true)
+{
+                 let docRefteam = db.collection("teams").document("\(TeamId!)")
+                docRefteam.collection("Tags").order(by: "count", descending: true).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                print("Error getting documents: \(err)")
+                } else {
+                self.taglist = NSMutableArray()
+                
+                for document in querySnapshot!.documents {
+                let data: NSDictionary = document.data() as NSDictionary
+                
+                self.taglist.add(data)
+                
+                }
+                self.posttag_tbl.reloadData()
+                Constant.showInActivityIndicatory()
+                
+                    }
+                }
+            }
+           else {
+            docRef.collection("Tags").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                print("Error getting documents: \(err)")
+                                                 } else {
+                                                    self.taglist = NSMutableArray()
+                
+                                                     for document in querySnapshot!.documents {
+                                                         let data: NSDictionary = document.data() as NSDictionary
+                                                         self.taglist.add(data)
+                                                    }
+                                                    self.posttag_tbl.reloadData()
+                                                   Constant.showInActivityIndicatory()
+                
+                                                }
+                                            }
                             }
+            
+//            docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
+//                Constant.showInActivityIndicatory()
+//
+//                                 if let err = err {
+//                                     print("Error getting documents: \(err)")
+//                                 } else {
+//                                    self.taglist = NSMutableArray()
+//
+//                                     for document in querySnapshot!.documents {
+//                                         let data: NSDictionary = document.data() as NSDictionary
+//                                         
+//                                        self.taglist.add(data)
+//                
+//                                    }
+//                                   
+//                                    self.posttag_tbl.reloadData()
+//                                    Constant.showInActivityIndicatory()
+//
+//                                }
+//                            }
             }
            
     

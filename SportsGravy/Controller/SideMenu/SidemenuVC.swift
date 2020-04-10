@@ -59,10 +59,13 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        self.settings_view.isHidden = true
         self.user_view.isHidden = true
        
+
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
       getuserDetail()
          
 

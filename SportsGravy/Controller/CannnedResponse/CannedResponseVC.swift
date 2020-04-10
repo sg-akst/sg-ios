@@ -107,7 +107,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
             var runningWidth: CGFloat = 0.0
             let maxWidth: CGFloat = UIScreen.main.bounds.size.width
             let horizontalSpaceBetweenButtons: CGFloat = 8.0
-            let verticalSpaceBetweenButtons: CGFloat = 0.0
+            let verticalSpaceBetweenButtons: CGFloat = 1.5
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -719,11 +719,11 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
         let isDelete: Bool = (count != false ) ? false : true
         if(isDelete == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "system generated Canned Responses cant able to delete")
+            Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "System Generated Canned Responses Cant Able To Delete")
         }
         else
         {
-            let alert = UIAlertController(title: " Delete Canned Response? ", message: "Are you sure want to delete \(teamDic.value(forKey: "cannedResponseTitle")!)", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: " Delete Canned Response? ", message: "Are You Sure Want To Delete \(teamDic.value(forKey: "cannedResponseTitle")!)".capitalized, preferredStyle: UIAlertController.Style.alert);
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        //Cancel Action
                    }))
@@ -953,7 +953,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
            vc.getorderArray = addorderArray
            vc.sortingOrderArray = self.TeamArray
         vc.delegate = self
-           vc.selectType = "CannedResponse"
+           vc.selectType = "Canned Response"
         vc.getorganizationDetails = getRolebyreasonDetailArray
         vc.rolebySeasonid = self.getrolebySeasonid as NSString?
         vc.getTeamId = self.getTeamId as NSString?

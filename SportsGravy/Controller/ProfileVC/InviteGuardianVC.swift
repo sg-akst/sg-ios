@@ -96,16 +96,16 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     {
         if(guardianemail_txt.text!.isEmpty)
           {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter email address")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Email Address")
           }
         else if Constant.isValidEmail(testStr: guardianemail_txt.text!) == false{
               print("Validate EmailID")
-              Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter valid email address")
+              Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Valid Email Address")
           }
        else if(guardianmobil_txt.text == nil || guardianmobil_txt.text?.isEmpty == true
             || isValidMobile(testStr: guardianmobil_txt.text!) == false)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter mobile number")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Mobile Number")
         }
         else
         {

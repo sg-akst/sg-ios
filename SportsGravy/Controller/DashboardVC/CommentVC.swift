@@ -193,7 +193,7 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         comment_txt.resignFirstResponder()
         if(comment_txt.text == "" || comment_txt.text == nil)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please enter the comment")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter The Comment")
         }
         else
         {
@@ -320,13 +320,16 @@ class CommentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         print(dateFormatterPrint.string(from: datees as Date))
 
         cell.postdate_lbl.text = "Posted at \(dateFormatterPrint.string(from: datees as Date))"
+        cell.profile_img.layer.cornerRadius = cell.profile_img.frame.size.width/2
+        cell.profile_img.contentMode = .scaleAspectFill
+        cell.profile_img.layer.masksToBounds = true
+        cell.profile_img.image = UIImage(named: "person")
         let url = URL(string: "\(dic.value(forKey: "avatar")!)")
         if(url != nil)
         {
-          cell.profile_img.kf.setImage(with: url)
-            cell.profile_img.layer.cornerRadius = cell.profile_img.frame.size.width/2
-           cell.profile_img.layer.backgroundColor = UIColor.lightGray.cgColor
-            cell.profile_img.contentMode = .scaleAspectFill
+           
+            cell.profile_img.kf.setImage(with: url)
+
 
         }
         

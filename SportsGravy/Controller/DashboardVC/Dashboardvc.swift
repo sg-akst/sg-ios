@@ -26,6 +26,20 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     func feddSelectDetail(userDetail: NSMutableArray, selectitemname: String) {
         
+        let font = UIFont(name: "Arial", size: 16)
+         let fontAttributes = [NSAttributedStringKey.font: font]
+         let size = selectitemname.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
+         print("select:\(selectitemname) \(size.width)")
+       // self.postvielname_lbl.frame = CGRect(x: self.displayselectitem.frame.origin.x + 3, y: self.displayselectitem.frame.origin.y, width: size.width, height: self.displayselectitem.frame.size.height)
+//         cell.select_text_width.constant = size.width + 5
+//         cell.common_view_width.constant = cell.select_text_width.constant + 35
+        //cell.detail_btn.setTitle(selectname, for: .normal)
+        // cell.detail_btn.setImage(UIImage(named: ""), for: .normal)
+
+        
+        
+        
+        
         self.postvielname_lbl.text = selectitemname
          self.postvielname_lbl.backgroundColor = UIColor.white
          self.postvielname_lbl.textColor = UIColor.gray
@@ -102,6 +116,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
    
     var selectRole: String!
     var videoplay_btn: UIButton!
+    
+    var db:DBHelper = DBHelper()
+    
+    var persons:[FeedPostData] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,15 +145,38 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         commonArray = NSMutableArray()
         selectindexArray = NSMutableArray()
         post_tbl.tableFooterView = UIView()
+        let reachability: Reachability = Reachability.networkReachabilityForInternetConnection()!
 
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        let netStatus = reachability.currentReachabilityStatus
+        switch netStatus {
+        case .notReachable:
+        break
+        case .reachableViaWiFi:
+           wificonnectionlocaldatabaseupload()
+        print(netStatus)
+        break
+                           
+        case .reachableViaWWAN:
+        break
+        }
         if(UserDefaults.standard.value(forKey: "Role") != nil)
         {
             selectRole = (UserDefaults.standard.value(forKey: "Role") != nil) ? UserDefaults.standard.value(forKey: "Role") as! String : ""
         }
         getFeedMethod()
+
+    }
+    func wificonnectionlocaldatabaseupload()
+    {
+
+        let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
+        objpostvc.localDatauploadfirebase()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
         
     }
     @objc func selectitemRemove(_ sender: UIButton)
@@ -273,11 +314,10 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             if(urls?.absoluteString != "")
              {
                 
-                cell.profileImg.kf.setImage(with: urls! as URL)
-
-            
                  cell.profileImg.layer.cornerRadius = cell.profileImg.frame.size.width/2
-                 cell.profileImg.layer.backgroundColor = UIColor.lightGray.cgColor
+                 cell.profileImg.layer.masksToBounds = true
+                 cell.profileImg.kf.setImage(with: urls! as URL)
+
              }
             let likeDic: NSDictionary = Dic.value(forKey: "likes") as! NSDictionary
             let userlist: NSArray = likeDic.value(forKey: "user_list") as! NSArray
@@ -289,7 +329,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
     cell.comment_lbl_height.constant = (Dic.value(forKey: "feedText") as? String != "" && Dic.value(forKey: "feedText") != nil) ? 50 : 0
     cell.comment_lbl.text = Dic.value(forKey: "feedText") as? String
-           cell.infoviewHeight.constant = (Dic.value(forKey: "isInfo") as! Bool  == true) ? 110 : 0
+   
            cell.infoview.isHidden = (Dic.value(forKey: "isInfo") as! Bool == true ) ? false : true
             cell.info_btn.tag = indexPath.row
             cell.like_btn.tag = indexPath.row
@@ -304,7 +344,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     if(postinfoDic.value(forKey:"organization_name") != nil && postinfoDic.value(forKey: "organization_name")as? String != "")
     {
         
-        infoDetail.add(" org:  \(postinfoDic.value(forKey:"organization_name") as! NSString)")
+        infoDetail.add(" Org:  \(postinfoDic.value(forKey:"organization_name") as! NSString)")
     }
     
     if(postinfoDic.value(forKey:"sport_name") != nil && postinfoDic.value(forKey:"sport_name")as? String != "")
@@ -319,7 +359,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
          
     if(postinfoDic.value(forKey:"level_name") != nil && postinfoDic.value(forKey: "level_name")as? String != "")
          {
-            infoDetail.add(" Leavel:  \(postinfoDic.value(forKey:"level_name") as! NSString)")
+            infoDetail.add(" Level:  \(postinfoDic.value(forKey:"level_name") as! NSString)")
 
          }
          
@@ -343,6 +383,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     
     cell.getInfoDetail(getinfodetailArray: infoDetail)
+     
+    
             var postimageArray = NSMutableArray()
             let keyExists = Dic.value(forKey: "feedImageURL") != nil
             let videoExists = Dic.value(forKey: "feedVideoURL") != nil
@@ -364,10 +406,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                     let postvideo : String = Dic.value(forKey: "feedVideoURL") as! String
                     let videoURL = NSURL(string: "\(postvideo)")
-//                    cell.avPlayer = AVPlayer(url: videoURL! as URL)
-//
-//                    cell.avPlayerLayer = AVPlayerLayer(player: cell.avPlayer)
-//                    cell.avPlayerLayer?.frame = cell.bounds
+
                     cell.videoview = AGVideoPlayerView()
                     cell.videoview.frame =  CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: imageheight)
                     cell.postimageScroll.addSubview(cell.videoview)
@@ -378,19 +417,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     cell.videoview.shouldAutoRepeat = false
                     cell.videoview.showsCustomControls = false
                     cell.videoview.shouldSwitchToFullscreen = true
-//                    cell.videoview = UIView()
-//
-//                    cell.videoview.frame =  CGRect(x: 0, y: -10, width: imagewidth, height: imageheight)
-//                    cell.videoview.layer.addSublayer(cell.avPlayerLayer!)
-//                    cell.videoview.layer.display()
-//                    videoplay_btn = UIButton()
-//                    videoplay_btn.frame = CGRect(x: videoview.frame.size.width/2, y: videoview.frame.size.height/2, width: 30, height: 30)
-//                    videoplay_btn.setImage(UIImage(named: "video_play"), for: .normal)
-//                    videoplay_btn.tag = indexPath.row
-//                    videoplay_btn.addTarget(self, action: #selector(videoplay), for: .touchUpInside)
-//                    videoview.addSubview(videoplay_btn)
-                   // cell.avPlayer?.play()
-                   
+
                 }
                 else
                 {
@@ -428,6 +455,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
                  cell.pageControl.isHidden = true
                 
             }
+    cell.infoviewHeight.constant = (Dic.value(forKey: "isInfo") as! Bool  == true) ? 115 : 0
             cell.postimageScroll.isPagingEnabled = true
             cell.postimageScroll.delegate = self
             cell.pageControl.currentPage = 0;
@@ -441,149 +469,24 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
         }
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! PostCell
-// Check the player object is set (unwrap it)
+        if(self.commonArray.count>0)
+        {
+      let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! PostCell
     if let player = cell.avPlayerLayer?.player {
-    // Check if the player is playing
     if player.rate != 0 {
-        // Pause the player
         player.pause()
     }
 }
+        }
     }
-//    func getInfoDetail(getinfodetailArray: NSMutableArray) -> UIView{
-//
-//            let buttons: NSMutableArray = NSMutableArray()
-//            var indexOfLeftmostButtonOnCurrentLine: Int = 0
-//            var runningWidth: CGFloat = 0.0
-//            let maxWidth: CGFloat = UIScreen.main.bounds.size.width
-//            let horizontalSpaceBetweenButtons: CGFloat = 8.0
-//            let verticalSpaceBetweenButtons: CGFloat = 0.0
-////            if(self.addOrder != nil)
-////            {
-////               self.addOrder.removeFromSuperview()
-////            }
-//            let addinfo = UIView()
-//        addinfo.frame = CGRect(x: 10, y: 50, width: self.view.frame.size.width-20, height: 70)
-//            for i in 0..<getinfodetailArray.count
-//            {
-//                let button_title = UIButton(type: .roundedRect)
-//
-//                button_title.titleLabel?.font = UIFont(name: "Arial", size: 18)
-//                button_title.titleLabel?.textAlignment = .left
-//                let title: String = getinfodetailArray[i] as! String
-//                if(title != "" && title != nil)
-//                {
-//                if(i == 0)
-//                {
-//                   button_title.setTitle("\(getinfodetailArray[i] as! String)", for: .normal)
-//                }
-//                else
-//                {
-//                  button_title.setTitle("\(getinfodetailArray[i] as! String)", for: .normal)
-//
-//                }
-//
-//                button_title.translatesAutoresizingMaskIntoConstraints = false
-//                let attrStr = NSMutableAttributedString(string: "\(button_title.title(for: .normal) ?? "")")
-//
-//                if(i != 0)
-//                {
-//                    attrStr.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 2))
-//                }
-//               button_title.setAttributedTitle(attrStr, for: .normal)
-//
-//                let lastIndex: Int = getinfodetailArray.count-1
-//
-//                if(lastIndex == i)
-//               {
-//                button_title.tintColor = UIColor.gray
-//                button_title.setTitleColor(UIColor.gray, for: .normal)
-//                button_title.isUserInteractionEnabled = false
-//                }
-//                else
-//               {
-//                button_title.tintColor = UIColor.blue
-//                button_title.setTitleColor(UIColor.blue, for: .normal)
-//                button_title.isUserInteractionEnabled = true
-//
-//                }
-//                button_title.sizeToFit()
-//                button_title.tag = i
-//                addinfo.addSubview(button_title)
-//              //  button_title.addTarget(self, action: #selector(orderselectmethod), for: .touchUpInside)
-//                if ((i == 0) || (runningWidth + button_title.frame.size.width > maxWidth))
-//                 {
-//                     runningWidth = button_title.frame.size.width
-//                    if(i==0)
-//                    {
-//                        // first button (top left)
-//                        // horizontal position: same as previous leftmost button (on line above)
-//                       let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .left, relatedBy: .equal, toItem: addinfo, attribute: .left, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
-//                       button_title.setAttributedTitle(attrStr, for: .normal)
-//                        addinfo.addConstraint(horizontalConstraint)
-//
-//                        // vertical position:
-//                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .top, relatedBy: .equal, toItem: addinfo, attribute: .top, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
-//                        addinfo.addConstraint(verticalConstraint)
-//
-//                    }
-//                    else{
-//                        // put it in new line
-//                        let previousLeftmostButton: UIButton = buttons.object(at: indexOfLeftmostButtonOnCurrentLine) as! UIButton
-//
-//                        // horizontal position: same as previous leftmost button (on line above)
-//                        let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .left, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .left, multiplier: 1.0, constant: 0.0)
-//                        addinfo.addConstraint(horizontalConstraint)
-//
-//                        // vertical position:
-//                        let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .top, relatedBy: .equal, toItem: previousLeftmostButton, attribute: .bottom, multiplier: 1.0, constant: verticalSpaceBetweenButtons)
-//                        addinfo.addConstraint(verticalConstraint)
-//
-//
-//                        indexOfLeftmostButtonOnCurrentLine = i
-//                    }
-//                }
-//                else
-//                {
-//                    runningWidth += button_title.frame.size.width + horizontalSpaceBetweenButtons;
-//
-//                    let previousButton: UIButton = buttons.object(at: i-1) as! UIButton  //[buttons objectAtIndex:(i-1)];
-//
-//                               // horizontal position: right from previous button
-//                    let horizontalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: horizontalSpaceBetweenButtons)
-//                    addinfo.addConstraint(horizontalConstraint)
-//
-//                               // vertical position same as previous button
-//                    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint(item: button_title, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0.0)
-//                    addinfo.addConstraint(verticalConstraint)
-//
-//                }
-//                buttons.add(button_title)
-//            }
-//
-//            }
-//
-//            //self.addorderview.addSubview(addOrder)
-//           // orderviewheight.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 70 : 40
-//
-////            if(commonArray.count > 0)
-////            {
-////                commonArray.removeAll { $0 == "" }
-////                //Constant.showInActivityIndicatory()
-////                //tag_tbl.reloadData()
-////
-////
-////            }
-//            return addinfo
-//        }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+        if(self.commonArray.count>0)
+        {
     let Dic: NSDictionary = self.commonArray?[indexPath.row] as! NSDictionary
         
         let keyExists = Dic.value(forKey: "feedImageURL") != nil
         let videoExists = Dic.value(forKey: "feedVideoURL") != nil
-      print("fdfghsghfsfs:\(Dic.value(forKey: "feedText") as? String)")
         if(keyExists == true  || videoExists == true)
         {
             
@@ -610,6 +513,7 @@ let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath)
                 }
                 else
                 {
+                    //return cell.postimageviewHeight.constant + cell.comment_lbl_height.constant + cell.infoviewHeight.constant
                     return 515.0
                 }
                 
@@ -628,13 +532,9 @@ let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath)
             }
 
         }
+        }
+        return 0
     }
-//   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//       pausePlayeVideos()
-//   }
-   
-   
-   
     @objc func videoplay(_ sender: UIButton)
     {
         let button = sender
@@ -852,7 +752,7 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
     func feedfilter(feeddetail: NSDictionary)
     {
         Constant.internetconnection(vc: self)
-        //Constant.showActivityIndicatory(uiView: self.view)
+        Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getFeedFilter
         let header: HTTPHeaders = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
@@ -900,12 +800,15 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
                                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                                 appDelegate.timerAction()
                                // self.getplayerlist()
+                                Constant.showInActivityIndicatory()
+
                             }
                             else
                             {
                                 self.commonArray = NSMutableArray()
                                 self.post_tbl.reloadData()
                                 self.emptyfeed_img.isHidden = (self.commonArray.count == 0) ? false : true
+                                Constant.showInActivityIndicatory()
 
                             }
                            

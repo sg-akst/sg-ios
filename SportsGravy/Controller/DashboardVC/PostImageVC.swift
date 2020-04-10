@@ -19,6 +19,7 @@ import AlamofireImage
 import Kingfisher
 import Lightbox
 import ImagePicker
+import SwiftyJSON
 
 
 
@@ -41,7 +42,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         {
            //self.post_view.isHidden = false
             self.post_collection_view.isHidden = false
-            let scrollheight = self.postTbl_height.constant + CGFloat(images.count * 100)
+            let scrollheight = self.postTbl_height.constant + description_view_height.constant + CGFloat(images.count * 100)
             self.scroll_view.contentSize = CGSize(width: UIScreen.main.bounds.size.width, height: scrollheight)
            self.post_collection_view.reloadData()
         }
@@ -83,7 +84,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
          }
          let sectionIndex = IndexSet(integer: 2)
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-        postTbl_height.constant = postTbl_height.constant + 45
+        //self.postTbl_height.constant = CGFloat(self.postsections.count * 45) + 40
 
 
     }
@@ -107,7 +108,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
          }
          let sectionIndex = IndexSet(integer: 3)
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-        postTbl_height.constant = postTbl_height.constant + 45
+       // self.postTbl_height.constant = CGFloat(self.postsections.count * 45) + 40
 
     }
     
@@ -127,13 +128,18 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
          self.postteam_tbl.reloadSections(sectionIndex, with: .none)
         
-        postTbl_height.constant = postTbl_height.constant + 45
+        //self.postTbl_height.constant = CGFloat(self.postsections.count * 45) + 40
 
     }
     
     let imageviewcontroller = UIImagePickerController()
     
     func selectuserGroubDetail(userDetail: NSMutableArray) {
+        
+        DoneBtn.isUserInteractionEnabled = true
+        DoneBtn.setTitleColor(UIColor.blue, for: .normal)
+
+        
         let userTeam: NSDictionary = userDetail[0] as! NSDictionary
         teamList = userTeam
         
@@ -157,12 +163,12 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         let sectionIndex = IndexSet(integer: 0)
         self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-        postTbl_height.constant = CGFloat(self.postsections.count * 45)
+       // postTbl_height.constant = CGFloat(self.postsections.count * 45)
 
         
     }
     
-    
+
     @IBOutlet weak var postteam_tbl: UITableView!
     @IBOutlet weak var post_content_txt: UITextView!
     @IBOutlet weak var postimage: UIImageView!
@@ -170,6 +176,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
    // @IBOutlet weak var postvideo: UIImageView!
     @IBOutlet weak var postTbl_height: NSLayoutConstraint!
     @IBOutlet weak var post_collection_view: UICollectionView!
+    @IBOutlet weak var description_view_height: NSLayoutConstraint!
+
     @IBOutlet weak var post_view: UIView!
     @IBOutlet weak var close_Btn: UIButton!
     @IBOutlet weak var video_btn: UIButton!
@@ -177,6 +185,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var gallery_btn: UIButton!
     @IBOutlet weak var scroll_view: UIScrollView!
     @IBOutlet weak var content_count_lbl: UILabel!
+    @IBOutlet weak var DoneBtn: UIButton!
     
     
     var postsections = [PostGroupSection]()
@@ -207,10 +216,12 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     var Select_post_image: [Image]!
     var tempMedia: URL?
-
+    var videoPath: String!
     var isImage: Bool!
    
-
+    var db:DBHelper = DBHelper()
+       
+    var persons:[FeedPostData] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -228,7 +239,10 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         close_Btn.layer.borderWidth = 1
         close_Btn.layer.borderColor = UIColor.white.cgColor
         close_Btn.isHidden = true
+        DoneBtn.isUserInteractionEnabled = true
+
       //  scroll_view.contentSize = CGSize(width: self.view.frame.size.width, height: 800)
+        isImage = false
         
         let addHeader: [String] = ["Who would you like to share this post with?", "How would you like to tag this post?","What was your reaction?","Select a canned response"]
 
@@ -260,24 +274,42 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         postteam_tbl.tableFooterView = UIView()
         self.postteam_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         postteam_tbl.sizeToFit()
+        
+        NotificationCenter.default.addObserver(self,selector: #selector(PostImageVC.localDatauploadfirebase),name: NSNotification.Name(rawValue: "LocalDatabase"),object: nil)
        
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-       
+            if(text == "")
+            {
+                DoneBtn.isUserInteractionEnabled = false
+                DoneBtn.setTitleColor(UIColor.darkGray, for: .normal)
+        }
+        else
+            {
+                DoneBtn.isUserInteractionEnabled = true
+                DoneBtn.setTitleColor(UIColor.blue, for: .normal)
+        }
               if let _ = textView.text{
-                  let text = textView.text! as NSString
-                let fullText = text.replacingCharacters(in: range, with: text as String)
+                  //let text = textView.text! as NSString
+                let fullText = "\(textView.text!)" + "\(text)" //text.replacingCharacters(in: range, with: text as String)
                  let  wordCount = fullText.count
                   print(wordCount)
                content_count_lbl.text =  "\(wordCount)/250" // Set value of the label
                 
-                if(wordCount > 248)
+                if(wordCount > 249)
                 {
                     textView.resignFirstResponder()
                 }
               }
         return true
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let fixedWidth = textView.frame.size.width
+        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        description_view_height.constant = newSize.height
+       // textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
     }
     
      // MARK: - UITableViewDataSource
@@ -292,6 +324,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 return 1
             }
             sectionCount = items.count
+            print("section:\(sectionCount)")
+           // self.postTbl_height.constant = CGFloat(self.postsections[section].userlist.count * 45)
             return self.postsections[section].userlist.count
            
         }
@@ -300,7 +334,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let cell: PostImageDetailCell  = tableView.dequeueReusableCell(withIdentifier: "postDetail", for: indexPath) as! PostImageDetailCell
         let sections = postsections[indexPath.section]
         let dic: NSDictionary = sections.userlist
-      print("dfsdfgdfg\(indexPath.section)")
+     // print("dfsdfgdfg\(indexPath.section)")
         cell.cancel_btn.tag = indexPath.section
         if(indexPath.section == 0)
        {
@@ -319,7 +353,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else
         {
-        let selectname = (dic.value(forKey: "membergroup_id") as! String != "") ? dic.value(forKey: "membergroup_name") as! String : dic.value(forKey: "team_name") as! String
+        let selectname = (dic.value(forKey: "membergroup_name") as! String != "") ? dic.value(forKey: "membergroup_name") as! String : dic.value(forKey: "team_name") as! String
             let font = UIFont(name: "Arial", size: 16)
             let fontAttributes = [NSAttributedStringKey.font: font]
             let size = selectname.size(withAttributes: fontAttributes as [NSAttributedStringKey : Any])
@@ -374,6 +408,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.cancel_btn.tag = indexPath.section
         cell.commonview.layer.cornerRadius = 15
         cell.commonview.layer.masksToBounds = true
+        cell.detail_btn.titleLabel?.textAlignment = .center
         cell.cancel_btn.addTarget(self, action: #selector(RemovepostItem), for: .touchUpInside)
 
         
@@ -381,16 +416,16 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
        }
 
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
+        //self.postTbl_height.constant = CGFloat((indexPath.section * 40) + (4 * 45))
         return  40.0
        }
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            
             return UITableViewAutomaticDimension
         }
 
         func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-            return 40.0
+            return 45.0
         }
     
     
@@ -434,7 +469,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         let sectionIndex = IndexSet(integer: sender.tag)
         self.postteam_tbl.reloadSections(sectionIndex, with: .none)
-        postTbl_height.constant = postTbl_height.constant - 45
+       // postTbl_height.constant = postTbl_height.constant - 45
 
 
     }
@@ -462,13 +497,14 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             if(SelectgetrolebySeasonid != nil)
             {
             let objPosttag: PostTagVC = (self.storyboard?.instantiateViewController(identifier: "posttag"))!
-            objPosttag.TeamId = SelectgetrolebySeasonid
+            objPosttag.TeamId = SelectgetTeamId
+                objPosttag.rolebySeasonId = SelectgetrolebySeasonid
             objPosttag.delegate = self
                 self.navigationController?.pushViewController(objPosttag, animated: true)
                 
             }
             else{
-                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user group above team to get hash tag ")
+                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User Group Above Team To Get Hash Tag ")
             }
             
         }
@@ -494,13 +530,14 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             if(SelectgetrolebySeasonid != nil)
             {
             let objcanned: PostCannedVC = (self.storyboard?.instantiateViewController(identifier:"PostCannedVC"))!
-            objcanned.TeamId = SelectgetrolebySeasonid
+            objcanned.TeamId = SelectgetTeamId
+            objcanned.rolebyseasonid = SelectgetrolebySeasonid
             objcanned.delegate = self
 
             self.navigationController?.pushViewController(objcanned, animated: true)
             }
             else{
-                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user group above team to get canned response")
+                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User Group Above Team To Get Canned Response")
             }
         }
     }
@@ -557,10 +594,59 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
      
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
                self.dismiss(animated: true, completion: nil)
-        
+        DoneBtn.setTitleColor(UIColor.blue, for: .normal)
+        let dynamicuuid = UUID().uuidString
+
         let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         if mediaType.isEqual(to: kUTTypeMovie as NSString as String){
             //print("movie")
+            if picker.sourceType == UIImagePickerControllerSourceType.photoLibrary {
+                tempMedia = info[UIImagePickerControllerMediaURL]  as? URL
+                self.videoPath = tempMedia?.absoluteString
+                
+//                let storageReference = Storage.storage().reference().child("feedpostvideo/\(dynamicuuid).mp4")
+//                  guard let videoUrl = info[UIImagePickerControllerMediaURL] as? URL else {
+//                                return
+//                            }
+//                            do {
+//                                let data = try Data(contentsOf: videoUrl, options: .mappedIfSafe)
+//                                print(data)
+//                                 storageReference.putData(data, metadata: nil) { (metadata, error) in
+//                                if error == nil {
+//                                print("Successful video upload")
+//        storageReference.downloadURL { (URL, error) -> Void in
+//        if (error != nil) {
+//                        print("success")                                                          // Handle any errors
+//            } else {
+//                                                                                  // Get the download URL for 'images/stars.jpg'
+//let UrlString: String = URL!.absoluteString
+//print(UrlString)
+//self.getPostVideoUrl = UrlString
+//self.feedPostMethod()
+//Constant.showInActivityIndicatory()
+//
+//                                                                                }
+//                                                                              }
+//
+//                                } else {
+//                                print(error?.localizedDescription)
+//                                }
+//                            }
+//
+//                            } catch  {
+//                }
+                       
+                   } else {
+                tempMedia = info[UIImagePickerControllerMediaURL] as! NSURL as URL?
+                self.videoPath = tempMedia?.absoluteString
+
+//                       VideoManager.saveVideo(tempImageURL, onComplete: { (path) -> Void in
+//                           self.videoPath = path
+//                       })
+                   }
+            
+        
+            
             tempMedia = info[UIImagePickerControllerMediaURL] as? URL
             let player = AVPlayer(url: tempMedia!)
                 
@@ -623,22 +709,189 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     {
         if(SelectgetrolebySeasonid == nil)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please select user gruop")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User Gruop")
         }
         else if(self.post_content_txt.text == "" || self.post_content_txt.text == nil)
         {
-            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please type post content")
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Type Post Content")
         }
         else
         {
             post_content_txt.resignFirstResponder()
+            
+            if(getPostimageUrl.count > 0)
+            {
             uploadImageOrvideo()
+            }
+           else if(tempMedia != nil)
+            {
+                uploadImageOrvideo()
+
+            }
+            else
+            {
+                self.feedPostMethod()
+
+            }
         }
     
     }
     
+    @objc func localDatauploadfirebase()
+    {
+        let group = DispatchGroup() // create a group.
+
+        persons = db.read()
+        if(persons.count > 0){
+            self.getPostimageUrl = NSMutableArray()
+            print(persons.count)
+            for i in 0..<persons.count
+            {
+                group.enter()
+                
+                let idno = persons[i].id
+                var offlineparam:[String:AnyObject] = [:]
+                offlineparam["feedPostedUser_id"] = "\(persons[i].feedPostedUser_id)" as AnyObject
+                offlineparam["feedPostedUser_firstName"] = persons[i].feedPostedUser_firstName as AnyObject
+                offlineparam["feedPostedUser_lastName"] = persons[i].feedPostedUser_lastName as AnyObject
+                offlineparam["feedPostedUser_middleInitial"] = persons[i].feedPostedUser_middleInitial as AnyObject
+                offlineparam["feedPostedUser_suffix"] = persons[i].feedPostedUser_suffix as AnyObject
+                offlineparam["feedPostedUser_role"] =  persons[i].feedPostedUser_role as AnyObject
+                offlineparam["feedPostedUser_avatar"] = persons[i].feedPostedUser_avatar as AnyObject
+                offlineparam["feedText"] = persons[i].feedText as AnyObject
+            
+              
+                let imag = persons[i].feedImageURL
+                if(imag != "(\n)")
+                {
+                    
+                self.getPostimageUrl.add(imag!)
+                   let jsonData = imag?.data(using: .utf8)
+                    var abc = NSArray()
+
+                        do {
+                            if let jsonData = jsonData {
+                            abc = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as! NSArray
+                                                 }
+                                } catch {
+                                             }
+                if(abc.count>0)
+                {
+                offlineparam["feedImageURL"] = abc as AnyObject
+                }
+                }
+                let videourl = persons[i].feedVideoURL as AnyObject?
+                if(videourl as! String != "")
+                {
+                offlineparam["feedVideoURL"] = persons[i].feedVideoURL as AnyObject?
+                }
+                offlineparam["lastSelectedFeededLevel"] = persons[i].lastSelectedFeededLevel as AnyObject?
+                offlineparam["feedPostedOrg_id"] = persons[i].feedPostedOrg_id as AnyObject?
+                offlineparam["feedPostedOrg_name"] = persons[i].feedPostedOrg_name as AnyObject?
+                offlineparam["feedPostedOrg_abbre"] = persons[i].feedPostedOrg_abbre as AnyObject
+                offlineparam["tag_id"] = persons[i].tag_id as AnyObject
+                offlineparam["cannedResponseTitle"] = persons[i].cannedResponseTitle as AnyObject
+                offlineparam["cannedResponseDesc"] = persons[i].cannedResponseDesc as AnyObject
+                offlineparam["reaction"] = persons[i].reaction as AnyObject?
+                let feedreceip: NSArray = NSArray()
+                offlineparam["feedReceipients"] = feedreceip as AnyObject
+                orderArray = NSArray()
+                orderArray = ["\(persons[i].organization_id)", "\(persons[i].sport_id)", "\(persons[i].season_id)","\(persons[i].level_id)", "\(persons[i].team_id)"]
+                offlineparam["feededLevel"] = orderArray
+                let feedlevelobj : NSMutableDictionary = NSMutableDictionary()
+                feedlevelobj.setValue(persons[i].level_id, forKey: "level_id")
+                feedlevelobj.setValue(persons[i].level_name, forKey: "level_name")
+                feedlevelobj.setValue(persons[i].membergroup_id, forKey: "membergroup_id")
+                feedlevelobj.setValue(persons[i].membergroup_name, forKey: "membergroup_name")
+                feedlevelobj.setValue(persons[i].organization_id, forKey: "organization_id")
+                feedlevelobj.setValue(persons[i].organization_name, forKey: "organization_name")
+                feedlevelobj.setValue(persons[i].season_id, forKey: "season_id")
+                feedlevelobj.setValue(persons[i].season_label, forKey: "season_name")
+                feedlevelobj.setValue(persons[i].sport_id, forKey: "sport_id")
+                feedlevelobj.setValue(persons[i].sport_name, forKey: "sport_name")
+                feedlevelobj.setValue(persons[i].team_id, forKey: "team_id")
+                feedlevelobj.setValue(persons[i].team_name, forKey: "team_name")
+                feedlevelobj.setValue(persons[i].user_id, forKey: "user_id")
+                feedlevelobj.setValue(persons[i].user_name, forKey: "user_name")
+                let feedlevelobjArray: NSMutableArray = NSMutableArray()
+                feedlevelobjArray.add(feedlevelobj)
+                offlineparam["feededLevelObject"] = feedlevelobjArray.copy() as AnyObject
+                offlineparam["feedPostedOrg_id"] = persons[i].organization_id as AnyObject?
+
+                Constant.internetconnection(vc: self)
+                      Constant.showActivityIndicatory(uiView: self.view)
+                      let testStatusUrl: String = Constant.sharedinstance.FeedPostUrl
+                      let header: HTTPHeaders = [
+                                     "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
+                          AF.request(testStatusUrl, method: .post, parameters: offlineparam, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
+                              Constant.showInActivityIndicatory()
+
+                                         if(!(response.error != nil)){
+                                             switch (response.result)
+                                             {
+
+                                             case .success(let json):
+                                              let jsonData = json
+
+                                                // if let data = response.data{
+                                                     let info = jsonData as? NSDictionary
+                                                     let statusCode = info?["status"] as? Bool
+                                                     if(statusCode == true)
+                                                     {
+                                                         let result = info?["message"] as! String
+                                                      Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: result)
+                                                        Constant.showInActivityIndicatory()
+                                                     // CFRunLoopStop(runLoop)
+                                                     }
+                                             // CFRunLoopStop(runLoop)
+
+                                                     Constant.showInActivityIndicatory()
+                                              self.navigationController?.popViewController(animated: false)
+                                                 //}
+                                                 break
+
+                                             case .failure(_):
+                                                 Constant.showInActivityIndicatory()
+
+                                                 break
+                                             }
+                                            group.leave()
+                                           
+
+                                         }
+
+                                         else
+                                         {
+                                             Constant.showInActivityIndicatory()
+
+                                         }
+                                     }
+                
+                self.db.deleteByID(id: idno)
+                //self.persons = self.db.read()
+            }
+        }
+    }
+    
     func feedPostMethod()
     {
+        let reachability: Reachability = Reachability.networkReachabilityForInternetConnection()!
+
+        let netStatus = reachability.currentReachabilityStatus
+
+        if (UserDefaults.standard.bool(forKey: "feedpost") == true && netStatus != .reachableViaWiFi)
+        {
+            let paramsJSON = JSON(getPostimageUrl)
+            let paramsString = paramsJSON.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions.prettyPrinted)!
+           let getUserorgInfo: NSDictionary = teamList
+            db.insert(Id: 0, postuser_id: "\(self.getUserInfo.value(forKey: "user_id") as? String ?? "")", postuser_firstName: "\(getUserInfo.value(forKey: "first_name") as? String ?? "")", postuser_lastName: "\(getUserInfo.value(forKey: "last_name") as? String ?? "")", postuser_middleInitial: "\(getUserInfo.value(forKey: "middle_initial") as? String ?? "")", postuser_suffix: "\(getUserInfo.value(forKey: "suffix") as? String ?? "")", postuser_role: "\(UserDefaults.standard.string(forKey: "Role") as? String ?? "")", postuser_avatar: "\(getUserInfo.value(forKey: "profile_image") as? String ?? "" )", postuser_feedText: "\(post_content_txt.text! ?? "")", postuser_feedImageURL: "\(paramsString)", postuser_feedVideoURL: "\(getPostVideoUrl as? String ?? "")", postuser_Level: "\(selectTeamName as? String ?? "")", postuserOrg_id: "\(getUserorgInfo.value(forKey: "organization_id") as? String ?? "")", postuser_Org_name: "\(getUserorgInfo.value(forKey: "organization_name") as? String ?? "")", postuser_Org_abbre: "\(getUserorgInfo.value(forKey: "organization_abbrev") as? String ?? "")", postuser_tag_id: "\(selectTag as? String ?? "")", postuser_Title: "\(cannedResponseTitle as? String ?? "")", cannedResponseDesc: "\(cannedResponseDesc as? String ?? "")", reaction: "\(Reaction as? String ?? "")", feedOrg_id: "\(getOrganizationid as? String ?? "")", level_id: "\(self.teamList.value(forKey: "level_id")!)", level_name: "\(self.teamList.value(forKey: "level_name")!)", membergroup_id: "\(self.teamList.value(forKey: "membergroup_id")!)", membergroup_name: "\(self.teamList.value(forKey: "membergroup_name")!)", organization_id: "\(self.teamList.value(forKey: "organization_id")!)", organization_name: "\(self.teamList.value(forKey: "organization_name")!)", season_id: "\(self.teamList.value(forKey: "season_id")!)", season_name: "\(self.teamList.value(forKey: "season_label")!)", sport_id: "\(self.teamList.value(forKey: "sport_id")!)", sport_name: "\(self.teamList.value(forKey: "sport_name")!)", team_id: "\(self.teamList.value(forKey: "team_id")!)", team_name: "\(self.teamList.value(forKey: "team_name")!)", user_id: "\(self.teamList.value(forKey: "user_id")!)", user_name: "\(self.teamList.value(forKey: "user_name")!)")
+          self.navigationController?.popViewController(animated: false)
+
+           
+        }
+         else
+            {
+            
         let getUserorgInfo: NSDictionary = teamList
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
@@ -659,6 +912,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         param["feedImageURL"] = getPostimageUrl.copy() as AnyObject
         
         }
+            
         param["feedVideoURL"] = getPostVideoUrl as AnyObject?
         param["lastSelectedFeededLevel"] = selectTeamName as AnyObject?
         param["feedPostedOrg_id"] = getUserorgInfo.value(forKey: "organization_id") as AnyObject?
@@ -692,7 +946,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         feedlevelobjArray.add(feedlevelobj)
         param["feededLevelObject"] = feedlevelobjArray.copy() as AnyObject
         param["feedPostedOrg_id"] = getOrganizationid as AnyObject?
-            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
+        
+        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                 Constant.showInActivityIndicatory()
 
                            if(!(response.error != nil)){
@@ -709,9 +964,11 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                            let result = info?["message"] as! String
                                         Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: result)
                                           Constant.showInActivityIndicatory()
+                                        self.navigationController?.popViewController(animated: false)
+
                                        }
                                        Constant.showInActivityIndicatory()
-                                self.navigationController?.popViewController(animated: false)
+                                 self.navigationController?.popViewController(animated: false)
                                    //}
                                    break
 
@@ -727,13 +984,15 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                            }
                        }
+        }
     }
+    
     
     @IBAction func backpostbtn(_ sender: UIButton)
     {
         if(teamList.count > 0)
         {
-        let alert = UIAlertController(title: "SportsGravy", message: "Are you sure want to Decard", preferredStyle: UIAlertController.Style.alert);
+            let alert = UIAlertController(title: "SportsGravy", message: "Are You Sure Want To Discard".capitalized, preferredStyle: UIAlertController.Style.alert);
         alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                }))
         alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
@@ -842,40 +1101,77 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     }
 
         } else {
-            Constant.showActivityIndicatory(uiView: self.view)
+           Constant.showActivityIndicatory(uiView: self.view)
             let metadata = StorageMetadata()
             metadata.contentType = "mp4"
-             let uuid = UUID().uuidString
-            print("uuidstr:\(uuid)")
+             let dynamicuuid = UUID().uuidString
+            print("uuidstr:\(dynamicuuid)")
           
-            let store = Storage.storage()
+           // let store = Storage.storage()
            // let profileImageFromPicker = self.Select_post_image[i]
-            let storeref = store.reference().child("feedpostvideo/\(uuid).mp4")
+            //let storeref = store.reference().child("feedpostvideo/\(dynamicuuid).mp4")
+            let fileUrl = NSURL(string: videoPath)
 
-             storeref.putFile(from: self.tempMedia! as URL, metadata: metadata) { (metadata, error) in
-                Constant.showInActivityIndicatory()
+            let storageReference = Storage.storage().reference().child("feedpostvideo/\(dynamicuuid).mp4")
+//                              guard let videoUrl = info[UIImagePickerControllerMediaURL] as? URL else {
+//                                            return
+//                                        }
+                                        do {
+                                            let data = try Data(contentsOf: fileUrl! as URL, options: .mappedIfSafe)
+                                            print(data)
+                                             storageReference.putData(data, metadata: nil) { (metadata, error) in
+                                            if error == nil {
+                                            print("Successful video upload")
+                    storageReference.downloadURL { (URL, error) -> Void in
+                    if (error != nil) {
+                                    print("success")                                                          // Handle any errors
+                        } else {
+                                                                                              // Get the download URL for 'images/stars.jpg'
+            let UrlString: String = URL!.absoluteString
+            print(UrlString)
+            self.getPostVideoUrl = UrlString
+            self.feedPostMethod()
+            Constant.showInActivityIndicatory()
 
-                                           guard let _ = metadata else {
-                                               print("error occurred: \(error.debugDescription)")
-                                               return
-                                           }
-                                          // self.postimage.image = profileImageFromPicker
-
-                                           storeref.downloadURL { (URL, error) -> Void in
-                                             if (error != nil) {
-                                               // Handle any errors
-                                             } else {
-                                               // Get the download URL for 'images/stars.jpg'
-
-                                                let UrlString: String = URL!.absoluteString
-                                               print(UrlString)
-                                                 self.getPostVideoUrl = UrlString
-                                                self.feedPostMethod()
-                                                Constant.showInActivityIndicatory()
-
-                                             }
-                                           }
-                                       }
+                                                            }
+                                                                                          }
+                                                
+                                            } else {
+                                            print(error?.localizedDescription)
+                                            }
+                                        }
+                           
+                                        } catch  {
+                            }
+            
+            
+            
+            
+            
+//            storeref.putFile(from: fileUrl! as URL, metadata: metadata) { (metadata, error) in
+//                Constant.showInActivityIndicatory()
+//
+//                                           guard let _ = metadata else {
+//                                               print("error occurred: \(error.debugDescription)")
+//                                               return
+//                                           }
+//                                          // self.postimage.image = profileImageFromPicker
+//
+//                                           storeref.downloadURL { (URL, error) -> Void in
+//                                             if (error != nil) {
+//                                               // Handle any errors
+//                                             } else {
+//                                               // Get the download URL for 'images/stars.jpg'
+//
+//                                                let UrlString: String = URL!.absoluteString
+//                                               print(UrlString)
+//                                                 self.getPostVideoUrl = UrlString
+//                                                self.feedPostMethod()
+//                                                Constant.showInActivityIndicatory()
+//
+//                                             }
+//                                           }
+//                                       }
         }
 
     }

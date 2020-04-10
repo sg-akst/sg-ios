@@ -102,7 +102,7 @@ override func viewDidLoad() {
             var runningWidth: CGFloat = 0.0
             let maxWidth: CGFloat = UIScreen.main.bounds.size.width
             let horizontalSpaceBetweenButtons: CGFloat = 8.0
-            let verticalSpaceBetweenButtons: CGFloat = 0.0
+            let verticalSpaceBetweenButtons: CGFloat = 1.5
             if(self.addOrder != nil)
             {
                self.addOrder.removeFromSuperview()
@@ -697,11 +697,11 @@ override func viewDidLoad() {
             let isDelete: Bool = (count > 0) ? false : true
             if(isDelete == false)
             {
-                Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Tag is tied with feed,so cant able to delete")
+                Constant.showAlertMessage(vc: self, titleStr: "Unable To Delete", messageStr: "Tag Is Tied With Feed, So Can't Able To Delete")
             }
             else
             {
-                let alert = UIAlertController(title: " Delete Tag? ", message: "Are you sure want to delete \(teamDic.value(forKey: "tag_name")!)", preferredStyle: UIAlertController.Style.alert);
+                let alert = UIAlertController(title: " Delete Tag? ", message: "Are You Sure Want To Delete \(teamDic.value(forKey: "tag_name")!)".capitalized, preferredStyle: UIAlertController.Style.alert);
                 alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                        }))
                 alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
@@ -888,7 +888,7 @@ override func viewDidLoad() {
           let db = Firestore.firestore()
           let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
                 docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
-                    Constant.showInActivityIndicatory()
+                    //Constant.showInActivityIndicatory()
 
                 if let err = err {
                     print("Error getting documents: \(err)")
