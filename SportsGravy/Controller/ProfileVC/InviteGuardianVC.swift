@@ -178,6 +178,15 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 result.append(ch)
             }
         }
+        let cijfers = "\(number)"
+               print("\(cijfers.count)")
+               if(cijfers.count == 1)
+               {
+               let start = cijfers.startIndex;
+               let end = cijfers.index(cijfers.startIndex, offsetBy: 1);
+               result = cijfers.replacingCharacters(in: start..<end, with: "+1")
+               print(result)
+               }
         return result
     }
     

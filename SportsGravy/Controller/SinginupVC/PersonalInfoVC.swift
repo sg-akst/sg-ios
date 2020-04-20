@@ -8,13 +8,29 @@
 
 import UIKit
 import STPopup
+import Firebase
 
 class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     func selectoptionString(selectSuffix: String) {
+        if(isCountry == true)
+        {
+            for i in 0..<getCountryArray.count
+            {
+                let getdetail: NSDictionary = self.getCountryArray?[i] as! NSDictionary
+                if(getdetail.value(forKey: "name") as? String == selectSuffix)
+                {
+                    dialCode = getdetail.value(forKey: "dial_code") as? String
+                }
+            }
+            self.country_txt.text = selectSuffix
+        }
+        else
+        {
         self.suffix_lbl.text = selectSuffix
+        }
     }
     
-    
+    @IBOutlet weak var scroll: UIScrollView!
     @IBOutlet weak var firstname_lbl: UITextField!
     @IBOutlet weak var middlename_lbl: UITextField!
     @IBOutlet weak var lastname_lbl: UITextField!
@@ -24,8 +40,18 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var password_lbl: UITextField!
     @IBOutlet weak var confirm_lbl: UITextField!
     @IBOutlet weak var suffix_lbl: UITextField!
+    @IBOutlet weak var date_picker_view: UIView!
+    @IBOutlet weak var date_done_btn: UIButton!
+    @IBOutlet weak var date_picker: UIDatePicker!
+    @IBOutlet weak var country_txt: UITextField!
+    @IBOutlet weak var scrollview_height: NSLayoutConstraint!
+    
+    var selectdate: String!
     
     var userdetails: NSDictionary!
+    var getCountryArray: NSMutableArray!
+    var isCountry: Bool!
+    var dialCode: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +64,8 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         password_lbl.delegate = self
         suffix_lbl.delegate = self
         confirm_lbl.delegate = self
+        country_txt.delegate = self
+        date_picker_view.isHidden = true
         bordermethod(setborder: firstname_lbl)
         bordermethod(setborder: lastname_lbl)
         bordermethod(setborder: middlename_lbl)
@@ -47,6 +75,7 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         bordermethod(setborder: password_lbl)
         bordermethod(setborder: suffix_lbl)
         bordermethod(setborder: confirm_lbl)
+        bordermethod(setborder: country_txt)
         
         self.firstname_lbl.text = self.userdetails.value(forKey: "first_name") as? String
         self.middlename_lbl.text = self.userdetails.value(forKey: "middle_initial") as? String
@@ -56,6 +85,9 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         self.mobile_lbl.text = self.userdetails.value(forKey: "mobile_number") as? String
         self.password_lbl.text = self.userdetails.value(forKey: "") as? String
         self.suffix_lbl.text = self.userdetails.value(forKey: "suffix") as? String
+        self.country_txt.text = self.userdetails.value(forKey: "") as? String
+       // scrollview_height.constant = 2000
+        getcountryDetails()
         
     }
     
@@ -72,8 +104,26 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
              bottomBorder.backgroundColor = UIColor.lightGray.cgColor
            setborder.layer.addSublayer(bottomBorder)
        }
+    @IBAction func CountryCode(_ sender: UIButton)
+       {
+           isCountry = true
+           let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
+           vc.Title = "Select Country"
+           let filteredEvents: [String] = self.getCountryArray.value(forKeyPath: "@distinctUnionOfObjects.name") as! [String]
+           let popviewheight : Float = Float(self.getCountryArray.count * 45) + 60
+
+           vc.suffixArray = filteredEvents
+           vc.delegate = self
+           vc.contentSizeInPopup = CGSize(width: self.view.frame.size.width, height: CGFloat(popviewheight))
+           let popup = STPopupController(rootViewController: vc)
+           popup.containerView.layer.cornerRadius = 4;
+           popup.navigationBarHidden = true
+           popup.style = .bottomSheet
+           popup.present(in: self)
+       }
     @IBAction func selectprofilesuffix(_ sender: UIButton)
        {
+        isCountry = false
            let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
            vc.Title = "Select Suffix"
            vc.suffixArray = ["Jr","Sr","II","III","IV","V"]
@@ -85,16 +135,65 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         popup.style = .bottomSheet
            popup.present(in: self)
        }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(textField == self.mobile_lbl)
-        {
-          return textField.text!.count < 17 || string == ""
-        }
+        guard let text = textField.text else { return false }
+if(textField == self.mobile_lbl)
+{
+    let newString = (text as NSString).replacingCharacters(in: range, with: string)
+
+    if(country_txt.text != "" && country_txt.text != nil)
+    {
+        textField.text = formattedNumber(number: newString)
+    }
+    else
+    {
+        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Country")
+    }
+           return false
+      }
         else
-        {
-           return true
+{
+    return true
         }
     }
+    
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text != "" && text != "(XXX) XXX-XXXX" {
+            // Do something with your value
+        } else {
+            textField.text = ""
+        }
+    }
+    func formattedNumber(number: String) -> String {
+
+        let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let mask = "+X (XXX) XXX-XXXX"
+
+        var result = ""
+        var index = cleanPhoneNumber.startIndex
+        for ch in mask where index < cleanPhoneNumber.endIndex {
+            if ch == "X" {
+                result.append(cleanPhoneNumber[index])
+                index = cleanPhoneNumber.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        let cijfers = "\(number)"
+        print("\(cijfers.count)")
+        if(cijfers.count == 1)
+        {
+        let start = cijfers.startIndex;
+        let end = cijfers.index(cijfers.startIndex, offsetBy: 1);
+           // let countrycode = (self.userdetails.value(forKey: "country_code") as? String == "US") ? "+1" : ""
+        result = cijfers.replacingCharacters(in: start..<end, with: "\(dialCode!)")
+        print(result)
+        }
+        return result
+    }
+    
     @IBAction func nextbtn(_ sender: UIButton)
     {
         if(self.suffix_lbl.text == "" || self.suffix_lbl.text?.isEmpty == true)
@@ -117,6 +216,11 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         if(isValidEmail(self.email_lbl.text!) == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Check Email Id ")
+
+        }
+        if(self.country_txt.text == "" || self.country_txt.text?.isEmpty == true)
+        {
+            Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Country")
 
         }
         if(self.mobile_lbl.text == "" || self.mobile_lbl.text?.isEmpty == true)
@@ -148,20 +252,31 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         else{
             
             let getparentdetails: NSMutableDictionary = NSMutableDictionary()
-            getparentdetails.setValue(firstname_lbl.text, forKey: "first_name")
-            getparentdetails.setValue(middlename_lbl.text, forKey: "middle_name")
-            getparentdetails.setValue(lastname_lbl.text, forKey: "last_name")
-            getparentdetails.setValue(email_lbl.text, forKey: "email_address")
-            getparentdetails.setValue(dob_lbl.text, forKey: "dob")
-            getparentdetails.setValue(mobile_lbl.text, forKey: "mobile_number")
-            getparentdetails.setValue(suffix_lbl.text, forKey: "suffix")
-            getparentdetails.setValue(confirm_lbl.text, forKey: "confirm_password")
-            getparentdetails.setValue(password_lbl.text, forKey: "password")
+            getparentdetails.setValue(firstname_lbl.text!, forKey: "first_name")
+            getparentdetails.setValue(middlename_lbl.text!, forKey: "middle_name")
+            getparentdetails.setValue(lastname_lbl.text!, forKey: "last_name")
+            getparentdetails.setValue(email_lbl.text!, forKey: "email_address")
+            getparentdetails.setValue(dob_lbl.text!, forKey: "dob")
+            getparentdetails.setValue(mobile_lbl.text!, forKey: "mobile_number")
+            getparentdetails.setValue(suffix_lbl.text!, forKey: "suffix")
+            getparentdetails.setValue(confirm_lbl.text!, forKey: "confirm_password")
+            getparentdetails.setValue(password_lbl.text!, forKey: "password")
             
+            let children: NSArray = userdetails.value(forKey: "children") as! NSArray
+            if(children.count > 0)
+            {
             let objpersonalVC: InvitePlayerVC = (self.storyboard?.instantiateViewController(identifier: "inviteplayer"))!
             objpersonalVC.userdetails = userdetails
             objpersonalVC.parententerdetails = getparentdetails
             self.navigationController?.pushViewController(objpersonalVC, animated: true)
+            }
+            else
+            {
+                let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
+                objcoppaparentVC.parentdetails = getparentdetails
+                objcoppaparentVC.signuserDetail = userdetails
+                self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+            }
         }
     }
     func isValidEmail(_ email: String) -> Bool {
@@ -180,5 +295,64 @@ class PersonalInfoVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
             return false
         }
         
+    }
+    func getcountryDetails()
+       {
+           Constant.internetconnection(vc: self)
+           Constant.showActivityIndicatory(uiView: self.view)
+           let db = Firestore.firestore()
+           //let docRef = db.collection("countries").document()
+           db.collection("countries").getDocuments() { (querySnapshot, err) in
+               Constant.showInActivityIndicatory()
+
+           if let err = err {
+               print("Error getting documents: \(err)")
+           } else {
+                   self.getCountryArray = NSMutableArray()
+
+                   for document in querySnapshot!.documents {
+                   let data: NSDictionary = document.data() as NSDictionary
+                   self.getCountryArray.add(data)
+                  }
+              // Constant.showInActivityIndicatory()
+
+                   }
+               }
+           
+       }
+    @IBAction func UpdateDOBClick(_ sender: UIButton) {
+        date_picker_view.isHidden = false
+        //let picker : UIDatePicker = UIDatePicker()
+        date_picker.datePickerMode = .date
+        let currentDate = NSDate()
+        date_picker.maximumDate = currentDate as Date
+        date_picker.date = currentDate as Date
+        date_picker.addTarget(self, action: #selector(dueDateChanged(sender:)), for: UIControlEvents.valueChanged)
+        let pickerSize : CGSize = date_picker.sizeThatFits(CGSize.zero)
+        date_picker.frame = CGRect(x:0.0, y:250, width:pickerSize.width, height:300)
+        date_picker.backgroundColor = UIColor.lightText
+
+    }
+    @objc func dueDateChanged(sender:UIDatePicker){
+        date_done_btn.setTitleColor(UIColor.blue, for: .normal)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+       let formatter = DateFormatter()
+       formatter.dateFormat = "dd/MM/yyyy"
+
+        selectdate = formatter.string(from: sender.date)
+       
+   // dobButton.setTitle(dateFormatter.string(from: sender.date), for: .normal)
+    }
+    @IBAction func cancel_btn(_ sender: UIButton)
+    {
+        date_picker_view.isHidden = true
+    }
+    
+    @IBAction func done(_ sender: UIButton)
+    {
+        date_picker_view.isHidden = true
+         dob_lbl.text = selectdate
     }
 }

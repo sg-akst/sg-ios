@@ -312,6 +312,8 @@ PODS:
   - PromisesObjC (1.2.8)
   - ResizingTokenField (0.1.1)
   - STPopup (1.8.7)
+  - SwiftGifOrigin (1.7.0)
+  - SwiftyGif (5.2.0)
   - SwiftyJSON (5.0.0)
   - SWRevealViewController (2.3.0)
   - TagListView (1.4.0)
@@ -332,6 +334,8 @@ DEPENDENCIES:
   - PINRemoteImage
   - ResizingTokenField
   - STPopup
+  - SwiftGifOrigin
+  - SwiftyGif
   - SwiftyJSON
   - SWRevealViewController
   - TagListView (~> 1.0)
@@ -376,6 +380,8 @@ SPEC REPOS:
     - PromisesObjC
     - ResizingTokenField
     - STPopup
+    - SwiftGifOrigin
+    - SwiftyGif
     - SwiftyJSON
     - SWRevealViewController
     - TagListView
@@ -419,10 +425,12 @@ SPEC CHECKSUMS:
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   ResizingTokenField: 961ea54ab84b755998b5713cf5a87d4bf7a92ff9
   STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
+  SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
+  SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
 
-PODFILE CHECKSUM: 3eaf4b1a74249c1ad93cf2a1b89289377feda952
+PODFILE CHECKSUM: 953a96535164ada19768d30419f3f0409eb170d5
 
 COCOAPODS: 1.8.4

@@ -110,26 +110,7 @@ class PostCannedVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                                        }
                 }
         
-//        docRef.collection("CannedResponse").getDocuments() { (querySnapshot, err) in
-//            Constant.showInActivityIndicatory()
-//
-//                             if let err = err {
-//                                 print("Error getting documents: \(err)")
-//                             } else {
-//                                self.tagCannedArray = NSMutableArray()
-//
-//                                 for document in querySnapshot!.documents {
-//                                     let data: NSDictionary = document.data() as NSDictionary
-//                                     
-//                                    self.tagCannedArray.add(data)
-//            
-//                                }
-//                               
-//                                self.postcanned_tbl.reloadData()
-//                                Constant.showInActivityIndicatory()
-//
-//                            }
-//                        }
+
         }
        
     

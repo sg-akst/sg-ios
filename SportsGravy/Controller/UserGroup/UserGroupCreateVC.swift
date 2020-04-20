@@ -332,6 +332,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
      }
     @objc func selectplayer(_ sender: UIButton)
     {
+        groupcreate_btn.isUserInteractionEnabled = true
+        groupcreate_btn.setTitleColor(UIColor.blue, for: .normal)
         print(sender.tag)
         let button = sender
         let cell = button.superview?.superview as? UsergroupCreateCell
@@ -369,6 +371,8 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        groupcreate_btn.isUserInteractionEnabled = true
+        groupcreate_btn.setTitleColor(UIColor.blue, for: .normal)
         print("You tapped cell number \(indexPath.section).")
         let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
 

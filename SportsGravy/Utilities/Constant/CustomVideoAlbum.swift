@@ -10,7 +10,7 @@ import UIKit
 import Photos
 
 class CustomVideoAlbum: NSObject {
-    static let albumName = "SportsGravyVideo1"
+    static let albumName = "SportsGravyVideos"
     static let sharedInstance = CustomVideoAlbum()
 
     var assetCollection: PHAssetCollection!

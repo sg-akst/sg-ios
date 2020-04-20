@@ -11,7 +11,7 @@ import Photos
 import Foundation
 
 class CustomPhotoAlbum: NSObject {
-    static let albumName = "SportsGravy"
+    static let albumName = "SportsGravyImages"
     static let sharedInstance = CustomPhotoAlbum()
 
     var assetCollection: PHAssetCollection!

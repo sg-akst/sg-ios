@@ -109,69 +109,69 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                self.dob_lbl.text = "\(dobDate)"
                                                //let getaddress: NSDictionary = playerInfo.value(forKey: "address") as! NSDictionary
                                                self.address_lbl.text = "\(playerInfo.value(forKey: "street1")!)" + ", " + "\(playerInfo.value(forKey: "street2")!)" + "\n" + "\(playerInfo.value(forKey: "city")!)" + "-" + "\(playerInfo.value(forKey: "postal_code")!)" + "\n" + "\(playerInfo.value(forKey: "state_name")!)" + "," + "\(playerInfo.value(forKey: "country_name")!)"
-                            self.getGuardians()
+                            self.GetOrganization()
                         }
                         else {
                             print("Document does not exist")
                         }
         }
     }
-        func getGuardians()
-        {
-                Constant.internetconnection(vc: self)
-                Constant.showActivityIndicatory(uiView: self.view)
-                let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
-            let header: HTTPHeaders = [
-                    "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
-                 var param:[String:AnyObject] = [:]
-                param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-                
-                AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
-                    Constant.showInActivityIndicatory()
-
-                    if(!(response.error != nil)){
-                        switch (response.result)
-                        {
-                        case .success( let json):
-                            let jsonData = json
-                                                   print(jsonData)
-                           // if let data = response.data{
-                                let info = jsonData as? NSDictionary
-                                let statusCode = info?["status"] as? Bool
-                                //let message = info?["message"] as? String
-
-                                if(statusCode == true)
-                                {
-                                    let result = info?["data"] as! NSArray
-                                   
-                                    self.guardiansListArray = NSMutableArray()
-                                    self.guardiansListArray = result.mutableCopy() as? NSMutableArray
-                                    self.GetOrganization()
-
-                                }
-                                else
-                                {
-                                   // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
-                                }
-                                
-                           // }
-                            break
-
-                        case .failure(_):
-                           // Constant.showInActivityIndicatory()
-
-                            break
-                        }
-                    }
-                    else
-                    {
-                        //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-                       // Constant.showInActivityIndicatory()
-
-                    }
-                }
-            
-            }
+     //   func getGuardians()
+//        {
+//                Constant.internetconnection(vc: self)
+//                Constant.showActivityIndicatory(uiView: self.view)
+//                let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
+//            let header: HTTPHeaders = [
+//                    "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
+//                 var param:[String:AnyObject] = [:]
+//                param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+//
+//                AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+//                    Constant.showInActivityIndicatory()
+//
+//                    if(!(response.error != nil)){
+//                        switch (response.result)
+//                        {
+//                        case .success( let json):
+//                            let jsonData = json
+//                                                   print(jsonData)
+//                           // if let data = response.data{
+//                                let info = jsonData as? NSDictionary
+//                                let statusCode = info?["status"] as? Bool
+//                                //let message = info?["message"] as? String
+//
+//                                if(statusCode == true)
+//                                {
+//                                    let result = info?["data"] as! NSArray
+//
+//                                    self.guardiansListArray = NSMutableArray()
+//                                    self.guardiansListArray = result.mutableCopy() as? NSMutableArray
+//                                    self.GetOrganization()
+//
+//                                }
+//                                else
+//                                {
+//                                   // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+//                                }
+//
+//                           // }
+//                            break
+//
+//                        case .failure(_):
+//                           // Constant.showInActivityIndicatory()
+//
+//                            break
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+//                       // Constant.showInActivityIndicatory()
+//
+//                    }
+//                }
+//
+//            }
         
         func GetOrganization()
         {
@@ -179,11 +179,11 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
             let header: HTTPHeaders = [
-                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
-             var param:[String:AnyObject] = [:]
-            param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!, "UID" : UserDefaults.standard.string(forKey: "UUID")!]
+//             var param:[String:AnyObject] = [:]
+//            param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
             
-            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
+            AF.request(testStatusUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                 Constant.showInActivityIndicatory()
 
                 if(!(response.error != nil)){
@@ -199,14 +199,14 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
                             if(statusCode == true)
                             {
-                                let result = info?["data"] as! NSArray
-                                
+                                let result = info?["data"] as? NSDictionary
+                                self.guardiansListArray = NSMutableArray()
+                                let getGuardian = result?["guardianlist"] as? NSArray
+                                self.guardiansListArray = getGuardian?.mutableCopy() as? NSMutableArray
+                                let organisation = result?["orgdata"] as? NSArray
                                 self.organizationListArray = NSMutableArray()
-                                 self.organizationListArray = result.mutableCopy() as? NSMutableArray
-//                                 if(self.playerListArray.count > 0 && self.playerListArray.count != 0)
-//                                 {
-//                                   self.sections.append(Category(name:"Players", items:self.playerListArray as! [[String : Any]]))
-//                                 }
+                               self.organizationListArray = organisation?.mutableCopy() as? NSMutableArray
+                            
                                   if(self.guardiansListArray.count > 0 && self.guardiansListArray.count != 0)
                                  {
                                      self.sections.append(ProfileCategory(name:"Other Guardians", items:self.guardiansListArray as! [[String : Any]]))
@@ -330,7 +330,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             if(indexPath.section == 1)
             {
                 let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
-                vc.organizationDetails = item as NSDictionary
+                vc.organizationDetails = items as! NSMutableArray
                 //vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }

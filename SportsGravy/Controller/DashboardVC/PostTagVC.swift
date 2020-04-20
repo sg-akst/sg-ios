@@ -104,26 +104,7 @@ class PostTagVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                             }
                             }
             
-//            docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
-//                Constant.showInActivityIndicatory()
-//
-//                                 if let err = err {
-//                                     print("Error getting documents: \(err)")
-//                                 } else {
-//                                    self.taglist = NSMutableArray()
-//
-//                                     for document in querySnapshot!.documents {
-//                                         let data: NSDictionary = document.data() as NSDictionary
-//                                         
-//                                        self.taglist.add(data)
-//                
-//                                    }
-//                                   
-//                                    self.posttag_tbl.reloadData()
-//                                    Constant.showInActivityIndicatory()
-//
-//                                }
-//                            }
+
             }
            
     

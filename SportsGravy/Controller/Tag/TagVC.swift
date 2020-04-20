@@ -886,7 +886,88 @@ override func viewDidLoad() {
           Constant.showActivityIndicatory(uiView: self.view)
           let getuuid = UserDefaults.standard.string(forKey: "UUID")
           let db = Firestore.firestore()
-          let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
+        if(UserDefaults.standard.bool(forKey: "tag_team") == true)
+        {
+             let docRefteam = db.collection("teams").document("\(getTeamId!)")
+            docRefteam.collection("Tags").getDocuments() { (querySnapshot, err) in
+                    //Constant.showInActivityIndicatory()
+
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                      let getTagDelete = NSMutableArray()
+                        for document in querySnapshot!.documents {
+                        let data: NSDictionary = document.data() as NSDictionary
+                          if(data.value(forKey: "tag_name") as! String == tagtitle || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(tagtitle) == ComparisonResult.orderedSame)
+                          {
+                              getTagDelete.add(data)
+
+                          }
+                            
+                       }
+                    if(getTagDelete.count > 0)
+                    {
+                        docRefteam.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+                        { err in
+                            if let err = err {
+                                print("Error removing document: \(err)")
+                                Constant.showInActivityIndicatory()
+
+                            } else {
+                                print("Document roleby season successfully removed!")
+                                
+                                let teamRef = db.collection("teams").document("\(self.getTeamId!)")
+                                teamRef.collection("Tags").getDocuments{ (querySnapshot, err) in
+                                if let err = err {
+                                print("Error getting documents: \(err)")
+                                    Constant.showInActivityIndicatory()
+
+                                                           } else {
+                                                               
+                                let getteamsTagList = NSMutableArray()
+
+                                for document in querySnapshot!.documents {
+                                let data: NSDictionary = document.data() as NSDictionary
+                                if(data.value(forKey: "tag_name") as! String == tagtitle || (data.value(forKey: "tag_name") as! String) . caseInsensitiveCompare(tagtitle) == ComparisonResult.orderedSame)
+                                {
+                                    getteamsTagList.add(data)
+
+                                }
+                            }
+                            if(getteamsTagList.count > 0)
+                            {
+                                teamRef.collection("Tags").document("\(rolebyDic.value(forKey: "tag_id")!)").delete()
+                                { err in
+                                if let err = err {
+                                    print("Error removing document: \(err)")
+                                } else {
+                                    print("Document roleby season successfully removed!")
+                                    Constant.showInActivityIndicatory()
+                                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(rolebyDic.value(forKey: "tag_name")!) Removed Successfully")
+                                    self.getTagListMethod()
+                                    Constant.showInActivityIndicatory()
+                                    }
+                                }
+                            }
+                            }
+                                }
+                            }
+                        }
+                    }
+                    else{
+                       // Constant.showInActivityIndicatory()
+                        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Deleted Successfully")
+                        self.getTagListMethod()
+                        //Constant.showInActivityIndicatory()
+                    }
+
+                    }
+            }
+        }
+         
+        else
+        {
+             let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(getrolebySeasonid!)")
                 docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
                     //Constant.showInActivityIndicatory()
 
@@ -960,7 +1041,9 @@ override func viewDidLoad() {
                     }
 
                     }
+            }
                 }
+
               }
     @IBAction func cancelbtn(_ sender: UIButton)
     {

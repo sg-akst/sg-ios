@@ -10,8 +10,36 @@ import UIKit
 import MobileCoreServices
 import AVFoundation
 import Alamofire
+import ImagePicker
 
-class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,ImagePickerDelegate {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+//         self.getPostimageUrl = NSMutableArray()
+//               self.Select_post_image = images
+//               isImage = true
+        if images.count > 0
+        {
+                   selectedImageFromPicker = images
+        }
+               
+        imagePicker.dismiss(animated: true, completion: nil)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
+        vc.backgroundImage = selectedImageFromPicker
+        vc.finalDataDictionary=tempUserinfoDic
+        vc.isImage = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        imagePicker.dismiss(animated: true, completion: nil)
+
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
+
+    }
+    
     
     let imageviewcontroller = UIImagePickerController()
     let tempUserinfoDic = NSMutableDictionary()
@@ -23,7 +51,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
     
     var clickPhotoTitle : String!
     var clickVideoTitle : String!
-
+var selectedImageFromPicker: [UIImage]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,13 +245,24 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
         }
 
         let action3 = UIAlertAction(title: "Quick Photo Post", style: .default){ (action: UIAlertAction!) in
-            self.imageviewcontroller.allowsEditing = true
-            self.imageviewcontroller.delegate = self
-            self.imageviewcontroller.sourceType = .camera
-            self.imageviewcontroller.mediaTypes = [kUTTypeImage as String]
+//            self.imageviewcontroller.allowsEditing = true
+//            self.imageviewcontroller.delegate = self
+//            self.imageviewcontroller.sourceType = .camera
+//            self.imageviewcontroller.mediaTypes = [kUTTypeImage as String]
             self.clickPhotoTitle = "3"
+//
+//            self.present(self.imageviewcontroller, animated: true, completion: nil)
+            
+            let config = Configuration()
+            config.doneButtonTitle = "Finish"
+            config.noImagesTitle = "Sorry! There are no images here!"
+            config.recordLocation = false
+            config.allowVideoSelection = true
 
-            self.present(self.imageviewcontroller, animated: true, completion: nil)
+            let imagePicker = ImagePickerController(configuration: config)
+            imagePicker.delegate = self
+
+            self.present(imagePicker, animated: true, completion: nil)
         }
 
         let action4 = UIAlertAction(title: "Quick Video Post", style: .default){ (action: UIAlertAction!) in
@@ -272,26 +311,26 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
             }
         }
         if mediaType.isEqual(to: kUTTypeImage as NSString as String){
-             var selectedImageFromPicker: UIImage?
+            var takePhoto: UIImage = UIImage()
                        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-                           selectedImageFromPicker = editedImage
+                       takePhoto = editedImage
                        } else if let OriginalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-                           selectedImageFromPicker = OriginalImage
+                           takePhoto = OriginalImage
                        }
             if(self.clickPhotoTitle == "1")
             {
-            CustomPhotoAlbum.sharedInstance.save(image: selectedImageFromPicker!)
+            CustomPhotoAlbum.sharedInstance.save(image: takePhoto)
             self.present(self.imageviewcontroller, animated: false, completion: nil)
 
             }
-         else
-            {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
-            vc.backgroundImage = selectedImageFromPicker
-            vc.finalDataDictionary=tempUserinfoDic
-            vc.isImage = true
-            self.navigationController?.pushViewController(vc, animated: true)
-            }
+        // else
+//            {
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
+//            vc.backgroundImage = selectedImageFromPicker
+//            vc.finalDataDictionary=tempUserinfoDic
+//            vc.isImage = true
+//            self.navigationController?.pushViewController(vc, animated: true)
+//            }
         }
     }
 

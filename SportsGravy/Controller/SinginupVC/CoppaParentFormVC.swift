@@ -181,6 +181,7 @@ class CoppaParentFormVC: UIViewController {
                 let objterm: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
                 objterm.parentdetails = (parentDetails.copy() as! NSDictionary)
                 objterm.useruid = playerdetails.value(forKey: "user_id") as? String
+                objterm.signuserDetail = details[0] as? NSDictionary
                 
                 self.navigationController?.pushViewController(objterm, animated: true)
             }

@@ -10,7 +10,7 @@ import UIKit
 
 class OrganizationVC: UIViewController {
 
-    var organizationDetails: NSDictionary!
+    var organizationDetails: NSMutableArray!
     
     @IBOutlet weak var username_lbl: UILabel!
        @IBOutlet weak var date_lbl: UILabel!
@@ -29,39 +29,64 @@ class OrganizationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let organization = self.organizationDetails[0] as? NSDictionary
+        
+        self.username_lbl.text = "\(organization?.value(forKey: "abbrev") ?? "")"
+        let createdate = organization?.value(forKey: "created_datetime") as? NSDictionary
+        let getcreatedate = createdate?.value(forKey: "$date") as! Int
+        
+        
+        
+        let string : String = "\(getcreatedate)" // (Put your string here)
 
-        self.username_lbl.text = "\(self.organizationDetails.value(forKey: "abbrev")!)"
-         let joinDatestr: String = organizationDetails.value(forKey: "created_datetime") as! String
-       let dateFormatters = DateFormatter()
-        dateFormatters.locale = Locale(identifier: "en_US_POSIX")
-                                                            dateFormatters.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                                                            let dates = dateFormatters.date(from: "\(joinDatestr)")
-                                                            dateFormatters.dateFormat = "MMM-dd-yyyy"
-                                                            let dobDate = dateFormatters.string(from: dates!)
-//        let datees: Date = timestamp.dateValue()
+        let timeinterval : TimeInterval = (string as NSString).doubleValue // convert it in to NSTimeInteral
+
+        let dateFromServer = NSDate(timeIntervalSince1970:timeinterval) // you can the Date object from here
+
+        print(dateFromServer) // for My Example it will print : 2014-08-22 12:11:26 +0000
+
+
+        // Here i create a simple date formatter and print the string from DATE object. you can do it vise-versa.
+
+        let dateFormater : DateFormatter = DateFormatter()
+        dateFormater.dateFormat = "yyyy-MMM-dd"
+        print(dateFormater.string(from: dateFromServer as Date))
+        
+        
+        self.date_lbl.text = "Joined \(dateFormater.string(from: dateFromServer as Date))"
+        
+       // let timeInterval = Double(getcreatedate)
+
+        // create NSDate from Double (NSTimeInterval)
+       // let myNSDate = Date(timeIntervalSince1970: timeInterval)
+        //let date = NSDate(timeIntervalSince1970: TimeInterval(getcreatedate))
+
+        //let joinDatestr: String = myNSDate
+//       let dateFormatters = DateFormatter()
+//        dateFormatters.locale = Locale(identifier: "en_US_POSIX")
+//                                                            dateFormatters.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+//                                                            let dates = dateFormatters.date(from: "\(date)")
+//                                                            dateFormatters.dateFormat = "MMM-dd-yyyy"
+//                                                            let dobDate = dateFormatters.string(from: dates!)
 //
-//        let dateFormatterPrint = DateFormatter()
-//        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
-//        print(dateFormatterPrint.string(from: datees as Date))
-                                                           
-            self.date_lbl.text = "Joined \(dobDate)"
+//            self.date_lbl.text = "Joined \(dobDate)"
                                        
-        self.porfile_img.setTitle(organizationDetails.value(forKey: "abbrev") as? String, for: .normal)
+        self.porfile_img.setTitle(organization?.value(forKey: "abbrev") as? String, for: .normal)
          //self.porfile_img.layer.cornerRadius = self.porfile_img.frame.size.width/2
         
-        self.email_lbl.text = organizationDetails.value(forKey: "email_address") as? String
-        let dic: NSArray = organizationDetails["sports"] as! NSArray
+        self.email_lbl.text = organization?.value(forKey: "email_address") as? String
+        let dic: NSArray = organization?["governing_body_info"] as! NSArray
         let sportsname: NSDictionary = dic[0] as! NSDictionary
 
         self.sports_lbl.text = sportsname.value(forKey: "name") as? String
-                                                      self.mobile_no_lbl.text = organizationDetails.value(forKey: "phone") as? String
+        self.mobile_no_lbl.text = organization?.value(forKey: "mobile_phone") as? String
        // let getaddress: NSDictionary = self.organizationDetails.value(forKey: "address") as! NSDictionary
-                                                      self.address_lbl.text = "\(organizationDetails.value(forKey: "street1")!)" + ", " + "\(organizationDetails.value(forKey: "street2")!)" + "\n" + "\(organizationDetails.value(forKey: "city")!)" + "-" + "\(organizationDetails.value(forKey: "postal_code")!)" + "\n" + "\(organizationDetails.value(forKey: "state")!)" + "," + "\(organizationDetails.value(forKey: "country_code")!)"
-        name_lbl.text = organizationDetails.value(forKey: "name") as? String
-        fax_lbl.text = organizationDetails.value(forKey: "fax") as? String
-        website_lbl.text = organizationDetails.value(forKey: "website") as? String
-        state_lbl.text = organizationDetails.value(forKey: "state_governing_organization_name") as? String
-        national_lbl.text = organizationDetails.value(forKey: "national_governing_organization_name") as? String
+        self.address_lbl.text = "\(organization?.value(forKey: "street1")! ?? "")" + ", " + "\(organization?.value(forKey: "street2")! ?? "")" + "\n" + "\(organization?.value(forKey: "city")! ?? "")" + "-" + "\(organization?.value(forKey: "postal_code")! ?? "")" + "\n" + "\(organization?.value(forKey: "state")! ?? "")" + "," + "\(organization?.value(forKey: "country_code")! ?? "")"
+        name_lbl.text = organization?.value(forKey: "name") as? String
+        fax_lbl.text = organization?.value(forKey: "fax") as? String
+        website_lbl.text = organization?.value(forKey: "website") as? String
+        state_lbl.text = sportsname.value(forKey: "state_governing_organization_name") as? String
+        national_lbl.text = sportsname.value(forKey: "national_governing_organization_name") as? String
         self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: 300)
         
     }

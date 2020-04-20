@@ -23,10 +23,13 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var postimageviewHeight: NSLayoutConstraint!
     @IBOutlet weak var comment_lbl_height: NSLayoutConstraint!
     @IBOutlet weak var addinfoview_height: NSLayoutConstraint!
+    @IBOutlet weak var profileview_height: NSLayoutConstraint!
+
     @IBOutlet weak var shotImageView: UIImageView!
 
-
     @IBOutlet weak var postVideoviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var likeview_height: NSLayoutConstraint!
+
 
     @IBOutlet weak var infoview: UIView!
     @IBOutlet weak var infoviewHeight: NSLayoutConstraint!
@@ -61,6 +64,8 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var reaction_btn: UIButton!
     @IBOutlet weak var profile_view: UIView!
     @IBOutlet weak var addinfoview: UIView!
+    @IBOutlet weak var likeview: UIView!
+
     var avPlayer: AVPlayer?
     var avPlayerLayer: AVPlayerLayer?
     var addinfo: UIView!
@@ -68,6 +73,8 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
        var videoview: AGVideoPlayerView!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.profileview_height.constant = 95
+        self.likeview_height.constant = 50
         
     }
     
@@ -77,8 +84,8 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
                 var indexOfLeftmostButtonOnCurrentLine: Int = 0
                 var runningWidth: CGFloat = 0.0
                 let maxWidth: CGFloat = UIScreen.main.bounds.size.width
-                let horizontalSpaceBetweenButtons: CGFloat = 8.0
-                let verticalSpaceBetweenButtons: CGFloat = 0.0
+                let horizontalSpaceBetweenButtons: CGFloat = 3.0
+                let verticalSpaceBetweenButtons: CGFloat = -3.0
                 if(self.addinfo != nil)
                 {
                    self.addinfo.removeFromSuperview()
@@ -104,7 +111,7 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
                       button_title.setTitle("\(getinfodetailArray[i] as! String)", for: .normal)
                     button_title.translatesAutoresizingMaskIntoConstraints = false
                     let attrStr = NSMutableAttributedString(string: "\(button_title.title(for: .normal) ?? "")")
-                    button_title.titleLabel?.textColor = UIColor.lightGray
+                    button_title.titleLabel?.textColor = UIColor.gray
                     if(substr != "")
                     {
                         attrStr.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: substr.count+1))
@@ -172,15 +179,15 @@ class PostCell: UITableViewCell, UIScrollViewDelegate {
                 if(indexOfLeftmostButtonOnCurrentLine > 5 && indexOfLeftmostButtonOnCurrentLine < 7)
                                              {
                                                         
-                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 115 : 80
+                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 105 : 80
                                                         
                                              }
             if(indexOfLeftmostButtonOnCurrentLine > 6)
             {
-                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 115 : 115
+                self.addinfoview_height.constant = (indexOfLeftmostButtonOnCurrentLine > 0) ? 125 : 105
 
             }
-                                             }
+            }
             }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

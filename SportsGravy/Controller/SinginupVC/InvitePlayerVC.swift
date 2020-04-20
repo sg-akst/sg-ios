@@ -144,7 +144,8 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         else
         {
            let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
-            //objcoppaparentVC.details = emilladdArray
+            objcoppaparentVC.parentdetails = parententerdetails
+            objcoppaparentVC.signuserDetail = userdetails
             self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
         }
         

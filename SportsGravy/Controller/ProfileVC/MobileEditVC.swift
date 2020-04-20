@@ -42,9 +42,8 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
     }
    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
-           
-     
-           let newString = (text as NSString).replacingCharacters(in: range, with: string)
+    
+    let newString = (text as NSString).replacingCharacters(in: range, with: string)
     
            textField.text = formattedNumber(number: newString)
     
@@ -63,13 +62,14 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
       }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text != "" && text != "+X (XXX) XXX-XXXX" {
+        if let text = textField.text, text != "" && text != "(XXX) XXX-XXXX" {
             // Do something with your value
         } else {
             textField.text = ""
         }
     }
     func formattedNumber(number: String) -> String {
+        
         let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         let mask = "+X (XXX) XXX-XXXX"
 
@@ -82,6 +82,15 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
             } else {
                 result.append(ch)
             }
+        }
+        let cijfers = "\(number)"
+        print("\(cijfers.count)")
+        if(cijfers.count == 1)
+        {
+        let start = cijfers.startIndex;
+        let end = cijfers.index(cijfers.startIndex, offsetBy: 1);
+        result = cijfers.replacingCharacters(in: start..<end, with: "+1")
+        print(result)
         }
         return result
     }
@@ -137,24 +146,9 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
           print("textFieldShouldBeginEditing")
           return true
       }
-//     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//         if(string == textField.text)
-//         {
-//            update_btn.isUserInteractionEnabled = false
-//             update_btn.setTitleColor(UIColor.darkGray, for: .normal)
-//         }
-//         else
-//         {
-//             update_btn.isUserInteractionEnabled = true
-//             update_btn.setTitleColor(UIColor.blue, for: .normal)
-//         }
-//          print("textField")
-//          print("Leaving textField")
-//          return true
-//      }
+
      func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-         
          return true
      }
      func textFieldDidBeginEditing(_ textField: UITextField) {

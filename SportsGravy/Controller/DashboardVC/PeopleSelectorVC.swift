@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SWRevealViewController
 
 protocol PeopleSelectorDelegate: AnyObject {
     func passorderArray(select:NSMutableArray!, selectindex: UIButton)
@@ -34,6 +35,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var season_id: String!
     var level_id: String!
     var team_id: String!
+    var toWay: String!
    // var tag_group: String!
     
     
@@ -44,6 +46,11 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.revealViewController() != nil {                            self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 70
+               view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         people_selector_tbl.delegate = self
         people_selector_tbl.dataSource = self
         people_selector_tbl.tableFooterView = UIView()
@@ -213,7 +220,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         {
             let dic: NSDictionary  =  self.selectGrouptoPlayerlist?[indexPath.row] as! NSDictionary
             
-            cell.people_group_btn?.setTitle("\(dic.value(forKey: "first_name") as! String)" + "\(dic.value(forKey: "last_name") as! String)", for: .normal)
+            cell.people_group_btn?.setTitle("\(dic.value(forKey: "first_name") as! String)" + " " + "\(dic.value(forKey: "last_name") as! String)", for: .normal)
             cell.accessoryType = .none
 
         }
@@ -241,8 +248,19 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     @objc func selectPeople(_ sender: UIButton)
     {
+         let getgroup: String!
         let button = sender.tag
-        let getgroup: String = self.peoplegrouplist?[button] as! String
+        if(peoplegrouplist.count > 0)
+        {
+            getgroup = self.peoplegrouplist?[button] as? String
+        }
+        else
+        {
+            let dic: NSDictionary  =  self.selectGrouptoPlayerlist?[button] as! NSDictionary
+                       
+            getgroup = "\(dic.value(forKey: "first_name") as! String)" + " " + "\(dic.value(forKey: "last_name") as! String)"
+
+        }
         print(getgroup)
         let selectTeamDetail: NSMutableArray = NSMutableArray()
         
@@ -295,10 +313,10 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 {
                     print(dic)
                     let addgroup: NSMutableDictionary = getpeopleselectorArray?[i] as! NSMutableDictionary
-                    addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_id")
-                    addgroup.setValue(dic.value(forKey: "user_groupId"), forKey: "membergroup_name")
-                    addgroup.setValue("", forKey: "user_id")
-                    addgroup.setValue("", forKey: "user_name")
+                    addgroup.setValue(orderArray.lastObject!, forKey: "membergroup_id")
+                    addgroup.setValue(orderArray.lastObject!, forKey: "membergroup_name")
+                    addgroup.setValue(getgroup, forKey: "user_id")
+                    addgroup.setValue(getgroup, forKey: "user_name")
                     selectTeamDetail.add(addgroup)
                    // selectTeamDetail.add(dic)
                 }
@@ -307,9 +325,38 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         if(selectTeamDetail.count>0)
         {
-        self.delegate?.selectPeopleSelectorDetail(userDetail: selectTeamDetail)
-        self.navigationController?.popViewController(animated: true)
-        self.navigationController?.popViewController(animated: true)
+
+            if(toWay == "convention")
+            {
+                let vc = storyboard?.instantiateViewController(withIdentifier: "postimage") as! PostImageVC
+                vc.userDetailPeopleselector = selectTeamDetail
+               // vc.peopleselector = true
+                UserDefaults.standard.set(true, forKey: "peopleselector")
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            else
+            {
+                let selectArray: NSMutableArray = NSMutableArray()
+                for i in 0..<selectTeamDetail.count
+                {
+                    let dic: NSMutableDictionary = selectTeamDetail[i] as! NSMutableDictionary
+                    dic.removeObject(forKey: "season_start_date")
+                    dic.removeObject(forKey: "created_datetime")
+                    dic.removeObject(forKey: "season_end_date")
+                    selectArray.add(dic)
+                }
+                
+ let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
+                UserDefaults.standard.set(true, forKey: "selectPeople")
+
+                let defaults = UserDefaults.standard
+                defaults.set(selectArray, forKey: "Team")
+                print(UserDefaults.standard.array(forKey: "Team") as Any)
+
+               
+                self.navigationController?.pushViewController(swrvc, animated: true)
+
+        }
         }
 
     }
@@ -378,7 +425,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                             self.peoplegrouplist = NSMutableArray()
                             self.selectGrouptoPlayerlist = NSMutableArray()
                             self.selectGrouptoPlayerlist = result.mutableCopy() as? NSMutableArray
-                            self.empty_img.isHidden = (self.peoplegrouplist.count == 0) ? false : true
+                            self.empty_img.isHidden = (self.selectGrouptoPlayerlist.count == 0) ? false : true
                             self.people_selector_tbl.reloadData()
                              Constant.showInActivityIndicatory()
                             if(self.selectGrouptoPlayerlist.count == 0)
@@ -390,7 +437,8 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                                 
                                 self.getuserDetail()
                             }
-                            
+                            Constant.showInActivityIndicatory()
+
                         }
                         else
                         {
@@ -399,10 +447,14 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                                 appDelegate.timerAction()
                                // self.getplayerlist()
+                                Constant.showInActivityIndicatory()
+
                             }
                             else
                             {
                                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
+                                Constant.showInActivityIndicatory()
+
                             }
                            
                         }

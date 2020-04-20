@@ -19,6 +19,8 @@ ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/ResizingTokenField/ResizingTokenField.framework
 ${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework
 ${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework
+${BUILT_PRODUCTS_DIR}/SwiftGifOrigin/SwiftGifOrigin.framework
+${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
 ${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework
 ${BUILT_PRODUCTS_DIR}/abseil/absl.framework

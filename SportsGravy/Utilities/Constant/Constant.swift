@@ -17,11 +17,14 @@ class Constant: NSObject {
 
     var getPlayerbyuid:String = BaseUrl + "getPlayersByUid?"
     var getGuardiansbyuid:String = BaseUrl + "getGuardiansByUid?"
-    var getOrganizationbyuid: String = BaseUrl + "getOrganizationByUid?"
+    var getOrganizationbyuid: String = "https://sportsgravy-testing.appspot.com/accountprofile/getprofileinfo?"
     var updateSorting: String = BaseUrl + "updateSorting"
-    var signupString: String = BaseUrl + "getUserDetails"
+   // var signupString: String = BaseUrl + "getUserDetails"
+    var signupString: String =  "https://sportsgravy-testing.appspot.com/register/getUserDetails"
+
     var inviteGuardianUrl: String = BaseUrl + "inviteNewGuardianProfile"
-    var signupUrl: String = BaseUrl + "signUpUser"
+    //var signupUrl: String = BaseUrl + "signUpUser"
+    var signupUrl: String = "https://sportsgravy-testing.appspot.com/register/signup"
     var FeedPostUrl: String = BaseUrl + "postFeed"
     var RemovePlayerUrl: String = BaseUrl + "accountRemoveConnection"
     var FeedCountUrl: String = BaseUrl + "feedCount"
@@ -143,9 +146,11 @@ static func showActivityIndicatory(uiView: UIView) {
     }
     
 static func showInActivityIndicatory() {
-
+   if(actInd != nil)
+   {
     actInd.stopAnimating()
     self.loadingviewcontain.removeFromSuperview()
+    }
     }
     
     static func showAlertMessage(vc: UIViewController, titleStr:String, messageStr:String) -> Void {
@@ -165,5 +170,24 @@ static func showInActivityIndicatory() {
     let result = emailTest.evaluate(with: testStr)
        return result
    }
+    
+  static func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+    let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
+    func wificonnectionlocaldatabaseupload()
+         {
+           
+//           let objpostvc: PostImageVC = self.storyboard.instantiateViewController(identifier: "postimage")!
+//             objpostvc.localDatauploadfirebase()
+//             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+
+         }
 }
 

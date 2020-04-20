@@ -185,7 +185,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                            Constant.showInActivityIndicatory()
                             if(self.isdelegate == false)
                             {
-                                self.getplayerlist()
+                                self.GetOrganization()
                             }
 
                           } else {
@@ -284,129 +284,132 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
              
         }
     
-    func getplayerlist()
-    {
-        Constant.internetconnection(vc: self)
-        Constant.showActivityIndicatory(uiView: self.view)
-        let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
-        let header: HTTPHeaders = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
-         var param:[String:AnyObject] = [:]
-        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-        
-        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
-            Constant.showInActivityIndicatory()
-
-            if(!(response.error != nil)){
-                switch (response.result)
-                {
-                case .success(let json):
-                   // if let data = response.data{
-                        let jsonData = json
-                        print(jsonData)
-                        let info = jsonData as? NSDictionary
-                        let statusCode = info?["status"] as? Bool
-                        let message = info?["message"] as? String
-
-                        if(statusCode == true)
-                        {
-                            let result = info?["data"] as! NSArray
-                            self.playerListArray = NSMutableArray()
-                            self.playerListArray = result.mutableCopy() as? NSMutableArray
-                             Constant.showInActivityIndicatory()
-                            self.getGuardians()
-
-                        }
-                        else
-                        {
-                            if(message == "unauthorized user")
-                            {
-                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                appDelegate.timerAction()
-                                self.getplayerlist()
-                            }
-                            else
-                            {
-                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
-                            }
-                           
-                        }
-                  //  }
-                    break
-
-                case .failure(_):
-                    Constant.showInActivityIndicatory()
-
-                    break
-                }
-            }
-            else
-            {
-                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-                Constant.showInActivityIndicatory()
-
-            }
-        }
-    }
+ //   func getplayerlist()
+//    {
+//        Constant.internetconnection(vc: self)
+//        Constant.showActivityIndicatory(uiView: self.view)
+//        let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
+//        let header: HTTPHeaders = [
+//            "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? "", "UID" : "\(UserDefaults.standard.string(forKey: "UUID") as AnyObject?)"]
+////         var param:[String:AnyObject] = [:]
+////        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+//
+//        AF.request(testStatusUrl, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+//            Constant.showInActivityIndicatory()
+//
+//            if(!(response.error != nil)){
+//                switch (response.result)
+//                {
+//                case .success(let json):
+//                   // if let data = response.data{
+//                        let jsonData = json
+//                        print(jsonData)
+//                        let info = jsonData as? NSDictionary
+//                        let statusCode = info?["status"] as? Bool
+//                        let message = info?["message"] as? String
+//
+//                        if(statusCode == true)
+//                        {
+//                            let result = info?["data"] as! NSArray
+//                            let getPlayer: NSDictionary = result[0] as! NSDictionary
+//                            self.playerListArray = NSMutableArray()
+//                            self.playerListArray = getPlayer["childrendata"] as? NSMutableArray
+//                            self.guardiansListArray = NSMutableArray()
+//                            self.guardiansListArray = getPlayer["guardianlist"] as? NSMutableArray
+//                             Constant.showInActivityIndicatory()
+//                            //self.getGuardians()
+//
+//                        }
+//                        else
+//                        {
+//                            if(message == "unauthorized user")
+//                            {
+//                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//                                appDelegate.timerAction()
+//                                self.getplayerlist()
+//                            }
+//                            else
+//                            {
+//                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
+//                            }
+//
+//                        }
+//                  //  }
+//                    break
+//
+//                case .failure(_):
+//                    Constant.showInActivityIndicatory()
+//
+//                    break
+//                }
+//            }
+//            else
+//            {
+//                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+//                Constant.showInActivityIndicatory()
+//
+//            }
+//        }
+//    }
     
-    func getGuardians()
-    {
-            Constant.internetconnection(vc: self)
-            Constant.showActivityIndicatory(uiView: self.view)
-            let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
-        let header: HTTPHeaders = [
-                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
-             var param:[String:AnyObject] = [:]
-            param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-            
-            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
-                Constant.showInActivityIndicatory()
-
-                if(!(response.error != nil)){
-                    switch (response.result)
-                    {
-                    case .success(let json):
-                      //  if let data = response.data{
-                        let jsonData = json
-                            print(jsonData)
-                            let info = jsonData as? NSDictionary
-                            let statusCode = info?["status"] as? Bool
-                            //let message = info?["message"] as? String
-
-                            if(statusCode == true)
-                            {
-                                let result = info?["data"] as! NSArray
-                                
-                                self.guardiansListArray = NSMutableArray()
-                                self.guardiansListArray = result.mutableCopy() as? NSMutableArray
-                                Constant.showInActivityIndicatory()
-
-                                self.GetOrganization()
-
-                            }
-                            else
-                            {
-                               // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
-                            }
-                            //Constant.showInActivityIndicatory()
-                        //}
-                        break
-
-                    case .failure(_):
-                       // Constant.showInActivityIndicatory()
-
-                        break
-                    }
-                }
-                else
-                {
-                    //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-                   // Constant.showInActivityIndicatory()
-
-                }
-            }
-        
-        }
+   // func getGuardians()
+//    {
+//            Constant.internetconnection(vc: self)
+//            Constant.showActivityIndicatory(uiView: self.view)
+//            let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
+//        let header: HTTPHeaders = [
+//                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
+//             var param:[String:AnyObject] = [:]
+//            param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+//
+//            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+//                Constant.showInActivityIndicatory()
+//
+//                if(!(response.error != nil)){
+//                    switch (response.result)
+//                    {
+//                    case .success(let json):
+//                      //  if let data = response.data{
+//                        let jsonData = json
+//                            print(jsonData)
+//                            let info = jsonData as? NSDictionary
+//                            let statusCode = info?["status"] as? Bool
+//                            //let message = info?["message"] as? String
+//
+//                            if(statusCode == true)
+//                            {
+//                                let result = info?["data"] as! NSArray
+//
+//                                self.guardiansListArray = NSMutableArray()
+//                                self.guardiansListArray = result.mutableCopy() as? NSMutableArray
+//                                Constant.showInActivityIndicatory()
+//
+//                                self.GetOrganization()
+//
+//                            }
+//                            else
+//                            {
+//                               // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+//                            }
+//                            //Constant.showInActivityIndicatory()
+//                        //}
+//                        break
+//
+//                    case .failure(_):
+//                       // Constant.showInActivityIndicatory()
+//
+//                        break
+//                    }
+//                }
+//                else
+//                {
+//                    //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+//                   // Constant.showInActivityIndicatory()
+//
+//                }
+//            }
+//
+//        }
     
     func GetOrganization()
     {
@@ -414,11 +417,11 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         Constant.showActivityIndicatory(uiView: self.view)
         let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
         let header: HTTPHeaders = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
-         var param:[String:AnyObject] = [:]
-        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-        
-        AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")!, "UID" : UserDefaults.standard.string(forKey: "UUID")!]
+//         var param:[String:AnyObject] = [:]
+//        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
+//
+        AF.request(testStatusUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
             Constant.showInActivityIndicatory()
 
             if(!(response.error != nil)){
@@ -430,12 +433,24 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         print(jsonData)
                         let info = jsonData as? NSDictionary
                         let statusCode = info?["status"] as? Bool
+                        let message = info?["Message"] as? String
+
                         if(statusCode == true)
                         {
-                            let result = info?["data"] as! NSArray
-                            //self.sections = [Category] ()
+                            let result = info?["data"] as? NSDictionary
+                           // let getPlayer: NSDictionary = result[0] as! NSDictionary
+                            self.playerListArray = NSMutableArray()
+                            let getPlayer = result?["childrendata"] as? NSArray
+                            self.playerListArray = getPlayer?.mutableCopy() as? NSMutableArray
+                            self.guardiansListArray = NSMutableArray()
+                            let getGuardian = result?["guardianlist"] as? NSArray
+                            self.guardiansListArray = getGuardian?.mutableCopy() as? NSMutableArray
+                            let organisation = result?["orgdata"] as? NSArray
                             self.organizationListArray = NSMutableArray()
-                            self.organizationListArray = result.mutableCopy() as? NSMutableArray
+//                            let org = organisation?[0] as? NSDictionary
+//                            let getorg = org!["governing_body_info"] as? NSArray
+                            self.organizationListArray = organisation?.mutableCopy() as? NSMutableArray
+                            
                             if(self.playerListArray.count > 0 && self.playerListArray.count != 0)
                             {
                               self.sections.append(Category(name:"Players", items:self.playerListArray as! [[String : Any]]))
@@ -458,8 +473,19 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         }
                         else
                         {
-                           // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
+                            if(message == "unauthorized user")
+                            {
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.timerAction()
+                                self.GetOrganization()
+                            }
+                            else
+                            {
+                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
+                            }
+                           
                         }
+                        
                        // Constant.showInActivityIndicatory()
                    // }
                     break
@@ -621,10 +647,10 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         }
        else
         {
-            let dic: NSArray = item["sports"] as! NSArray
-            let sportsname: NSDictionary = dic[0] as! NSDictionary
+            let dic = item["governing_body_info"] as? NSArray
+            let sportsname: NSDictionary = dic?[0] as! NSDictionary
             cell.username_lbl.text = item["abbrev"] as? String
-            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name")!)"
+            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)"
             cell.accessoryType = .disclosureIndicator
 
 
@@ -655,7 +681,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         else if(indexPath.section == 2)
             {
                 let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
-                vc.organizationDetails = item as NSDictionary
+                vc.organizationDetails = organizationListArray
                 //vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -664,7 +690,10 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         else
         {
             let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
-            vc.organizationDetails = item as NSDictionary
+            //let dic = item["governing_body_info"] as? NSArray
+            //let sportsname: NSDictionary = dic?[0] as! NSDictionary
+            //let organization = item
+            vc.organizationDetails = organizationListArray
             //vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }

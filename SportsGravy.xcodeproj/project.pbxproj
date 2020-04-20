@@ -56,6 +56,8 @@
 		080E847E23E3F2840092CDB3 /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08507F5723BF423800CC968F /* SigninVC.swift */; };
 		080E847F23E3F2880092CDB3 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5721A23BF3A13000C8852 /* SplashVC.swift */; };
 		080E848123E3F3490092CDB3 /* SortingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E848023E3F3490092CDB3 /* SortingVC.swift */; };
+		0810E61E2445D64B00DAD2B8 /* ImageviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0810E61D2445D64B00DAD2B8 /* ImageviewVC.swift */; };
+		0810E6202446F84500DAD2B8 /* animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0810E61F2446F84500DAD2B8 /* animation.gif */; };
 		081120D223BDF77500327FF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 081120D023BDF77500327FF1 /* Main.storyboard */; };
 		081120D423BDF77800327FF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081120D323BDF77800327FF1 /* Assets.xcassets */; };
 		081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 081120D523BDF77800327FF1 /* LaunchScreen.storyboard */; };
@@ -125,6 +127,8 @@
 		080B0CEC240E74C3000B905E /* FeedSelectorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectorVC.swift; sourceTree = "<group>"; };
 		080BF3B823BF5BDE00084274 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		080E848023E3F3490092CDB3 /* SortingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingVC.swift; sourceTree = "<group>"; };
+		0810E61D2445D64B00DAD2B8 /* ImageviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageviewVC.swift; sourceTree = "<group>"; };
+		0810E61F2446F84500DAD2B8 /* animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animation.gif; sourceTree = "<group>"; };
 		081120C723BDF77500327FF1 /* SportsGravy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsGravy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		081120CA23BDF77500327FF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		081120D123BDF77500327FF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -388,6 +392,7 @@
 		0811210423BE08BC00327FF1 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				0810E61F2446F84500DAD2B8 /* animation.gif */,
 				0811210523BE08DD00327FF1 /* Constant.swift */,
 				08D5966F24065ED100C2ACBD /* CustomPhotoAlbum.swift */,
 				08D5967124067B7100C2ACBD /* CustomVideoAlbum.swift */,
@@ -542,6 +547,7 @@
 				08FDB58C2415BCBA00B59752 /* QuickimageandvideoViewController.swift */,
 				08FDB5862415761600B59752 /* BottomBar.swift */,
 				08BAAF3F24156FC2006B86D7 /* NextViewController.swift */,
+				0810E61D2445D64B00DAD2B8 /* ImageviewVC.swift */,
 			);
 			path = QuickPost;
 			sourceTree = "<group>";
@@ -756,6 +762,7 @@
 			files = (
 				081120D723BDF77800327FF1 /* LaunchScreen.storyboard in Resources */,
 				08FDB5A124163BB500B59752 /* GoogleService-Info.plist in Resources */,
+				0810E6202446F84500DAD2B8 /* animation.gif in Resources */,
 				081120D423BDF77800327FF1 /* Assets.xcassets in Resources */,
 				081120D223BDF77500327FF1 /* Main.storyboard in Resources */,
 			);
@@ -923,6 +930,7 @@
 				080E847023E3F2450092CDB3 /* CannedResponseCreateVC.swift in Sources */,
 				080E846F23E3F2410092CDB3 /* CannedResponseVC.swift in Sources */,
 				08FDB5992415BD2200B59752 /* BaseAnimator.swift in Sources */,
+				0810E61E2445D64B00DAD2B8 /* ImageviewVC.swift in Sources */,
 				080E846E23E3F23C0092CDB3 /* SittingsVC.swift in Sources */,
 				088AD9BD243569E600804D82 /* FeedPostData.swift in Sources */,
 				080E846D23E3F2370092CDB3 /* PlayerProfileVC.swift in Sources */,
@@ -1139,21 +1147,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.1;
-				DEVELOPMENT_TEAM = U8DDB8SCQ2;
+				DEVELOPMENT_TEAM = R3F779K464;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = SportsGravy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportgravy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportsgravy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1163,21 +1172,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.1;
-				DEVELOPMENT_TEAM = U8DDB8SCQ2;
+				DEVELOPMENT_TEAM = R3F779K464;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = SportsGravy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportgravy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iz.sportsgravy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

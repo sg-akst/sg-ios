@@ -24,6 +24,8 @@ target 'SportsGravy' do
   pod 'Lightbox'
   pod 'Hue'
   pod 'PINRemoteImage'
+  pod 'SwiftyGif'
+  pod 'SwiftGifOrigin'
 #  pod 'ReachabilitySwift'
 
 

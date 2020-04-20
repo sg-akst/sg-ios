@@ -282,7 +282,9 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         {
            let roleDic: NSDictionary = roleby_reasonArray?[i] as! NSDictionary
             let role: String = roleDic.value(forKey: "role") as? String ?? ""
-           if(role == SelectRole as String)
+            let team: String = (roleDic.value(forKey: "team_id") as? String ?? nil)!
+
+            if(role == SelectRole as String && team != "")
             {
                 getSameRoleArray.add(roleDic)
             }

@@ -67,12 +67,9 @@ class SignupVC: UIViewController, UITextFieldDelegate {
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.signupString
-             var param:[String:AnyObject] = [:]
-        param["uid"] = "zHhMZCuvhtrd87Q0vN65" as AnyObject   //uidString as AnyObject?
-            
-            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
-                Constant.showInActivityIndicatory()
-
+        let header: HTTPHeaders = [
+            "idtoken": UserDefaults.standard.string(forKey: "idtoken")! , "UID" : "7XrpgTtJOwGctldTcqse"]
+            AF.request(testStatusUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                 if(!(response.error != nil)){
                     switch (response.result)
                     {
@@ -81,16 +78,16 @@ class SignupVC: UIViewController, UITextFieldDelegate {
 
                        // if let data = response.data{
                             let info = jsonData as? NSDictionary
-                            let statusCode = info?["status"] as? Bool
+                            let statusCode = info?["Status"] as? Bool
                             if(statusCode == true)
                             {
-                                let result = info?["data"] as! NSDictionary
+                                let result = info?["Data"] as! NSDictionary
                                 self.email_txt.text = result.value(forKey: "email_address") as? String
                                 self.userdetails = result
                                Constant.showInActivityIndicatory()
 
                             }
-                            Constant.showInActivityIndicatory()
+                            //Constant.showInActivityIndicatory()
                        // }
                         break
 

@@ -101,13 +101,36 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                         feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "membergroup_id"), forKey: "membergroup_id")
                         feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "level_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "team_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "membergroup_id")!)", forKey: "feedLevel")
                     }
+                        else if(self.addorderArray.count == 7)
+                        {
+                           feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "organization_id"), forKey: "organization_id")
+                             feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "sport_id"), forKey: "sport_id")
+                            
+                            feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "season_id"), forKey: "season_id")
+                            
+                            feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "level_id"), forKey: "level_id")
+                            
+                            feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "team_id"), forKey: "team_id")
+                            
+                            feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "membergroup_id"), forKey: "membergroup_id")
+                            
+                             feedlevelobj.setValue((teamDic as AnyObject).value(forKey: "user_id"), forKey: "user_id")
+                            feedlevelobj.setValue("\((teamDic as AnyObject).value(forKey: "organization_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "sport_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "season_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "level_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "team_id")!)" + "|" + "\((teamDic as AnyObject).value(forKey: "membergroup_id")!)" + "\((teamDic as AnyObject).value(forKey: "user_id")!)", forKey: "feedLevel")
+                        }
                     
                     feedlevelobjsArray.add(feedlevelobj)
 
                 }
                 if(feedlevelobjsArray.count>0)
                 {
+                    if(self.addorderArray.count == 7)
+                    {
+                        self.delegate?.feddSelectDetail(userDetail: feedlevelobjsArray, selectitemname: membergroup.value(forKey: "user_id") as! String)
+                    }
+                    else
+                    {
                     self.delegate?.feddSelectDetail(userDetail: feedlevelobjsArray, selectitemname: membergroup.value(forKey: "membergroup_id") as! String)
+                    }
                 }
             }
             
@@ -1057,7 +1080,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             for i in 0..<slectplayer.count
             {
                 let roleDic: NSDictionary = slectplayer[i] as! NSDictionary
-                let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + "\(roleDic.value(forKey: "last_name")!)"
+                let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + " " + "\(roleDic.value(forKey: "last_name")!)"
                 var filteredEvents: [String] = [role]
                  filteredEvents.sort()
                 self.commonArray.append(contentsOf: filteredEvents)
@@ -1094,6 +1117,8 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             vc.sport_id = getSport
             vc.season_id = getSeasonid
             vc.level_id = getLevelid
+            vc.toWay = "feedSelector"
+
             if(self.getdifferentLevelArray.count > 1)
             {
                 let selectDic: NSDictionary = self.getdifferentLevelArray?[selectpeople] as! NSDictionary

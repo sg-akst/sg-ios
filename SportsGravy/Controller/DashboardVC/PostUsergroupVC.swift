@@ -611,8 +611,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                                                     
                                                }
                                                 self.commonArray = NSMutableArray() as? [String]
-                                                let filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
-                                                    //filteredEvents.sort()
+                                                let filteredEvents: [String] = self.GroupList.value(forKeyPath: "display_name") as! [String]
                                                 self.commonArray.append(contentsOf: filteredEvents)
                                                 self.getuserDetail()
                                                 self.postusergroup_tbl.reloadData()
@@ -623,22 +622,7 @@ class PostUsergroupVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                         
                                        }
                 }
-//        docRef.collection("MemberGroup").order(by: "updated_datetime", descending: false).getDocuments() { (querySnapshot, err) in
-//                if let err = err {
-//                    print("Error getting documents: \(err)")
-//                    } else {
-//                        for document in querySnapshot!.documents {
-//                        let data: NSDictionary = document.data() as NSDictionary
-//                        self.GroupList.add(data)
-//                        }
-//                        self.commonArray = NSMutableArray() as? [String]
-//                        var filteredEvents: [String] = self.GroupList.value(forKeyPath: "@distinctUnionOfObjects.display_name") as! [String]
-//                    filteredEvents.sort()
-//                        self.commonArray.append(contentsOf: filteredEvents)
-//                        self.getuserDetail()
-//                }
-//                Constant.showInActivityIndicatory()
-//           }
+
         }
        
     @objc func orderselectmethod(_ sender: UIButton)
@@ -913,7 +897,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         for i in 0..<slectplayer.count
         {
             let roleDic: NSDictionary = slectplayer[i] as! NSDictionary
-            let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + "\(roleDic.value(forKey: "last_name")!)"
+            let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + " " + "\(roleDic.value(forKey: "last_name")!)"
             let filteredEvents: [String] = [role]
             //filteredEvents.sort()
             self.commonArray.append(contentsOf: filteredEvents)
@@ -950,6 +934,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         vc.sport_id = getSport
         vc.season_id = getSeasonid
         vc.level_id = getLevelId
+        vc.toWay = "convention"
        
         if(self.getdifferentLevelArray.count > 1)
         {
@@ -1134,7 +1119,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 for i in 0..<slectplayer.count
                 {
                     let roleDic: NSDictionary = slectplayer[i] as! NSDictionary
-                    let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + "\(roleDic.value(forKey: "last_name")!)"
+                    let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + " " + "\(roleDic.value(forKey: "last_name")!)"
                     if(role == getTeam)
                     {
                         let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary

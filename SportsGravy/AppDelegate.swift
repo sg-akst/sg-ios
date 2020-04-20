@@ -46,13 +46,33 @@ var window: UIWindow?
     func applicationDidBecomeActive(_ application: UIApplication) {
         DispatchQueue.main.async {
             //self.everyhalfnoonTimer()
+          // reachability = Reachability.networkReachabilityForInternetConnection()!
+
+            let netStatus = self.reachability.currentReachabilityStatus
+                   switch netStatus {
+                   case .notReachable:
+                   break
+                   case .reachableViaWiFi:
+                    self.wificonnectionlocaldatabaseupload()
+                   //print(netStatus)
+                   break
+                   case .reachableViaWWAN:
+                   break
+                   }
         }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-   
+   func wificonnectionlocaldatabaseupload()
+      {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let objpostvc: PostImageVC = storyBoard.instantiateViewController(identifier: "postimage")
+          objpostvc.localDatauploadfirebase()
+          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+
+      }
     func application(_ app: UIApplication, open openurl: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let url = "\(openurl)"
         let queryItems = URLComponents(string: url)?.queryItems
