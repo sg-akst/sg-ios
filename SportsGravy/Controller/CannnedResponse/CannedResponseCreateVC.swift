@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import Crashlytics
 
 
 protocol CreateCanresponseDelegate: AnyObject {
@@ -296,6 +297,7 @@ class CannedResponseCreateVC: UIViewController, UITextFieldDelegate, UITextViewD
             }
             else
             {
+                Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

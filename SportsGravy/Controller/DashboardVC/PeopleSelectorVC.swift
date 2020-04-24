@@ -346,15 +346,28 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     selectArray.add(dic)
                 }
                 
- let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
-                UserDefaults.standard.set(true, forKey: "selectPeople")
+                if #available(iOS 13.0, *) {
+                    let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
+                    UserDefaults.standard.set(true, forKey: "selectPeople")
 
-                let defaults = UserDefaults.standard
-                defaults.set(selectArray, forKey: "Team")
-                print(UserDefaults.standard.array(forKey: "Team") as Any)
+                     let defaults = UserDefaults.standard
+                     defaults.set(selectArray, forKey: "Team")
+                     print(UserDefaults.standard.array(forKey: "Team") as Any)
 
-               
-                self.navigationController?.pushViewController(swrvc, animated: true)
+                    
+                     self.navigationController?.pushViewController(swrvc, animated: true)
+                } else {
+                    let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "revealvc"))! as! SWRevealViewController
+                    UserDefaults.standard.set(true, forKey: "selectPeople")
+
+                     let defaults = UserDefaults.standard
+                     defaults.set(selectArray, forKey: "Team")
+                     print(UserDefaults.standard.array(forKey: "Team") as Any)
+
+                    
+                     self.navigationController?.pushViewController(swrvc, animated: true)
+                }
+                
 
         }
         }
@@ -444,10 +457,16 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                         {
                             if(message == "unauthorized user")
                             {
-                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                appDelegate.timerAction()
-                               // self.getplayerlist()
-                                Constant.showInActivityIndicatory()
+                                if #available(iOS 13.0, *) {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                    Constant.showInActivityIndicatory()
+                                } else {
+                                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                     appDelegate.timerAction()
+                                     Constant.showInActivityIndicatory()
+                                }
+                               
 
                             }
                             else

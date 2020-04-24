@@ -22,7 +22,7 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       // let font = UIFont(name: "Raleway-SemiBold", size: 16)
         term_txv.tintColor = UIColor.blue
         let linkedText = NSMutableAttributedString(attributedString: term_txv.attributedText)
         let hyperlinked = linkedText.setAsLink(textToFind: "[Privacy Notice]", linkURL: "http://www.sportsgravy.com/legal/privacy-notice")
@@ -133,8 +133,14 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
                                        let result = info?["data"] as! NSDictionary
 
                                       Constant.showInActivityIndicatory()
-                                    let objcongz: ConguralutionVC = (self.storyboard?.instantiateViewController(identifier: "congz"))!
-                                    self.navigationController?.pushViewController(objcongz, animated: true)
+                                    if #available(iOS 13.0, *) {
+                                        let objcongz: ConguralutionVC = (self.storyboard?.instantiateViewController(identifier: "congz"))!
+                                        self.navigationController?.pushViewController(objcongz, animated: true)
+
+                                    } else {
+                                        let objcongz: ConguralutionVC = (self.storyboard?.instantiateViewController(withIdentifier: "congz"))! as! ConguralutionVC
+                                        self.navigationController?.pushViewController(objcongz, animated: true)
+                                    }
                                    }
                             else
                                    {

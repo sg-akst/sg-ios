@@ -10,9 +10,10 @@ import UIKit
 import IQKeyboardManagerSwift
 import Firebase
 import FirebaseFirestore
-
+import Fabric
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 var window: UIWindow?
@@ -21,8 +22,11 @@ var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+       
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
+        Fabric.sharedSDK().debug = true
+        
        
         return true
     }
@@ -68,12 +72,20 @@ var window: UIWindow?
    func wificonnectionlocaldatabaseupload()
       {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let objpostvc: PostImageVC = storyBoard.instantiateViewController(identifier: "postimage")
-          objpostvc.localDatauploadfirebase()
-          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+        if #available(iOS 13.0, *) {
+            let objpostvc: PostImageVC = storyBoard.instantiateViewController(identifier: "postimage")
+            objpostvc.localDatauploadfirebase()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+        } else {
+            let objpostvc = storyBoard.instantiateViewController(withIdentifier: "postimage") as? PostImageVC
 
+           // let objpostvc = storyBoard.instantiateViewController(identifier: "postimage") as? PostImageVC
+            objpostvc!.localDatauploadfirebase()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+        }
       }
     func application(_ app: UIApplication, open openurl: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        print(openurl)
         let url = "\(openurl)"
         let queryItems = URLComponents(string: url)?.queryItems
         let param1 = queryItems?.filter({$0.name == "uid"}).first

@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 import Alamofire
 import Kingfisher
 import FirebaseStorage
+import Crashlytics
 
 struct ProfileCategory {
     let name : String
@@ -83,8 +84,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                {
                                                
                                                    self.profile_imag.kf.setImage(with: url)
-//                                                   self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
-//                                                   self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
+
                                                }
                             else
                                 {
@@ -330,7 +330,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             if(indexPath.section == 1)
             {
                 let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
-                vc.organizationDetails = items as! NSMutableArray
+                vc.organizationDetails = items as? NSMutableArray
                 //vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -405,6 +405,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func removeconnection(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         RemovePlayerconnection()
     }
     
@@ -482,6 +483,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
                self.dismiss(animated: true, completion: nil)
+        Crashlytics.sharedInstance().crash()
         
                let profileImageFromPicker = info[UIImagePickerControllerOriginalImage] as! UIImage
                 

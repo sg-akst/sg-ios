@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 import Alamofire
 import SwiftyJSON
+import Crashlytics
 
 protocol SortorderDelegate: AnyObject {
     func sortingOrderTagupdateSuccess()
@@ -259,6 +260,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        }
     @IBAction func updatesorting(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         Constant.internetconnection(vc: self)
@@ -273,7 +275,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             "season_id" : organization.value(forKey: "season_id") as! String,
              "team_id" : getTeamId as String,
              "auth_id" : UserDefaults.standard.string(forKey: "UUID")!,
-              "roleBySeason_id" : rolebySeasonid as String,
+             "roleBySeason_id" : self.rolebySeasonid as String,
               "title" : selectType!,
                "updateObj": self.updateArray]
         
@@ -284,7 +286,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         
 AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { response in
-    Constant.showInActivityIndicatory()
+    //
 
                         switch response.result
                        {
@@ -298,21 +300,29 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
                         {
                             let str = ("MemberGroup" == self.selectType) ? "User Group" : self.selectType
                             self.alertermsg(msg: " \(str!) Sorted Successfully ")
-
+                             Constant.showInActivityIndicatory()
                         }
                         else
                         {
                            if(message == "unauthorized user")
                             {
-                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                appDelegate.timerAction()
-                                self.updatesorting(sender)
+                                if #available(iOS 13.0, *) {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                    self.updatesorting(sender)
+                                } else {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                    self.updatesorting(sender)
+                                }
+                               
                             }
                             else
                            {
                             self.alertermsg(msg: "\(message!)")
 
                             }
+                            Constant.showInActivityIndicatory()
                         }
                        
                             
@@ -350,6 +360,7 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
     
      @IBAction func Sortingcancelbtn(_ sender: UIButton)
         {
+            Crashlytics.sharedInstance().crash()
            self.navigationController?.popViewController(animated: true)
         }
 }

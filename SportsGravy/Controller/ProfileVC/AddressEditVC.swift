@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import STPopup
+import Crashlytics
 
 protocol addressEditDelegate: AnyObject {
     func addressupdateSuccess()
@@ -267,6 +268,7 @@ class AddressEditVC: UIViewController,PopViewDelegate, UITextFieldDelegate {
         }
         else
         {
+            Crashlytics.sharedInstance().crash()
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let getuuid = UserDefaults.standard.string(forKey: "UUID")

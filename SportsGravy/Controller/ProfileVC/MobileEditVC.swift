@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestoreSwift
 import Firebase
+import Crashlytics
 
 protocol mobileEditDelegate: AnyObject {
     func mobileupdateSuccess()
@@ -106,6 +107,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
         }
         else
         {
+            Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

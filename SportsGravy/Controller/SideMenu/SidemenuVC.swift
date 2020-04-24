@@ -58,16 +58,13 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         role_tbl.sizeToFit()
        self.settings_view.isHidden = true
         self.user_view.isHidden = true
-       
-
-       
+            
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
       getuserDetail()
-         
 
     }
     func getuserDetail()
@@ -101,7 +98,6 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     let url = URL(string: "\(doc.value(forKey: "profile_image")!)")
                     if(url != nil)
                     {
-                       // self.profileimg.isHidden = true
                         self.profileimg.isHidden = true
                         self.profile_image_view.isHidden = false
                         self.profile_image_view.layer.cornerRadius = self.profile_image_view.frame.size.width/2

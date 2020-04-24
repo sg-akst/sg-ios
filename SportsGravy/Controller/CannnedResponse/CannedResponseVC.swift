@@ -10,7 +10,7 @@ import UIKit
 import SWRevealViewController
 import Firebase
 import FirebaseFirestore
-
+import Crashlytics
 
 
 class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate,CreateCanresponseDelegate, SortorderDelegate {
@@ -891,6 +891,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     
     func deleteMethod(rolebyDic: NSDictionary)
    {
+    Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

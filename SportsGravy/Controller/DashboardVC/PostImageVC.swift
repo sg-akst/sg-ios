@@ -9,7 +9,7 @@ import Photos
 //import BSImagePicker
 import AlamofireImage
 import Kingfisher
-import Lightbox
+//import Lightbox
 import ImagePicker
 import SwiftyJSON
 import AVKit
@@ -94,8 +94,11 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let userTeam: NSDictionary = userDetail
          cannedResponseTitle = userTeam.value(forKey: "cannedResponseTitle") as? String
         cannedResponseDesc = userTeam.value(forKey: "cannedResponseDesc") as? String
-        self.post_content_txt.text = cannedResponseDesc
-        content_count_lbl.text = "\(post_content_txt.text?.count ?? 0)/250"
+        if(self.post_content_txt.text == nil || self.post_content_txt.text == "")
+        {
+          self.post_content_txt.text = cannedResponseDesc
+          content_count_lbl.text = "\(post_content_txt.text?.count ?? 0)/250"
+        }
 
         sectionCount = 3
 
@@ -507,9 +510,16 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             {
                 RemovepostItem(sender)
             }
-          let objPosttag: PostUsergroupVC = (self.storyboard?.instantiateViewController(identifier: "postuser"))!
-            objPosttag.delegate = self
-            self.navigationController?.pushViewController(objPosttag, animated: true)
+            if #available(iOS 13.0, *) {
+                let objPosttag: PostUsergroupVC = (self.storyboard?.instantiateViewController(identifier: "postuser"))!
+                objPosttag.delegate = self
+                self.navigationController?.pushViewController(objPosttag, animated: true)
+            } else {
+                let objPosttag: PostUsergroupVC = (self.storyboard?.instantiateViewController(withIdentifier: "postuser"))! as! PostUsergroupVC
+                objPosttag.delegate = self
+                self.navigationController?.pushViewController(objPosttag, animated: true)
+            }
+           
         }
         else if(button == 1)
         {
@@ -519,12 +529,21 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             }
             if(SelectgetrolebySeasonid != nil)
             {
-            let objPosttag: PostTagVC = (self.storyboard?.instantiateViewController(identifier: "posttag"))!
-            objPosttag.TeamId = SelectgetTeamId
-                objPosttag.rolebySeasonId = SelectgetrolebySeasonid
-            objPosttag.delegate = self
-                self.navigationController?.pushViewController(objPosttag, animated: true)
-                
+                if #available(iOS 13.0, *) {
+                    let objPosttag: PostTagVC = (self.storyboard?.instantiateViewController(identifier: "posttag"))!
+                    objPosttag.TeamId = SelectgetTeamId
+                        objPosttag.rolebySeasonId = SelectgetrolebySeasonid
+                    objPosttag.delegate = self
+                        self.navigationController?.pushViewController(objPosttag, animated: true)
+                        
+                } else {
+                    let objPosttag: PostTagVC = (self.storyboard?.instantiateViewController(withIdentifier: "posttag"))! as! PostTagVC
+                    objPosttag.TeamId = SelectgetTeamId
+                        objPosttag.rolebySeasonId = SelectgetrolebySeasonid
+                    objPosttag.delegate = self
+                        self.navigationController?.pushViewController(objPosttag, animated: true)
+                }
+            
             }
             else{
                 Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User Group Above Team To Get Hash Tag ")
@@ -538,9 +557,16 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             {
                 RemovepostItem(sender)
             }
-            let objReaction: ReactionVC = (self.storyboard?.instantiateViewController(identifier:"reactionvc"))!
-            objReaction.delegate = self
-            self.navigationController?.pushViewController(objReaction, animated: true)
+            if #available(iOS 13.0, *) {
+                let objReaction: ReactionVC = (self.storyboard?.instantiateViewController(identifier:"reactionvc"))!
+                objReaction.delegate = self
+                self.navigationController?.pushViewController(objReaction, animated: true)
+                
+            } else {
+                let objReaction: ReactionVC = (self.storyboard?.instantiateViewController(withIdentifier:"reactionvc"))! as! ReactionVC
+                objReaction.delegate = self
+                self.navigationController?.pushViewController(objReaction, animated: true)
+            }
             
         }
         else if(button == 3)
@@ -552,12 +578,22 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
             if(SelectgetrolebySeasonid != nil)
             {
-            let objcanned: PostCannedVC = (self.storyboard?.instantiateViewController(identifier:"PostCannedVC"))!
-            objcanned.TeamId = SelectgetTeamId
-            objcanned.rolebyseasonid = SelectgetrolebySeasonid
-            objcanned.delegate = self
+                if #available(iOS 13.0, *) {
+                    let objcanned: PostCannedVC = (self.storyboard?.instantiateViewController(identifier:"PostCannedVC"))!
+                    objcanned.TeamId = SelectgetTeamId
+                    objcanned.rolebyseasonid = SelectgetrolebySeasonid
+                    objcanned.delegate = self
 
-            self.navigationController?.pushViewController(objcanned, animated: true)
+                    self.navigationController?.pushViewController(objcanned, animated: true)
+                } else {
+                    let objcanned: PostCannedVC = (self.storyboard?.instantiateViewController(withIdentifier:"PostCannedVC"))! as! PostCannedVC
+                    objcanned.TeamId = SelectgetTeamId
+                    objcanned.rolebyseasonid = SelectgetrolebySeasonid
+                    objcanned.delegate = self
+
+                    self.navigationController?.pushViewController(objcanned, animated: true)
+                }
+            
             }
             else{
                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select User Group Above Team To Get Canned Response")
@@ -567,15 +603,13 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBAction func PostImage(_ sender: UIButton)
     {
         let config = Configuration()
-           config.doneButtonTitle = "Finish"
-           config.noImagesTitle = "Sorry! There are no images here!"
-           config.recordLocation = false
-           config.allowVideoSelection = true
-
-           let imagePicker = ImagePickerController(configuration: config)
-           imagePicker.delegate = self
-
-           present(imagePicker, animated: true, completion: nil)
+        config.doneButtonTitle = "Cancel"
+        config.noImagesTitle = "Sorry! There are no images here!"
+        config.recordLocation = false
+        config.allowVideoSelection = true
+        let imagePicker = ImagePickerController(configuration: config)
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
     }
     
     @IBAction func postVideo(_ sender: UIButton)
@@ -618,9 +652,9 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
                self.dismiss(animated: true, completion: nil)
         DoneBtn.setTitleColor(UIColor.blue, for: .normal)
-        let dynamicuuid = UUID().uuidString
+       
+       let mediaType = info[UIImagePickerControllerMediaType] as! NSString
 
-        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         if mediaType.isEqual(to: kUTTypeMovie as NSString as String){
             //print("movie")
             if picker.sourceType == UIImagePickerControllerSourceType.photoLibrary {
@@ -632,20 +666,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 self.videoPath = tempMedia?.absoluteString
                    }
             tempMedia = info[UIImagePickerControllerMediaURL] as? URL
-//            let player = AVPlayer(url: tempMedia!)
-////
-//                let playerLayer = AVPlayerLayer(player: player)
-//            playerLayer.frame = self.postimage.bounds
-//                player.play()
-//                let videoview = UIView()
-//
-//            videoview.frame =  CGRect(x: 0, y: 0, width: self.postimage.frame.size.width, height: self.postimage.frame.size.height)
-//           // videoview.videoUrl = tempMedia
-//            videoview.layer.addSublayer(playerLayer)
-//                videoview.layer.display()
-//            //videoview.contentMode = .scaleAspectFill
-//            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
-//            self.postimage.addSubview(videoview)
 
             
            let videoplayview = AGVideoPlayerView()
@@ -894,7 +914,6 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     func feedPostMethod()
     {
-        self.delegate?.backgroundpostloading()
 
         let reachability: Reachability = Reachability.networkReachabilityForInternetConnection()!
 
@@ -902,6 +921,9 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         if (UserDefaults.standard.bool(forKey: "feedpost") == true && netStatus != .reachableViaWiFi)
         {
+            self.delegate?.backgroundpostloading()
+
+            
             //tag_name is insert 
             let paramsJSON = JSON(getPostimageUrl)
             let paramsString = paramsJSON.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions.prettyPrinted)!
@@ -1018,7 +1040,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                                                   }
                                                               }
                                 
-                                self.delegate?.backgroundloadingstop()
+                               // self.delegate?.backgroundloadingstop()
                                   // if let data = response.data{
                                        let info = jsonData as? NSDictionary
                                        let statusCode = info?["status"] as? Bool
@@ -1059,8 +1081,14 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { _ in
                }))
         alert.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { _ in
-            let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
-            self.navigationController?.pushViewController(swrvc, animated: true)
+            if #available(iOS 13.0, *) {
+                let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(identifier: "revealvc"))!
+                self.navigationController?.pushViewController(swrvc, animated: true)
+
+            } else {
+                let swrvc: SWRevealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "revealvc"))! as! SWRevealViewController
+                self.navigationController?.pushViewController(swrvc, animated: true)
+            }
                 }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -1088,9 +1116,16 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     // MARK: - UICollectionViewDelegate protocol
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       let vc: ImageviewVC = (self.storyboard?.instantiateViewController(identifier: "PageImage"))!
-       vc.ImageCount = getPostimageUrl
-       self.navigationController?.pushViewController(vc, animated: true)
+        if #available(iOS 13.0, *) {
+            let vc: ImageviewVC = (self.storyboard?.instantiateViewController(identifier: "PageImage"))!
+            vc.ImageCount = getPostimageUrl
+                  self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let vc: ImageviewVC = (self.storyboard?.instantiateViewController(withIdentifier: "PageImage"))! as! ImageviewVC
+            vc.ImageCount = getPostimageUrl
+                  self.navigationController?.pushViewController(vc, animated: true)
+        }
+      
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let flowayout = collectionViewLayout as? UICollectionViewFlowLayout

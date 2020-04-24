@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestoreSwift
 import Firebase
 import STPopup
+import Crashlytics
 
 protocol genderEditDelegate: AnyObject {
     func genderupdateSuccess()
@@ -81,6 +82,7 @@ class GenderEditVC: UIViewController,UITextFieldDelegate,PopViewDelegate {
         }
         else
         {
+            Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

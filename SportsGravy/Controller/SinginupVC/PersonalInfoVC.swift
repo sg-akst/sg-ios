@@ -196,6 +196,16 @@ if(textField == self.mobile_lbl)
     
     @IBAction func nextbtn(_ sender: UIButton)
     {
+        if(self.firstname_lbl.text == "" || self.firstname_lbl.text?.isEmpty == true)
+        {
+        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Firstname ")
+
+        }
+        if(self.lastname_lbl.text == "" || self.lastname_lbl.text?.isEmpty == true)
+        {
+        Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Lastname ")
+
+        }
         if(self.suffix_lbl.text == "" || self.suffix_lbl.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Select Suffix ")
@@ -265,17 +275,33 @@ if(textField == self.mobile_lbl)
             let children: NSArray = userdetails.value(forKey: "children") as! NSArray
             if(children.count > 0)
             {
-            let objpersonalVC: InvitePlayerVC = (self.storyboard?.instantiateViewController(identifier: "inviteplayer"))!
-            objpersonalVC.userdetails = userdetails
-            objpersonalVC.parententerdetails = getparentdetails
-            self.navigationController?.pushViewController(objpersonalVC, animated: true)
+                if #available(iOS 13.0, *) {
+                    let objpersonalVC: InvitePlayerVC = (self.storyboard?.instantiateViewController(identifier: "inviteplayer"))!
+                    objpersonalVC.userdetails = userdetails
+                    objpersonalVC.parententerdetails = getparentdetails
+                    self.navigationController?.pushViewController(objpersonalVC, animated: true)
+                } else {
+                    let objpersonalVC: InvitePlayerVC = (self.storyboard?.instantiateViewController(withIdentifier: "inviteplayer"))! as! InvitePlayerVC
+                    objpersonalVC.userdetails = userdetails
+                    objpersonalVC.parententerdetails = getparentdetails
+                    self.navigationController?.pushViewController(objpersonalVC, animated: true)
+                }
+           
             }
             else
             {
-                let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
-                objcoppaparentVC.parentdetails = getparentdetails
-                objcoppaparentVC.signuserDetail = userdetails
-                self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+                if #available(iOS 13.0, *) {
+                    let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
+                    objcoppaparentVC.parentdetails = getparentdetails
+                    objcoppaparentVC.signuserDetail = userdetails
+                    self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+                } else {
+                    let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(withIdentifier: "termandcon"))! as! TermAndConditionVC
+                                       objcoppaparentVC.parentdetails = getparentdetails
+                                       objcoppaparentVC.signuserDetail = userdetails
+                                       self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+                }
+                
             }
         }
     }
@@ -303,7 +329,6 @@ if(textField == self.mobile_lbl)
            let db = Firestore.firestore()
            //let docRef = db.collection("countries").document()
            db.collection("countries").getDocuments() { (querySnapshot, err) in
-               Constant.showInActivityIndicatory()
 
            if let err = err {
                print("Error getting documents: \(err)")
@@ -313,6 +338,8 @@ if(textField == self.mobile_lbl)
                    for document in querySnapshot!.documents {
                    let data: NSDictionary = document.data() as NSDictionary
                    self.getCountryArray.add(data)
+                    Constant.showInActivityIndicatory()
+
                   }
               // Constant.showInActivityIndicatory()
 

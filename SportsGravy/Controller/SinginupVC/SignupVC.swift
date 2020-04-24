@@ -67,8 +67,7 @@ class SignupVC: UIViewController, UITextFieldDelegate {
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.signupString
-        let header: HTTPHeaders = [
-            "idtoken": UserDefaults.standard.string(forKey: "idtoken")! , "UID" : "7XrpgTtJOwGctldTcqse"]
+        let header: HTTPHeaders = ["UID" : "7XrpgTtJOwGctldTcqse"]
             AF.request(testStatusUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                 if(!(response.error != nil)){
                     switch (response.result)
@@ -114,9 +113,16 @@ class SignupVC: UIViewController, UITextFieldDelegate {
         }
         else
         {
-            let objpersonalVC: PersonalInfoVC = (self.storyboard?.instantiateViewController(identifier: "personinfo"))!
-            objpersonalVC.userdetails = userdetails
-            self.navigationController?.pushViewController(objpersonalVC, animated: true)
+            if #available(iOS 13.0, *) {
+                let objpersonalVC: PersonalInfoVC = (self.storyboard?.instantiateViewController(identifier: "personinfo"))!
+                objpersonalVC.userdetails = userdetails
+                self.navigationController?.pushViewController(objpersonalVC, animated: true)
+            } else {
+                let objpersonalVC: PersonalInfoVC = (self.storyboard?.instantiateViewController(withIdentifier: "personinfo"))! as! PersonalInfoVC
+                objpersonalVC.userdetails = userdetails
+                self.navigationController?.pushViewController(objpersonalVC, animated: true)
+            }
+            
         }
         
     }

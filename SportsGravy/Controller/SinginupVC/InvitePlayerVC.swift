@@ -21,18 +21,30 @@ class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.emilladdArray.removeObject(at: 0)
             
         }
-        let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(identifier: "coppaform"))!
-        objcoppaparentVC.delegate = self
-        objcoppaparentVC.details = emilladdArray
-        objcoppaparentVC.parentDetails = parententerdetails
-        
-        self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+        if #available(iOS 13.0, *) {
+            let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(identifier: "coppaform"))!
+            objcoppaparentVC.delegate = self
+                   objcoppaparentVC.details = emilladdArray
+                   objcoppaparentVC.parentDetails = parententerdetails
+                   
+                   self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+        } else {
+            let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(withIdentifier: "coppaform"))! as! CoppaParentFormVC
+            objcoppaparentVC.delegate = self
+                   objcoppaparentVC.details = emilladdArray
+                   objcoppaparentVC.parentDetails = parententerdetails
+                   
+                   self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+        }
+       
         
         
     }
     
     @IBOutlet var children_tbl: UITableView!
-
+    @IBOutlet weak var invite_scroll: UIScrollView!
+    @IBOutlet weak var inviteplayer_scroll_height: NSLayoutConstraint!
+    @IBOutlet weak var invite_tbl: NSLayoutConstraint!
     
     var userdetails: NSDictionary!
     var chidArray: NSMutableArray!
@@ -41,6 +53,7 @@ class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var emilladdArray: NSMutableArray!
     var isParentconsent: Bool!
     var parententerdetails: NSMutableDictionary!
+    
 
     
     override func viewDidLoad() {
@@ -53,8 +66,9 @@ class InvitePlayerVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.children_tbl.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         children_tbl.sizeToFit()
        
-
+        invite_tbl.constant = CGFloat(chidArray.count * 70)
         
+        inviteplayer_scroll_height.constant = (self.view.frame.size.height < invite_tbl.constant + 235) ? invite_tbl.constant + 235 : self.view.frame.size.height
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -134,19 +148,37 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if(self.emilladdArray.count > 0)
         {
-            let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(identifier: "coppaform"))!
-            objcoppaparentVC.delegate = self
-            objcoppaparentVC.details = emilladdArray
-            objcoppaparentVC.parentDetails = parententerdetails
+            if #available(iOS 13.0, *) {
+                let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(identifier: "coppaform"))!
+                objcoppaparentVC.delegate = self
+                objcoppaparentVC.details = emilladdArray
+                objcoppaparentVC.parentDetails = parententerdetails
+                
+                self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+            } else {
+                let objcoppaparentVC: CoppaParentFormVC = (self.storyboard?.instantiateViewController(withIdentifier: "coppaform"))! as! CoppaParentFormVC
+                               objcoppaparentVC.delegate = self
+                               objcoppaparentVC.details = emilladdArray
+                               objcoppaparentVC.parentDetails = parententerdetails
+                               
+                               self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+            }
             
-            self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
         }
         else
         {
-           let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
-            objcoppaparentVC.parentdetails = parententerdetails
-            objcoppaparentVC.signuserDetail = userdetails
-            self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+            if #available(iOS 13.0, *) {
+                let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(identifier: "termandcon"))!
+                objcoppaparentVC.parentdetails = parententerdetails
+                objcoppaparentVC.signuserDetail = userdetails
+                self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+            } else {
+                let objcoppaparentVC: TermAndConditionVC = (self.storyboard?.instantiateViewController(withIdentifier: "termandcon"))! as! TermAndConditionVC
+                objcoppaparentVC.parentdetails = parententerdetails
+                objcoppaparentVC.signuserDetail = userdetails
+                self.navigationController?.pushViewController(objcoppaparentVC, animated: true)
+            }
+           
         }
         
         

@@ -67,7 +67,7 @@ var selectedImageFromPicker: [UIImage]!
             //Constant.showActivityIndicatory(uiView: self.view)
         let getuserByUid: String = Constant.sharedinstance.getUserByUId  //"https://us-central1-sportsgravy-testing.cloudfunctions.net/getuserByUid?"
         let token = UserDefaults.standard.string(forKey: "idtoken")
-        print(token)
+       // print(token)
         let header: HTTPHeaders = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
                         var param:[String:AnyObject] = [:]
@@ -254,7 +254,7 @@ var selectedImageFromPicker: [UIImage]!
 //            self.present(self.imageviewcontroller, animated: true, completion: nil)
             
             let config = Configuration()
-            config.doneButtonTitle = "Finish"
+            config.doneButtonTitle = "Cancel"
             config.noImagesTitle = "Sorry! There are no images here!"
             config.recordLocation = false
             config.allowVideoSelection = true
@@ -312,9 +312,10 @@ var selectedImageFromPicker: [UIImage]!
         }
         if mediaType.isEqual(to: kUTTypeImage as NSString as String){
             var takePhoto: UIImage = UIImage()
-                       if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+                       if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
                        takePhoto = editedImage
-                       } else if let OriginalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+                       }
+            if let OriginalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                            takePhoto = OriginalImage
                        }
             if(self.clickPhotoTitle == "1")
@@ -323,14 +324,6 @@ var selectedImageFromPicker: [UIImage]!
             self.present(self.imageviewcontroller, animated: false, completion: nil)
 
             }
-        // else
-//            {
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
-//            vc.backgroundImage = selectedImageFromPicker
-//            vc.finalDataDictionary=tempUserinfoDic
-//            vc.isImage = true
-//            self.navigationController?.pushViewController(vc, animated: true)
-//            }
         }
     }
 

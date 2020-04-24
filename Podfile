@@ -21,11 +21,14 @@ target 'SportsGravy' do
   pod 'TagListView', '~> 1.0'
   pod 'ResizingTokenField'
   pod 'ImagePicker'
-  pod 'Lightbox'
+#  pod 'Lightbox'
   pod 'Hue'
   pod 'PINRemoteImage'
   pod 'SwiftyGif'
   pod 'SwiftGifOrigin'
+  pod 'Fabric'
+  pod 'Crashlytics'
+  pod 'Firebase/Core'
 #  pod 'ReachabilitySwift'
 
 

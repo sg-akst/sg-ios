@@ -233,7 +233,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                        }
                                        else
                                        {
-                                         addTitle_btn.setTitle(" > \(addorderArray[i] as! String)", for: .normal)
+                                         addTitle_btn.setTitle(" >  \(addorderArray[i] as! String)", for: .normal)
 
                                        }
                         addTitle_btn.translatesAutoresizingMaskIntoConstraints = false
@@ -863,13 +863,19 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                {
                                    if(message == "unauthorized user")
                                    {
-                                       let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                       appDelegate.timerAction()
+                                    if #available(iOS 13.0, *) {
+                                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                        appDelegate.timerAction()
+
+                                    } else {
+                                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                        appDelegate.timerAction()
+                                    }
                                        //self.getplayerlist()
                                    }
                                 else
                                 {
-                                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message as! String)")
+                                    Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
 
                                 }
                                   Constant.showInActivityIndicatory()

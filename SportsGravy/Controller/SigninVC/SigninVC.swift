@@ -27,7 +27,14 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         self.email_txt.delegate = self
         self.password_txt.delegate = self
         revealController = SWRevealViewController()
-        
+        try! Auth.auth().signOut()
+               if let storyboard = self.storyboard {
+                   
+                  // let vc = storyboard.instantiateViewController(withIdentifier: "Signin_page") as! SigninVC
+                  // self.navigationController?.pushViewController(vc, animated: true)
+                   UserDefaults.standard.removeObject(forKey: "UUID")
+                   UserDefaults.standard.removeObject(forKey: "idtoken")
+               }
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -113,9 +120,16 @@ class SigninVC: UIViewController, UITextFieldDelegate {
 
                 UserDefaults.standard.set(userUUID, forKey: "UUID")
                 Constant.showInActivityIndicatory()
-                let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
-                self?.navigationController?.pushViewController(swrvc, animated: true)
-                    Constant.showInActivityIndicatory()
+                    if #available(iOS 13.0, *) {
+                        let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(identifier: "revealvc"))!
+                        self?.navigationController?.pushViewController(swrvc, animated: true)
+                        Constant.showInActivityIndicatory()
+                    } else {
+                        let swrvc: SWRevealViewController = (self?.storyboard?.instantiateViewController(withIdentifier: "revealvc"))! as! SWRevealViewController
+                        self?.navigationController?.pushViewController(swrvc, animated: true)
+                        Constant.showInActivityIndicatory()
+                    }
+                
             }
             else
             {
@@ -131,8 +145,15 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     }
     @IBAction func gotoforgot(_ sender: UIButton)
        {
-           let objSigninvc: ForgotVC = (self.storyboard?.instantiateViewController(identifier: "forgot"))!
-              self.navigationController?.pushViewController(objSigninvc, animated: true)
+        if #available(iOS 13.0, *) {
+            let objSigninvc: ForgotVC = (self.storyboard?.instantiateViewController(identifier: "forgot"))!
+            self.navigationController?.pushViewController(objSigninvc, animated: true)
+
+        } else {
+            let objSigninvc: ForgotVC = (self.storyboard?.instantiateViewController(withIdentifier: "forgot"))! as! ForgotVC
+            self.navigationController?.pushViewController(objSigninvc, animated: true)
+
+        }
        }
     
     

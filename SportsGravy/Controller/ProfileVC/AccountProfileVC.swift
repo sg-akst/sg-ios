@@ -13,6 +13,7 @@ import Kingfisher
 import FirebaseStorage
 import Alamofire
 import SwiftyJSON
+import Crashlytics
 
 struct Category {
     let name : String
@@ -195,6 +196,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func updateprofileImage(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         showAlert()
     }
     
@@ -229,7 +231,6 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
      
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
             self.dismiss(animated: true, completion: nil)
-     
             let profileImageFromPicker = info[UIImagePickerControllerOriginalImage] as! UIImage
              
             let metadata = StorageMetadata()
@@ -283,133 +284,6 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             }
              
         }
-    
- //   func getplayerlist()
-//    {
-//        Constant.internetconnection(vc: self)
-//        Constant.showActivityIndicatory(uiView: self.view)
-//        let testStatusUrl: String = Constant.sharedinstance.getPlayerbyuid
-//        let header: HTTPHeaders = [
-//            "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? "", "UID" : "\(UserDefaults.standard.string(forKey: "UUID") as AnyObject?)"]
-////         var param:[String:AnyObject] = [:]
-////        param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-//
-//        AF.request(testStatusUrl, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
-//            Constant.showInActivityIndicatory()
-//
-//            if(!(response.error != nil)){
-//                switch (response.result)
-//                {
-//                case .success(let json):
-//                   // if let data = response.data{
-//                        let jsonData = json
-//                        print(jsonData)
-//                        let info = jsonData as? NSDictionary
-//                        let statusCode = info?["status"] as? Bool
-//                        let message = info?["message"] as? String
-//
-//                        if(statusCode == true)
-//                        {
-//                            let result = info?["data"] as! NSArray
-//                            let getPlayer: NSDictionary = result[0] as! NSDictionary
-//                            self.playerListArray = NSMutableArray()
-//                            self.playerListArray = getPlayer["childrendata"] as? NSMutableArray
-//                            self.guardiansListArray = NSMutableArray()
-//                            self.guardiansListArray = getPlayer["guardianlist"] as? NSMutableArray
-//                             Constant.showInActivityIndicatory()
-//                            //self.getGuardians()
-//
-//                        }
-//                        else
-//                        {
-//                            if(message == "unauthorized user")
-//                            {
-//                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                                appDelegate.timerAction()
-//                                self.getplayerlist()
-//                            }
-//                            else
-//                            {
-//                                Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(message!)")
-//                            }
-//
-//                        }
-//                  //  }
-//                    break
-//
-//                case .failure(_):
-//                    Constant.showInActivityIndicatory()
-//
-//                    break
-//                }
-//            }
-//            else
-//            {
-//                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-//                Constant.showInActivityIndicatory()
-//
-//            }
-//        }
-//    }
-    
-   // func getGuardians()
-//    {
-//            Constant.internetconnection(vc: self)
-//            Constant.showActivityIndicatory(uiView: self.view)
-//            let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
-//        let header: HTTPHeaders = [
-//                "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
-//             var param:[String:AnyObject] = [:]
-//            param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-//
-//            AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
-//                Constant.showInActivityIndicatory()
-//
-//                if(!(response.error != nil)){
-//                    switch (response.result)
-//                    {
-//                    case .success(let json):
-//                      //  if let data = response.data{
-//                        let jsonData = json
-//                            print(jsonData)
-//                            let info = jsonData as? NSDictionary
-//                            let statusCode = info?["status"] as? Bool
-//                            //let message = info?["message"] as? String
-//
-//                            if(statusCode == true)
-//                            {
-//                                let result = info?["data"] as! NSArray
-//
-//                                self.guardiansListArray = NSMutableArray()
-//                                self.guardiansListArray = result.mutableCopy() as? NSMutableArray
-//                                Constant.showInActivityIndicatory()
-//
-//                                self.GetOrganization()
-//
-//                            }
-//                            else
-//                            {
-//                               // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
-//                            }
-//                            //Constant.showInActivityIndicatory()
-//                        //}
-//                        break
-//
-//                    case .failure(_):
-//                       // Constant.showInActivityIndicatory()
-//
-//                        break
-//                    }
-//                }
-//                else
-//                {
-//                    //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-//                   // Constant.showInActivityIndicatory()
-//
-//                }
-//            }
-//
-//        }
     
     func GetOrganization()
     {
@@ -475,9 +349,16 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                         {
                             if(message == "unauthorized user")
                             {
-                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                appDelegate.timerAction()
-                                self.GetOrganization()
+                                if #available(iOS 13.0, *) {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                    self.GetOrganization()
+                                } else {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                    self.GetOrganization()
+                                }
+                                
                             }
                             else
                             {
@@ -738,13 +619,25 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     
     @objc func inviteGuardian(_ sender: UIButton)
     {
-        let vc: InviteGuardianVC = (self.storyboard?.instantiateViewController(identifier: "guardian"))!
-        vc.player_list_Array = self.playerListArray
-        self.navigationController?.pushViewController(vc, animated: true)
+       // let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        if #available(iOS 13.0, *) {
+            let vc: InviteGuardianVC = (self.storyboard?.instantiateViewController(identifier: "guardian"))!
+            vc.player_list_Array = self.playerListArray
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "guardian") as? InviteGuardianVC
+
+            //let vc: InviteGuardianVC = storyBoard.instantiateViewController(identifier: "guardian")
+            vc?.player_list_Array = self.playerListArray
+            self.navigationController?.pushViewController(vc!, animated: true)
+        }
+        
     }
     
     @IBAction func usernameEdit(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatename") as! UsernameEditVC
         vc.userDetailDic = alldoc
         vc.delegate = self
@@ -753,12 +646,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func passwordEdit(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatePW") as! PasswordEditVC
         vc.getAllDic = alldoc
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func mobileEdit(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "UpdateMobile") as! MobileEditVC
         vc.getAllDic = alldoc
         vc.delegate = self
@@ -767,6 +662,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func genderEdit(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
        let vc = storyboard?.instantiateViewController(withIdentifier: "updateGender") as! GenderEditVC
         vc.getalldoc = alldoc
         vc.delegate = self
@@ -776,6 +672,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func addressEdit(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "Update_address") as! AddressEditVC
         vc.addressDetailDic = alldoc
         vc.delegate = self
@@ -784,11 +681,13 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func organisationEdit(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
        let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func logout_btnaction(_ sender: UIButton)
        {
+        Crashlytics.sharedInstance().crash()
             try! Auth.auth().signOut()
            if let storyboard = self.storyboard {
                
@@ -801,6 +700,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
        
     @IBAction func cancelbtn(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
        self.navigationController?.popViewController(animated: true)
     }
 

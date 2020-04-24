@@ -3,6 +3,7 @@ import UIKit
 import SWRevealViewController
 import Firebase
 import FirebaseFirestoreSwift
+import Crashlytics
 
 protocol CreateusergroupDelegate: AnyObject {
     func passorderArray(select:NSMutableArray!, selectindex: UIButton)
@@ -411,7 +412,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             else
             {
              
-                
+                Crashlytics.sharedInstance().crash()
             Constant.internetconnection(vc: self)
 
             let getuuid = UserDefaults.standard.string(forKey: "UUID")

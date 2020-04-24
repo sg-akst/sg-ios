@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 protocol PopViewDelegate: AnyObject {
     func selectoptionString(selectSuffix: String)
@@ -57,6 +58,7 @@ class PopVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
    
        @IBAction func didclickcancel(_ sender: UIButton)
        {
+        Crashlytics.sharedInstance().crash()
           popupController?.dismiss()
       }
 

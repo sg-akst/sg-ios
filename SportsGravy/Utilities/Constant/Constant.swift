@@ -135,14 +135,25 @@ static func showActivityIndicatory(uiView: UIView) {
 
     self.actInd = UIActivityIndicatorView()
     self.actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0);
-    self.actInd.activityIndicatorViewStyle =
+    if #available(iOS 13.0, *) {
+        self.actInd.activityIndicatorViewStyle =
             UIActivityIndicatorView.Style.large
-    self.actInd.center = CGPoint(x: loadingView.frame.size.width / 2,
-                            y: loadingView.frame.size.height / 2);
-        loadingView.addSubview(actInd)
-        self.loadingviewcontain.addSubview(loadingView)
-        uiView.addSubview(self.loadingviewcontain)
-    self.actInd.startAnimating()
+        self.actInd.center = CGPoint(x: loadingView.frame.size.width / 2,
+                                   y: loadingView.frame.size.height / 2);
+               loadingView.addSubview(actInd)
+               self.loadingviewcontain.addSubview(loadingView)
+               uiView.addSubview(self.loadingviewcontain)
+           self.actInd.startAnimating()
+    } else {
+        self.actInd.activityIndicatorViewStyle = .whiteLarge
+               self.actInd.center = CGPoint(x: loadingView.frame.size.width / 2,
+                                          y: loadingView.frame.size.height / 2);
+                      loadingView.addSubview(actInd)
+                      self.loadingviewcontain.addSubview(loadingView)
+                      uiView.addSubview(self.loadingviewcontain)
+                  self.actInd.startAnimating()
+    }
+   
     }
     
 static func showInActivityIndicatory() {

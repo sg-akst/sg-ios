@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestoreSwift
+import Crashlytics
 
 class PasswordEditVC: UIViewController, UITextFieldDelegate {
     
@@ -97,6 +98,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
 
     @IBAction func passwordUpdate(_ sender: UIButton)
     {
+        
         if(self.oldpw_txt.text == nil || self.oldpw_txt.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Old Password ")
@@ -123,6 +125,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
         }
         else
         {
+            Crashlytics.sharedInstance().crash()
              Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let credential = EmailAuthProvider.credential(withEmail: self.getAllDic.value(forKey: "email_address") as! String, password: self.oldpw_txt.text!)
@@ -165,6 +168,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
    
     @IBAction func EditPasswordcancelbtn(_ sender: UIButton)
     {
+        Crashlytics.sharedInstance().crash()
        self.navigationController?.popViewController(animated: true)
     }
 

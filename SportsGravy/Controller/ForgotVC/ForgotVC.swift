@@ -63,8 +63,14 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
      }
     @IBAction func gotologin(_ sender: UIButton)
     {
-        let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
-           self.navigationController?.pushViewController(objSigninvc, animated: true)
+        if #available(iOS 13.0, *) {
+            let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
+            self.navigationController?.pushViewController(objSigninvc, animated: true)
+        } else {
+            let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(withIdentifier: "Signin_page"))! as! SigninVC
+            self.navigationController?.pushViewController(objSigninvc, animated: true)
+        }
+           
     }
     @IBAction func forgotbtn_Action(sender: UIButton)
     {
@@ -99,8 +105,14 @@ class ForgotVC: UIViewController, UITextFieldDelegate {
     func showAlertMessage(titleStr:String, messageStr:String) -> Void {
         let alert = UIAlertController(title: titleStr, message: messageStr.capitalized, preferredStyle: UIAlertController.Style.alert);
            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { _ in
-            let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
+            if #available(iOS 13.0, *) {
+                let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(identifier: "Signin_page"))!
                 self.navigationController?.pushViewController(objSigninvc, animated: true)
+
+            } else {
+                let objSigninvc: SigninVC = (self.storyboard?.instantiateViewController(withIdentifier: "Signin_page"))! as! SigninVC
+                self.navigationController?.pushViewController(objSigninvc, animated: true)
+            }
                   }))
            
            self.present(alert, animated: true, completion: nil)

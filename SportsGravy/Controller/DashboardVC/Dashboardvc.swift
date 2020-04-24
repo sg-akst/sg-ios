@@ -226,11 +226,19 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     func wificonnectionlocaldatabaseupload()
     {
+          
+        if #available(iOS 13.0, *) {
+            let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
+            objpostvc.localDatauploadfirebase()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+        } else {
+            let objpostvc = storyboard?.instantiateViewController(withIdentifier: "postimage") as? PostImageVC
 
-        let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
-        objpostvc.localDatauploadfirebase()
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+            //let objpostvc = self.storyboard?.instantiateViewController(identifier: "postimage") as! PostImageVC
+            objpostvc!.localDatauploadfirebase()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LocalDatabase"), object: nil)
+        }
+       
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -399,13 +407,13 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         Postcell.reaction_btn.isHidden = true
     }
             let profileImage = Dic.value(forKey: "feedPostedUser_avatar") as? String ?? ""
-            let urls = NSURL(string: "\(profileImage)")
+            let urls = URL(string: "\(profileImage)")
             if(urls?.absoluteString != "")
              {
                 
                  Postcell.profileImg.layer.cornerRadius = Postcell.profileImg.frame.size.width/2
                  Postcell.profileImg.layer.masksToBounds = true
-                 Postcell.profileImg.kf.setImage(with: urls! as URL)
+                 Postcell.profileImg.kf.setImage(with: urls)
 
              }
             let likeDic: NSDictionary = Dic.value(forKey: "likes") as! NSDictionary
@@ -818,23 +826,44 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
         let indexno = button.tag
         //let cell = button.superview?.superview as? PostCell
         let Dic: NSDictionary = self.commonArray?[indexno] as! NSDictionary
-        let objCommentvc: CommentVC = (self.storyboard?.instantiateViewController(identifier: "comment"))!
-        objCommentvc.selectComment = Dic
-        self.navigationController?.pushViewController(objCommentvc, animated: false)
+        if #available(iOS 13.0, *) {
+            let objCommentvc: CommentVC = (self.storyboard?.instantiateViewController(identifier: "comment"))!
+            objCommentvc.selectComment = Dic
+                   self.navigationController?.pushViewController(objCommentvc, animated: false)
+        } else {
+            let objCommentvc: CommentVC = self.storyboard?.instantiateViewController(withIdentifier: "comment") as! CommentVC
+            objCommentvc.selectComment = Dic
+            self.navigationController?.pushViewController(objCommentvc, animated: false)
+        }
+       
         
     }
     @IBAction func postVideoandImage(_ sender: UIButton)
     {
-       let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
-        objpostvc.delegate = self
-        self.navigationController?.pushViewController(objpostvc, animated: false)
+        if #available(iOS 13.0, *) {
+            let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(identifier: "postimage"))!
+            objpostvc.delegate = self
+            self.navigationController?.pushViewController(objpostvc, animated: false)
+        } else {
+            let objpostvc: PostImageVC = (self.storyboard?.instantiateViewController(withIdentifier: "postimage"))! as! PostImageVC
+            objpostvc.delegate = self
+            self.navigationController?.pushViewController(objpostvc, animated: false)
+        }
+       
         
     }
     @IBAction func feedSelector(_ sender: UIButton)
     {
-        let objPosttag: FeedSelectorVC = (self.storyboard?.instantiateViewController(identifier: "FeedSelectorVc"))!
-        objPosttag.delegate = self
-        self.navigationController?.pushViewController(objPosttag, animated: false)
+        if #available(iOS 13.0, *) {
+            let objPosttag: FeedSelectorVC = (self.storyboard?.instantiateViewController(identifier: "FeedSelectorVc"))!
+            objPosttag.delegate = self
+                self.navigationController?.pushViewController(objPosttag, animated: false)
+        } else {
+            let objPosttag: FeedSelectorVC = (self.storyboard?.instantiateViewController(withIdentifier: "FeedSelectorVc"))! as! FeedSelectorVC
+             objPosttag.delegate = self
+            self.navigationController?.pushViewController(objPosttag, animated: false)
+        }
+       
     }
     
     func feedfilter(feeddetail: NSDictionary)
@@ -886,10 +915,18 @@ db.collection("feed").document("\(userFeedid)").collection("feedLikes").document
                         {
                             if(message == "unauthorized user")
                             {
-                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                                appDelegate.timerAction()
-                               // self.getplayerlist()
-                                Constant.showInActivityIndicatory()
+                                if #available(iOS 13.0, *) {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                                                  // self.getplayerlist()
+                                    Constant.showInActivityIndicatory()
+                                } else {
+                                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                    appDelegate.timerAction()
+                                                                  
+                                    Constant.showInActivityIndicatory()
+                                }
+                               
 
                             }
                             else
