@@ -71,7 +71,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     
     @IBAction func selectsuffix(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "pop") as! PopVC
         vc.Title = "Select Suffix"
         vc.suffixArray = ["Jr","Sr","II","III","IV","V"]
@@ -85,7 +85,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     }
     @IBAction func usernameUpdate(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         if(self.first_name_txt.text == nil || self.first_name_txt.text?.isEmpty == true)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Firstname ")
@@ -182,7 +182,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
     
     @IBAction func Editusercancelbtn(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
        self.navigationController?.popViewController(animated: true)
     }
 }

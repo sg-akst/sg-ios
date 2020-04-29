@@ -412,7 +412,7 @@ class UserGroupCreateVC: UIViewController, UITableViewDelegate, UITableViewDataS
             else
             {
              
-                Crashlytics.sharedInstance().crash()
+                //Crashlytics.sharedInstance().crash()
             Constant.internetconnection(vc: self)
 
             let getuuid = UserDefaults.standard.string(forKey: "UUID")

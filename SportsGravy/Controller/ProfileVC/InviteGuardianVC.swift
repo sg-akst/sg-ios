@@ -110,7 +110,7 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         else
         {
-            Crashlytics.sharedInstance().crash()
+           // Crashlytics.sharedInstance().crash()
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             Constant.internetconnection(vc: self)

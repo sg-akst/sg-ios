@@ -6,7 +6,7 @@ target 'SportsGravy' do
   use_frameworks!
   
   pod 'Alamofire'
- pod 'Firebase/Auth'
+  pod 'Firebase/Auth'
   pod 'FirebaseFirestoreSwift'
   pod 'IQKeyboardManagerSwift'
   pod 'SwiftyJSON'
@@ -17,19 +17,16 @@ target 'SportsGravy' do
   pod 'Firebase/Storage'
   pod 'LayoutHelper'
   pod 'AlamofireImage'
-# pod  'BSImagePicker'
   pod 'TagListView', '~> 1.0'
   pod 'ResizingTokenField'
   pod 'ImagePicker'
-#  pod 'Lightbox'
   pod 'Hue'
   pod 'PINRemoteImage'
   pod 'SwiftyGif'
   pod 'SwiftGifOrigin'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Firebase/Core'
-#  pod 'ReachabilitySwift'
+#  pod 'Firebase/Analytics'
 
 
 

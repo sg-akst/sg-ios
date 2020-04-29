@@ -260,7 +260,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        }
     @IBAction func updatesorting(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+       // Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         Constant.internetconnection(vc: self)
@@ -360,7 +360,7 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
     
      @IBAction func Sortingcancelbtn(_ sender: UIButton)
         {
-            Crashlytics.sharedInstance().crash()
+            //Crashlytics.sharedInstance().crash()
            self.navigationController?.popViewController(animated: true)
         }
 }

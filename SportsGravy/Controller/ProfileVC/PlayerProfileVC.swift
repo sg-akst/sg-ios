@@ -405,7 +405,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func removeconnection(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         RemovePlayerconnection()
     }
     
@@ -483,7 +483,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
                self.dismiss(animated: true, completion: nil)
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         
                let profileImageFromPicker = info[UIImagePickerControllerOriginalImage] as! UIImage
                 

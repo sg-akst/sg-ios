@@ -125,7 +125,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
         }
         else
         {
-            Crashlytics.sharedInstance().crash()
+            //Crashlytics.sharedInstance().crash()
              Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let credential = EmailAuthProvider.credential(withEmail: self.getAllDic.value(forKey: "email_address") as! String, password: self.oldpw_txt.text!)
@@ -168,7 +168,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
    
     @IBAction func EditPasswordcancelbtn(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
        self.navigationController?.popViewController(animated: true)
     }
 

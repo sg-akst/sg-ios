@@ -107,7 +107,7 @@ class MobileEditVC: UIViewController, UITextFieldDelegate{
         }
         else
         {
-            Crashlytics.sharedInstance().crash()
+            //Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

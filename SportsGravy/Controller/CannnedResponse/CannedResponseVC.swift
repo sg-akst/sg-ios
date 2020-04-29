@@ -891,7 +891,7 @@ class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDele
     
     func deleteMethod(rolebyDic: NSDictionary)
    {
-    Crashlytics.sharedInstance().crash()
+    //Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

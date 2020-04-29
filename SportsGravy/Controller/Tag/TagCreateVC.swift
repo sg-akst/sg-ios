@@ -231,7 +231,7 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Tag Name")
         }
         else {
-            Crashlytics.sharedInstance().crash()
+            //Crashlytics.sharedInstance().crash()
         Constant.internetconnection(vc: self)
         Constant.showActivityIndicatory(uiView: self.view)
         let getuuid = UserDefaults.standard.string(forKey: "UUID")

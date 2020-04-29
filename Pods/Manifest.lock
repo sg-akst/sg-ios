@@ -323,7 +323,6 @@ DEPENDENCIES:
   - Fabric
   - Firebase
   - Firebase/Auth
-  - Firebase/Core
   - Firebase/Storage
   - FirebaseFirestoreSwift
   - Hue
@@ -429,6 +428,6 @@ SPEC CHECKSUMS:
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
 
-PODFILE CHECKSUM: 55670dea795d8bd5cc373027df4b822dcc310f30
+PODFILE CHECKSUM: 26415455c2e249badc6aa367d992aaa0788c658e
 
 COCOAPODS: 1.8.4

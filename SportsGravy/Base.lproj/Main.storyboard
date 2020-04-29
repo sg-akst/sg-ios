@@ -9097,17 +9097,33 @@ to improve.  </string>
                                 <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5X-9W-BA3">
+                                <rect key="frame" x="10" y="12" width="60" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="n9O-Ix-FaT"/>
+                                    <constraint firstAttribute="width" constant="60" id="qGv-ec-Cts"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextviewBackbtn:" destination="0b3-eo-5YI" eventType="touchUpInside" id="gXD-nn-Vbb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="nCd-gc-j8h" firstAttribute="leading" secondItem="F5y-8P-sRn" secondAttribute="leading" id="1Om-no-QHw"/>
                             <constraint firstItem="nCd-gc-j8h" firstAttribute="trailing" secondItem="F5y-8P-sRn" secondAttribute="trailing" id="4bp-f7-xCz"/>
+                            <constraint firstItem="P5X-9W-BA3" firstAttribute="leading" secondItem="F5y-8P-sRn" secondAttribute="leading" constant="10" id="CRp-XK-6ay"/>
                             <constraint firstItem="Ioi-TW-Jxc" firstAttribute="leading" secondItem="F5y-8P-sRn" secondAttribute="leading" id="F3Y-Cc-FVH"/>
                             <constraint firstItem="Ioi-TW-Jxc" firstAttribute="top" secondItem="nCd-gc-j8h" secondAttribute="bottom" constant="1" id="GGZ-rA-ghN"/>
                             <constraint firstItem="F5y-8P-sRn" firstAttribute="trailing" secondItem="52e-eN-vId" secondAttribute="trailing" constant="15" id="Uua-EJ-JYO"/>
                             <constraint firstItem="Ioi-TW-Jxc" firstAttribute="trailing" secondItem="F5y-8P-sRn" secondAttribute="trailing" id="ZJB-yY-sKq"/>
                             <constraint firstItem="52e-eN-vId" firstAttribute="top" secondItem="F5y-8P-sRn" secondAttribute="top" constant="12" id="kXF-dn-w1i"/>
                             <constraint firstItem="Ioi-TW-Jxc" firstAttribute="bottom" secondItem="F5y-8P-sRn" secondAttribute="bottom" id="lzg-g6-FpU"/>
+                            <constraint firstItem="P5X-9W-BA3" firstAttribute="top" secondItem="F5y-8P-sRn" secondAttribute="top" constant="12" id="s6D-SP-Cq9"/>
                             <constraint firstItem="nCd-gc-j8h" firstAttribute="top" secondItem="F5y-8P-sRn" secondAttribute="top" constant="62" id="wAu-9Y-fBm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="F5y-8P-sRn"/>
@@ -9121,7 +9137,7 @@ to improve.  </string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DG0-dP-ooe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7244" y="2155"/>
+            <point key="canvasLocation" x="7244" y="2154.872563718141"/>
         </scene>
         <!--Quickimageandvideo View Controller-->
         <scene sceneID="3kE-b2-ztL">

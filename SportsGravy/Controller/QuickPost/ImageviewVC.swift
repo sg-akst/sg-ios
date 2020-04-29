@@ -53,7 +53,7 @@ class ImageviewVC: UIViewController, UIScrollViewDelegate {
     }
     @IBAction func imageBackbtn(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         self.navigationController?.popViewController(animated: true)
     }
     

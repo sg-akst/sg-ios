@@ -196,7 +196,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func updateprofileImage(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         showAlert()
     }
     
@@ -637,7 +637,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     
     @IBAction func usernameEdit(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatename") as! UsernameEditVC
         vc.userDetailDic = alldoc
         vc.delegate = self
@@ -646,14 +646,14 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func passwordEdit(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+       // Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "updatePW") as! PasswordEditVC
         vc.getAllDic = alldoc
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func mobileEdit(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "UpdateMobile") as! MobileEditVC
         vc.getAllDic = alldoc
         vc.delegate = self
@@ -662,7 +662,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func genderEdit(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
        let vc = storyboard?.instantiateViewController(withIdentifier: "updateGender") as! GenderEditVC
         vc.getalldoc = alldoc
         vc.delegate = self
@@ -672,7 +672,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func addressEdit(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         let vc = storyboard?.instantiateViewController(withIdentifier: "Update_address") as! AddressEditVC
         vc.addressDetailDic = alldoc
         vc.delegate = self
@@ -681,13 +681,13 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func organisationEdit(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
        let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func logout_btnaction(_ sender: UIButton)
        {
-        Crashlytics.sharedInstance().crash()
+       // Crashlytics.sharedInstance().crash()
             try! Auth.auth().signOut()
            if let storyboard = self.storyboard {
                
@@ -700,7 +700,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
        
     @IBAction func cancelbtn(_ sender: UIButton)
     {
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
        self.navigationController?.popViewController(animated: true)
     }
 

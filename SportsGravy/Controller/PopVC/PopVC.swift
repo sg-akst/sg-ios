@@ -58,7 +58,7 @@ class PopVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
    
        @IBAction func didclickcancel(_ sender: UIButton)
        {
-        Crashlytics.sharedInstance().crash()
+       // Crashlytics.sharedInstance().crash()
           popupController?.dismiss()
       }
 
