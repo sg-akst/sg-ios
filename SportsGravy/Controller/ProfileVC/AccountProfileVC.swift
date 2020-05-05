@@ -13,7 +13,6 @@ import Kingfisher
 import FirebaseStorage
 import Alamofire
 import SwiftyJSON
-import Crashlytics
 
 struct Category {
     let name : String
@@ -153,7 +152,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             {
                                 let name =  self.username_lbl.text
                                 let nameFormatter = PersonNameComponentsFormatter()
-                                if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
+                                if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.familyName?.first {
 
                                      let sortName = "\(firstLetter)\(lastName)"
                                    // self.profile_imag.isHidden = true
@@ -341,7 +340,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             self.player_tbl_height.constant = (height>2) ? CGFloat(height * 80) :CGFloat(height * 80)
                             self.player_tbl.reloadData()
 
-                            self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.player_tbl.frame.origin.y + self.player_tbl_height.constant)
+                            self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height:  self.player_tbl_height.constant)
                            Constant.showInActivityIndicatory()
 
                         }
@@ -462,15 +461,16 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             {
              cell.username_lbl?.text = "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
             cell.gender_lbl.text =  item["gender"] as? String
+               
             }
             else
             {
-                cell.username_lbl?.text =  item["email_address"] as? String
+                cell.username_lbl?.text = (item["first_name"] as! String == "" && item["last_name"] as! String == "") ? "\(item["email_address"] as! String)" : "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" //item["email_address"] as? String
                 let playDIC : NSDictionary  =  self.playerListArray?[0] as! NSDictionary
                 //print(playerguardian)
                 let playerGuardianArray: NSArray = playDIC.value(forKey: "parent_user_id") as! NSArray
                 let contained = playerGuardianArray.contains("\(item["user_id"]!)")
-                cell.gender_lbl.text = (contained) ? "Guardian of \(username_lbl.text!)" : "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
+                cell.gender_lbl.text = (contained) ? "Guardian of \(playDIC["first_name"] as! String)" + " " + "\(playDIC["middle_initial"] as! String)" + " " + "\(playDIC["last_name"] as! String)" : "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
                 
             }
             
@@ -512,10 +512,11 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         }
             else
         {
-            let dic: NSArray = (item["sports"] as? NSArray ?? nil)!
+            let dic: NSArray = (item["governing_body_info"] as? NSArray ?? nil)!
             let sportsname: NSDictionary = dic[0] as! NSDictionary
+            let national: NSDictionary = dic[1] as! NSDictionary
             cell.username_lbl.text = item["abbrev"] as? String
-            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
+            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name") as! String)" + "," + "\(national.value(forKey: "sport_name") as! String)"
 //            if(indexPath.sections == 2)
 //            {
 //                cell.accessoryType = .none
@@ -530,8 +531,16 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         {
             let dic = item["governing_body_info"] as? NSArray
             let sportsname: NSDictionary = dic?[0] as! NSDictionary
+            if(dic!.count > 1)
+            {
+            let national: NSDictionary = dic?[1] as! NSDictionary
+                cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)" + "," + "\(national.value(forKey: "sport_name") as! String)"
+            }
+     else
+            {
             cell.username_lbl.text = item["abbrev"] as? String
             cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)"
+            }
             cell.accessoryType = .disclosureIndicator
 
 
@@ -548,9 +557,12 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         {
         if(indexPath.section == 0)
         {
+            if(item["is_signup_completed"] as! Bool == true)
+           {
             let vc = storyboard?.instantiateViewController(withIdentifier: "playerProfile") as! PlayerProfileVC
             vc.playerDetails = item as NSDictionary
             self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
         else if(indexPath.section == 1)
         {
@@ -589,8 +601,15 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         let indexPaths = player_tbl.indexPath(for: cell!)
         let dicvalu = sections[indexPaths!.section]
         print(dicvalu)
-        let getvalue: NSDictionary = dicvalu.items[sender.tag] as NSDictionary
-
+        let getvalue: NSDictionary!
+        if(dicvalu.name == "Players")
+        {
+          getvalue = dicvalu.items[sender.tag] as NSDictionary
+        }
+        else
+        {
+            getvalue = dicvalu.items[sender.tag - playerListArray.count] as NSDictionary
+        }
         let invite: Bool = getvalue.value(forKey: "is_invited")! as! Bool
         let signup: Bool = getvalue.value(forKey: "is_signup_completed")! as! Bool
         if(invite == true && signup == false)

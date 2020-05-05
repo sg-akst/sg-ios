@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import FirebaseFirestoreSwift
-import Crashlytics
 
 class PasswordEditVC: UIViewController, UITextFieldDelegate {
     

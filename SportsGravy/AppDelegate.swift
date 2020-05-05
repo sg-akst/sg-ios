@@ -10,7 +10,6 @@ import UIKit
 import IQKeyboardManagerSwift
 import Firebase
 import FirebaseFirestore
-import Fabric
 
 @UIApplicationMain
 
@@ -25,7 +24,6 @@ var window: UIWindow?
        
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
-        Fabric.sharedSDK().debug = true
         
        
         return true

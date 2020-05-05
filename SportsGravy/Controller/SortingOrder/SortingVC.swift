@@ -10,7 +10,6 @@ import UIKit
 import Foundation
 import Alamofire
 import SwiftyJSON
-import Crashlytics
 
 protocol SortorderDelegate: AnyObject {
     func sortingOrderTagupdateSuccess()

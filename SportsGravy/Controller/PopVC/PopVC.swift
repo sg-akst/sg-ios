@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Crashlytics
 
 protocol PopViewDelegate: AnyObject {
     func selectoptionString(selectSuffix: String)

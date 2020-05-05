@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseFirestore
 import Firebase
-import Crashlytics
 
 protocol PassSelectorderDelegate: AnyObject {
     func selectorderArray(select:NSMutableArray!,selectindex: UIButton)

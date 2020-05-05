@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Crashlytics
 
 class OrganizationVC: UIViewController {
 
@@ -31,8 +30,9 @@ class OrganizationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let organization = self.organizationDetails[0] as? NSDictionary
-        
+        //self.profile_imag.isHidden = true
         self.username_lbl.text = "\(organization?.value(forKey: "abbrev") ?? "")"
+        self.username_lbl.textColor = UIColor.blue
         let createdate = organization?.value(forKey: "created_datetime") as? NSDictionary
         let getcreatedate = createdate?.value(forKey: "$date") as! Int
         
@@ -73,6 +73,18 @@ class OrganizationVC: UIViewController {
 //            self.date_lbl.text = "Joined \(dobDate)"
                                        
         self.porfile_img.setTitle(organization?.value(forKey: "abbrev") as? String, for: .normal)
+        let name =  self.username_lbl.text
+                                       let nameFormatter = PersonNameComponentsFormatter()
+                                       if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.familyName?.first {
+
+                                            let sortName = "\(firstLetter)\(lastName)"
+                                          // self.profile_imag.isHidden = true
+                                          // self.porfile_img.isHidden = false
+                                          self.porfile_img.layer.cornerRadius = self.porfile_img.frame.size.width/2
+                                          self.porfile_img.layer.backgroundColor = UIColor.lightGray.cgColor
+                                          self.porfile_img.contentMode = .scaleAspectFill
+                                           self.porfile_img.setTitle(sortName, for: .normal)
+        }
          //self.porfile_img.layer.cornerRadius = self.porfile_img.frame.size.width/2
         
         self.email_lbl.text = organization?.value(forKey: "email_address") as? String

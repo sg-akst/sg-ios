@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
-import Crashlytics
 
 
 protocol CreateCanresponseDelegate: AnyObject {

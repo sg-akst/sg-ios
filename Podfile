@@ -24,9 +24,11 @@ target 'SportsGravy' do
   pod 'PINRemoteImage'
   pod 'SwiftyGif'
   pod 'SwiftGifOrigin'
-  pod 'Fabric'
-  pod 'Crashlytics'
-#  pod 'Firebase/Analytics'
+ # pod 'Fabric'
+ # pod 'Crashlytics'
+ pod 'Firebase/Analytics'
+ pod 'Firebase/Crashlytics'
+
 
 
 

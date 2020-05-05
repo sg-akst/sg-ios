@@ -10,7 +10,6 @@ import UIKit
 import SWRevealViewController
 import Firebase
 import FirebaseFirestore
-import Crashlytics
 
 
 class CannedResponseVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate,CreateCanresponseDelegate, SortorderDelegate {

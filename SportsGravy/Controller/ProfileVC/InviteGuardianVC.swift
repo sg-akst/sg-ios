@@ -8,13 +8,14 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
 
 class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var guardianemail_txt: UITextField!
     @IBOutlet weak var guardianmobil_txt: UITextField!
     @IBOutlet weak var playerlist_tbl: UITableView!
+    @IBOutlet weak var invitebtn: UIButton!
+
     var player_list_Array: NSMutableArray!
     var selectpersonArray = [String]()
 
@@ -24,7 +25,7 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.playerlist_tbl.dataSource = self
         guardianmobil_txt.delegate = self
         guardianemail_txt.delegate = self
-        
+        invitebtn.isUserInteractionEnabled = false
         bottomlineMethod(selecttext: guardianmobil_txt)
         bottomlineMethod(selecttext: guardianemail_txt)
         playerlist_tbl.sizeToFit()
@@ -103,8 +104,7 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
               print("Validate EmailID")
               Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Valid Email Address")
           }
-       else if(guardianmobil_txt.text == nil || guardianmobil_txt.text?.isEmpty == true
-            || isValidMobile(testStr: guardianmobil_txt.text!) == false)
+        else if(isValidMobile(testStr: guardianmobil_txt.text!) == false)
         {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Enter Mobile Number")
         }
@@ -113,7 +113,6 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
            // Crashlytics.sharedInstance().crash()
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
-            Constant.internetconnection(vc: self)
             let getuuid = UserDefaults.standard.string(forKey: "UUID")
 
             let testStatusUrl: String = Constant.sharedinstance.inviteGuardianUrl
@@ -130,7 +129,6 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             print("parameter=>\(parameter)")
         
             AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { response in
-                Constant.showInActivityIndicatory()
 
                  switch response.result
                 {
@@ -139,28 +137,72 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     print(jsonData)
                  let dic: NSDictionary = jsonData as! NSDictionary
                  Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(dic.value(forKey: "message")!)")
-                   // Constant.showInActivityIndicatory()
+                    Constant.showInActivityIndicatory()
 
+                 self.navigationController?.popViewController(animated: true)
                     
                  case .failure(let error): break
                  print(error)
                    // self.errorFailer(error: error)
-                   // Constant.showInActivityIndicatory()
+                    Constant.showInActivityIndicatory()
 
                 }
-               // Constant.showInActivityIndicatory()
+                Constant.showInActivityIndicatory()
             }
         }
     }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+         print("textFieldShouldBeginEditing")
+         return true
+     }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+       
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+        return true
+    }
+    
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        guard let text = textField.text else { return false }
+//           let newString = (text as NSString).replacingCharacters(in: range, with: string)
+//           textField.text = formattedNumber(number: newString)
+//           return false
+        
         guard let text = textField.text else { return false }
+        if( textField.text == "" || textField.text == nil)
+        {
+            invitebtn.isUserInteractionEnabled = false
+            invitebtn.setTitleColor(UIColor.darkGray, for: .normal)
+        }
+        else
+        {
+            invitebtn.isUserInteractionEnabled = true
+            invitebtn.setTitleColor(UIColor.blue, for: .normal)
+        }
+           if(textField == self.guardianmobil_txt)
+           {
            let newString = (text as NSString).replacingCharacters(in: range, with: string)
-           textField.text = formattedNumber(number: newString)
-           return false
+           
+                  textField.text = formattedNumber(number: newString)
+             return true
+        }
+        else
+           {
+            return true
+        }
       }
 
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text != "" && text != "+1 (XXX) XXX-XXXX" {
+   func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text != "" && text != "(XXX) XXX-XXXX" {
             // Do something with your value
         } else {
             textField.text = ""
@@ -194,13 +236,13 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func isValidMobile(testStr:String) -> Bool {
         let range = NSRange(location: 0, length: testStr.count)
-        let regex = try! NSRegularExpression(pattern: "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}")
-        if regex.firstMatch(in: testStr, options: [], range: range) != nil{
-            print("Phone number is valid")
-            return true
-        }else{
-            return false
-        }
+               let regex = try! NSRegularExpression(pattern: "(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}")
+               if regex.firstMatch(in: testStr, options: [], range: range) != nil{
+                   print("Phone number is valid")
+                   return true
+               }else{
+                   return false
+               }
     }
      @IBAction func cancelbtn(_ sender: UIButton)
     {

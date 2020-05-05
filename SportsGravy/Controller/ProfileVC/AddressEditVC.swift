@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import STPopup
-import Crashlytics
 
 protocol addressEditDelegate: AnyObject {
     func addressupdateSuccess()

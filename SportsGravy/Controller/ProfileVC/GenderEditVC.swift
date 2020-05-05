@@ -10,7 +10,6 @@ import UIKit
 import FirebaseFirestoreSwift
 import Firebase
 import STPopup
-import Crashlytics
 
 protocol genderEditDelegate: AnyObject {
     func genderupdateSuccess()

@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseFirestoreSwift
 import Firebase
-import Crashlytics
 
 protocol mobileEditDelegate: AnyObject {
     func mobileupdateSuccess()

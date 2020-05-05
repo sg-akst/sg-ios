@@ -112,7 +112,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         //self.profileimg.contentMode = .scaleAspectFill
                         let name =  self.username_lbl.text
                         let nameFormatter = PersonNameComponentsFormatter()
-                        if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.last {
+                        if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.familyName?.first {
 
                              let sortName = "\(firstLetter)\(lastName)"
                              self.profileimg.isHidden = false

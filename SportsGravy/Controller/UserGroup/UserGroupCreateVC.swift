@@ -3,7 +3,6 @@ import UIKit
 import SWRevealViewController
 import Firebase
 import FirebaseFirestoreSwift
-import Crashlytics
 
 protocol CreateusergroupDelegate: AnyObject {
     func passorderArray(select:NSMutableArray!, selectindex: UIButton)

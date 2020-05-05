@@ -12,7 +12,6 @@ import FirebaseFirestoreSwift
 import Alamofire
 import Kingfisher
 import FirebaseStorage
-import Crashlytics
 
 struct ProfileCategory {
     let name : String
@@ -65,7 +64,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                             let playerInfo = document.data()! as NSDictionary
                             print("Player=>\(playerInfo)")
                             self.username_lbl.text = "\(playerInfo.value(forKey: "first_name")!)" + " " + "\(playerInfo.value(forKey: "middle_initial")!)" + " " + "\( playerInfo.value(forKey: "last_name")!)"
-                            self.player_id = playerInfo.value(forKey: "user_id") as! String
+                            self.player_id = playerInfo.value(forKey: "user_id") as? String
                             let timestamp: Timestamp = playerInfo.value(forKey: "created_datetime") as! Timestamp
                             let datees: Date = timestamp.dateValue()
                                                              
@@ -90,7 +89,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                 {
                                             let name =  self.username_lbl.text
                                                            let nameFormatter = PersonNameComponentsFormatter()
-                                                           if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.givenName?.first {
+                                                           if let nameComps  = nameFormatter.personNameComponents(from: name!), let firstLetter = nameComps.givenName?.first, let lastName = nameComps.familyName?.first {
 
                                                                 let sortName = "\(firstLetter)\(lastName)"  // J. Singh
                                                                self.porfile_img.setTitle(sortName, for: .normal)
@@ -99,14 +98,29 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                self.email_lbl.text = playerInfo.value(forKey: "email_address") as? String
                                                self.gender_lbl.text = playerInfo.value(forKey: "gender") as? String
                                                self.mobile_no_lbl.text = playerInfo.value(forKey: "mobile_phone") as? String
-                                               let dobstr: String = playerInfo.value(forKey: "date_of_birth") as! String
-                                               let dateFormatter = DateFormatter()
-                                               dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                                               dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                                               let date = dateFormatter.date(from: "\(dobstr)")
-                                               dateFormatter.dateFormat = "MM-dd-yyyy"
-                                               let dobDate = dateFormatter.string(from: date!)
-                                               self.dob_lbl.text = "\(dobDate)"
+                            
+                            let dob: Timestamp = playerInfo.value(forKey: "date_of_birth") as! Timestamp
+                              let dobdate: Date = dob.dateValue()
+                            
+                              let dobdateFormatterGet = DateFormatter()
+                              dobdateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                              let dobdateFormatterPrint = DateFormatter()
+                              dobdateFormatterPrint.dateFormat = "MM-dd-yyyy"
+                              print(dateFormatterPrint.string(from: datees as Date))
+
+                              self.dob_lbl.text = "\(dateFormatterPrint.string(from: dobdate as Date))"
+                            
+                            
+                            
+//                                               let dobstr: String = playerInfo.value(forKey: "date_of_birth") as! String
+//                                               let dateFormatter = DateFormatter()
+//                                               dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//                                               dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+//                                               let date = dateFormatter.date(from: "\(dobstr)")
+//                                               dateFormatter.dateFormat = "MM-dd-yyyy"
+//                                               let dobDate = dateFormatter.string(from: date!)
+                                              // self.dob_lbl.text = "\(dobDate)"
                                                //let getaddress: NSDictionary = playerInfo.value(forKey: "address") as! NSDictionary
                                                self.address_lbl.text = "\(playerInfo.value(forKey: "street1")!)" + ", " + "\(playerInfo.value(forKey: "street2")!)" + "\n" + "\(playerInfo.value(forKey: "city")!)" + "-" + "\(playerInfo.value(forKey: "postal_code")!)" + "\n" + "\(playerInfo.value(forKey: "state_name")!)" + "," + "\(playerInfo.value(forKey: "country_name")!)"
                             self.GetOrganization()
@@ -175,6 +189,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         func GetOrganization()
         {
+            sections = [ProfileCategory]()
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.getOrganizationbyuid
@@ -216,7 +231,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                   self.sections.append(ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]]))
                                  }
                                  let height: Int =  self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
-                                 self.playerprofile_tbl_height.constant = (height>2) ? CGFloat(height * 60) :CGFloat(height * 60)
+                                 self.playerprofile_tbl_height.constant = (height>2) ? CGFloat(height * 80) :CGFloat(height * 80)
                                  self.playerprofile_tbl.reloadData()
 
                                  self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant)
@@ -263,10 +278,22 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
                   guard let tableView = view as? UITableViewHeaderFooterView else { return }
-                  // tableView.backgroundView?.backgroundColor = UIColor.black
-                 tableView.backgroundColor = UIColor.white
-
-                  tableView.textLabel?.textColor = UIColor.black
+                         tableView.backgroundColor = UIColor.lightGray
+                         //tableView.textLabel?.textColor = UIColor.black
+                         view.tintColor = Constant.getUIColor(hex: "#EEEEEE")
+                         
+                         let headerLabel = UILabel(frame: CGRect(x: 10, y: 8, width:
+                         tableView.bounds.size.width-5, height: 30))
+                         headerLabel.font = UIFont(name: "Arial-BoldMT", size: 20)
+                         headerLabel.textColor = Constant.getUIColor(hex: "#333333")
+                         headerLabel.text = self.sections[section].name
+                         headerLabel.sizeToFit()
+                         
+                         view.addSubview(headerLabel)
+            let sepFrame: CGRect = CGRect(x: 0, y: view.frame.size.height-1, width: self.view.frame.size.width, height: 1);
+                   let seperatorView = UIView.init(frame: sepFrame)
+                   seperatorView.backgroundColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
+                       view.addSubview(seperatorView)
               }
        
         
@@ -275,19 +302,19 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             return self.sections.count
         }
         
-        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-           
-            return self.sections[section].name
-        }
+//        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//           
+//            return self.sections[section].name
+//        }
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 80.0
+            return 90.0
         }
          func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-             return UITableViewAutomaticDimension
+            return 45.0
          }
 
          func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-             return 44.0
+             return 45.0
          }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -309,15 +336,17 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             cell.selectionStyle = .none
             if(indexPath.section == 0)
             {
-                cell.username_lbl?.text = "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
+                cell.username_lbl?.text = (item["first_name"] as! String == "" && item["last_name"] as! String == "") ? "\(item["email_address"] as! String)" : "\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)" //"\(item["first_name"] as! String)" + " " + "\(item["middle_initial"] as! String)" + " " + "\(item["last_name"] as! String)"
                 cell.gender_lbl.text = "Guardian" //item["gender"] as? String
             }
             else
             {
-                let dic: NSArray = item["sports"] as! NSArray
+                let dic: NSArray = (item["governing_body_info"] as? NSArray)!
                 let sportsname: NSDictionary = dic[0] as! NSDictionary
+                let national: NSDictionary = dic[1] as! NSDictionary
+
                 cell.username_lbl.text = item["abbrev"] as? String
-                cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "name") as! String)"
+                cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)" + "," + "\(national.value(forKey: "sport_name") as! String)"
                 cell.accessoryType = .disclosureIndicator
             }
             
@@ -330,7 +359,9 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             if(indexPath.section == 1)
             {
                 let vc = storyboard?.instantiateViewController(withIdentifier: "Organizationprofile") as! OrganizationVC
-                vc.organizationDetails = items as? NSMutableArray
+                let organitiondetailadd: NSMutableArray = NSMutableArray()
+                organitiondetailadd.add(item)
+                vc.organizationDetails = organitiondetailadd
                 //vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }
