@@ -16,6 +16,7 @@ import Kingfisher
 import SwiftyGif
 import SwiftGifOrigin
 import UserNotifications
+import PINRemoteImage
 
 
 class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate, FeedSelectorDelegate, backgroundpostDelegate {
@@ -25,23 +26,33 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     @IBOutlet weak var progressView: UIImageView!
 
-   @objc func backgroundloadingstop() {
-    
-    
+    @objc func backgroundofflineloadingstop()
+    {
         self.progressView.isHidden = true
-        msg_lbl.isHidden = false
-        loadviewcancelbutton.isHidden = false
+        self.msg_lbl.isHidden = true
+        self.loadviewcancelbutton.isHidden = true
+        self.loadingview.isHidden = true
+    }
     
+   @objc func backgroundloadingstop() {
+    // DispatchQueue.global().async {
+        self.progressView.isHidden = true
+        self.msg_lbl.isHidden = false
+        self.loadviewcancelbutton.isHidden = false
+    //}
 
     }
     
     @objc func backgroundpostloading() {
        
-        self.loadingview.isHidden = false
-        msg_lbl.isHidden = true
-        loadviewcancelbutton.isHidden = true
-        progressView.isHidden = false
-        self.progressView.image = UIImage.gif(name: "animation")
+       // DispatchQueue.global().async {
+            self.loadingview.isHidden = false
+            self.msg_lbl.isHidden = true
+            self.loadviewcancelbutton.isHidden = true
+            self.progressView.isHidden = false
+            self.progressView.image = UIImage.gif(name: "animation")
+          // }
+       
        
     }
     
@@ -220,6 +231,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.loadviewcancelbutton.layer.masksToBounds = true
          NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundpostloading),name: NSNotification.Name(rawValue: "backgroundpostloading"),object: nil)
          NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundloadingstop),name: NSNotification.Name(rawValue: "backgroundloadingstop"),object: nil)
+         NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundofflineloadingstop),name: NSNotification.Name(rawValue: "backgroundofflineloadingstop"),object: nil)
 
      
 
@@ -247,10 +259,11 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
              {
                  UserDefaults.standard.set(false, forKey: "selectPeople")
                  self.PeopleselectArray = NSMutableArray()
-             let data  = UserDefaults.standard.object(forKey: "Team")
-              self.PeopleselectArray = data as? NSMutableArray
+                let data: NSArray = UserDefaults.standard.array(forKey: "Team") as! NSArray
+               // let data = UserDefaults.standard.object(forKey: "Team")
+                self.PeopleselectArray = data.mutableCopy() as? NSMutableArray
 
-                 let selectDic: NSDictionary = PeopleselectArray?[0] as! NSDictionary
+                let selectDic: NSDictionary = self.PeopleselectArray[0] as! NSDictionary
                  if(selectDic.value(forKey: "user_name")as? String != nil && selectDic.value(forKey: "user_name")as? String != "")
                  {
                      self.feddSelectDetail(userDetail: PeopleselectArray, selectitemname: selectDic.value(forKey: "user_name") as! String)
@@ -333,6 +346,13 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         //getFeedMethod()
 
     }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+        KingfisherManager.shared.cache.clearMemoryCache()
+        KingfisherManager.shared.cache.clearDiskCache()
+        KingfisherManager.shared.cache.cleanExpiredDiskCache()
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.commonArray.count
         }
@@ -406,14 +426,21 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     {
         Postcell.reaction_btn.isHidden = true
     }
-            let profileImage = Dic.value(forKey: "feedPostedUser_avatar") as? String ?? ""
-            let urls = URL(string: "\(profileImage)")
+    let profileImage: String = Dic.value(forKey: "feedPostedUser_avatar") as? String ?? ""
+    let urls = NSURL(string: profileImage as String)
             if(urls?.absoluteString != "")
              {
                 
                  Postcell.profileImg.layer.cornerRadius = Postcell.profileImg.frame.size.width/2
                  Postcell.profileImg.layer.masksToBounds = true
-                 Postcell.profileImg.kf.setImage(with: urls)
+//                Postcell.profileImg.pin_updateWithProgress = true
+//                Postcell.profileImg.pin_setImage(from: URL(string: "\(profileImage)")!)
+                KingfisherManager.shared.cache.clearMemoryCache()
+                KingfisherManager.shared.cache.clearDiskCache()
+                //KingfisherManager.shared.cache.cleanExpiredDiskCache()
+                    //Postcell.profileImg.pin_setImage(from: urls! as URL)
+                Postcell.profileImg.kf.setImage(with: urls! as URL)
+                
 
              }
             let likeDic: NSDictionary = Dic.value(forKey: "likes") as! NSDictionary

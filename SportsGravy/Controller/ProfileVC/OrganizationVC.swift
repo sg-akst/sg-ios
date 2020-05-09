@@ -89,17 +89,21 @@ class OrganizationVC: UIViewController {
         
         self.email_lbl.text = organization?.value(forKey: "email_address") as? String
         let dic: NSArray = organization?["governing_body_info"] as! NSArray
-        let sportsname: NSDictionary = dic[0] as! NSDictionary
+        if(dic.count>0)
+        {
+            let sportsname: NSDictionary = dic[0] as! NSDictionary
+            self.sports_lbl.text = sportsname.value(forKey: "name") as? String
+            state_lbl.text = sportsname.value(forKey: "state_governing_organization_name") as? String
+            national_lbl.text = sportsname.value(forKey: "national_governing_organization_name") as? String
 
-        self.sports_lbl.text = sportsname.value(forKey: "name") as? String
+        }
+
         self.mobile_no_lbl.text = organization?.value(forKey: "mobile_phone") as? String
        // let getaddress: NSDictionary = self.organizationDetails.value(forKey: "address") as! NSDictionary
         self.address_lbl.text = "\(organization?.value(forKey: "street1")! ?? "")" + ", " + "\(organization?.value(forKey: "street2")! ?? "")" + "\n" + "\(organization?.value(forKey: "city")! ?? "")" + "-" + "\(organization?.value(forKey: "postal_code")! ?? "")" + "\n" + "\(organization?.value(forKey: "state")! ?? "")" + "," + "\(organization?.value(forKey: "country_code")! ?? "")"
         name_lbl.text = organization?.value(forKey: "name") as? String
         fax_lbl.text = organization?.value(forKey: "fax") as? String
         website_lbl.text = organization?.value(forKey: "website") as? String
-        state_lbl.text = sportsname.value(forKey: "state_governing_organization_name") as? String
-        national_lbl.text = sportsname.value(forKey: "national_governing_organization_name") as? String
         self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: 300)
         
     }

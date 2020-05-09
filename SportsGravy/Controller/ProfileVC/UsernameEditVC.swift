@@ -119,7 +119,7 @@ class UsernameEditVC: UIViewController, UITextFieldDelegate,PopViewDelegate {
             } else {
                 print("Document successfully updated")
                 Constant.showInActivityIndicatory()
-                self.alertermsg(msg: "Suffix Update Successfully")
+                self.alertermsg(msg: "Name Update Successfully")
 
             }
         }

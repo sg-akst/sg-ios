@@ -54,6 +54,8 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell: InviteCell = self.playerlist_tbl.dequeueReusableCell(withIdentifier: "invite") as! InviteCell
             let dic: NSDictionary = player_list_Array?[indexPath.row] as! NSDictionary
+        //if(dic.value(forKey: "is_signup_completed") as! Bool == true)
+        //{
            cell.playername.text = "\(dic.value(forKey: "first_name")!)" + "" + "\(dic.value(forKey: "last_name")!)"
             cell.checkbox.layer.cornerRadius = cell.checkbox.frame.size.width/2
             cell.checkbox.layer.masksToBounds = true
@@ -64,6 +66,7 @@ class InviteGuardianVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             cell.checkbox.addTarget(self, action: #selector(selectplayer), for: .touchUpInside)
             cell.selectionStyle = .none
             cell.accessoryType = .none
+        //}
                 return cell
     }
     @objc func selectplayer(_ sender: UIButton)

@@ -275,7 +275,7 @@ class SortingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
              "team_id" : getTeamId as String,
              "auth_id" : UserDefaults.standard.string(forKey: "UUID")!,
              "roleBySeason_id" : self.rolebySeasonid as String,
-              "title" : selectType!,
+             "title" : (selectType == "Canned Response") ? "CannedResponse" : selectType!,
                "updateObj": self.updateArray]
         
         let urlString = "\(testStatusUrl)"
@@ -341,7 +341,7 @@ AF.request(url!, method: .post, parameters: parameter, encoding: JSONEncoding.de
                 {
                     self.delegate?.sortingOrderUsergroupupdateSuccess()
                 }
-                else if(self.selectType == "CannedResponse")
+                else if(self.selectType == "Canned Response")
                 {
                     self.delegate?.sortingOrderCannedupdateSuccess()
                 }

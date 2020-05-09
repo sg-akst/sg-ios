@@ -1323,7 +1323,7 @@ class FeedSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     for i in 0..<slectplayer.count
                     {
                         let roleDic: NSDictionary = slectplayer[i] as! NSDictionary
-                                            let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + "\(roleDic.value(forKey: "last_name")!)"
+                                            let role: String = "\(roleDic.value(forKey: "first_name") as! String)" + " " + "\(roleDic.value(forKey: "last_name")!)"
                                             if(role == getTeam)
                                             {
                                                 let addgroup: NSMutableDictionary = getSameLevelArray?[0] as! NSMutableDictionary

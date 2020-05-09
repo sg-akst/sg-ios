@@ -234,6 +234,16 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
              
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
+//        let url = URL
+//
+//         if(url != nil)
+        // {
+             //self.profile_imag.isHidden = false
+             self.porfile_img.backgroundColor = UIColor.clear
+             self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
+             self.profile_imag.layer.masksToBounds = true
+             self.profile_imag.image = profileImageFromPicker
+         //}
              
             let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
         Constant.showActivityIndicatory(uiView: self.view)
@@ -260,6 +270,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
 
                         let UrlString = URL!.absoluteString
                         print(UrlString)
+                        
                         let getuuid = UserDefaults.standard.string(forKey: "UUID")
                         let db = Firestore.firestore()
                             
@@ -270,9 +281,11 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                                       Constant.showInActivityIndicatory()
 
                                   } else {
+                                    
                                       print("Document successfully updated")
+                                    
                                       Constant.showInActivityIndicatory()
-                                    self.getInformation()
+                                   // self.getInformation()
 
                                   }
                               }
@@ -512,7 +525,10 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         }
             else
         {
-            let dic: NSArray = (item["governing_body_info"] as? NSArray ?? nil)!
+           
+            let dic: NSArray = item["governing_body_info"] as! NSArray
+            if(dic.count > 0)
+            {
             let sportsname: NSDictionary = dic[0] as! NSDictionary
             let national: NSDictionary = dic[1] as! NSDictionary
             cell.username_lbl.text = item["abbrev"] as? String
@@ -526,14 +542,17 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             cell.accessoryType = .disclosureIndicator
            // }
             }
+            }
         }
        else
         {
-            let dic = item["governing_body_info"] as? NSArray
-            let sportsname: NSDictionary = dic?[0] as! NSDictionary
-            if(dic!.count > 1)
+            let dic: NSArray = (item["governing_body_info"] as? NSArray ?? nil)!
+            if(dic.count > 0)
             {
-            let national: NSDictionary = dic?[1] as! NSDictionary
+                let sportsname: NSDictionary = dic[0] as! NSDictionary
+                if(dic.count > 1)
+            {
+                let national: NSDictionary = dic[1] as! NSDictionary
                 cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)" + "," + "\(national.value(forKey: "sport_name") as! String)"
             }
      else
@@ -544,6 +563,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             cell.accessoryType = .disclosureIndicator
 
 
+        }
         }
         
         return cell
@@ -642,12 +662,11 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
 
         if #available(iOS 13.0, *) {
             let vc: InviteGuardianVC = (self.storyboard?.instantiateViewController(identifier: "guardian"))!
+            
             vc.player_list_Array = self.playerListArray
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "guardian") as? InviteGuardianVC
-
-            //let vc: InviteGuardianVC = storyBoard.instantiateViewController(identifier: "guardian")
             vc?.player_list_Array = self.playerListArray
             self.navigationController?.pushViewController(vc!, animated: true)
         }

@@ -22,6 +22,7 @@ protocol backgroundpostDelegate: AnyObject {
     
     func backgroundpostloading()
     func backgroundloadingstop()
+    func backgroundofflineloadingstop()
    
 
 }
@@ -43,12 +44,14 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.close_Btn.isHidden = false
         if(getPostimageUrl.count > 1)
         {
+            self.post_collection_view.reloadData()
+
            //self.post_view.isHidden = false
             post_collection_view_height.constant = CGFloat(self.getPostimageUrl.count * 100)
             self.post_collection_view.isHidden = false
             let scrollheight = self.postTbl_height.constant + description_view_height.constant + post_collection_view_height.constant
             self.scroll_view.contentSize = CGSize(width: UIScreen.main.bounds.size.width, height: scrollheight)
-           self.post_collection_view.reloadData()
+            //self.scrollview_contentheight.constant = scrollheight
         }
         else
         {
@@ -196,6 +199,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var post_collection_view_height: NSLayoutConstraint!
 
     @IBOutlet weak var description_view_height: NSLayoutConstraint!
+    @IBOutlet weak var scrollview_contentheight: NSLayoutConstraint!
 
     @IBOutlet weak var post_view: UIView!
     @IBOutlet weak var close_Btn: UIButton!
@@ -243,11 +247,16 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var userDetailPeopleselector: NSMutableArray!
    
     var db:DBHelper = DBHelper()
-       
+    var reachability: Reachability!
     var persons:[FeedPostData] = []
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        reachability = Reachability.networkReachabilityForInternetConnection()!
+
+        //let netStatus = reachability.currentReachabilityStatus
+        
         peopleselector = false
         postteam_tbl.delegate = self
         postteam_tbl.dataSource = self
@@ -264,7 +273,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         close_Btn.isHidden = true
         DoneBtn.isUserInteractionEnabled = true
 
-      //  scroll_view.contentSize = CGSize(width: self.view.frame.size.width, height: 800)
+        //scroll_view.contentSize = CGSize(width: self.view.frame.size.width, height: 800)
         isImage = false
         
         let addHeader: [String] = ["Who would you like to share this post with?", "How would you like to tag this post?","What was your reaction?","Select a canned response"]
@@ -738,8 +747,15 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         else
         {
+            self.delegate?.backgroundpostloading()
+
             post_content_txt.resignFirstResponder()
-            
+            //let reachability: Reachability = Reachability.networkReachabilityForInternetConnection()!
+
+            let netStatus = reachability.currentReachabilityStatus
+
+            if (UserDefaults.standard.bool(forKey: "feedpost") == true && netStatus != .reachableViaWiFi)
+            {
             UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
                                               switch notificationSettings.authorizationStatus {
                                               case .notDetermined:
@@ -748,17 +764,19 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                                                       // Schedule Local Notification
                                                       self.scheduleLocalNotification(msg: "Feed Posting, Please wait")
+                                                   
                                                   })
                                               case .authorized:
                                                   // Schedule Local Notification
                                                   self.scheduleLocalNotification(msg: "Feed Posting, Please wait")
+                                            
                                               case .denied:
                                                   print("Application Not Allowed to Display Notifications")
                                               case .provisional:
                                                   break
                                               }
                                           }
-            
+            }
             
             if(getPostimageUrl.count > 0)
             {
@@ -774,16 +792,18 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 self.feedPostMethod()
 
             }
-        }
-    
+        
+        
     }
-    
+    }
     @objc func localDatauploadfirebase()
     {
+ 
         let group = DispatchGroup() // create a group.
 
         persons = db.read()
         if(persons.count > 0){
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "backgroundpostloading"), object: nil)
             self.getPostimageUrl = NSMutableArray()
             print(persons.count)
             for i in 0..<persons.count
@@ -831,6 +851,7 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 offlineparam["feedPostedOrg_name"] = persons[i].feedPostedOrg_name as AnyObject?
                 offlineparam["feedPostedOrg_abbre"] = persons[i].feedPostedOrg_abbre as AnyObject
                 offlineparam["tag_id"] = persons[i].tag_id as AnyObject
+                offlineparam["tag_name"] = persons[i].tag_name as AnyObject
                 offlineparam["cannedResponseTitle"] = persons[i].cannedResponseTitle as AnyObject
                 offlineparam["cannedResponseDesc"] = persons[i].cannedResponseDesc as AnyObject
                 offlineparam["reaction"] = persons[i].reaction as AnyObject?
@@ -873,6 +894,8 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                                              case .success(let json):
                                               let jsonData = json
+                                             // self.delegate?.backgroundloadingstop()
+                                              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "backgroundloadingstop"), object: nil)
 
                                                 // if let data = response.data{
                                                      let info = jsonData as? NSDictionary
@@ -915,20 +938,20 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func feedPostMethod()
     {
 
-        let reachability: Reachability = Reachability.networkReachabilityForInternetConnection()!
+    let netStatus = reachability.currentReachabilityStatus
 
-        let netStatus = reachability.currentReachabilityStatus
 
         if (UserDefaults.standard.bool(forKey: "feedpost") == true && netStatus != .reachableViaWiFi)
         {
-            self.delegate?.backgroundpostloading()
 
             
             //tag_name is insert 
             let paramsJSON = JSON(getPostimageUrl)
             let paramsString = paramsJSON.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions.prettyPrinted)!
            let getUserorgInfo: NSDictionary = teamList
-            db.insert(Id: 0, postuser_id: "\(self.getUserInfo.value(forKey: "user_id") as? String ?? "")", postuser_firstName: "\(getUserInfo.value(forKey: "first_name") as? String ?? "")", postuser_lastName: "\(getUserInfo.value(forKey: "last_name") as? String ?? "")", postuser_middleInitial: "\(getUserInfo.value(forKey: "middle_initial") as? String ?? "")", postuser_suffix: "\(getUserInfo.value(forKey: "suffix") as? String ?? "")", postuser_role: "\(UserDefaults.standard.string(forKey: "Role") as? String ?? "")", postuser_avatar: "\(getUserInfo.value(forKey: "profile_image") as? String ?? "" )", postuser_feedText: "\(post_content_txt.text! ?? "")", postuser_feedImageURL: "\(paramsString)", postuser_feedVideoURL: "\(getPostVideoUrl as? String ?? "")", postuser_Level: "\(selectTeamName as? String ?? "")", postuserOrg_id: "\(getUserorgInfo.value(forKey: "organization_id") as? String ?? "")", postuser_Org_name: "\(getUserorgInfo.value(forKey: "organization_name") as? String ?? "")", postuser_Org_abbre: "\(getUserorgInfo.value(forKey: "organization_abbrev") as? String ?? "")", postuser_tag_id: "\(selectTag as? String ?? "")", postuser_tag_name: "\(selectTagname as? String ?? "")",postuser_Title: "\(cannedResponseTitle as? String ?? "")", cannedResponseDesc: "\(cannedResponseDesc as? String ?? "")", reaction: "\(Reaction as? String ?? "")", feedOrg_id: "\(getOrganizationid as? String ?? "")", level_id: "\(self.teamList.value(forKey: "level_id")!)", level_name: "\(self.teamList.value(forKey: "level_name")!)", membergroup_id: "\(self.teamList.value(forKey: "membergroup_id")!)", membergroup_name: "\(self.teamList.value(forKey: "membergroup_name")!)", organization_id: "\(self.teamList.value(forKey: "organization_id")!)", organization_name: "\(self.teamList.value(forKey: "organization_name")!)", season_id: "\(self.teamList.value(forKey: "season_id")!)", season_name: "\(self.teamList.value(forKey: "season_label")!)", sport_id: "\(self.teamList.value(forKey: "sport_id")!)", sport_name: "\(self.teamList.value(forKey: "sport_name")!)", team_id: "\(self.teamList.value(forKey: "team_id")!)", team_name: "\(self.teamList.value(forKey: "team_name")!)", user_id: "\(self.teamList.value(forKey: "user_id")!)", user_name: "\(self.teamList.value(forKey: "user_name")!)")
+            DispatchQueue.main.async {
+                self.db.insert(Id: 0, postuser_id: "\(self.getUserInfo.value(forKey: "user_id") as? String ?? "")", postuser_firstName: "\(self.getUserInfo.value(forKey: "first_name") as? String ?? "")", postuser_lastName: "\(self.getUserInfo.value(forKey: "last_name") as? String ?? "")", postuser_middleInitial: "\(self.getUserInfo.value(forKey: "middle_initial") as? String ?? "")", postuser_suffix: "\(self.getUserInfo.value(forKey: "suffix") as? String ?? "")", postuser_role: "\(UserDefaults.standard.string(forKey: "Role") ?? "")", postuser_avatar: "\(self.getUserInfo.value(forKey: "profile_image") as? String ?? "" )", postuser_feedText: "\(self.post_content_txt.text! )", postuser_feedImageURL: "\(paramsString)", postuser_feedVideoURL: "\(self.getPostVideoUrl as? String ?? "")", postuser_Level: "\(self.selectTeamName as? String ?? "")", postuserOrg_id : "\(getUserorgInfo.value(forKey: "organization_id") as? String ?? "")", postuser_Org_name: "\(getUserorgInfo.value(forKey: "organization_name") as? String ?? "")", postuser_Org_abbre: "\(getUserorgInfo.value(forKey: "organization_abbrev") as? String ?? "")", postuser_tag_id: "\(self.selectTag as? String ?? "")", postuser_tag_name: "\(self.selectTagname as? String ?? "")",postuser_Title: "\(self.cannedResponseTitle as? String ?? "")", cannedResponseDesc: "\(self.cannedResponseDesc as? String ?? "")", reaction: "\(self.Reaction as? String ?? "")", feedOrg_id: "\(self.getOrganizationid as? String ?? "")", level_id: "\(self.teamList.value(forKey: "level_id")!)", level_name: "\(self.teamList.value(forKey: "level_name")!)", membergroup_id: "\(self.teamList.value(forKey: "membergroup_id")!)", membergroup_name: "\(self.teamList.value(forKey: "membergroup_name")!)", organization_id: "\(self.teamList.value(forKey: "organization_id")!)", organization_name: "\(self.teamList.value(forKey: "organization_name")!)", season_id: "\(self.teamList.value(forKey: "season_id")!)", season_name: "\(self.teamList.value(forKey: "season_label")!)", sport_id: "\(self.teamList.value(forKey: "sport_id")!)", sport_name: "\(self.teamList.value(forKey: "sport_name")!)", team_id: "\(self.teamList.value(forKey: "team_id")!)", team_name: "\(self.teamList.value(forKey: "team_name")!)", user_id: "\(self.teamList.value(forKey: "user_id")!)", user_name: "\(self.teamList.value(forKey: "user_name")!)")
+            }
             UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
                                               switch notificationSettings.authorizationStatus {
                                               case .notDetermined:
@@ -941,21 +964,33 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                               case .authorized:
                                                   // Schedule Local Notification
                                                   self.scheduleLocalNotification(msg: "Feed Post Completed")
+                                               // self.delegate?.backgroundloadingstop()
+                                              
+//                                               let timer = Timer.scheduledTimer(timeInterval: 0.5,
+//                                                target: self,
+//                                                selector: #selector(eventWith),
+//                                                userInfo: nil,
+//                                                repeats: false)
                                               case .denied:
                                                   print("Application Not Allowed to Display Notifications")
                                               case .provisional:
                                                   break
                                               }
-                                          }
-            
-            
-          self.navigationController?.popViewController(animated: false)
-            self.delegate?.backgroundloadingstop()
-
+                                        }
+            self.navigationController?.popViewController(animated: false)
            
+            let myTimer : Timer = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(myPerformeCode), userInfo: nil, repeats: false)
+
+//            let timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { timer in
+//                    print("FIRE!!!")
+//                self.delegate?.backgroundofflineloadingstop()
+//
+//            })
         }
          else
             {
+                self.delegate?.backgroundpostloading()
+
             self.navigationController?.popViewController(animated: false)
         let getUserorgInfo: NSDictionary = teamList
         Constant.internetconnection(vc: self)
@@ -1021,26 +1056,26 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                                {
                                case .success(let json):
                                 let jsonData = json
-                                UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
-                                switch notificationSettings.authorizationStatus {
-                                case .notDetermined:
-                                self.requestAuthorization(completionHandler: { (success) in
-                                guard success else { return }
-
-                                                                          // Schedule Local Notification
-                            self.scheduleLocalNotification(msg: "Feed Post Completed")
-                                                                      })
-                            case .authorized:
-                                                                      // Schedule Local Notification
-                            self.scheduleLocalNotification(msg: "Feed Post Completed")
-                                        case .denied:
-                                                                      print("Application Not Allowed to Display Notifications")
-                                                                  case .provisional:
-                                                                      break
-                                                                  }
-                                                              }
+//                                UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
+//                                switch notificationSettings.authorizationStatus {
+//                                case .notDetermined:
+//                                self.requestAuthorization(completionHandler: { (success) in
+//                                guard success else { return }
+//
+//                                                                          // Schedule Local Notification
+//                            self.scheduleLocalNotification(msg: "Feed Post Completed")
+//                                                                      })
+//                            case .authorized:
+//                                                                      // Schedule Local Notification
+//                            self.scheduleLocalNotification(msg: "Feed Post Completed")
+//                                        case .denied:
+//                                                                      print("Application Not Allowed to Display Notifications")
+//                                                                  case .provisional:
+//                                                                      break
+//                                                                  }
+//                                                              }
                                 
-                               // self.delegate?.backgroundloadingstop()
+                                self.delegate?.backgroundloadingstop()
                                   // if let data = response.data{
                                        let info = jsonData as? NSDictionary
                                        let statusCode = info?["status"] as? Bool
@@ -1071,8 +1106,10 @@ class PostImageVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                        }
         }
     }
-    
-    
+    @objc func myPerformeCode(timer : Timer) {
+
+       self.delegate?.backgroundofflineloadingstop()
+    }
     @IBAction func backpostbtn(_ sender: UIButton)
     {
         if(teamList.count > 0)

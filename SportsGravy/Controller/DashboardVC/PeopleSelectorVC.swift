@@ -362,7 +362,7 @@ class PeopleSelectorVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
                      let defaults = UserDefaults.standard
                      defaults.set(selectArray, forKey: "Team")
-                     print(UserDefaults.standard.array(forKey: "Team") as Any)
+                    // print(UserDefaults.standard.array(forKey: "Team") as Any)
 
                     
                      self.navigationController?.pushViewController(swrvc, animated: true)

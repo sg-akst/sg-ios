@@ -84,7 +84,7 @@ var window: UIWindow?
       }
     func application(_ app: UIApplication, open openurl: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         print(openurl)
-        let url = "\(openurl)"
+        let url = "7XrpgTtJOwGctldTcqse"
         let queryItems = URLComponents(string: url)?.queryItems
         let param1 = queryItems?.filter({$0.name == "uid"}).first
         print(param1?.value as Any)

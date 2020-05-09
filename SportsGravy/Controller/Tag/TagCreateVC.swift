@@ -238,11 +238,13 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
         let docRef = db.collection("users").document("\(getuuid!)").collection("roles_by_season").document("\(rolebySeasonid!)")
             
             docRef.collection("Tags").getDocuments() { (querySnapshot, err) in
-                Constant.showInActivityIndicatory()
 
             if let err = err {
                 print("Error getting documents: \(err)")
+                Constant.showInActivityIndicatory()
+
             } else {
+
                   let getTagList = NSMutableArray()
 
                     for document in querySnapshot!.documents {
@@ -259,9 +261,12 @@ class TagCreateVC: UIViewController, UITextFieldDelegate {
                  { err in
                      if let err = err {
                          print("Error writing document: \(err)")
+                        Constant.showInActivityIndicatory()
+
                      } else {
                          print("Document successfully written!")
-                     docRef.collection("Tags").document(ref!.documentID).updateData(["tag_id":ref!.documentID])
+                     Constant.showInActivityIndicatory()
+docRef.collection("Tags").document(ref!.documentID).updateData(["tag_id":ref!.documentID])
                          if let err = err {
                                 print("Error writing document: \(err)")
                          } else {

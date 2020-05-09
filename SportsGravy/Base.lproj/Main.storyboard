@@ -78,7 +78,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="DzB-ne-awt">
-                                        <rect key="frame" x="-12.5" y="23" width="400" height="244"/>
+                                        <rect key="frame" x="87.5" y="84" width="200" height="122"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -144,7 +144,7 @@
                                                 </constraints>
                                                 <color key="textColor" red="0.12156862745098039" green="0.1764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="10"/>
@@ -2966,7 +2966,7 @@ multiple sports organizations.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toplogo" translatesAutoresizingMaskIntoConstraints="NO" id="72H-dE-XQc">
-                                        <rect key="frame" x="12.5" y="5" width="350" height="50"/>
+                                        <rect key="frame" x="-162.5" y="5" width="700" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="k78-gh-uvM"/>
                                         </constraints>
@@ -4035,7 +4035,7 @@ help with to continue to improve.</string>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="4U3-hk-2N2"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" bounces="NO" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qm0-at-0Qa">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qm0-at-0Qa">
                                 <rect key="frame" x="0.0" y="61" width="375" height="544"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4IX-Zw-p6v">
@@ -4220,7 +4220,7 @@ help with to continue to improve.</string>
                                                 <rect key="frame" x="10" y="10" width="355" height="305"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             </view>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lEZ-5t-2tq">
+                                            <collectionView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lEZ-5t-2tq">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -8282,7 +8282,7 @@ to improve.  </string>
                                     <constraint firstAttribute="height" constant="40" id="tdB-b2-IdI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                 <connections>
                                     <outlet property="delegate" destination="61H-XZ-Q5o" id="P6E-cX-PAH"/>
                                 </connections>
@@ -8317,7 +8317,7 @@ to improve.  </string>
                                                         <constraint firstAttribute="height" constant="30" id="b92-0C-AbN"/>
                                                     </constraints>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW8-dQ-EIj">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW8-dQ-EIj">
                                                     <rect key="frame" x="50" y="7" width="295" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="ysB-cq-q2V"/>
@@ -8327,6 +8327,7 @@ to improve.  </string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="KW8-dQ-EIj" firstAttribute="top" secondItem="RC0-hT-TpD" secondAttribute="top" constant="7" id="dKI-dV-dvg"/>
                                                 <constraint firstItem="AcR-q8-hL1" firstAttribute="leading" secondItem="RC0-hT-TpD" secondAttribute="leading" constant="10" id="i90-OR-HIe"/>
@@ -8335,6 +8336,7 @@ to improve.  </string>
                                                 <constraint firstItem="KW8-dQ-EIj" firstAttribute="leading" secondItem="AcR-q8-hL1" secondAttribute="trailing" constant="10" id="vxt-Vh-4hc"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="checkbox" destination="AcR-q8-hL1" id="tuK-fe-JQ7"/>
                                             <outlet property="playername" destination="KW8-dQ-EIj" id="ldY-Oa-xip"/>

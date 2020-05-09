@@ -30,7 +30,6 @@ class FeedPostData
         var feedPostedOrg_abbre: String = ""
         var tag_id: String = ""
         var tag_name: String = ""
-
         var cannedResponseTitle: String = ""
         var cannedResponseDesc: String = ""
         var reaction: String = ""
@@ -68,6 +67,7 @@ class FeedPostData
             self.feedPostedOrg_name = feedPostedOrg_name
             self.feedPostedOrg_abbre = feedPostedOrg_abbre
             self.tag_id = tag_id
+            self.tag_name = tag_name
             self.cannedResponseTitle = cannedResponseTitle
             self.cannedResponseDesc = cannedResponseDesc
             self.reaction = reaction

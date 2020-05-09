@@ -38,7 +38,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var userviewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var logoutypositionConstraint: NSLayoutConstraint!
     weak var delegate:sidemenuDelegate?
-
+  
 
     
     var roleArray: [String]!
@@ -47,6 +47,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var isTeamEnable: [String]!
 
     var getRole: String!
+    var isProfile: Bool!
 
 
     override func viewDidLoad() {
@@ -58,13 +59,17 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         role_tbl.sizeToFit()
        self.settings_view.isHidden = true
         self.user_view.isHidden = true
-            
+        getuserDetail()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-      getuserDetail()
+        if(isProfile == true)
+        {
+          getuserDetail()
+        }
 
     }
     func getuserDetail()
@@ -321,6 +326,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func logout_btnaction(_ sender: UIButton)
     {
+        isProfile = false
          try! Auth.auth().signOut()
         if let storyboard = self.storyboard {
             
@@ -333,6 +339,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func user_group_Action(_ sender: UIButton)
     {
+        isProfile = false
         let vc = storyboard?.instantiateViewController(withIdentifier: "usergroup") as! UsergroupVC
       // vc.getRolebyreasonDetailArray = self.getSameRoleArray
         vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
@@ -341,6 +348,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     @IBAction func tag_Action(_ sender: UIButton)
     {
+        isProfile = false
         let vc = storyboard?.instantiateViewController(withIdentifier: "tag") as! TagVC
        // vc.getRolebyreasonDetailArray = self.getSameRoleArray
         vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
@@ -349,6 +357,7 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     @IBAction func canned_response_Action(_ sender: UIButton)
        {
+        isProfile = false
            let vc = storyboard?.instantiateViewController(withIdentifier: "Can_response") as! CannedResponseVC
           // vc.getRolebyreasonDetailArray = self.getSameRoleArray
            vc.getSelectRole = (self.getRole == nil) ? roleArray[0] : getRole
@@ -357,12 +366,14 @@ class SidemenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
        }
     @IBAction func profileBtn(_ sender: UIButton)
     {
+        isProfile = true
         let vc = storyboard?.instantiateViewController(withIdentifier: "acprofile") as! AccountProfileVC
         vc.getAllrole = self.roleby_reasonArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func sittingsBtn(_ sender: UIButton)
     {
+        isProfile = false
         let vc = storyboard?.instantiateViewController(withIdentifier: "sittings") as! SittingsVC
         //vc.getAllrole = self.roleby_reasonArray
         self.navigationController?.pushViewController(vc, animated: true)

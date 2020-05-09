@@ -26,6 +26,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
         vc.backgroundImage = selectedImageFromPicker
         vc.finalDataDictionary=tempUserinfoDic
+       // vc.profile_Img = profileImg_str
         vc.isImage = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -52,6 +53,7 @@ class CommonTabBarVC: UITabBarController, sidemenuDelegate, UITabBarControllerDe
     var clickPhotoTitle : String!
     var clickVideoTitle : String!
 var selectedImageFromPicker: [UIImage]!
+   // var profileImg_str : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +68,7 @@ var selectedImageFromPicker: [UIImage]!
             Constant.internetconnection(vc: self)
             //Constant.showActivityIndicatory(uiView: self.view)
         let getuserByUid: String = Constant.sharedinstance.getUserByUId  //"https://us-central1-sportsgravy-testing.cloudfunctions.net/getuserByUid?"
-        let token = UserDefaults.standard.string(forKey: "idtoken")
+        //let token = UserDefaults.standard.string(forKey: "idtoken")
        // print(token)
         let header: HTTPHeaders = [
             "idtoken": UserDefaults.standard.string(forKey: "idtoken") ?? ""]
@@ -84,6 +86,16 @@ var selectedImageFromPicker: [UIImage]!
                                 let info = jsonData as? NSDictionary
                                     let insideData = info?["data"] as? NSDictionary
                                     if let userInfo = info?["data"] as? NSDictionary {
+                                        if(UserDefaults.standard.string(forKey: "profile_person_imag") != nil)
+                                        {
+                                            UserDefaults.standard.removeObject(forKey: "profile_person_imag")
+                                             UserDefaults.standard.set(userInfo.value(forKey: "profile_image") as? String ?? "", forKey: "profile_person_imag")
+                                        }
+                                        else
+                                        {
+                                        UserDefaults.standard.set(userInfo.value(forKey: "profile_image") as? String ?? "", forKey: "profile_person_imag")
+                                        }
+                                      //  self.profileImg_str = userInfo.value(forKey: "profile_image") as? String ?? ""
                                         for item in userInfo {
                                             if "\(item.0)" != "roles_by_seasons" {
                                                 self.tempUserinfoDic[item.0] = "\(item.1)"
@@ -306,6 +318,7 @@ var selectedImageFromPicker: [UIImage]!
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuickimageandvideoViewController") as! QuickimageandvideoViewController
             vc.tempMedia = tempMedia as URL?
             vc.finalDataDictionary=tempUserinfoDic
+               //  vc.profile_Img = profileImg_str
             vc.isImage = false
             self.navigationController?.pushViewController(vc, animated: true)
             }

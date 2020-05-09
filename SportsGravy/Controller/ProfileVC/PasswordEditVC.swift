@@ -83,7 +83,7 @@ class PasswordEditVC: UIViewController, UITextFieldDelegate {
        }
     if(oldpw_txt.text != "" || newpw_txt.text != "" || confirmpw_txt.text != "")
     {
-        pwdupdate_Btn.isUserInteractionEnabled = false
+        pwdupdate_Btn.isUserInteractionEnabled = true
         pwdupdate_Btn.setTitleColor(UIColor.blue, for: .normal)
     }
     else

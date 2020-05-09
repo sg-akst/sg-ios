@@ -522,7 +522,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                metadata.contentType = "image/jpeg"
                 
                let imageData: Data = UIImageJPEGRepresentation(profileImageFromPicker, 0.5)!
-                
+                 self.profile_imag.image = profileImageFromPicker
                let store = Storage.storage()
                let user = Auth.auth().currentUser
                if let user = user{
@@ -533,7 +533,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                            return
                        }
         
-                       self.profile_imag.image = profileImageFromPicker
+                      
                    }
                     
                }
