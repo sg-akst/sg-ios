@@ -90,8 +90,6 @@ let dic: NSDictionary = chidArray?[indexPath.row] as! NSDictionary
     cell.age_lbl.text = "Age: \(dic.value(forKey: "age")!)"
     cell.emailid_txt.tag = indexPath.row
     cell.emailid_txt.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-
-
     cell.selectionStyle = .none
     cell.accessoryType = .none
     return cell
@@ -131,14 +129,15 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         cell?.inviteBtn.sendActions(for: .touchUpInside)
         
         emilladdArray = NSMutableArray()
-        for i in 0..<self.allCellsText.count
+        for i in 0..<self.chidArray.count
         {
             //sender.tag = i
-            let getdetail = allCellsText[i]
-            let getTag = getdetail.id
-            let getemail: String = getdetail.email
-            let dic: NSDictionary = chidArray?[getTag] as! NSDictionary
-            if(getemail.isEmpty == false && (dic.value(forKey: "age") != nil))
+           // let getdetail = allCellsText[i]
+           // let getTag = getdetail.id
+            //let getemail: String = getdetail.email
+            let dic: NSDictionary = chidArray?[i] as! NSDictionary
+            let age: Int = dic.value(forKey: "age") as? Int ?? 0
+            if(dic.value(forKey: "email_address") as! String != "" && (age < 14))
             {
                 belowAgecount += 1
                 emilladdArray.add(dic)

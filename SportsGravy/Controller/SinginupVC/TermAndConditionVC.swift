@@ -51,7 +51,7 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
     }
     @IBAction func cancelbtn(_ sender: UIButton)
     {
-        
+        self.navigationController?.popViewController(animated: true)
     }
 
     func getsignupwebservice()
@@ -71,9 +71,9 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
             
             
             let dicMutable = NSMutableDictionary()
-            dicMutable.setValue(signuserDetail.value(forKey: "age") ?? "", forKey: "age")
+            dicMutable.setValue(childrenDic.value(forKey: "age") as? Int ?? 0, forKey: "age")
             dicMutable.setValue(childrenAdress, forKey: "childern_address")
-            dicMutable.setValue(signuserDetail.value(forKey: "email_address") ?? "", forKey: "email")
+            dicMutable.setValue(childrenDic.value(forKey: "email_address") ?? "", forKey: "email")
             dicMutable.setValue(signuserDetail.value(forKey: "middle_initial") ?? "", forKey: "first_name")
             dicMutable.setValue(signuserDetail.value(forKey: "last_name") ?? "", forKey: "last_name")
             dicMutable.setValue(roleDic.value(forKey: "level_name") ?? "", forKey: "level_name")
@@ -117,7 +117,7 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
         print("param:\(param)")
                    
         AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON{ (response:AFDataResponse<Any>) in
-            Constant.showInActivityIndicatory()
+           
 
                        if(!(response.error != nil)){
                            switch (response.result)
@@ -130,8 +130,6 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
                                    let statusCode = info?["status"] as? Bool
                                    if(statusCode == true)
                                    {
-                                       let result = info?["data"] as! NSDictionary
-
                                       Constant.showInActivityIndicatory()
                                     if #available(iOS 13.0, *) {
                                         let objcongz: ConguralutionVC = (self.storyboard?.instantiateViewController(identifier: "congz"))!
@@ -145,8 +143,9 @@ class TermAndConditionVC: UIViewController, UITextViewDelegate {
                             else
                                    {
                                     Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "\(info?["message"]! ?? "")")
+                                    Constant.showInActivityIndicatory()
+
                             }
-                                   Constant.showInActivityIndicatory()
                               // }
                                break
 

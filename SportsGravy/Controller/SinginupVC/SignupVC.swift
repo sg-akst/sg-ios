@@ -67,7 +67,7 @@ class SignupVC: UIViewController, UITextFieldDelegate {
             Constant.internetconnection(vc: self)
             Constant.showActivityIndicatory(uiView: self.view)
             let testStatusUrl: String = Constant.sharedinstance.signupString
-        let header: HTTPHeaders = ["UID" : "7XrpgTtJOwGctldTcqse"]
+        let header: HTTPHeaders = ["UID" : "ZxQKGuZ7ANROz8fO8iWr"]
             AF.request(testStatusUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON{ (response:AFDataResponse<Any>) in
                 if(!(response.error != nil)){
                     switch (response.result)

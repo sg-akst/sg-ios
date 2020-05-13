@@ -69,6 +69,12 @@ var window: UIWindow?
     }
    func wificonnectionlocaldatabaseupload()
       {
+        //let netStatus = self.reachability.currentReachabilityStatus
+
+         // if (UserDefaults.standard.bool(forKey: "feedpost") == true && netStatus != .reachableViaWiFi)
+                   // {
+                   
+                    //}
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if #available(iOS 13.0, *) {
             let objpostvc: PostImageVC = storyBoard.instantiateViewController(identifier: "postimage")
@@ -84,7 +90,7 @@ var window: UIWindow?
       }
     func application(_ app: UIApplication, open openurl: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         print(openurl)
-        let url = "7XrpgTtJOwGctldTcqse"
+        let url = "ZxQKGuZ7ANROz8fO8iWr"
         let queryItems = URLComponents(string: url)?.queryItems
         let param1 = queryItems?.filter({$0.name == "uid"}).first
         print(param1?.value as Any)
@@ -155,5 +161,38 @@ var window: UIWindow?
        //        }
                completionHandler(.noData)
            }
+    private func requestAuthorization(completionHandler: @escaping (_ success: Bool) -> ()) {
+          // Request Authorization
+          UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (success, error) in
+              if let error = error {
+                  print("Request Authorization Failed (\(error), \(error.localizedDescription))")
+              }
+
+              completionHandler(success)
+          }
+      }
+      private func scheduleLocalNotification(msg: String) {
+              // Create Notification Content
+              let notificationContent = UNMutableNotificationContent()
+
+              // Configure Notification Content
+              notificationContent.title = "SportsGravy Feed"
+              notificationContent.subtitle = ""
+              notificationContent.body = msg
+
+              // Add Trigger
+              let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 10.0, repeats: false)
+
+              // Create Notification Request
+              let notificationRequest = UNNotificationRequest(identifier: "cocoacasts_local_notification", content: notificationContent, trigger: notificationTrigger)
+
+              // Add Request to User Notification Center
+              UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                  if let error = error {
+                      print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                  }
+              }
+          
+      }
 }
 

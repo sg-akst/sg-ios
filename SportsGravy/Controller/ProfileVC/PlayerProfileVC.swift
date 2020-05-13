@@ -40,6 +40,9 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
      var sections = [ProfileCategory]()
     var player_id : String!
     
+    var isPlayerDelegate: Bool!
+    var playerInfo: NSDictionary!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,6 +50,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         playerprofile_tbl.dataSource = self
         guardiansListArray = NSMutableArray()
         organizationListArray = NSMutableArray()
+        isPlayerDelegate = false
         getplayerDetail()
     }
     func getplayerDetail()
@@ -61,11 +65,11 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                           Constant.showInActivityIndicatory()
 
                           if let document = document, document.exists {
-                            let playerInfo = document.data()! as NSDictionary
-                            print("Player=>\(playerInfo)")
-                            self.username_lbl.text = "\(playerInfo.value(forKey: "first_name")!)" + " " + "\(playerInfo.value(forKey: "middle_initial")!)" + " " + "\( playerInfo.value(forKey: "last_name")!)"
-                            self.player_id = playerInfo.value(forKey: "user_id") as? String
-                            let timestamp: Timestamp = playerInfo.value(forKey: "created_datetime") as! Timestamp
+                            self.playerInfo = document.data()! as NSDictionary
+                            print("Player=>\(self.playerInfo)")
+                            self.username_lbl.text = "\(self.playerInfo.value(forKey: "first_name")!)" + " " + "\(self.playerInfo.value(forKey: "middle_initial")!)" + " " + "\( self.playerInfo.value(forKey: "last_name")!)"
+                            self.player_id = self.playerInfo.value(forKey: "user_id") as? String
+                            let timestamp: Timestamp = self.playerInfo.value(forKey: "created_datetime") as! Timestamp
                             let datees: Date = timestamp.dateValue()
                                                              
                                                               let dateFormatterGet = DateFormatter()
@@ -78,7 +82,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                               self.date_lbl.text = "Joined \(dateFormatterPrint.string(from: datees as Date))"
                                    self.profile_imag.layer.cornerRadius = self.profile_imag.frame.size.width/2
                                    self.profile_imag.layer.backgroundColor = UIColor.lightGray.cgColor
-                                   let url = URL(string: "\(playerInfo.value(forKey: "profile_image")!)")
+                            let url = URL(string: "\(self.playerInfo.value(forKey: "profile_image")!)")
                                                if(url != nil)
                                                {
                                                
@@ -95,11 +99,11 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                                                self.porfile_img.setTitle(sortName, for: .normal)
                                                             }
                                                        }
-                                               self.email_lbl.text = playerInfo.value(forKey: "email_address") as? String
-                                               self.gender_lbl.text = playerInfo.value(forKey: "gender") as? String
-                                               self.mobile_no_lbl.text = playerInfo.value(forKey: "mobile_phone") as? String
+                            self.email_lbl.text = self.playerInfo.value(forKey: "email_address") as? String
+                            self.gender_lbl.text = self.playerInfo.value(forKey: "gender") as? String
+                            self.mobile_no_lbl.text = self.playerInfo.value(forKey: "mobile_phone") as? String
                             
-                            let dob: Timestamp = playerInfo.value(forKey: "date_of_birth") as! Timestamp
+                            let dob: Timestamp = self.playerInfo.value(forKey: "date_of_birth") as! Timestamp
                               let dobdate: Date = dob.dateValue()
                             
                               let dobdateFormatterGet = DateFormatter()
@@ -122,70 +126,17 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 //                                               let dobDate = dateFormatter.string(from: date!)
                                               // self.dob_lbl.text = "\(dobDate)"
                                                //let getaddress: NSDictionary = playerInfo.value(forKey: "address") as! NSDictionary
-                                               self.address_lbl.text = "\(playerInfo.value(forKey: "street1")!)" + ", " + "\(playerInfo.value(forKey: "street2")!)" + "\n" + "\(playerInfo.value(forKey: "city")!)" + "-" + "\(playerInfo.value(forKey: "postal_code")!)" + "\n" + "\(playerInfo.value(forKey: "state_name")!)" + "," + "\(playerInfo.value(forKey: "country_name")!)"
+                            self.address_lbl.text = "\(self.playerInfo.value(forKey: "street1")!)" + ", " + "\(self.playerInfo.value(forKey: "street2")!)" + "\n" + "\(self.playerInfo.value(forKey: "city")!)" + "-" + "\(self.playerInfo.value(forKey: "postal_code")!)" + "\n" + "\(self.playerInfo.value(forKey: "state_name")!)" + "," + "\(self.playerInfo.value(forKey: "country_name")!)"
+                            if(self.isPlayerDelegate == false)
+                            {
                             self.GetOrganization()
+                            }
                         }
                         else {
                             print("Document does not exist")
                         }
         }
     }
-     //   func getGuardians()
-//        {
-//                Constant.internetconnection(vc: self)
-//                Constant.showActivityIndicatory(uiView: self.view)
-//                let testStatusUrl: String = Constant.sharedinstance.getGuardiansbyuid
-//            let header: HTTPHeaders = [
-//                    "idtoken": UserDefaults.standard.string(forKey: "idtoken")!]
-//                 var param:[String:AnyObject] = [:]
-//                param["uid"] = UserDefaults.standard.string(forKey: "UUID") as AnyObject?
-//
-//                AF.request(testStatusUrl, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON{ (response) in
-//                    Constant.showInActivityIndicatory()
-//
-//                    if(!(response.error != nil)){
-//                        switch (response.result)
-//                        {
-//                        case .success( let json):
-//                            let jsonData = json
-//                                                   print(jsonData)
-//                           // if let data = response.data{
-//                                let info = jsonData as? NSDictionary
-//                                let statusCode = info?["status"] as? Bool
-//                                //let message = info?["message"] as? String
-//
-//                                if(statusCode == true)
-//                                {
-//                                    let result = info?["data"] as! NSArray
-//
-//                                    self.guardiansListArray = NSMutableArray()
-//                                    self.guardiansListArray = result.mutableCopy() as? NSMutableArray
-//                                    self.GetOrganization()
-//
-//                                }
-//                                else
-//                                {
-//                                   // Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: message ?? response.result.error as! String)
-//                                }
-//
-//                           // }
-//                            break
-//
-//                        case .failure(_):
-//                           // Constant.showInActivityIndicatory()
-//
-//                            break
-//                        }
-//                    }
-//                    else
-//                    {
-//                        //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
-//                       // Constant.showInActivityIndicatory()
-//
-//                    }
-//                }
-//
-//            }
         
         func GetOrganization()
         {
@@ -231,25 +182,12 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                                   self.sections.append(ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]]))
                                  }
                                  let height: Int =  self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
-                                 self.playerprofile_tbl_height.constant = (height>2) ? CGFloat(height * 80) :CGFloat(height * 80)
+                                 self.playerprofile_tbl_height.constant = (height>2) ? CGFloat(height * 65) :CGFloat(height * 65)
                                  self.playerprofile_tbl.reloadData()
 
                                  self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant)
                         //        Constant.showInActivityIndicatory()
                                 
-                                
-                                
-                                
-//                                self.organizationListArray = NSMutableArray()
-//                                self.organizationListArray = result.mutableCopy() as? NSMutableArray
-//                                self.sections = [ProfileCategory(name:"Guardians", items:self.guardiansListArray as! [[String : Any]]), ProfileCategory(name:"Organizations", items:self.organizationListArray as! [[String : Any]])
-//                                ]
-//                                let height: Int = self.guardiansListArray.count + self.organizationListArray.count
-//                                self.playerprofile_tbl_height.constant = CGFloat(height * 75)
-//                                self.playerprofile_tbl.reloadData()
-//
-//                                self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height: self.playerprofile_tbl.frame.origin.y + self.playerprofile_tbl_height.constant)
-//                               Constant.showInActivityIndicatory()
 
                             }
                             else
@@ -369,21 +307,25 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     
     func addressupdateSuccess() {
+        isPlayerDelegate = true
            getplayerDetail()
 
        }
        
        func genderupdateSuccess() {
+        isPlayerDelegate = true
            getplayerDetail()
 
        }
        
        func mobileupdateSuccess() {
+        isPlayerDelegate = true
           getplayerDetail()
 
        }
        
        func usernameupdateSuccess() {
+        isPlayerDelegate = true
            getplayerDetail()
        }
        
@@ -443,7 +385,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBAction func usernameEdit(_ sender: UIButton)
        {
            let vc = storyboard?.instantiateViewController(withIdentifier: "updatename") as! UsernameEditVC
-           vc.userDetailDic = playerDetails
+           vc.userDetailDic = playerInfo
           vc.delegate = self
         vc.isUpdateName = false
 
@@ -452,7 +394,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBAction func mobileEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "UpdateMobile") as! MobileEditVC
-        vc.getAllDic = playerDetails
+        vc.getAllDic = playerInfo
         vc.delegate = self
         vc.isUpdatePage = false
         self.navigationController?.pushViewController(vc, animated: true)
@@ -460,7 +402,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBAction func genderEdit(_ sender: UIButton)
     {
        let vc = storyboard?.instantiateViewController(withIdentifier: "updateGender") as! GenderEditVC
-        vc.getalldoc = playerDetails
+        vc.getalldoc = playerInfo
         vc.delegate = self
         vc.isUpdateGender = false
 
@@ -469,7 +411,7 @@ class PlayerProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBAction func addressEdit(_ sender: UIButton)
     {
         let vc = storyboard?.instantiateViewController(withIdentifier: "Update_address") as! AddressEditVC
-        vc.addressDetailDic = self.playerDetails
+        vc.addressDetailDic = self.playerInfo
         vc.delegate = self
         vc.isUpdate = false
         self.navigationController?.pushViewController(vc, animated: true)

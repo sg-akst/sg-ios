@@ -107,18 +107,43 @@ class CoppaParentFormVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         playerdetails = self.details?[0] as? NSDictionary
-               self.childname_lbl.text = "" + "\(playerdetails.value(forKey: "first_name")!)" + " " + "\(playerdetails.value(forKey: "last_name")!)"
+               self.childname_lbl.text = " " + "\(playerdetails.value(forKey: "first_name")!)" + " " + "\(playerdetails.value(forKey: "last_name")!)"
                self.childemail_lbl.text = " " + "\(playerdetails.value(forKey: "email_address")!)"
-               self.child_dob_lbl.text = " " + "\(playerdetails.value(forKey: "date_of_birth")!)"
-               let getaddtress: NSDictionary = playerdetails.value(forKey: "address") as! NSDictionary
-               self.child_mailing_lbl.text = " " + "\(getaddtress.value(forKey: "street1")!)" + " " + "\(getaddtress.value(forKey: "street2")!)" + "\n" + "\(getaddtress.value(forKey: "city")!)" + " " + "\(getaddtress.value(forKey: "country_code")!)" + "\n" + "\(getaddtress.value(forKey: "postal_code")!)"
+        
+        let createdate = self.playerdetails.value(forKey: "date_of_birth") as? NSDictionary
+               let getcreatedate = createdate?.value(forKey: "$date") as! Int
+               
+               
+               
+               let string : String = "\(getcreatedate)" // (Put your string here)
+
+               let timeinterval : TimeInterval = (string as NSString).doubleValue // convert it in to NSTimeInteral
+
+               let dateFromServer = NSDate(timeIntervalSince1970:timeinterval) // you can the Date object from here
+
+               print(dateFromServer) // for My Example it will print : 2014-08-22 12:11:26 +0000
+
+
+               // Here i create a simple date formatter and print the string from DATE object. you can do it vise-versa.
+
+               let dateFormater : DateFormatter = DateFormatter()
+               dateFormater.dateFormat = "yyyy-MMM-dd"
+               print(dateFormater.string(from: dateFromServer as Date))
+               
+               
+               self.child_dob_lbl.text = " \(dateFormater.string(from: dateFromServer as Date))"
+        
+        
+              // self.child_dob_lbl.text = " " + "\(playerdetails.value(forKey: "date_of_birth")!)"
+              // let getaddtress: NSDictionary = playerdetails.value(forKey: "address") as! NSDictionary
+               self.child_mailing_lbl.text = " " + "\(playerdetails.value(forKey: "street1")!)" + " " + "\(playerdetails.value(forKey: "street2")!)" + "\n" + " \(playerdetails.value(forKey: "city")!)" + " " + " \(playerdetails.value(forKey: "country_name")!)" + "\n" + " \(playerdetails.value(forKey: "postal_code")!)"
                let getroleinfo: NSDictionary = playerdetails.value(forKey: "roleInfo") as! NSDictionary
                self.sport_lbl.text = " " + "\(getroleinfo.value(forKey: "sport_name")!)"
                self.season_lbl.text = " " + "\(getroleinfo.value(forKey: "season_label")!)"
                self.level_lbl.text = " " + "\(getroleinfo.value(forKey: "level_name")!)"
-               let getorgzationAddress: NSDictionary = getroleinfo.value(forKey: "organization_Address") as! NSDictionary
-               self.sport_organization_lbl.text = " " + "\(getroleinfo.value(forKey: "organization_abbrev")!)" + "\n"
-                   + "\(getorgzationAddress.value(forKey: "street1")!)" + "\(getorgzationAddress.value(forKey: "street2")!)" + "\n" + "\(getorgzationAddress.value(forKey: "city")!)" + "\(getorgzationAddress.value(forKey: "state")!)" + "\n" + "\(getorgzationAddress.value(forKey: "country_code")!)" + "\(getorgzationAddress.value(forKey: "postal_code")!)"
+        let getorgzationAddress: NSDictionary = self.playerdetails.value(forKey: "organization_Address") as! NSDictionary
+        self.sport_organization_lbl.text = " " + "\(self.playerdetails.value(forKey: "organization_abbrev")!)" + "\n"
+                   + " \(getorgzationAddress.value(forKey: "street1")!)" + "\(getorgzationAddress.value(forKey: "street2")!)" + "\n" + " \(getorgzationAddress.value(forKey: "city")!)" + "\(getorgzationAddress.value(forKey: "state")!)" + "\n" + " \(getorgzationAddress.value(forKey: "country_code")!)" + "\(getorgzationAddress.value(forKey: "postal_code")!)"
         self.parents_lbl.text = " " + "\(parentDetails.value(forKey: "first_name")!)" + "" + "\(parentDetails.value(forKey: "middle_name")!)" + "" + "\(parentDetails.value(forKey: "last_name")!)"
         self.relationship_lbl.text = " Guardian"
         self.parent_email_lbl.text = " " + "\(parentDetails.value(forKey: "email_address")!)"
@@ -207,5 +232,8 @@ class CoppaParentFormVC: UIViewController {
             Constant.showAlertMessage(vc: self, titleStr: "SportsGravy", messageStr: "Please Accept The Parent Consent Form")
         }
     }
-    
+    @IBAction func cancelcopperbtn(_ sender: UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
 }

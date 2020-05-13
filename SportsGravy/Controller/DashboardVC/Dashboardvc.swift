@@ -21,24 +21,26 @@ import PINRemoteImage
 
 class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, sidemenuDelegate, FeedSelectorDelegate, backgroundpostDelegate {
     
+    
     func feedselectDashboard(selectitem: NSDictionary, selectName: String) {
         
     }
     @IBOutlet weak var progressView: UIImageView!
 
-    @objc func backgroundofflineloadingstop()
-    {
-        self.progressView.isHidden = true
-        self.msg_lbl.isHidden = true
-        self.loadviewcancelbutton.isHidden = true
-        self.loadingview.isHidden = true
-    }
+//    @objc func backgroundofflineloadingstop()
+//    {
+//        self.progressView.isHidden = true
+//        self.msg_lbl.isHidden = true
+//        self.loadviewcancelbutton.isHidden = true
+//        self.loadingview.isHidden = true
+//    }
     
    @objc func backgroundloadingstop() {
     // DispatchQueue.global().async {
         self.progressView.isHidden = true
         self.msg_lbl.isHidden = false
         self.loadviewcancelbutton.isHidden = false
+    sync_lbl.isHidden = true
     //}
 
     }
@@ -50,6 +52,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
             self.msg_lbl.isHidden = true
             self.loadviewcancelbutton.isHidden = true
             self.progressView.isHidden = false
+        sync_lbl.isHidden = false
             self.progressView.image = UIImage.gif(name: "animation")
           // }
        
@@ -152,6 +155,8 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var loadingview: UIView!
     @IBOutlet weak var  msg_lbl: UILabel!
     @IBOutlet weak var  loadviewcancelbutton: UIButton!
+    @IBOutlet weak var  sync_lbl: UILabel!
+
 
     var particularCellHeight: CGFloat!
      var Postcell:PostCell!
@@ -231,7 +236,7 @@ class Dashboardvc: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.loadviewcancelbutton.layer.masksToBounds = true
          NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundpostloading),name: NSNotification.Name(rawValue: "backgroundpostloading"),object: nil)
          NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundloadingstop),name: NSNotification.Name(rawValue: "backgroundloadingstop"),object: nil)
-         NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundofflineloadingstop),name: NSNotification.Name(rawValue: "backgroundofflineloadingstop"),object: nil)
+       //  NotificationCenter.default.addObserver(self,selector: #selector(Dashboardvc.backgroundofflineloadingstop),name: NSNotification.Name(rawValue: "backgroundofflineloadingstop"),object: nil)
 
      
 

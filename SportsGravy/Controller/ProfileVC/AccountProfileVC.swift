@@ -180,7 +180,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                             self.dob_lbl.text = "\(dobDate)"
                             }
                            // let getaddress: NSDictionary = self.alldoc.value(forKey: "address") as! NSDictionary
-                            self.address_lbl.text = "\(self.alldoc.value(forKey: "street1")!)" + ", " + "\(self.alldoc.value(forKey: "street2")!)" + "\n" + "\(self.alldoc.value(forKey: "city")!)" + "-" + "\(self.alldoc.value(forKey: "postal_code")!)" + "\n" + "\(self.alldoc.value(forKey: "state")!)" + "," + "\(self.alldoc.value(forKey: "country_code")!)"
+                            self.address_lbl.text = "\(self.alldoc.value(forKey: "street1") ?? "")" + ", " + "\(self.alldoc.value(forKey: "street2") ?? "")" + "\n" + "\(self.alldoc.value(forKey: "city") ?? "")" + "-" + "\(self.alldoc.value(forKey: "postal_code") ?? "")" + "\n" + "\(self.alldoc.value(forKey: "state") ?? self.alldoc.value(forKey: "state_name")!)" + "," + "\(self.alldoc.value(forKey: "country_code") ?? "")"
                 
                            Constant.showInActivityIndicatory()
                             if(self.isdelegate == false)
@@ -350,7 +350,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                              self.sections.append(Category(name:"Organizations", items:self.organizationListArray as! [[String : Any]]))
                             }
                             let height: Int = self.playerListArray.count + self.guardiansListArray.count + self.organizationListArray.count + self.sections.count
-                            self.player_tbl_height.constant = (height>2) ? CGFloat(height * 80) :CGFloat(height * 80)
+                            self.player_tbl_height.constant = (height>2) ? CGFloat(height * 70) :CGFloat(height * 70)
                             self.player_tbl.reloadData()
 
                             self.profile_scroll.contentSize = CGSize(width: self.view.frame.size.width, height:  self.player_tbl_height.constant)
@@ -391,7 +391,7 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
             }
             else
             {
-                //Themes.sharedIntance.showErrorMsg(view: self.view, withMsg: "\(Constant.sharedinstance.errormsgDetail)")
+                self.player_tbl_height.constant = 0
                 Constant.showInActivityIndicatory()
 
             }
@@ -555,11 +555,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
                 let national: NSDictionary = dic[1] as! NSDictionary
                 cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)" + "," + "\(national.value(forKey: "sport_name") as! String)"
             }
-     else
-            {
-            cell.username_lbl.text = item["abbrev"] as? String
-            cell.gender_lbl.text = "\(item["name"]!)" + "\n" + "\(sportsname.value(forKey: "sport_name")!)"
-            }
+            cell.username_lbl.text = item["abbrev"] as? String ?? ""
+            cell.gender_lbl.text = "\(item["name"] ?? "")" + "\n" + "\(sportsname.value(forKey: "sport_name") ?? "")"
             cell.accessoryType = .disclosureIndicator
 
 
@@ -577,8 +574,8 @@ class AccountProfileVC: UIViewController, UIImagePickerControllerDelegate, UINav
         {
         if(indexPath.section == 0)
         {
-            if(item["is_signup_completed"] as! Bool == true)
-           {
+           if(item["is_signup_completed"] as! Bool == true)
+          {
             let vc = storyboard?.instantiateViewController(withIdentifier: "playerProfile") as! PlayerProfileVC
             vc.playerDetails = item as NSDictionary
             self.navigationController?.pushViewController(vc, animated: true)
